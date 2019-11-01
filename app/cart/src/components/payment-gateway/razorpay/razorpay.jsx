@@ -4,9 +4,9 @@ import $ from 'jquery';
 import Standard from './checkout-types/standard';
 import Custom from './checkout-types/custom';
 import Hosted from './checkout-types/hosted';
+import { razorPayConfig,generalConfig } from '../payment-gateway-config';
 const script = document.createElement("script");
 
-const apiEndPoint = 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1'
 
 class Razorpay extends Component {
     constructor(props) {
@@ -25,10 +25,10 @@ class Razorpay extends Component {
     componentDidMount() {
         
         if(this.state.pgtype == 'standard') {
-            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.src = razorPayConfig.standardJs;
       
         } else if (this.state.pgtype == 'custom') {
-            script.src = "https://checkout.razorpay.com/v1/razorpay.js";
+            script.src = razorPayConfig.customJs;
         }
         script.async = true;
         document.body.appendChild(script);
@@ -53,7 +53,7 @@ class Razorpay extends Component {
             return <Standard pgconfig={{}} order={this.props.order} r_order_id={this.state.r_order_id} createOrder={this.createOrder}/>
 
         } else if(this.state.pgtype == 'custom') {
-            return <Custom order={this.props.order}  r_order_id={this.state.r_order_id} showPaymentOptns={this.state.showPaymentOptns} createOrder={this.createOrder}/>
+            return <Custom order={this.props.order} pgconfig={this.props.pgconfig}  r_order_id={this.state.r_order_id} showPaymentOptns={this.state.showPaymentOptns} createOrder={this.createOrder}/>
         } else {
             return <Hosted order={this.props.order} r_order_id={this.state.r_order_id} payForm={this.payForm} createOrder={this.createOrder}/>
         }
@@ -67,7 +67,7 @@ class Razorpay extends Component {
         if(e) {
             e.preventDefault();
         }
-        let url = apiEndPoint + "/anonymous/payment/create-order";
+        let url = generalConfig.apiEndPoint + "/anonymous/payment/create-order";
 			let body = {
                 order_id : this.props.order.id,
                 amount: this.props.order.amount

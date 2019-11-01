@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import {razorPayConfig, generalConfig} from '../../payment-gateway-config'; 
 class Standard extends Component {
     constructor(props) {
         super(props);
@@ -19,8 +19,8 @@ class Standard extends Component {
     }
     async standardPayment(e) {
         let Razorpay = new window.Razorpay({
-            "key": "rzp_test_k5UaQj4CYdBzL5",
-            "image": "https://i.imgur.com/n5tjHFD.png"
+            "key": razorPayConfig.api_key,
+            "image": razorPayConfig.image
         })
          await this.props.createOrder(e)
          let amount = this.state.amount*100
