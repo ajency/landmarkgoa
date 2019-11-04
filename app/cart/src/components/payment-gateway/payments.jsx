@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Razorpay from './razorpay/razorpay.jsx';
 class Payments extends Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
 
     render() {
@@ -12,7 +12,7 @@ class Payments extends Component {
     getPaymentGateway() {
         switch (this.props.pgname.toLowerCase()) {
             case 'razorpay':
-                return <Razorpay pgconfig={this.props.pgconfig} order={this.props.order}/>
+                return <Razorpay pgconfig={this.props.pgconfig} order={this.props.order} {...this.props.user_details}/>
                 break;
         
             default:

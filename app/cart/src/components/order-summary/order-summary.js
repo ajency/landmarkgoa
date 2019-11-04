@@ -47,7 +47,7 @@ class OrderSummary extends Component {
                 <p>Email: {this.state.orderSummary.user_details.email}</p>
                 <p>Contact: {this.state.orderSummary.user_details.mobile}</p>
                 <p>You pay: {this.state.orderSummary.summary.you_pay}</p>
-                <Payments pgname="razorpay" pgconfig={{pgtype:'standard'}} order={{id: this.state.orderSummary.order_id, amount:this.state.orderSummary.summary.you_pay}}/>
+                <Payments pgname="razorpay" pgconfig={{pgtype:'standard'}} user_details={{user_details:this.state.orderSummary.user_details}} order={{id: this.state.orderSummary.order_id, amount:this.state.orderSummary.summary.you_pay}}/>
             </div>
         )
     }
