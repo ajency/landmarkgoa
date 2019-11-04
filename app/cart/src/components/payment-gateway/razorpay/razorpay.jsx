@@ -17,11 +17,7 @@ class Razorpay extends Component {
             method: '',
             pgname:this.props.pgname,
             pgtype:this.props.pgconfig.pgtype,
-            methodsError: false,
             showPaymentOptns:false,
-            showError:false,
-            showErrMsg:false,
-            paymentErrorMsg:null,
             r_order_id:null,
         };
     }
@@ -47,8 +43,6 @@ class Razorpay extends Component {
         return (
             <div>
                {this.showPaymentBtn()} 
-               {this.state.showMsg ? this.successMsg(): null}
-               {this.state.showErrMsg ? this.errorMsg(): null}
             </div>
         );
     }
@@ -56,24 +50,17 @@ class Razorpay extends Component {
     showPaymentBtn() {
         if(this.state.pgtype =='standard')
         {
-            return <Standard pgconfig={{}} order={this.props.order} r_order_id={this.state.r_order_id} showMsg={this.state.showMsg} showErrMsg={this.state.showErrMsg} createOrder={this.createOrder}/>
+            return <Standard pgconfig={{}} order={this.props.order} r_order_id={this.state.r_order_id} createOrder={this.createOrder}/>
 
         } else if(this.state.pgtype == 'custom') {
-            return <Custom order={this.props.order} pgconfig={{}} r_order_id={this.state.r_order_id} showPaymentOptns={this.state.showPaymentOptns} createOrder={this.createOrder}/>
+            return <Custom order={this.props.order}  r_order_id={this.state.r_order_id} showPaymentOptns={this.state.showPaymentOptns} createOrder={this.createOrder}/>
         } else {
             return <Hosted order={this.props.order} r_order_id={this.state.r_order_id} payForm={this.payForm} createOrder={this.createOrder}/>
         }
     }
     
 
-    successMsg=() =>{
-        return <p><b>Payment is successfull</b></p>;
-    }
-    
-    errorMsg() {
-        return <p><b>Payment is un-successfull, {this.state.paymentErrorMsg}</b></p>;
-    }
-    
+   
     
     async createOrder (e) {
         console.log("here")
@@ -94,21 +81,6 @@ class Razorpay extends Component {
                this.setState({r_order_id: res.data.order_id});
             }
             return true;
-        })          
-    }
-
-    verifyPayment(res) {
-        let url = this.state.apiEndPoint + "/anonymous/payment/verify-payment";
-        let body = {
-            order_id : 1,
-            ...res
-        }
-        return  axios.post(url, body).then(res => {
-            console.log(res,"successfull")
-            this.setState({"showMsg":true})
-        }).catch(err => {
-            this.setState({"showErrMsg":true})
-            console.log(err)
         })          
     }
 }
