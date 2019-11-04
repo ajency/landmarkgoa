@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './order-summary.scss';
 import axios from 'axios';
+import Payments from '../payment-gateway/payments'
 
 const apiEndPont = 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1';
 
@@ -22,8 +23,9 @@ class OrderSummary extends Component {
             let url = apiEndPont+ '/anonymous/cart/create-order'
             axios.post(url, {cart_id:this.props.match.params.order_id, address_id:this.props.match.params.address_id})
             .then((res) => {
+                
                 this.setState({orderSummary: res.data.order_data, dataLoading:false})
-                console.log(this.state.orderSummary)
+
             }).catch(err => {
                 console.log(err)
                 this.setState({dataLoading:false})
@@ -31,7 +33,6 @@ class OrderSummary extends Component {
             })
         }
 
-        console.log(this.props.match.params)
     }
 
     render() {
@@ -42,10 +43,11 @@ class OrderSummary extends Component {
         return(
             <div>
                 <h3>Order Summary Page</h3>
-               <p> Name: {this.state.orderSummary.user_details.name}</p>
+                <p> Name: {this.state.orderSummary.user_details.name}</p>
                 <p>Email: {this.state.orderSummary.user_details.email}</p>
                 <p>Contact: {this.state.orderSummary.user_details.mobile}</p>
                 <p>You pay: {this.state.orderSummary.summary.you_pay}</p>
+                <Payments pgname="razorpay" pgconfig={{pgtype:'standard'}} order={{id: this.state.orderSummary.order_id, amount:this.state.orderSummary.summary.you_pay}}/>
             </div>
         )
     }

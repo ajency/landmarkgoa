@@ -12,7 +12,6 @@ class Standard extends Component {
     render() {
         return (
             <div>
-                <h3>Stadard Checkout</h3>
                 <button onClick={(e)=> { this.standardPayment(e)}}>Proceed to Payment</button>
             </div>
         );

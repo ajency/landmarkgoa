@@ -8,6 +8,7 @@ import AddNewAddress from './components/add-new-addess/add-new-address';
 import AddressList from './components/address-list/address-list';
 import VerifyMobile from './components/login/verify-mobile';
 import OrderSummary from './components/order-summary/order-summary';
+import OrderDetail from './components/order-details/order-details';
 
 import {
   HashRouter as Router,
@@ -22,7 +23,7 @@ class App extends Component {
         <Route path="/add-address" component={AddNewAddress} />
         <Route path="/verify-mobile" component={VerifyMobile} />
         <Route exact path="/order-summary/:cart_id/:address_id" component={OrderSummary}></Route>
-
+        <Route exact path="/order-details/" component={OrderDetail}></Route>
       </Router>
     );
   }
