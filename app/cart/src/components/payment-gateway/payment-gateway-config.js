@@ -1,9 +1,9 @@
 let razorPayConfig = {
-    api_key:"rzp_test_k5UaQj4CYdBzL5",
+    api_key:"rzp_test_FSfmJofoQNnVG6",
     customJs:"https://checkout.razorpay.com/v1/razorpay.js",
     standardJs:"https://checkout.razorpay.com/v1/checkout.js",
     image:"https://i.imgur.com/n5tjHFD.png",
-    callback_url:"http://greengrainbowl.local/index.php/payment-successful/",
+    callback_url:"http://localhost:3000/order-details/",
     cancel_url:"http://greengrainbowl.local/index.php/payment-unsuccessful/"
 };
 

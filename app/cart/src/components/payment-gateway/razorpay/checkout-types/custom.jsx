@@ -158,14 +158,14 @@ class Custom extends Component {
      }
 
      verifyPayment(res) {
-        let url = generalConfig.apiEndPoint + "/anonymous/payment/verify-payment2";
+        let url = generalConfig.apiEndPoint + "/anonymous/payment/verify-payment";
         let body = {
             order_id : 1,
             ...res
         }
         return  axios.post(url, body).then(res => {
             console.log(res,"successfull")
-            window.location.href = razorPayConfig.callback_url;
+            window.location.href = razorPayConfig.callback_url+ this.props.order.id;
         }).catch(err => {
             window.location.href = razorPayConfig.cancel_url;
         })          

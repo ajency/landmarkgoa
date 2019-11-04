@@ -50,7 +50,7 @@ class Razorpay extends Component {
     showPaymentBtn() {
         if(this.state.pgtype =='standard')
         {
-            return <Standard pgconfig={{}} order={this.props.order} r_order_id={this.state.r_order_id} createOrder={this.createOrder}/>
+            return <Standard order={this.props.order} r_order_id={this.state.r_order_id} createOrder={this.createOrder}/>
 
         } else if(this.state.pgtype == 'custom') {
             return <Custom order={this.props.order} pgconfig={this.props.pgconfig}  r_order_id={this.state.r_order_id} showPaymentOptns={this.state.showPaymentOptns} createOrder={this.createOrder}/>
