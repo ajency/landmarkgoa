@@ -61,7 +61,7 @@ class Razorpay extends Component {
         } else if(this.state.pgtype == 'custom') {
             return <Custom order={this.props.order} pgconfig={{}} r_order_id={this.state.r_order_id} showPaymentOptns={this.state.showPaymentOptns} createOrder={this.createOrder}/>
         } else {
-            return <Hosted order={this.props.order} r_order_id={this.state.r_order_id}/>
+            return <Hosted order={this.props.order} r_order_id={this.state.r_order_id} payForm={this.payForm} createOrder={this.createOrder}/>
         }
     }
     
@@ -91,10 +91,9 @@ class Razorpay extends Component {
             if(this.state.pgtype =='custom') 
                 this.setState({"showPaymentOptns":true})
             if(this.state.pgtype == 'hosted') {
-                $('#order_id').val(res.data.order_id)
-                this.payForm.current.submit()
+               this.setState({r_order_id: res.data.order_id});
             }
-                
+            return true;
         })          
     }
 
