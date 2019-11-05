@@ -23,7 +23,7 @@ class App extends Component {
         <Route path="/add-address" component={AddNewAddress} />
         <Route path="/verify-mobile" component={VerifyMobile} />
         <Route exact path="/order-summary/:cart_id/:address_id" component={OrderSummary}></Route>
-        <Route exact path="/order-details/" component={OrderDetail}></Route>
+        <Route exact path="/order-details/:payment_id" component={OrderDetail}></Route>
       </Router>
     );
   }

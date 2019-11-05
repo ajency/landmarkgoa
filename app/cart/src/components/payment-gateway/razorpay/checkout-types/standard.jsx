@@ -41,7 +41,7 @@ class Standard extends Component {
             "currency": "INR",
             "order_id":this.props.r_order_id,//This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
             "handler": function (response){
-                alert(response.razorpay_payment_id);
+                window.location = window.location.origin + '#/order-details/' + response.razorpay_payment_id
             },
             "prefill": {
                 "email": this.props.user_details.email,

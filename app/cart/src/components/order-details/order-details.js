@@ -22,8 +22,8 @@ class OrderDetails extends Component {
     }
 
     getOrderDetails() {
-        let url = generalConfig.apiEndPoint + "/anonymous/order/get-order";
-        axios.post(url, {order_id: this.props.match.params.order_id})
+        let url = generalConfig.apiEndPoint + "/anonymous/payment/get-order-details";
+        axios.post(url, {payment_id: this.props.match.params.payment_id})
         .then((res) => {
 
             if(res.data.pending) {
@@ -44,7 +44,9 @@ class OrderDetails extends Component {
     getStatus() {
         if(this.state.order_status == 'captured'){
             return (
-                <div>Order is successful Payment id: {this.state.payment_id}</div>
+                <div>
+                    Order is successful Payment id: {this.state.payment_id}
+                </div>
             );
         } else {
             return (
