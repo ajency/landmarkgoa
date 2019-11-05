@@ -3,6 +3,7 @@ import axios from 'axios'
 import {generalConfig} from '../payment-gateway/payment-gateway-config'
 
 class OrderDetails extends Component {
+    _isUnMount = false;
     constructor(props){
         super(props)
         this.state = {
@@ -22,7 +23,14 @@ class OrderDetails extends Component {
         this.getOrderDetails()        
     }
 
+    componentWillUnmount() {
+        this._isUnMount = true
+    }
+
     getOrderDetails() {
+        if(this._isUnMount) {
+            return ;
+        }
         let url = generalConfig.apiEndPoint + "/anonymous/payment/get-order-details";
         axios.post(url, {payment_id: this.props.match.params.payment_id})
         .then((res) => {
