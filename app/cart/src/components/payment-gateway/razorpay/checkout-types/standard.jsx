@@ -12,7 +12,7 @@ class Standard extends Component {
     render() {
         return (
             <div>
-                <button onClick={(e)=> { this.standardPayment(e)}}>Proceed to Payment</button>
+                <button className={this.props.pgconfig.classes} onClick={(e)=> { this.standardPayment(e)}}>Proceed to Payment</button>
             </div>
         );
     }
@@ -37,24 +37,35 @@ class Standard extends Component {
             "key": razorPayConfig.api_key,
             "image": razorPayConfig.image,
             "name": generalConfig.company_name,
+            "callback_url":generalConfig.apiEndPoint+"/anonymous/payment/verify-payment",
+            "redirect": true,
             "amount": amount, 
             "currency": "INR",
             "order_id":this.props.r_order_id,//This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
             "handler": function (response){
                 window.location = window.location.origin + '#/order-details/' + response.razorpay_payment_id
             },
+            "modal.handleback":true,
             "prefill": {
                 "email": this.props.user_details.email,
                 "name": this.props.user_details.name ,
                 "contact": this.props.user_details.mobile
             },
-
-            "theme": {
-                "color": "#F37254"
-            }
+            "modal.escape":false,
+            "modal.backdropclose":false
+            
          });
          Razorpay.open();
- 
+         Razorpay.on('payment.success', (res) => {
+            console.log("onsuccess",res)
+            this.verifyPayment(res)             
+        });
+
+        Razorpay.on('payment.error', function(resp){
+            this.setState({"paymentErrorMsg":resp.error.description})
+            console.log(resp.error.description);
+            
+        });
      }
 }
 
