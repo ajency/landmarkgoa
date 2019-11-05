@@ -38,16 +38,20 @@ class OrderDetails extends Component {
             if(res.data.pending) {
                 this.getOrderDetails()
                 this.setState({"loader": true})
+        		// window.addCartLoader();
+
             } else {
-             this.setState({"loader": false})
-             this.setState({payment_id:res.data.details.pg_payment_id})
-             this.setState({order_status: res.data.details.status})
-             this.setState({"loadingError": false})
+                // window.removeCartLoader();
+                this.setState({"loader": false})
+                this.setState({payment_id:res.data.details.pg_payment_id})
+                this.setState({order_status: res.data.details.status})
+                this.setState({"loadingError": false})
             }
             
         }).catch(err => {
             this.setState({"loader": false})
             this.setState({"loadingError": true})
+            // window.removeCartLoader();
             console.log(err)
         }) 
     }
