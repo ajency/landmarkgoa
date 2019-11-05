@@ -10,10 +10,6 @@ import VerifyMobile from './components/login/verify-mobile';
 import OrderSummary from './components/order-summary/order-summary';
 import OrderDetail from './components/order-details/order-details';
 
-import {
-  HashRouter as Router,
-  Route
-} from 'react-router-dom';
 class App extends Component {
   render() {
     return (
