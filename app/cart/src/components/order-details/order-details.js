@@ -7,8 +7,9 @@ class OrderDetails extends Component {
         super(props)
         this.state = {
             loader:true,
-            payment_id:''
-    }
+            payment_id:'',
+            loadingError:false
+        }
     }
 
     render() {
@@ -28,20 +29,29 @@ class OrderDetails extends Component {
 
             if(res.data.pending) {
                 this.getOrderDetails()
+                this.setState({"loader": true})
             } else {
-             console.log(res.data.details)
              this.setState({"loader": false})
              this.setState({payment_id:res.data.details.pg_payment_id})
              this.setState({order_status: res.data.details.status})
+             this.setState({"loadingError": false})
             }
             
         }).catch(err => {
             this.setState({"loader": false})
+            this.setState({"loadingError": true})
             console.log(err)
         }) 
     }
 
     getStatus() {
+        if(this.state.loadingError) {
+            return (
+                <div>
+                    Error encountered try after sometime
+                </div>
+            );
+        }
         if(this.state.order_status == 'captured'){
             return (
                 <div>
