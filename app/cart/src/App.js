@@ -14,11 +14,11 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route path="/cart" component={Cart} />
-        <Route path="/address" component={AddressList} />
-        <Route path="/add-address" component={AddNewAddress} />
-        <Route path="/verify-mobile" component={VerifyMobile} />
-        <Route exact path="/order-summary/:cart_id/:address_id" component={OrderSummary}></Route>
+        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/cart/address" component={AddressList} />
+        <Route exact path="/cart/add-address" component={AddNewAddress} />
+        <Route exact path="/cart/verify-mobile" component={VerifyMobile} />
+        <Route exact path="/cart/order-summary/:cart_id/:address_id" component={OrderSummary}></Route>
         <Route exact path="/order-details/:payment_id" component={OrderDetail}></Route>
       </Router>
     );

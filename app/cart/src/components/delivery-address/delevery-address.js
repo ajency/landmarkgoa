@@ -16,13 +16,7 @@ class DeliveryAddress extends Component {
 						<span className="text-green d-inline-block cursor-pointer" onClick={() => this.openChangeLocationModal()}>. Edit</span>
 					</div>
 
-					{/*<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
-						<span className="text-green font-weight-semibold">Mobile No.: </span> 
-						<span id="cart-delivery-address"> 9823353495 </span>
-					</div>*/}
-					{/* <div className="btn-edit" onClick={() => this.openChangeLocationModal()}>
-						<img src={editImage} className="app-log" alt="Edit address" title="Edit address"/>
-					</div> */}
+					{this.showSummaryContent()}
 				</div>
 			</div>
 		);
@@ -31,6 +25,22 @@ class DeliveryAddress extends Component {
 	openChangeLocationModal(){
 		console.log("openChangeLocationModal");
 		 window.showGpsModalPrompt(true);
+	}
+
+	showSummaryContent() {
+		if(this.props.showSummaryContent) {
+			return (
+				<div>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
+						<span className="text-green font-weight-semibold">Mobile No.: </span> 
+						<span id="cart-delivery-address"> 9823353495 </span>
+					</div>
+						<div className="btn-edit" onClick={() => this.openChangeLocationModal()}>
+						<img src={editImage} className="app-log" alt="Edit address" title="Edit address"/>
+					</div>
+				</div>
+			);
+		}
 	}
 }
 
