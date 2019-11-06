@@ -18,7 +18,7 @@ class App extends Component {
         <Route exact path="/cart/address" component={AddressList} />
         <Route exact path="/cart/add-address" component={AddNewAddress} />
         <Route exact path="/cart/verify-mobile" component={VerifyMobile} />
-        <Route exact path="/cart/cart-summary/:cart_id/:address_id" component={CartCheckoutSummary}></Route>
+        <Route exact path="/cart/cart-summary/:cart_id" component={CartCheckoutSummary}></Route>
         <Route exact path="/order-summary/:payment_id" component={OrderSummary}></Route>
       </Router>
     );

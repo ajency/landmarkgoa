@@ -73,7 +73,7 @@ class OrderSummary extends Component {
                 </div>
             );
         }
-        if(this.state.orderSummary.payment_summary.status== 'successful'){
+        if(this.state.orderSummary.payment_summary.status== 'captured'){
             return (
                 <div>
                     <div className="p-15">
@@ -151,7 +151,7 @@ class OrderSummary extends Component {
                         <h4 className="font-weight-light mt-4 pb-4">No worries, you can always try again</h4>
                     </div> 
                     <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white">
-                        <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}/1`} auto_pay={true}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Try Again </button></Link>
+                        <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}`} auto_pay={true}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Try Again </button></Link>
                         <Link to="/"><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Go To Homepage</button></Link>
                     </div>
                 </div>
