@@ -337,6 +337,24 @@
   <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.jpg" width="75px" class="mt-5"/> 
 </div>
 
+<div class="push p-15 d-none">
+    <div class="push-note">
+        <div class="push-row d-flex mb-3">
+            <div class="push-img">
+              <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.jpg" width="65"/> 
+            </div>
+            <div class="push-text pl-3">
+                <h4 class="ft6">Get latest notifications from GGB</h4>
+                <div>We'll send you latest updates. You can manage them any time from your browser settings.</div>
+            </div>
+        </div>   
+        <div class="push-btns d-flex justify-content-end">
+            <button class="btn btn-reset btn-inverted rounded-0 text-white mr-3 text-uppercase mw-120" href="#">No Thanks</button>
+            <button class="btn btn-reset btn-primary rounded-0 text-white mw-120" href="#">Allow</button>
+        </div>      
+    </div>
+</div>
+
 <button id="cart-address-change-trigger" class="d-none"></button>
 
 <div class="backdrop-wrap"></div>
