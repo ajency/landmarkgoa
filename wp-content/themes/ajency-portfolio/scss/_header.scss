@@ -127,3 +127,22 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+.push{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99999;
+    background-color: rgba(0,0,0,.5);
+    &-note{
+        width: 500px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 15px;
+        @media (max-width: 520px) {
+            width: 100%;
+        }
+    }
+}
