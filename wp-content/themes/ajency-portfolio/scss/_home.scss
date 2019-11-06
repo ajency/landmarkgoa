@@ -343,15 +343,15 @@
     }
 }
 .logo {
-    @media (min-width: 991.98px) and (max-width: 1199.98px) {
-        float: left !important;
+    @media (min-width: 992px) and (max-width: 1400px) {
+        width: 170px !important;
     }
     @media (min-width: 768px) and (max-width: 991px) {
-        width: 70px !important;
+        width: 110px !important;
         margin: 0 auto;
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
-        width: 45px !important;
+        width: 100px !important;
         margin: 0 auto;
     }
 }
@@ -365,9 +365,12 @@
 }
 nav {
     width: 100%;
-    // position: absolute;
-    // box-shadow: 0 2px 6px 0 rgba(0,0,0,.3);
     padding-bottom: 16px;
+    &.bg-white{
+        @media (min-width: 992px) and (max-width: 1400px) {
+            padding-top: 50px !important;
+        }
+    }    
     @media (min-width: 768px) and (max-width: 991px) {
         padding-bottom: 16px;
         z-index: 999;
@@ -626,6 +629,9 @@ nav {
 }
 .img-fluid {
     width: 100%;
+    &.auto-width{
+        width: auto;
+    }
 }
 body .fixed-header {
     z-index: 1;
