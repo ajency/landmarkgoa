@@ -29,7 +29,7 @@
 
   <body>
 
-  	<nav class="bg-white">
+  	<!-- <nav class="bg-white">
       <div class="container mt-3 p5 position-relative">
         <div class="row justify-content-between align-items-center">
             <div class="col-4 col-lg-3 position-static">
@@ -77,4 +77,10 @@
             </div>
         </div>        
       </div>
-    </nav>
+    </nav> -->
+
+<nav class="bg-white text-center p-15 pt-6">
+  <a href="<?php echo get_site_url(); ?>" class="">
+    <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.jpg" width="250" class="logo"/>
+  </a>
+</nav>
