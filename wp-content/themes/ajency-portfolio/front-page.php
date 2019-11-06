@@ -291,23 +291,28 @@
 <div id="react-verify-otp-container"></div>
 
 <div class="msg-container">
-<!-- Add to cart error  -->
-<div class="failure toast d-flex justify-content-center">
-  <span class="alert-danger p-15 w-100 d-none" id="failure-toast">
-    Add to cart failed
-  </span>
-</div>
+  <div class="container p5">
+    <div class="row">
+      <div class="col offset-xl-2 col-xl-8 col12">
+          <!-- Add to cart error  -->
+          <div class="failure toast d-flex justify-content-center">
+            <span class="alert-danger p-15 w-100 d-none" id="failure-toast">
+              Add to cart failed
+            </span>
+          </div>
 
-<!-- Add to cart error  -->
-<div class="success toast d-flex justify-content-center">
-  <span class="alert-success p-15 w-100 d-none" id="success-toast">
-    Successfully added to cart
-  </span>
-</div>
+          <!-- Add to cart error  -->
+          <div class="success toast d-flex justify-content-center">
+            <span class="alert-success p-15 w-100 d-none" id="success-toast">
+              Successfully added to cart
+            </span>
+          </div>
 
-
-<!-- View cart component -->
-<div id="react-view-cart-container" style="width: 100%"></div>
+          <!-- View cart component -->
+          <div id="react-view-cart-container" style="width: 100%"></div>
+      </div>
+    </div>
+  </div>  
 </div>
 
 
