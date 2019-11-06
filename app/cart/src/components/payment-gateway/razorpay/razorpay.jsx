@@ -1,6 +1,5 @@
 import React, {Component,createRef} from 'react'
 import axios from 'axios';
-import $ from 'jquery';
 import Standard from './checkout-types/standard';
 import Custom from './checkout-types/custom';
 import Hosted from './checkout-types/hosted';

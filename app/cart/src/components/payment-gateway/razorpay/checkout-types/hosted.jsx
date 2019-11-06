@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import $ from 'jquery'
 import {razorPayConfig, generalConfig} from '../../payment-gateway-config.js'
 
 class Hosted extends Component {
@@ -29,7 +28,7 @@ class Hosted extends Component {
     async handleSubmit(e) {
         e.preventDefault();
         await this.props.createOrder()
-        $('#order_id').val(this.props.r_order_id)
+        // $('#order_id').val(this.props.r_order_id)
         this.props.payForm.current.submit()
     }
 }
