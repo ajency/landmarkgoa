@@ -82,8 +82,12 @@
   <div class="container p5">
     <div class="row">
       <div class="col  offset-xl-2 col-xl-8 col12">
-        <p class="body-text">
-          We <strong class="font-weight-bold h1">design</strong> and <strong class="font-weight-bold h1">code websites </strong> for online stores, real estate projects, hotels, company or product websites, blog and others. Sites we build are buzzword and <strong class="font-weight-bold h1">SEO compliant</strong>, and <strong class="font-weight-bold h1">load under 4 seconds</strong>.</p>
+        <span class="display-4 font-weight-bold aj-home-title">Wholesome meals. Salad style.</span>
+        <p class="body-text">Green Grain Bowl was born out of a desire to eat well. That's what we stand for.</p> 
+        <p class="body-text">Fibre & grain. Greens, colourful vegetables & the occasional fruit. Some raw, some cooked. Local & seasonal. Something for a vegetarian & enough meat options. Tossed together in a bowl with a dressing that adds to the existing flavors.</p>   
+        <p class="body-text">Bowls that put a smile on your face.</p>
+          <!-- We <strong class="font-weight-bold h1">design</strong> and <strong class="font-weight-bold h1">code websites </strong> for online stores, real estate projects, hotels, company or product websites, blog and others. Sites we build are buzzword and <strong class="font-weight-bold h1">SEO compliant</strong>, and <strong class="font-weight-bold h1">load under 4 seconds</strong>.-->
+        </p> 
       </div>
     </div>
   </div>
