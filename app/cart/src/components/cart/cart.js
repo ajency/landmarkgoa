@@ -7,11 +7,12 @@ import DeliveryAddress from '../delivery-address/delevery-address.js';
 import add from '../../assets/images/add.png';
 import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
  declare var $: any;
 
 class Cart extends Component {
+	_currentCart = null;
 	constructor(props){
 		super(props);
 		this.state = {
@@ -22,7 +23,9 @@ class Cart extends Component {
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
 			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			cartEmpty : false
+			cartEmpty : false,
+			redirectToSummary:false,
+			cartSummary:null
 		}
 		this.fetchCart();
 	}
@@ -113,9 +116,7 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Link to={`/cart/order-summary/1/1`} >
-									<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0">Proceed to Checkout</button>
-								</Link>
+								<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR">Proceed to Checkout</button>
 							</div>
 						</div>
 					</div>
@@ -124,10 +125,28 @@ class Cart extends Component {
 
 		return (
 			<div className="cart-container visible">
-				<Header/>				
+				<Header/>		
+				{this.state.redirectToSummary ? <Redirect to={`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`} order_obj={this.state.cartSummary}/>: null}
 				{cartContainer}
 			</div>
 		);
+	}
+
+	handleCheckout(e) {
+		e.preventDefault();
+		let url = this.state.apiEndPoint + "/anonymous/cart/create-order"
+		let data = {
+			address_id:e.target.getAttribute("data-address"),
+			cart_id:e.target.getAttribute("data-id") //this._currentCart
+		}
+		
+		return axios.post(url,data).then((res) => {
+			if(res.data.success) {
+				this.setState({cartSummary:res.data, redirectToSummary:true})
+			} else {
+				console.log(res.data)
+			}
+		})
 	}
 
 	closeCart(){
@@ -140,6 +159,7 @@ class Cart extends Component {
 	fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
+		//this._currentCart = window.readFromLocalStorage('cart_id');
 		let cart_id =  true //window.readFromLocalStorage('cart_id');
 		if(cart_id){
 			let url = "https://demo8558685.mockable.io/get-cart";
