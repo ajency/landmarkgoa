@@ -8,6 +8,7 @@ import add from '../../assets/images/add.png';
 import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
  declare var $: any;
 
 class Cart extends Component {
@@ -112,7 +113,9 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0">Proceed to Checkout</button>
+								<Link to={`/cart/order-summary/1/1`} >
+									<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0">Proceed to Checkout</button>
+								</Link>
 							</div>
 						</div>
 					</div>
@@ -136,10 +139,11 @@ class Cart extends Component {
 
 	fetchCart() {
 		window.addCartLoader();
-		let cart_id = window.readFromLocalStorage('cart_id');
+		console.log("inside fetch cart");
+		let cart_id =  true //window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			// let url = "https://demo8558685.mockable.io/get-cart";
-			let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
+			let url = "https://demo8558685.mockable.io/get-cart";
+			// let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
 			let body = {
 				cart_id : cart_id
 			}
