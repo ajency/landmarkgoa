@@ -7,8 +7,8 @@ import Cart from './components/cart/cart.js';
 import AddNewAddress from './components/add-new-addess/add-new-address';
 import AddressList from './components/address-list/address-list';
 import VerifyMobile from './components/login/verify-mobile';
+import CartCheckoutSummary from './components/cart-checkout-summary/cart-checkout-summary';
 import OrderSummary from './components/order-summary/order-summary';
-import OrderDetail from './components/order-details/order-details';
 
 class App extends Component {
   render() {
@@ -18,8 +18,8 @@ class App extends Component {
         <Route exact path="/cart/address" component={AddressList} />
         <Route exact path="/cart/add-address" component={AddNewAddress} />
         <Route exact path="/cart/verify-mobile" component={VerifyMobile} />
-        <Route exact path="/cart/order-summary/:cart_id/:address_id" component={OrderSummary}></Route>
-        <Route exact path="/order-details/:payment_id" component={OrderDetail}></Route>
+        <Route exact path="/cart/cart-summary/:cart_id/:address_id" component={CartCheckoutSummary}></Route>
+        <Route exact path="/order-summary/:payment_id" component={OrderSummary}></Route>
       </Router>
     );
   }
