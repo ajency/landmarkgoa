@@ -60,8 +60,8 @@ class addToCart extends React.Component {
 						</div>
 
 						<div className="d-flex justify-content-between">
-							<button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48" onClick={()=>this.showVariantModal()}> I'll Choose </button>
-							<button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48" onClick={()=>this.addToCart(this.state.lastSelected)}> Repeat Last </button>
+							{/* <button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48" onClick={()=>this.showVariantModal()}> I'll Choose </button> */}
+							<button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-100" onClick={()=>this.addToCart(this.state.lastSelected)}> Select & Continue </button>
 						</div>
 				  	</div>
 			    </div>
@@ -129,7 +129,7 @@ class addToCart extends React.Component {
 	getLastSelected(){
 		let last_selected = this.props.product_data.variants.find((variant) => {return variant.id == this.state.lastSelected})
 		if(last_selected)
-			return ( <div> Size : {last_selected.size} </div>
+			return ( <div> Size : {last_selected.size} <a class="ml-2 text-primary text-underline cursor-pointer" onClick={()=>this.showVariantModal()}>Choose again </a></div>
 				)
 	}
 
