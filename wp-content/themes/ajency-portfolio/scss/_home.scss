@@ -370,6 +370,9 @@ nav {
         @media (min-width: 992px) and (max-width: 1400px) {
             padding-top: 50px !important;
         }
+        @media (min-width: 320px) and (max-width: 767.98px) {
+            padding-top: 50px !important;
+        }
     }    
     @media (min-width: 768px) and (max-width: 991px) {
         padding-bottom: 16px;
@@ -377,6 +380,7 @@ nav {
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
         padding-bottom: 16px;
+        padding-top: 50px !important;
         z-index: 999;
     }
     .navbar-nav{
