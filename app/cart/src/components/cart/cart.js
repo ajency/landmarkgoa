@@ -126,7 +126,7 @@ class Cart extends Component {
 		return (
 			<div className="cart-container visible">
 				<Header/>		
-				{this.state.redirectToSummary ? <Redirect to={`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`} order_obj={this.state.cartSummary}/>: null}
+				{this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`, state:{order_obj:this.state.cartSummary}}} />: null}
 				{cartContainer}
 			</div>
 		);
@@ -142,7 +142,7 @@ class Cart extends Component {
 		
 		return axios.post(url,data).then((res) => {
 			if(res.data.success) {
-				this.setState({cartSummary:res.data, redirectToSummary:true})
+				this.setState({cartSummary:res.data.cart, redirectToSummary:true})
 			} else {
 				console.log(res.data)
 			}

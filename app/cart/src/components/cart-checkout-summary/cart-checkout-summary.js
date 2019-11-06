@@ -30,23 +30,34 @@ class CartCheckoutSummary extends Component {
         }
     }
 
-    componentWillMount() {
-        this._isMounted = true
+	componentWillMount() {
+		this._isMounted = true
+	}
+    componentDidMount() {
         if(this._isMounted) {
-            let url = apiEndPont+ '/anonymous/cart/create-order'
-            axios.post(url, {cart_id:this.props.match.params.order_id, address_id:this.props.match.params.address_id})
-            .then((res) => {
-                
-                this.setState({orderSummary: res.data.order_data, dataLoading:false, fetchCartComplete:true})
-
-            }).catch(err => {
-                console.log(err)
-                this.setState({dataLoading:false})
-                
-            })
+			if(this.props.location.state) {
+				this.setState({orderSummary: this.props.location.state.order_obj})
+				this.setState({dataLoading:false, fetchCartComplete:true})
+			} else {
+				let url = apiEndPont+ '/anonymous/cart/create-order'
+				axios.post(url, {cart_id:this.props.match.params.order_id, address_id:this.props.match.params.address_id})
+				.then((res) => {
+					
+					this.setState({orderSummary: res.data.order_data, dataLoading:false, fetchCartComplete:true})
+					
+				}).catch(err => {
+					console.log(err)
+					this.setState({dataLoading:false})
+					
+				})
+			}
         }
 
-    }
+	}
+	
+	componentWillUnmount() {
+        this._isMounted = false
+	}
 
     getItems(){
 		let items = this.state.orderSummary.items.map((item)=>
