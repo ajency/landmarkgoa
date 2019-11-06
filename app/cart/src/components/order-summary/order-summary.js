@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './order-summary.scss';
 import Header from '../header/header.js';
 import GoogleMap from '../google-map/google-map.js';
+import {Link} from 'react-router-dom';
 import axios from 'axios'
 import {generalConfig} from '../payment-gateway/payment-gateway-config'
 
@@ -13,7 +14,7 @@ class OrderSummary extends Component {
             loader:true,
             payment_id:'',
             loadingError:false,
-            paymentDetails:{}
+            orderSummary:null
         }
     }
 
@@ -46,19 +47,14 @@ class OrderSummary extends Component {
             if(res.data.pending) {
                 this.getOrderDetails()
                 this.setState({"loader": true})
-        		// window.addCartLoader();
+        		window.addCartLoader();
 
             } else {
-                // window.removeCartLoader();
+                window.removeCartLoader();
+                this.setState({orderSummary: {...res.data.summary}})
                 this.setState({"loader": false})
-                this.setState({payment_id:res.data.details.pg_payment_id})
-                this.setState({order_status: res.data.details.status})
-                if(res.data.details.order_details) {
-                    res.data.details.order_details = JSON.parse(res.data.details.order_details);
-                }
-                this.setState({paymentDetails: res.data.details})
                 this.setState({"loadingError": false})
-
+                console.log(this.state.orderSummary)
             }
             
         }).catch(err => {
@@ -77,7 +73,7 @@ class OrderSummary extends Component {
                 </div>
             );
         }
-        if(this.state.order_status == 'captured'){
+        if(this.state.orderSummary.payment_summary.status== 'successful'){
             return (
                 <div>
                     <div className="p-15">
@@ -85,24 +81,24 @@ class OrderSummary extends Component {
                     <h4 className="font-weight-light mt-4 pb-4">You can check your order status below.</h4>
                     </div>  
                     <div className="map-container">
-                        <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng}/>
+                        <GoogleMap latlng={this.state.orderSummary.order_data.lat_lng}/>
                         <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
                     </div>  
                     <div className="p-15 pt-0 pb-0">
                         <div className="list-text-block p-3 mb-3 full-width-15 position-relative">
                             <div className="list-meta mt-0">
                                 <div className="order-number">
-                                    <span className="text-grey">ORDER</span> <span className="ft6 text-black">{this.state.paymentDetails.order_id}</span>
+                                    <span className="text-grey">ORDER</span> <span className="ft6 text-black">#{this.state.orderSummary.payment_summary.order_id}</span>
                                 </div>
                                 <div className="order-data d-flex text-grey">
                                     <div className="order-time d-inline-block border-right-lightgrey pr-2">
                                         12:21 P.M.
                                     </div>
                                     <div className="order-item-count d-inline-block border-right-lightgrey pr-2 pl-2">
-                                        1 Item(s)
+                                        {this.getTotalItems()} Item(s)
                                     </div>
                                     <div className="order-price d-inline-block pl-2">
-                                        Price  ₹500
+                                        Price  ₹{this.state.orderSummary.order_data.summary.you_pay}
                                     </div>
                                 </div>
                             </div>
@@ -149,9 +145,25 @@ class OrderSummary extends Component {
             );
         } else {
             return (
-                <div>Order  Unsuccessful Payment id: {this.state.payment_id}</div>
+                 <div className="payment-failed">
+                    <div className="p-15">
+                        <h3 className="mt-4 h1 ft6 text-red">Your payment failed.</h3>
+                        <h4 className="font-weight-light mt-4 pb-4">No worries, you can always try again</h4>
+                    </div> 
+                    <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white">
+                        <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}/1`} auto_pay={true}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Try Again </button></Link>
+                        <Link to="/"><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Go To Homepage</button></Link>
+                    </div>
+                </div>
             );
         }
+    }
+
+    getTotalItems() {
+        if(this.state.orderSummary.order_data.items) {
+            return this.state.orderSummary.order_data.items.length
+        }
+        return 0;
     }
 }
 
