@@ -84,7 +84,10 @@ class Razorpay extends Component {
             window.removeCartLoader()
 
             return true;
-        })          
+        }) .catch((err) => {
+            console.log(err)
+            window.removeCartLoader();
+        })        
     }
 }
 

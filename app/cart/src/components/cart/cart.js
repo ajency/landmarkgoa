@@ -13,6 +13,7 @@ import axios from 'axios';
  declare var $: any;
 
 class Cart extends Component {
+    _webSiteLink = "#/cart";
 	_currentCart = null;
 	constructor(props){
 		super(props);
@@ -124,7 +125,7 @@ class Cart extends Component {
 
 		return (
 			<div className="cart-container visible">
-				<Header/>		
+				<Header/>
 				{this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`, state:{order_obj:this.state.cartSummary}}} />: null}
 				{cartContainer}
 			</div>
@@ -145,7 +146,11 @@ class Cart extends Component {
 				this.setState({cartSummary:res.data.cart, redirectToSummary:true})
 			} else {
 				window.removeCartLoader();
-				console.log(res)
+				if(res.data.code =='PAYMENT_DONE') {
+					window.removeFromLocalStorage('cart_id')
+					window.location = this._webSiteLink
+				}
+				console.log(res.data.message)
 			}
 		})
 	}
