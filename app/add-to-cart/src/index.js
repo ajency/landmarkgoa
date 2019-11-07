@@ -353,17 +353,21 @@ class addToCart extends React.Component {
 	displayError(msg){
 		document.querySelector('#failure-toast').innerHTML = msg;
 		document.querySelector('#failure-toast').classList.remove('d-none');
+		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
 		setTimeout(()=>{
 			document.querySelector('#failure-toast').classList.add('d-none');
-		},3000)
+			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
+		},30000)
 	}
 
 	displaySuccess(msg){
 		document.querySelector('#success-toast').innerHTML = msg;
 		document.querySelector('#success-toast').classList.remove('d-none');
+		document.querySelector('#success-toast-close-btn').classList.remove('d-none');
 		setTimeout(()=>{
 			document.querySelector('#success-toast').classList.add('d-none');
-		},3000)
+			document.querySelector('#success-toast-close-btn').classList.add('d-none');
+		},30000)
 	}
 
 	getGeolocation(){

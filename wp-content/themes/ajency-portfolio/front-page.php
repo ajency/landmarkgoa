@@ -292,19 +292,19 @@
 
 <div class="msg-container">
   <!-- Add to cart error  -->
-  <div class="failure toast d-flex justify-content-center">
+  <div class="failure toast d-flex justify-content-center position-relative">
     <span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative" id="failure-toast">
       Add to cart failed
-      <button class="btn-reset close-img d-none d-lg-block"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
     </span>
+    <button id="failure-toast-close-btn" class="btn-reset close-img d-none"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
   <!-- Add to cart error  -->
-  <div class="success toast d-flex justify-content-center sb-shadow mt-lg-5">
+  <div class="success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative">
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
-      <button class="btn-reset close-img d-none d-lg-block"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
     </span>
+    <button id="success-toast-close-btn" class="btn-reset close-img d-none"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
   <!-- View cart component -->
