@@ -122,5 +122,10 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
 
 self.addEventListener('notificationclick', function(event) {
-  console.log("notification clicked");
+  console.log("notification clicked ==>", event);
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('https://greengrainbowl.com/')
+  );
 });
