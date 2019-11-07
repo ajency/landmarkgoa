@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {razorPayConfig, generalConfig} from '../../payment-gateway-config.js'
+import {razorPayConfig, generalConfig} from '../../../payment-gateway-config.js'
 
 class Hosted extends Component {
     constructor(props) {

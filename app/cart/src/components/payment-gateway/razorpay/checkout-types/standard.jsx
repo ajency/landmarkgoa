@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {razorPayConfig, generalConfig} from '../../payment-gateway-config'; 
+import {razorPayConfig, generalConfig} from '../../../payment-gateway-config'; 
 class Standard extends Component {
     constructor(props) {
         super(props);
