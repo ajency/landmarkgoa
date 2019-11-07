@@ -11,35 +11,30 @@ class variantSelection extends React.Component {
 			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			variants : [], // variants fetched from firestore
 			selectedVariant : '',
-			productId : ''
+			productId : '',
+			title : ''
 		};
-	}
-
-	componentDidMount(){
-		
 	}
 
 	render() {
 		return (
-			<div>
-			    <div className="custom-modal" id="variation-selection-popup">
-				    <div className="custom-modal-content p-15">
-					<button type="button" className="btn-reset close-modal" onClick={()=> this.hideVariantModal()}><i class="fas fa-times text-silver"></i></button>
-				        <div className="product-variant text-left text-black">
-						  <h3 class="h1 ft6 pr-4">Choose your Bowl</h3>
-						  <div class="list-meta mt-4 mb-4">
-							<div class="list-author">{this.props.product_data.title}</div>
-							<div class="list-date">Veg</div>
-						  </div>				          
-				          <div className="variant-list mb-4">
-				          		{this.getVariants()}
-				          </div>
-				        </div>
-				        <div className="custom-modal-footer d-flex justify-content-between">
-				          <button type="button" className="btn-reset btn-continue btn-arrow font-size-15 text-uppercase p-15 bg-primary text-white text-left w-100 position-relative" onClick={()=>this.addToCart(this.state.selectedVariant)} >Select & Continue</button>
-				        </div>
-				    </div>
-				</div>
+		    <div className="custom-modal" id="variation-selection-popup">
+			    <div className="custom-modal-content p-15">
+				<button type="button" className="btn-reset close-modal" onClick={()=> this.hideVariantModal()}><i class="fas fa-times text-silver"></i></button>
+			        <div className="product-variant text-left text-black">
+					  <h3 class="h1 ft6 pr-4">Choose your Bowl</h3>
+					  <div class="list-meta mt-4 mb-4">
+						<div class="list-author">{this.state.title}</div>
+						<div class="list-date">Veg</div>
+					  </div>				          
+			          <div className="variant-list mb-4">
+			          		{this.getVariants()}
+			          </div>
+			        </div>
+			        <div className="custom-modal-footer d-flex justify-content-between">
+			          <button type="button" className="btn-reset btn-continue btn-arrow font-size-15 text-uppercase p-15 bg-primary text-white text-left w-100 position-relative" onClick={()=>this.addToCart(this.state.selectedVariant)} >Select & Continue</button>
+			        </div>
+			    </div>
 			</div>
 		);
 	}
@@ -80,7 +75,7 @@ class variantSelection extends React.Component {
 			.forEach((domContainer) => {
 				domContainer.classList.add('transform-none');
 			});
-		document.querySelector('#product-'+product_id).classList.add('zindex');
+		document.querySelector('#product-'+this.state.product_id).classList.add('zindex');
 		window.hideScroll();
 	}
 
@@ -90,7 +85,7 @@ class variantSelection extends React.Component {
 			.forEach((domContainer) => {
 				domContainer.classList.remove('transform-none');
 			});
-		document.querySelector('#product-'+this.props.product_data.product_id).classList.remove('zindex');
+		document.querySelector('#product-'+this.state.product_id).classList.remove('zindex');
 		window.showScroll();
 	}
 
@@ -143,14 +138,15 @@ let domContainer = document.querySelector('#react-variant-selection-modal');
 const VariantSelectionComponent = ReactDOM.render(e(variantSelection), domContainer);
 
 
-window.showVariantSelectionPopup = (product_id, last_selected) => {
+window.showVariantSelectionPopup = (product_id, last_selected, title) => {
 	console.log("inside updateViewCartCompoent", product_id, last_selected);
-	VariantSelectionComponent.setState({variants : [], productId : product_id});
+	VariantSelectionComponent.setState({variants : [], productId : product_id, title : title});
 	VariantSelectionComponent.showVariantModal(product_id, last_selected);
 }
 
 function hideVariantSelectionPopup(event) {
-    VariantSelectionComponent.hideVariantModal();
+	if(event.target == document.querySelector('#variation-selection-popup'))
+    	VariantSelectionComponent.hideVariantModal();
 }
 
 window.addEventListener("click", hideVariantSelectionPopup);

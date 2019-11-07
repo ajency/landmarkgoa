@@ -13,15 +13,10 @@ class addToCart extends React.Component {
 			quantity : 0,
 			lastSelected : '',
 			items : [], // variants added to cart
-			selectedVariant : '',
-			variants : [] // variants fetched from firestore
 		};
 	}
 
 	componentDidMount(){
-		this.setState({selectedVariant : this.props.product_data.default.id })
-		variantModals[this.props.product_data.product_id] = document.querySelector('#variantSelectionModal-' + this.props.product_data.product_id);
-		repeateModals[this.props.product_data.product_id] = document.querySelector('#repeatLast-' + this.props.product_data.product_id);
 	}
 
 	render() {
@@ -33,11 +28,7 @@ class addToCart extends React.Component {
 	}
 
 	showVariantModal(){
-		
-	}
-
-	handleOptionChange(event){
-		this.setState({selectedVariant : event.target.value });
+		window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
 	}
 
 	getButtonContent(){
@@ -249,31 +240,6 @@ document.querySelectorAll('.react-add-to-cart-container')
 		addToCartComponents[index] =  ReactDOM.render(e(addToCart, { product_data : product_data }),domContainer);
 	});
 
-function toggleModal(modal) {
-    modal.classList.toggle("show-modal");
-    document.querySelectorAll('.product-wrapper')
-		.forEach((domContainer) => {
-			domContainer.classList.remove('transform-none');
-		});
-	document.querySelectorAll('.product-list-item')
-		.forEach((domContainer) => {
-			domContainer.classList.remove('zindex');
-		});
-	window.removeBackDrop();
-}
-
-function windowOnClick(event) {
-	for(let i in variantModals) {
-		if(event.target === variantModals[i])
-			toggleModal(variantModals[i]);
-	}
-	for(let i in repeateModals) {
-		if(event.target === repeateModals[i])
-			toggleModal(repeateModals[i]);
-	}
-}
-
-window.addEventListener("click", windowOnClick);
 
 window.updateaddToCartComponent = (item) => {
 	addToCartComponents.forEach((component) =>{

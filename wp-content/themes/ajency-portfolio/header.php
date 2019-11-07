@@ -29,6 +29,19 @@
 
   <body>
 
+    <div class="d-none">
+      <div class="delivery-location cursor-pointer d-inline-block pr-2 ml-lg-2 vertical-align-middle">
+        <a href="javascript:void(0)" class="d-inline-block location-icon">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+        </a> 
+        <div id="selected-location-address" class="font-weight-light">
+        </div> 
+      </div>              
+      <div class="edit-location d-none text-primary vertical-align-middle">
+        <a href="#" class="d-inline-block location-icon"><i class="fas fa-pencil-alt number-edit cursor-pointer"></i></a>  
+      </div>
+    </div>
+
   	<!-- <nav class="bg-white">
       <div class="container mt-3 p5 position-relative">
         <div class="row justify-content-between align-items-center">
