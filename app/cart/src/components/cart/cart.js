@@ -19,7 +19,8 @@ class Cart extends Component {
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			cartEmpty : false
 		}
 		this.fetchCart();
@@ -37,6 +38,7 @@ class Cart extends Component {
 			this.setState({cartData : {}, fetchCartComplete : false, cartEmpty : false})
 			this.fetchCart();
 		});
+		// window.checkPushNotificationPermissions();
 	}
 
 	getItems(){

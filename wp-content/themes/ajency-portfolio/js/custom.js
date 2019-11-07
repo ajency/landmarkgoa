@@ -421,3 +421,38 @@ function getCookieExpiryDate(){
     milli_sec = milli_sec+(30*24*60*60*1000);
     let expiredate = new Date(milli_sec).toUTCString();
 }
+
+
+window.addEventListener("click", checkInternetConnection, true);
+window.addEventListener('online',  updateOnlineStatus);
+
+function checkInternetConnection(){
+    if(navigator.onLine){
+        //do nothing
+    } else {
+        event.stopPropagation();
+        disableSite();
+        document.querySelector('#offline-toast').innerHTML = "You are offline and may be viewing outdated content!";
+        document.querySelector('#offline-toast').classList.remove('d-none');
+        setTimeout(()=>{
+            document.querySelector('#offline-toast').classList.add('d-none');
+        },5000)
+    }
+}
+
+function updateOnlineStatus(){
+    enableSite();
+    document.querySelector('#offline-toast').innerHTML = "You are online";
+    document.querySelector('#offline-toast').classList.remove('d-none');
+    setTimeout(()=>{
+        document.querySelector('#offline-toast').classList.add('d-none');
+    },4000)
+}
+
+function enableSite(){
+    $('body').removeClass('site-offline');
+}
+
+function disableSite(){
+    $('body').addClass('site-offline');
+}

@@ -565,3 +565,69 @@ require get_parent_theme_file_path( '/inc/customizer.php' );
  * SVG icons functions and filters.
  */
 require get_parent_theme_file_path( '/inc/icon-functions.php' );
+
+
+/**
+ * Add meta fields support in rest API for post type `Post`
+ *
+ * @param   array   $args       Contains by default pre written params.
+ * @param   array   $request    Contains params values passed through URL request.
+ * @return  array   $args       New array with added custom params and its values.
+ */
+if( ! function_exists( 'post_meta_request_params' ) ) :
+	function post_meta_request_params( $args, $request )
+	{
+		$args += array(
+			'meta_key'   => $request['meta_key'],
+			'meta_value' => $request['meta_value'],
+			'meta_query' => $request['meta_query'],
+		);
+		return $args;
+	}
+	add_filter( 'rest_post_query', 'post_meta_request_params', 99, 2 );
+endif;
+
+/**
+ * save_post is an action triggered whenever a post is created or updated
+ * @param   int      $post_ID      Post ID
+ * @param   object   $post         Post object
+ * @param   bool     $update       Whether this is an existing post being updated or not.
+ */
+add_action( 'save_post', 'my_save_post_function', 10, 3 );
+function my_save_post_function( $post_ID, $post, $update ) {
+	update_post_meta( $post_ID, 'is_featured', $_POST['is_featured']);
+	update_post_meta( $post_ID, 'view_count', $_POST['view_count']);
+}
+
+/**
+ * To add custom checkbox field "Is featured" for a post 
+ */
+add_action( 'add_meta_boxes', 'add_featured_checkbox_function' );
+function add_featured_checkbox_function() {
+	add_meta_box('featured_checkbox_id','Is featured', 'featured_checkbox_callback_function', 'post', 'normal', 'high');
+}
+function featured_checkbox_callback_function( $post ) {
+	global $post;
+	$isFeatured = get_post_meta( $post->ID, 'is_featured', true );
+	if($isFeatured){
+		$isFeatured = strtolower($isFeatured);
+	}
+?>
+	<input type="checkbox" name="is_featured" value="true" <?php echo (($isFeatured=='true') ? 'checked': '');?>/> YES
+<?php
+}
+
+/**
+ * To add custom text field "View count" for a post
+ */
+add_action( 'add_meta_boxes', 'add_view_count_function' );
+function add_view_count_function() {
+	add_meta_box('view_count_id','View count', 'view_count_callback_function', 'post', 'normal', 'high');
+}
+function view_count_callback_function( $post ) {
+	global $post;
+	$viewCount = get_post_meta( $post->ID, 'view_count', true );
+?>
+	<input type="text" name="view_count" value="<?php if($viewCount){ echo $viewCount; } ?>"/>
+<?php
+}
