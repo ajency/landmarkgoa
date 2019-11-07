@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import './order-summary.scss';
 import Header from '../header/header.js';
 import GoogleMap from '../google-map/google-map.js';
+import scooter from '../../assets/images/scooter.png';
+import list from '../../assets/images/list.png';
+import ricecooker from '../../assets/images/rice-cooker.png';
 import {Link} from 'react-router-dom';
 import axios from 'axios'
 import {generalConfig} from '../payment-gateway/payment-gateway-config'
@@ -111,7 +114,7 @@ class OrderSummary extends Component {
                         <div className="order-steps font-weight-medium">
                             <div className="order-received border-bottom-lightgrey position-relative p-15 pl-0 pr-0">
                                 <div className="order-icon">
-                                    <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/list.png" className=""  width="30"/>
+                                    <img src={list} className=""  width="30"/>
                                 </div>
                                 <div className="order-text d-flex align-items-center justify-content-between">
                                     <span className="text-silver d-inline-block">Order <br/> Received</span>
@@ -120,7 +123,7 @@ class OrderSummary extends Component {
                             </div>
                             <div className="order-being-prepared border-bottom-lightgrey position-relative p-15 pl-0 pr-0">
                                 <div className="order-icon">
-                                    <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/rice-cooker.png" className="" width="30" />
+                                    <img src={ricecooker} className="" width="30" />
                                 </div>
                                 <div className="order-text d-flex align-items-center justify-content-between">
                                     <span className="text-primary d-inline-block">Food is being <br/> Prepared </span>
@@ -129,7 +132,7 @@ class OrderSummary extends Component {
                             </div>
                             <div className="order-pickedup position-relative order-pickedup position-relative p-15 pl-0 pr-0">
                                 <div className="order-icon">
-                                    <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/scooter.png" className="" width="30"/>
+                                    <img src={scooter} className="" width="30"/>
                                 </div>
                                 <div className="order-text d-flex align-items-center justify-content-between">
                                     <span className="text-grey d-inline-block">Order <br/> Picked Up</span>
