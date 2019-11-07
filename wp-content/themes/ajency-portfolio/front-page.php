@@ -130,7 +130,7 @@
                           <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
                           <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3>    
                           <div class="product-content">
-                            <h4 class="product-excerpt font-weight-light font-size-18 mt-0 mb-lg-0">
+                            <h4 class="product-excerpt font-weight- font-size-18 mt-0 mb-lg-0">
                                 <?php echo $product['description'] ?>
                             </h4>
                             <div class="product-meta d-flex mt-lg-3">
@@ -291,28 +291,23 @@
 <div id="react-verify-otp-container"></div>
 
 <div class="msg-container">
-  <div class="container p5">
-    <div class="row">
-      <div class="col offset-xl-2 col-xl-8 col12">
-          <!-- Add to cart error  -->
-          <div class="failure toast d-flex justify-content-center">
-            <span class="alert-danger p-15 w-100 d-none" id="failure-toast">
-              Add to cart failed
-            </span>
-          </div>
+  <!-- Add to cart error  -->
+  <div class="failure toast d-flex justify-content-center">
+    <span class="alert-danger p-15 w-100 d-none" id="failure-toast">
+      Add to cart failed
+    </span>
+  </div>
 
-          <!-- Add to cart error  -->
-          <div class="success toast d-flex justify-content-center">
-            <span class="alert-success p-15 w-100 d-none" id="success-toast">
-              Successfully added to cart
-            </span>
-          </div>
+  <!-- Add to cart error  -->
+  <div class="success toast d-flex justify-content-center sb-shadow">
+    <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
+      Item successfully added to cart
+      <button class="btn-reset close-img d-none d-lg-block"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    </span>
+  </div>
 
-          <!-- View cart component -->
-          <div id="react-view-cart-container" style="width: 100%"></div>
-      </div>
-    </div>
-  </div>  
+  <!-- View cart component -->
+  <div id="react-view-cart-container" class="mt-lg-5 "></div>
 </div>
 
 
