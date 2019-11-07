@@ -292,18 +292,19 @@
 
 <div class="msg-container">
   <!-- Add to cart error  -->
-  <div class="failure toast d-flex justify-content-center">
-    <span class="alert-danger p-15 w-100 d-none" id="failure-toast">
+  <div class="failure toast d-flex justify-content-center position-relative">
+    <span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative" id="failure-toast">
       Add to cart failed
     </span>
+    <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
   <!-- Add to cart error  -->
-  <div class="success toast d-flex justify-content-center sb-shadow">
+  <div class="success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative">
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
-      <button class="btn-reset close-img d-none d-lg-block"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
     </span>
+    <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
   <!-- View cart component -->
@@ -344,5 +345,20 @@
 <button id="cart-address-change-trigger" class="d-none"></button>
 
 <div class="backdrop-wrap"></div>
+
+<script>
+  function closenotication() {
+    var element = document.getElementById("success-toast");
+    var elementBtn = document.getElementById("success-toast-close-btn");
+    element.classList.add("d-none");
+    elementBtn.classList.add("d-none");
+  }
+  function closenoticationF() {
+    var element = document.getElementById("failure-toast");
+    var elementBtn = document.getElementById("failure-toast-close-btn");
+    element.classList.add("d-none");
+    elementBtn.classList.add("d-none");
+  }
+</script>
 
 <?php get_footer(); ?>

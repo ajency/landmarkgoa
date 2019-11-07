@@ -22,6 +22,7 @@
             scroll-snap-stop: always;
             @media (min-width: 992px) {
                 padding: 1px !important;
+                overflow: hidden;
             }
             @media (max-width: 991px) {
                 margin-bottom: 60px;
@@ -29,7 +30,6 @@
         }
         @media (min-width: 992px) {
             margin: 0 -16px !important;
-            overflow: hidden;
         }
     }
     &-wrapper{

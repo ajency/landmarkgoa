@@ -86,7 +86,7 @@ class gpsModalPrompt extends React.Component {
 						{this.checkLocationErrorMsg()}
 					</div>
 
-			      	<ul style={locationStyle} className="pl-0 h5 mb-0">
+			      	<ul style={locationStyle} className="pl-0 h5 mb-0 add-list">
 						{this.getAutoCompleteLocations()}
 					</ul>
 
@@ -209,7 +209,7 @@ class gpsModalPrompt extends React.Component {
 
 		if(!this.state.locations.length && this.state.searchText.length > 2){
 			return (
-					<div>
+					<div className="no-results-msg">
 						No results, please enter a valid street address
 					</div>
 				);
