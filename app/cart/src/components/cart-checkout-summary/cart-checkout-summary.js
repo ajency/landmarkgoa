@@ -38,6 +38,7 @@ class CartCheckoutSummary extends Component {
 			if(this.props.location.state) {
 				this.setState({orderSummary: this.props.location.state.order_obj})
 				this.setState({dataLoading:false, fetchCartComplete:true})
+				window.removeCartLoader();
 			} else {
 				console.log(this.props.match.params);
 				let url = apiEndPont+ '/anonymous/cart/create-order'
