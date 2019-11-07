@@ -59,6 +59,7 @@ class viewCart extends React.Component {
 	}
 
 	loadCart() {
+		// window.checkPushNotificationPermissions();
 		let url = window.location.href.split("#")[0] + '#/cart';
         window.location = url;
 	}
