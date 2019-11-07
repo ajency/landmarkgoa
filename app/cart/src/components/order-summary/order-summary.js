@@ -7,7 +7,7 @@ import list from '../../assets/images/list.png';
 import ricecooker from '../../assets/images/rice-cooker.png';
 import {Link} from 'react-router-dom';
 import axios from 'axios'
-import {generalConfig} from '../payment-gateway-config'
+import {generalConfig} from '../config'
 
 class OrderSummary extends Component {
     _webSiteLink = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/";
