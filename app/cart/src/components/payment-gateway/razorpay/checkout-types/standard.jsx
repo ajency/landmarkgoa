@@ -37,7 +37,7 @@ class Standard extends Component {
             "key": razorPayConfig.api_key,
             "image": razorPayConfig.image,
             "name": generalConfig.company_name,
-            "callback_url":generalConfig.apiEndPoint+"/anonymous/payment/verify-payment",
+            "callback_url":generalConfig.apiEndPoint+"/anonymous/payment/verify-payment?r_order_id="+this.props.r_order_id,
             "redirect": true,
             "amount": amount, 
             "currency": "INR",
@@ -56,16 +56,7 @@ class Standard extends Component {
             
          });
          Razorpay.open();
-         Razorpay.on('payment.success', (res) => {
-            console.log("onsuccess",res)
-            this.verifyPayment(res)             
-        });
-
-        Razorpay.on('payment.error', function(resp){
-            this.setState({"paymentErrorMsg":resp.error.description})
-            console.log(resp.error.description);
-            
-        });
+      
      }
 }
 

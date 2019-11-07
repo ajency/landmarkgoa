@@ -137,14 +137,16 @@ class Cart extends Component {
 		let url = this.state.apiEndPoint + "/anonymous/cart/create-order"
 		let data = {
 			address_id:e.target.getAttribute("data-address"),
-			cart_id:e.target.getAttribute("data-id") //this._currentCart
+			cart_id: this._currentCart //e.target.getAttribute("data-id")
 		}
+		window.addCartLoader();
 		
 		return axios.post(url,data).then((res) => {
 			if(res.data.success) {
 				this.setState({cartSummary:res.data.cart, redirectToSummary:true})
 			} else {
-				console.log(res.data)
+				window.removeCartLoader();
+				console.log(res)
 			}
 		})
 	}
@@ -159,11 +161,11 @@ class Cart extends Component {
 	fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
-		//this._currentCart = window.readFromLocalStorage('cart_id');
-		let cart_id =  true //window.readFromLocalStorage('cart_id');
+		this._currentCart = window.readFromLocalStorage('cart_id');
+		let cart_id =  window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			let url = "https://demo8558685.mockable.io/get-cart";
-			// let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
+			// let url = "https://demo8558685.mockable.io/get-cart";
+			 let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
 			let body = {
 				cart_id : cart_id
 			}
