@@ -90,3 +90,37 @@ workbox.routing.registerRoute(
 );
 
 workbox.precaching.precacheAndRoute([]);
+
+
+
+
+
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js');
+
+firebase.initializeApp({
+    messagingSenderId: "1034785903670"
+});
+
+const messaging = firebase.messaging();
+
+// messaging.useServiceWorker(self.registration);
+
+messaging.setBackgroundMessageHandler(function(payload) {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  // Customize notification here
+  let data = payload.data;
+  let notificationTitle = data.title;
+  let notificationOptions = {
+      body: data.message,
+      icon: data.icon
+  };
+
+  return self.registration.showNotification(notificationTitle,
+    notificationOptions);
+});
+
+
+self.addEventListener('notificationclick', function(event) {
+  console.log("notification clicked");
+});
