@@ -41,7 +41,7 @@ class OrderSummary extends Component {
             return ;
         }
         let url = generalConfig.apiEndPoint + "/anonymous/payment/get-order-details";
-        axios.post(url, {payment_id: this.props.match.params.payment_id})
+        axios.post(url, {transaction_id: this.props.match.params.transaction_id})
         .then((res) => {
 
             if(res.data.pending) {
@@ -54,7 +54,9 @@ class OrderSummary extends Component {
                 this.setState({orderSummary: {...res.data.summary}})
                 this.setState({"loader": false})
                 this.setState({"loadingError": false})
-                console.log(this.state.orderSummary)
+                if(this.state.orderSummary.payment_summary.status== 'captured') {
+                    window.removeFromLocalStorage('cart_id');
+                }
             }
             
         }).catch(err => {
@@ -138,7 +140,7 @@ class OrderSummary extends Component {
                     </div>
                     <div class="p-15 pt-0 pb-0">
                         <div class="secure-checkout fixed-bottom visible bg-white p-15">
-                            <button class="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0">I Want More, Take Me to shop</button>
+                           <Link to="http://localhost/"> <button class="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0">I Want More, Take Me to shop</button></Link>
                         </div>
                     </div>
                 </div>
@@ -152,7 +154,7 @@ class OrderSummary extends Component {
                     </div> 
                     <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white">
                         <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}`} auto_pay={true}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Try Again </button></Link>
-                        <Link to="/"><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Go To Homepage</button></Link>
+                        <Link to="http://localhost/"><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Go To Homepage</button></Link>
                     </div>
                 </div>
             );
