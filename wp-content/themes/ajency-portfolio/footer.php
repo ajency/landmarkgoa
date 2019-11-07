@@ -1,7 +1,7 @@
 <div class="spacer-200">
 </div>
 
-<!-- <footer id="footer">
+<footer id="footer">
     <section class="footer-section">
         <div class="container p5">
             <div class="row">
@@ -65,13 +65,15 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <?php
     $app_url = APP_URL;
     $json_path = JSON_PATH;
     $js_json = json_decode(file_get_contents($json_path.'/react_component_file_hash.json'), true);
     $css_json = json_decode(file_get_contents($json_path.'/cart_app_css_file_hash.json'), true);
+    // $show_pn = SHOW_PN;
+    $show_pn = true;
     
  if (!is_page_template('archive.php') && !is_singular('post') && !is_page_template('template-blogs.php') && !is_page_template('template-fullwidth.php') ) { ?>
     <noscript id="deferred-styles">
@@ -95,6 +97,8 @@
           var react_js_file_hashes = <?php echo json_encode($js_json); ?>;
           var react_css_file_hashes = <?php echo json_encode($css_json); ?>;
           var app_url = "<?php echo $app_url; ?>";
+          var show_pn = "<?php echo $show_pn; ?>";
+          console.log("show push notifications ==>", true);
     </script>
 <?php } ?>
 <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" rel="stylesheet"/>
@@ -121,28 +125,17 @@
 
 <script src="<?php echo get_template_directory_uri(); ?>/js/combine.js" type="text/javascript">
 </script>
-<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_12" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_13" type="text/javascript">
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
-<script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "AIzaSyC-w19gW41OaoyjuK4jHPVN5JtviKGB7KQ",
-        authDomain: "project-ggb-dev.firebaseapp.com",
-        databaseURL: "https://project-ggb-dev.firebaseio.com",
-        projectId: "project-ggb-dev",
-        storageBucket: "project-ggb-dev.appspot.com",
-        messagingSenderId: "1034785903670",
-        appId: "1:1034785903670:web:496c7762259b7fb3b9f497"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js" type="text/javascript">
 </script>
 
-
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
@@ -222,6 +215,27 @@
 
     }
 </script>
+
+
+<script>
+      if ('serviceWorker' in navigator ) {
+        window.addEventListener('load', function() {
+            let sw = '/service-worker.js';
+            if(window.location.host == 'localhost:8888'){
+                sw = '/greengrainbowl' + sw;
+            }
+            navigator.serviceWorker.register(sw).then(function(registration) {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                messaging.useServiceWorker(registration);
+            }, function(err) {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
+</script>
+
     <?php wp_footer(); ?>
 
     </body>

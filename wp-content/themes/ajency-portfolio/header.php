@@ -54,7 +54,7 @@
               <a href="<?php echo get_site_url(); ?>" class="d-block d-lg-none">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.jpg" width="120px" class="logo"/>
               </a>
-              <ul class="navbar-nav">
+              <ul class="navbar-nav d-none">
                 <li class="nav-item active">
                   <a class="nav-link" href="#our-bowl">Our Bowls</a>
                 </li>

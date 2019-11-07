@@ -13,7 +13,8 @@ class AddNewAddress extends Component {
         this.handleCenter = this.handleCenter.bind(this);
         this.state = {
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+            apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			locError : '',
 			gpsError : '',
             showLoader : false,

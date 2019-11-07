@@ -7,12 +7,14 @@ class addToCart extends React.Component {
 		super(props);
 		this.state = { 
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			apiCallInProgress : false,
 			quantity : 0,
 			lastSelected : '',
-			items : [],
-			selectedVariant : ''
+			items : [], // variants added to cart
+			selectedVariant : '',
+			variants : [] // variants fetched from firestore
 		};
 	}
 
@@ -70,21 +72,36 @@ class addToCart extends React.Component {
 	}
 
 	getVariants(){
-		let variants = this.props.product_data.variants.map((variant)=>{
+		if(this.state.variants.length){
+			let variants = this.state.variants.map((variant)=>{
+				return (
+					<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
+			              <label className="custom-radio-btn mb-0 font-size-16">
+			              		<span className={"mr-3 " + (this.state.selectedVariant == variant.id ? 'text-primary' : '') }>{variant.size}</span> ₹ {variant.sale_price}
+			                	<input type="radio" name={"variant-" + this.props.product_data.product_id} value={variant.id} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
+			                	<span className="checkmark"></span>
+			              </label>
+					</div>
+				)
+			})
+			return variants;
+		}
+		else{
 			return (
-				<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
-		              <label className="custom-radio-btn mb-0 font-size-16">
-		              		<span className={"mr-3 " + (this.state.selectedVariant == variant.id ? 'text-primary' : '') }>{variant.size}</span> ₹ {variant.sale_price}
-		                	<input type="radio" name={"variant-" + this.props.product_data.product_id} value={variant.id} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
-		                	<span className="checkmark"></span>
-		              </label>
+				<div className="list-item pt-3 pb-3 border-bottom-lightgrey">
+		              <div className="text-line mb-3">
+		              </div>
+		              <div className="text-line mb-3">
+		              </div>
+		              <div className="text-line">
+		              </div>
 				</div>
 			)
-		})
-		return variants;
+		}
 	}
 
 	showVariantModal(){
+		this.fetchVariants();
 		this.hideRepeateLastModal();
 		this.setState({selectedVariant : this.props.product_data.default.id });
 		document.querySelector('#variantSelectionModal-' + this.props.product_data.product_id).classList.add('show-modal');
@@ -184,6 +201,25 @@ class addToCart extends React.Component {
 					this.removeFromCart(this.state.items[0].variant_id);
 				}
 			}
+		}
+	}
+
+	fetchVariants(){
+		if(!this.state.variants.length){
+			let url = this.state.apiEndPoint + "/misc/fetch-variants";
+			let body = {
+				product_id 	: this.props.product_data.product_id,
+			}
+
+			axios.get(url, {params : body})
+			.then((res) => {
+				if(res.data.success){
+					this.setState({variants : res.data.variants});
+				}
+			})
+			.catch((error)=>{
+				console.log("error in add to cart ==>", error);
+			})
 		}
 	}
 

@@ -254,6 +254,13 @@ footer {
     border-bottom: 1px solid #C4C8C4;
 }
 
+.site-offline{
+    > * {
+        pointer-events: none;
+        filter: grayscale(100%);
+    }
+}
+
 @media (min-width: 320px) and (max-width: 767.98px) {
     .footer-section {
         padding-top: 2rem;
