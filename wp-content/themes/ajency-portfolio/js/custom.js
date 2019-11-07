@@ -209,7 +209,7 @@ $(window).on("load", function() {
 })
 
 $(document).ready(function(){
-    if(window.location.href.includes('#/cart')){
+    if(window.location.href.includes('#/cart') || window.location.href.includes('#/order-summary')){
         loadCartApp();
         showCartSlider()
     }
@@ -254,7 +254,7 @@ $('.bread-crumb__menu').on('click', function(e) {
 
 function locationHashChanged() {
     console.log("location hash changed");
-    if (location.hash === '#/cart') { 
+    if (location.hash === '#/cart' || location.hash === '#/order-summary') { 
         loadCartApp();
         showCartSlider()
     }
@@ -402,6 +402,15 @@ function readFromLocalStorage(item_name) {
     }
 }
 
+function removeFromLocalStorage(item_name) {
+    if(isLocalStorageSupported()) {
+        localStorage.removeItem(item_name);
+    } else {
+        removeCookie(item_name);  
+    }
+    return true;
+}
+
 function isLocalStorageSupported() {
     try {
         localStorage.setItem('test', 'test');
@@ -410,6 +419,11 @@ function isLocalStorageSupported() {
     } catch(e) {
         return false;
     }
+}
+
+function removeCookie(item_name) {
+    let expiredate = new Date('12-02-1970').toUTCString();
+    document.cookie = item_name + "=" + ";expires="+expiredate+";max-age="+getCookieMaxAge()+";path=/";
 }
 
 function getCookieMaxAge(){

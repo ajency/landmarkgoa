@@ -7,15 +7,19 @@ import Cart from './components/cart/cart.js';
 import AddNewAddress from './components/add-new-addess/add-new-address';
 import AddressList from './components/address-list/address-list';
 import VerifyMobile from './components/login/verify-mobile';
+import CartCheckoutSummary from './components/cart-checkout-summary/cart-checkout-summary';
+import OrderSummary from './components/order-summary/order-summary';
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <Route path="/cart" component={Cart} />
-        <Route path="/address" component={AddressList} />
-        <Route path="/add-address" component={AddNewAddress} />
-        <Route path="/verify-mobile" component={VerifyMobile} />
+        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/cart/address" component={AddressList} />
+        <Route exact path="/cart/add-address" component={AddNewAddress} />
+        <Route exact path="/cart/verify-mobile" component={VerifyMobile} />
+        <Route exact path="/cart/cart-summary/:cart_id" component={CartCheckoutSummary}></Route>
+        <Route exact path="/order-summary/:transaction_id" component={OrderSummary}></Route>
       </Router>
     );
   }
