@@ -75,7 +75,9 @@ class variantSelection extends React.Component {
 			.forEach((domContainer) => {
 				domContainer.classList.add('transform-none');
 			});
-		document.querySelector('#product-'+this.state.product_id).classList.add('zindex');
+		let product_element = document.querySelector('#product-'+this.state.productId)
+		if(product_element)
+			product_element.classList.add('zindex');
 		window.hideScroll();
 	}
 
@@ -85,17 +87,12 @@ class variantSelection extends React.Component {
 			.forEach((domContainer) => {
 				domContainer.classList.remove('transform-none');
 			});
-		document.querySelector('#product-'+this.state.product_id).classList.remove('zindex');
+		let product_element = document.querySelector('#product-'+this.state.productId)
+		if(product_element)
+			product_element.classList.add('zindex');
 		window.showScroll();
 	}
 
-
-	getLastSelected(){
-		let last_selected = this.props.product_data.variants.find((variant) => {return variant.id == this.state.lastSelected})
-		if(last_selected)
-			return ( <div> Size : {last_selected.size} <a class="ml-2 text-primary text-underline cursor-pointer" onClick={()=>this.showVariantModal()}>Choose again </a></div>
-				)
-	}
 
 	handleOptionChange(event){
 		this.setState({selectedVariant : event.target.value });
@@ -103,27 +100,25 @@ class variantSelection extends React.Component {
 
 
 	fetchVariants(product_id, last_selected){
-		if(!this.state.variants.length){
-			let url = this.state.apiEndPoint + "/misc/fetch-variants";
-			let body = {
-				product_id 	: product_id,
-			}
-
-			axios.get(url, {params : body})
-			.then((res) => {
-				if(res.data.success){
-					if(!last_selected){
-						this.setState({variants : res.data.variants, last_selected : res.data.variants[0].id});
-					}
-					else{
-						this.setState({variants : res.data.variants, last_selected : last_selected});
-					}
-				}
-			})
-			.catch((error)=>{
-				console.log("error in add to cart ==>", error);
-			})
+		let url = this.state.apiEndPoint + "/misc/fetch-variants";
+		let body = {
+			product_id 	: product_id,
 		}
+
+		axios.get(url, {params : body})
+		.then((res) => {
+			if(res.data.success){
+				if(!last_selected){
+					this.setState({variants : res.data.variants, last_selected : res.data.variants[0].id});
+				}
+				else{
+					this.setState({variants : res.data.variants, last_selected : last_selected});
+				}
+			}
+		})
+		.catch((error)=>{
+			console.log("error in add to cart ==>", error);
+		})
 	}
 
 	addToCart(variant_id = null) {
