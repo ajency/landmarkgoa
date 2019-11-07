@@ -101,7 +101,7 @@
         </div>
         <div class="col-xl-12">
           <h1 class="ft6 product-section__title mb-4 d-none">Products</h1>   
-          <div class="row product-list">   
+          <div class="row product-list">
             <?php $products = json_decode(file_get_contents(get_template_directory_uri() . '/products.json'), true)['products']; 
               foreach ($products as $key => $product) { ?>
               <div class="custom-col-3 col-lg-4 product-list-item p-lg-0 effect trigger<?php echo $key+1 ?>" id="product-<?php echo $product['product_id'] ?>">
@@ -120,21 +120,22 @@
                               <img src="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                       </div>
-                      <div class="product-info lg-w-50 pl-lg-2">
+
+                      <div class="product-info lg-w-50 pl-lg-2 normal-text d-none d-lg-block">
+                          <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
+                          <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3> 
+                      </div>
+
+                      <div class="product-info lg-w-50 pl-lg-2 hover-text">
                           <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
                           <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3>    
                           <div class="product-content">
-                            <h4 class="product-excerpt font-weight-light font-size-18 mt-0">
+                            <h4 class="product-excerpt font-weight-light font-size-18 mt-0 mb-lg-0">
                                 <?php echo $product['description'] ?>
                             </h4>
-                            <div class="product-meta d-flex mt-lg-5">
+                            <div class="product-meta d-flex mt-lg-3">
                                 <div class="product-price h1 ft6 mb-0">₹ <?php echo $product['default']['sale_price'] ?>
                                 </div>
-                                
-                              <!--  <a href="#" class="btn-add-to-cart btn-add-to-cart-desktop text-primary border-radius-4 border-white text-decoration-none m-0 font-size-25 ft6" title="Add Noodle Salad Bowl to cart">
-                                Add to cart  
-                                </a> -->
-
                                 <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div>
                             </div>
                           </div>
@@ -142,7 +143,6 @@
                   </div>      
               </div>
             <?php } ?>
-
           </div>
         </div>
       </div>   
