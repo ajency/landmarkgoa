@@ -39,11 +39,11 @@ class CartCheckoutSummary extends Component {
 				this.setState({orderSummary: this.props.location.state.order_obj})
 				this.setState({dataLoading:false, fetchCartComplete:true})
 			} else {
+				console.log(this.props.match.params);
 				let url = apiEndPont+ '/anonymous/cart/create-order'
-				axios.post(url, {cart_id:this.props.match.params.order_id, fetchDraft:true})
+				axios.post(url, {cart_id:this.props.match.params.cart_id, fetchDraft:true})
 				.then((res) => {
-					
-					this.setState({orderSummary: res.data.order_data, dataLoading:false, fetchCartComplete:true})
+					this.setState({orderSummary: res.data.cart, dataLoading:false, fetchCartComplete:true})
 					
 				}).catch(err => {
 					console.log(err)
