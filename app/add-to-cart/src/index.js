@@ -13,145 +13,22 @@ class addToCart extends React.Component {
 			quantity : 0,
 			lastSelected : '',
 			items : [], // variants added to cart
-			selectedVariant : '',
-			variants : [] // variants fetched from firestore
 		};
 	}
 
 	componentDidMount(){
-		this.setState({selectedVariant : this.props.product_data.default.id })
-		variantModals[this.props.product_data.product_id] = document.querySelector('#variantSelectionModal-' + this.props.product_data.product_id);
-		repeateModals[this.props.product_data.product_id] = document.querySelector('#repeatLast-' + this.props.product_data.product_id);
 	}
 
 	render() {
 		return (
 			<div>
 				{this.getButtonContent()}
-
-			    <div className="custom-modal" id={'variantSelectionModal-' + this.props.product_data.product_id}>
-				    <div className="custom-modal-content p-15">
-					<button type="button" className="btn-reset close-modal" onClick={()=> this.hideVariantModal()}><i class="fas fa-times text-silver"></i></button>
-				        <div className="product-variant text-left text-black">
-						  <h3 class="h1 ft6 pr-4">Choose your Bowl</h3>
-						  <div class="list-meta mt-4 mb-4">
-							<div class="list-author">{this.props.product_data.title}</div>
-							<div class="list-date">Veg</div>
-						  </div>				          
-				          <div className="variant-list mb-4">
-				          		{this.getVariants()}
-				          </div>
-				        </div>
-				        <div className="custom-modal-footer d-flex justify-content-between">
-				          {/* <button type="button" className="btn-reset btn-back font-size-15 text-uppercase mr-4 p-15 bg-primary text-white text-left w-48" onClick={()=> this.hideVariantModal()}>Back</button> */}
-				          <button type="button" className="btn-reset btn-continue btn-arrow font-size-15 text-uppercase p-15 bg-primary text-white text-left w-100 position-relative" onClick={()=>this.addToCart(this.state.selectedVariant)} >Select & Continue</button>
-				        </div>
-				    </div>
-				</div>
-
-
-			   	 <div className="custom-modal" id={'repeatLast-' + this.props.product_data.product_id}>
-				  	<div className="custom-modal-content p-15 text-black">
-					  	<h3 class="h1 ft6 pr-4">Repeat last used customization?</h3>
-						<div class="list-meta mt-4 mb-4">
-							<div class="list-author">{this.props.product_data.title}</div>
-							<div class="list-date">Veg</div>
-						</div>
-						<div className="pl-0 pt-0 pb-3 pr-3">
-							<h5>{this.getLastSelected()}</h5>
-						</div>
-
-						<div className="d-flex justify-content-between">
-							{/* <button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48" onClick={()=>this.showVariantModal()}> I'll Choose </button> */}
-							<button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-100" onClick={()=>this.addToCart(this.state.lastSelected)}> Select & Continue </button>
-						</div>
-				  	</div>
-			    </div>
 			</div>
 		);
 	}
 
-	getVariants(){
-		if(this.state.variants.length){
-			let variants = this.state.variants.map((variant)=>{
-				return (
-					<div key={variant.id} className="list-item pt-3 pb-3 border-bottom-lightgrey">
-			              <label className="custom-radio-btn mb-0 font-size-16">
-			              		<span className={"mr-3 " + (this.state.selectedVariant == variant.id ? 'text-primary' : '') }>{variant.size}</span> ₹ {variant.sale_price}
-			                	<input type="radio" name={"variant-" + this.props.product_data.product_id} value={variant.id} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
-			                	<span className="checkmark"></span>
-			              </label>
-					</div>
-				)
-			})
-			return variants;
-		}
-		else{
-			return (
-				<div className="list-item pt-3 pb-3 border-bottom-lightgrey">
-		              <div className="text-line mb-3">
-		              </div>
-		              <div className="text-line mb-3">
-		              </div>
-		              <div className="text-line">
-		              </div>
-				</div>
-			)
-		}
-	}
-
 	showVariantModal(){
-		this.fetchVariants();
-		this.hideRepeateLastModal();
-		this.setState({selectedVariant : this.props.product_data.default.id });
-		document.querySelector('#variantSelectionModal-' + this.props.product_data.product_id).classList.add('show-modal');
-		document.querySelectorAll('.product-wrapper')
-			.forEach((domContainer) => {
-				domContainer.classList.add('transform-none');
-			});
-		document.querySelector('#product-'+this.props.product_data.product_id).classList.add('zindex');
-		window.hideScroll();
-	}
-
-	hideVariantModal(){
-		document.querySelector('#variantSelectionModal-' + this.props.product_data.product_id).classList.remove('show-modal');
-		document.querySelectorAll('.product-wrapper')
-			.forEach((domContainer) => {
-				domContainer.classList.remove('transform-none');
-			});
-		document.querySelector('#product-'+this.props.product_data.product_id).classList.remove('zindex');
-		window.showScroll();
-	}
-
-	showRepeateLastModal(){
-		document.querySelector('#repeatLast-' + this.props.product_data.product_id).classList.add('show-modal');	
-		document.querySelectorAll('.product-wrapper')
-			.forEach((domContainer) => {
-				domContainer.classList.add('transform-none');
-			});
-		document.querySelector('#product-'+this.props.product_data.product_id).classList.add('zindex');
-		window.hideScroll();
-	}
-
-	hideRepeateLastModal(){
-		document.querySelector('#repeatLast-' + this.props.product_data.product_id).classList.remove('show-modal');
-		document.querySelectorAll('.product-wrapper')
-			.forEach((domContainer) => {
-				domContainer.classList.remove('transform-none');
-			});
-		document.querySelector('#product-'+this.props.product_data.product_id).classList.remove('zindex');
-		window.showScroll();
-	}
-
-	getLastSelected(){
-		let last_selected = this.props.product_data.variants.find((variant) => {return variant.id == this.state.lastSelected})
-		if(last_selected)
-			return ( <div> Size : {last_selected.size} <a class="ml-2 text-primary text-underline cursor-pointer" onClick={()=>this.showVariantModal()}>Choose again </a></div>
-				)
-	}
-
-	handleOptionChange(event){
-		this.setState({selectedVariant : event.target.value });
+		window.showVariantSelectionPopup(this.props.product_data.product_id, this.state.lastSelected, this.props.product_data.title)
 	}
 
 	getButtonContent(){
@@ -180,52 +57,21 @@ class addToCart extends React.Component {
 
 	
 	checkVariant(action){
-		if(this.props.product_data.variants.length == 1){
-			action == 'add' ? this.addToCart(this.props.product_data.variants[0].id) : this.removeFromCart(this.props.product_data.variants[0].id)
+		if(action == 'add'){
+			this.showVariantModal()
 		}
 		else{
-			if(action == 'add'){
-				if(this.state.items.length){
-					this.showRepeateLastModal();
-				}
-				else{
-					this.showVariantModal()
-				}
+			if(this.state.items.length > 1){
+				let msg = "Item has multiple variants added. Remove correct item from cart";
+				this.displayError(msg);
 			}
 			else{
-				if(this.state.items.length > 1){
-					let msg = "Item has multiple variants added. Remove correct item from cart";
-					this.displayError(msg);
-				}
-				else{
-					this.removeFromCart(this.state.items[0].variant_id);
-				}
+				this.removeFromCart(this.state.items[0].variant_id);
 			}
-		}
-	}
-
-	fetchVariants(){
-		if(!this.state.variants.length){
-			let url = this.state.apiEndPoint + "/misc/fetch-variants";
-			let body = {
-				product_id 	: this.props.product_data.product_id,
-			}
-
-			axios.get(url, {params : body})
-			.then((res) => {
-				if(res.data.success){
-					this.setState({variants : res.data.variants});
-				}
-			})
-			.catch((error)=>{
-				console.log("error in add to cart ==>", error);
-			})
 		}
 	}
 
 	addToCart(variant_id = null) {
-		this.hideRepeateLastModal();
-		this.hideVariantModal()
 		this.setState({apiCallInProgress : true});
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(cart_id){
@@ -398,31 +244,6 @@ document.querySelectorAll('.react-add-to-cart-container')
 		addToCartComponents[index] =  ReactDOM.render(e(addToCart, { product_data : product_data }),domContainer);
 	});
 
-function toggleModal(modal) {
-    modal.classList.toggle("show-modal");
-    document.querySelectorAll('.product-wrapper')
-		.forEach((domContainer) => {
-			domContainer.classList.remove('transform-none');
-		});
-	document.querySelectorAll('.product-list-item')
-		.forEach((domContainer) => {
-			domContainer.classList.remove('zindex');
-		});
-	window.removeBackDrop();
-}
-
-function windowOnClick(event) {
-	for(let i in variantModals) {
-		if(event.target === variantModals[i])
-			toggleModal(variantModals[i]);
-	}
-	for(let i in repeateModals) {
-		if(event.target === repeateModals[i])
-			toggleModal(repeateModals[i]);
-	}
-}
-
-window.addEventListener("click", windowOnClick);
 
 window.updateaddToCartComponent = (item) => {
 	addToCartComponents.forEach((component) =>{
@@ -450,6 +271,14 @@ window.updateItemQuantity = (item, action) => {
 				component.addItems(item)
 			else
 				component.removeItems(item)
+		}
+	})
+}
+
+window.addToCartFromVariant = (product_id, variant_id) => {
+	addToCartComponents.forEach((component) =>{
+		if(component.props.product_data.product_id == product_id){
+			component.addToCart(variant_id);
 		}
 	})
 }

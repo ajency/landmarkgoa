@@ -290,6 +290,9 @@
 <!-- verify-otp container -->
 <div id="react-verify-otp-container"></div>
 
+<!-- variant selection popup -->
+<div id="react-variant-selection-modal"></div>
+
 <div class="msg-container">
   <!-- Add to cart error  -->
   <div class="failure toast d-flex justify-content-center position-relative">
@@ -299,13 +302,20 @@
     <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
-  <!-- Add to cart error  -->
+  <!-- Add to cart success  -->
   <div class="success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative">
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
     </span>
     <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
+
+   <!-- Offline toast  -->
+    <div class="success toast d-flex justify-content-center">
+      <span class="alert-info p-15 w-100 d-none" id="offline-toast">
+        You are offline and may be viewing outdated content!
+      </span>
+    </div>
 
   <!-- View cart component -->
   <div id="react-view-cart-container" class="mt-lg-5 "></div>
