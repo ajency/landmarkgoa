@@ -36,7 +36,10 @@ input[type='number'], input[type='tel']{
 }
 
 .plceholder-text{
-    color: #C4C8C4 !important;
+    outline: 0 !important;
+    &:focus{
+        outline: 0;
+    }
 }
 
 .plceholder-text::placeholder {

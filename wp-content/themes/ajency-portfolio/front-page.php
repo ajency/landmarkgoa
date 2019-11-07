@@ -296,7 +296,7 @@
     <span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative" id="failure-toast">
       Add to cart failed
     </span>
-    <button id="failure-toast-close-btn" class="btn-reset close-img d-none"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
   <!-- Add to cart error  -->
@@ -304,7 +304,7 @@
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
     </span>
-    <button id="success-toast-close-btn" class="btn-reset close-img d-none"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
   </div>
 
   <!-- View cart component -->
@@ -346,15 +346,19 @@
 
 <div class="backdrop-wrap"></div>
 
-<!-- <script>
+<script>
   function closenotication() {
     var element = document.getElementById("success-toast");
+    var elementBtn = document.getElementById("success-toast-close-btn");
     element.classList.add("d-none");
+    elementBtn.classList.add("d-none");
   }
   function closenoticationF() {
     var element = document.getElementById("failure-toast");
+    var elementBtn = document.getElementById("failure-toast-close-btn");
     element.classList.add("d-none");
+    elementBtn.classList.add("d-none");
   }
-</script> -->
+</script>
 
 <?php get_footer(); ?>

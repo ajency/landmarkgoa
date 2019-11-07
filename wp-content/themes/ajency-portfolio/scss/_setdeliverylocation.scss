@@ -46,3 +46,15 @@
         margin-bottom: 0;
     }
 }
+
+.add-list{
+    word-break: break-word;
+    li.btn{
+        white-space: unset;
+        text-align: left;
+    }
+    .no-results-msg{
+        font-size: 14px;
+        font-weight: 300;
+    }
+}
