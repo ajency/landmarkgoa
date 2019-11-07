@@ -32,6 +32,12 @@ buildViewCart(){
 	npm run build
 }
 
+buildVariationSelection(){
+	cd ../variant-selection-popup
+	npm install
+	npm run build
+}
+
 buildCartApp(){
 	cd ../cart
 	npm install
@@ -49,5 +55,6 @@ buildDeliveryAddress
 buildSignIn
 buildVerifyOtp
 buildViewCart
+buildVariationSelection
 buildCartApp
 removePreBuildFolder

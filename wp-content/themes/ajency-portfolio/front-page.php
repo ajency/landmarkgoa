@@ -290,6 +290,9 @@
 <!-- verify-otp container -->
 <div id="react-verify-otp-container"></div>
 
+<!-- variant selection popup -->
+<div id="react-variant-selection-modal"></div>
+
 <div class="msg-container">
   <div class="container p5">
     <div class="row">

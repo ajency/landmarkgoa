@@ -6,7 +6,7 @@ let js_files = ["runtime-main.", "main.", "2."];
 let css_files = ["main."];
 
 let react_component_file_hash = {};
-let react_component_js_files = ["add-to-cart.", "delivery-address-slider.", "sign-in.", "verify-otp.", "view-cart."];
+let react_component_js_files = ["add-to-cart.", "delivery-address-slider.", "sign-in.", "verify-otp.", "view-cart.", "variant-selection-popup"];
 
 fs.emptyDir('../pre_build/cart')
 .then(() => {
