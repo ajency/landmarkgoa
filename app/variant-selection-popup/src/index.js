@@ -109,10 +109,10 @@ class variantSelection extends React.Component {
 		.then((res) => {
 			if(res.data.success){
 				if(!last_selected){
-					this.setState({variants : res.data.variants, last_selected : res.data.variants[0].id});
+					this.setState({variants : res.data.variants, selectedVariant : res.data.variants[0].id});
 				}
 				else{
-					this.setState({variants : res.data.variants, last_selected : last_selected});
+					this.setState({variants : res.data.variants, selectedVariant : last_selected});
 				}
 			}
 		})
