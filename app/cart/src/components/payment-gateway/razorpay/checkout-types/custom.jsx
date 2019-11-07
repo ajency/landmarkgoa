@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import * as _ from 'underscore';
-import {razorPayConfig,generalConfig} from '../../../payment-gateway-config.js';
+import {razorPayConfig,generalConfig} from '../../../config';
 
 class Custom extends Component {
     constructor(props) {

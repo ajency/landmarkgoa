@@ -3,7 +3,7 @@ import axios from 'axios';
 import Standard from './checkout-types/standard';
 import Custom from './checkout-types/custom';
 import Hosted from './checkout-types/hosted';
-import { razorPayConfig,generalConfig } from '../../payment-gateway-config';
+import { razorPayConfig,generalConfig } from '../../config';
 const script = document.createElement("script");
 
 

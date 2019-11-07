@@ -8,6 +8,7 @@ import add from '../../assets/images/add.png';
 import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
 import {Redirect} from 'react-router-dom';
+import {generalConfig} from '../config'
 import axios from 'axios';
  declare var $: any;
 
@@ -20,9 +21,7 @@ class Cart extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : generalConfig.apiEndPoint,
 			cartEmpty : false,
 			redirectToSummary:false,
 			cartSummary:null
