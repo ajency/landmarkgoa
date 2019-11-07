@@ -6,7 +6,7 @@ import scooter from '../../assets/images/scooter.png';
 import list from '../../assets/images/list.png';
 import ricecooker from '../../assets/images/rice-cooker.png';
 import {Link} from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
 import {generalConfig} from '../config'
 
 class OrderSummary extends Component {
@@ -25,7 +25,7 @@ class OrderSummary extends Component {
     render() {
         return (
             <div className="address-container visible">
-				<Header/>                
+				<Header/>    
                 {this.state.loader ?  <div></div> :  this.getStatus()}
             </div>
          //
@@ -144,7 +144,7 @@ class OrderSummary extends Component {
                     </div>
                     <div class="p-15 pt-0 pb-0">
                         <div class="secure-checkout fixed-bottom visible bg-white p-15">
-                           <Link to={this._webSiteLink}> <button class="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0">I Want More, Take Me to shop</button></Link>
+                           <button class="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={(e) => this.handleRedirect(e)}>I Want More, Take Me to shop</button>
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,7 @@ class OrderSummary extends Component {
                     </div> 
                     <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white">
                         <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}`} auto_pay={true}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Try Again </button></Link>
-                        <Link to={this._webSiteLink}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Go To Homepage</button></Link>
+                        <button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48" onClick={(e)=> this.handleRedirect(e)}> Go To Homepage</button>
                     </div>
                 </div>
             );
@@ -170,6 +170,11 @@ class OrderSummary extends Component {
             return this.state.orderSummary.order_data.items.length
         }
         return 0;
+    }
+
+    handleRedirect(e) {
+        e.preventDefault()
+        window.location = this._webSiteLink
     }
 }
 
