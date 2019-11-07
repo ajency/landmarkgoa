@@ -44,9 +44,10 @@ class CartCheckoutSummary extends Component {
 				axios.post(url, {cart_id:this.props.match.params.cart_id, fetchDraft:true})
 				.then((res) => {
 					this.setState({orderSummary: res.data.cart, dataLoading:false, fetchCartComplete:true})
-					
+					window.removeCartLoader();
 				}).catch(err => {
 					console.log(err)
+					window.removeCartLoader();
 					this.setState({dataLoading:false})
 					
 				})
@@ -154,36 +155,6 @@ class CartCheckoutSummary extends Component {
 		window.removeBackDrop();
 	}
 
-	fetchCart() {
-		window.addCartLoader();
-		console.log("inside fetch cart");
-		let cart_id =  true //window.readFromLocalStorage('cart_id');
-		if(cart_id){
-			let url = "https://demo8558685.mockable.io/get-cart";
-			// let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
-			let body = {
-				cart_id : cart_id
-			}
-			axios.get(url, {params : body})
-				.then((res) => {
-					window.removeCartLoader();
-					console.log("fetch cart response ==>", res);
-					this.setState({orderSummary : res.data, fetchCartComplete : true});
-				})
-				.catch((error)=>{
-					window.removeCartLoader();
-					this.setState({fetchCartFailureMsg : error.message,  fetchCartComplete : true})
-					console.log("error in fetch cart ==>", error);
-				})
-		}
-		else{
-			console.log("inside else")
-			setTimeout(()=>{
-				window.removeCartLoader();
-				this.setState({cartEmpty : true, fetchCartComplete : true});
-			},100)
-		}
-	}
 
 	removeItem(variant_id){
 		console.log("remove item ==>", variant_id);

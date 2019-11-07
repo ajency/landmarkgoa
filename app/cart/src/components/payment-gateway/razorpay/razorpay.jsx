@@ -67,6 +67,7 @@ class Razorpay extends Component {
         if(e) {
             e.preventDefault();
         }
+        window.addCartLoader();
         let url = generalConfig.apiEndPoint + "/anonymous/payment/create-order";
 			let body = {
                 order_id : this.props.order.id,
@@ -80,6 +81,8 @@ class Razorpay extends Component {
             if(this.state.pgtype == 'hosted') {
                this.setState({r_order_id: res.data.order_id});
             }
+            window.removeCartLoader()
+
             return true;
         })          
     }
