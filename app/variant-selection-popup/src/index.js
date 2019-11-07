@@ -89,7 +89,7 @@ class variantSelection extends React.Component {
 			});
 		let product_element = document.querySelector('#product-'+this.state.productId)
 		if(product_element)
-			product_element.classList.add('zindex');
+			product_element.classList.remove('zindex');
 		window.showScroll();
 	}
 
