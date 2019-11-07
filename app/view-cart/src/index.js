@@ -40,8 +40,11 @@ class viewCart extends React.Component {
 	getItemsCount(){
 		if(this.state.cart && this.state.cart.cart_count){
 			return (
-				<div>
-					{this.state.cart.cart_count} Item(s)
+				<div className="">
+					<div className="cart-count cart-count d-none d-lg-flex">
+						{this.state.cart.cart_count} 
+					</div>
+					<span className="d-block d-lg-none">items(s)</span>
 				</div>
 			)
 		}

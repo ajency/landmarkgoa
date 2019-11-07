@@ -293,6 +293,12 @@ footer {
     }
 }
 
+.sb-shadow{
+    -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
+}
+
 @media (min-width: 320px) and (max-width: 767.98px) {
     .footer-section {
         padding-top: 2rem;
