@@ -131,6 +131,8 @@
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js" type="text/javascript">

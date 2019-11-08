@@ -57,6 +57,18 @@ class addToCart extends React.Component {
 
 	
 	checkVariant(action){
+		firebase.auth().onAuthStateChanged((user) => {
+			console.log("check user ==>", user);
+			if(user){
+				console.log("user exist");
+			}
+			else{
+				this.signInAnonymously();
+			}
+		});
+
+
+
 		if(action == 'add'){
 			this.showVariantModal()
 		}
@@ -71,11 +83,24 @@ class addToCart extends React.Component {
 		}
 	}
 
+	signInAnonymously(){
+		firebase.auth().signInAnonymously()
+			.then((res)=>{
+				// res.user.getIdToken().then((idToken) => {
+		  //          this.updateUserDetails(idToken);
+		  //       });
+			})
+			.catch((error) => {
+			  	console.log("error in anonymouse sign in", error);
+			});
+	}
+
 	addToCart(variant_id = null) {
+		console.log("add to cart function");
 		this.setState({apiCallInProgress : true});
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			this.addToCartApiCall(variant_id, null, cart_id);
+			this.addToCartApiCall(variant_id, window.lat_lng, cart_id, window.formatted_address);
 		}
 		else if(window.lat_lng){
 			this.addToCartApiCall(variant_id, window.lat_lng, null, window.formatted_address);
@@ -129,42 +154,153 @@ class addToCart extends React.Component {
 		})
 	}
 
-	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null){
-		window.addBackDrop();
-		let url = this.state.apiEndPoint + "/anonymous/cart/insert";
-		let body = {
-			variant_id : variant_id,
-			quantity : 1,
-			lat_long : lat_long,
-			formatted_address : formatted_address
-		}
-		if(cart_id)
-			body.cart_id = cart_id;
+	async addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null){
+		// window.addBackDrop();
+		// let url = this.state.apiEndPoint + "/anonymous/cart/insert";
+		// let body = {
+		// 	variant_id : variant_id,
+		// 	quantity : 1,
+		// 	lat_long : lat_long,
+		// 	formatted_address : formatted_address
+		// }
+		// if(cart_id)
+		// 	body.cart_id = cart_id;
 
-		axios.post(url, body)
-		.then((res) => {
-			if(res.data.success){
-				this.addItems(res.data.item);
-				window.updateViewCartCompoent(res.data);
-				this.displaySuccess("Successfully added to cart")
-				if(!cart_id && res.data.cart_id){
-					// document.cookie = "cart_id=" + res.data.cart_id + ";path=/";
-					window.writeInLocalStorage('cart_id' , res.data.cart_id);
-				}
+		// axios.post(url, body)
+		// .then((res) => {
+		// 	if(res.data.success){
+		// 		this.addItems(res.data.item);
+		// 		window.updateViewCartCompoent(res.data);
+		// 		this.displaySuccess("Successfully added to cart")
+		// 		if(!cart_id && res.data.cart_id){
+		// 			// document.cookie = "cart_id=" + res.data.cart_id + ";path=/";
+		// 			window.writeInLocalStorage('cart_id' , res.data.cart_id);
+		// 		}
+		// 	}
+		// 	else{
+		// 		this.displayError(res.data.message);
+		// 	}
+		// 	this.setState({apiCallInProgress : false});
+		// 	window.removeBackDrop();
+		// })
+		// .catch((error)=>{
+		// 	console.log("error in add to cart ==>", error);
+		// 	this.setState({apiCallInProgress : false});
+		// 	let msg = error && error.message ? error.message : error;
+		// 	this.displayError(msg);
+		// 	window.removeBackDrop();
+		// })
+		window.addBackDrop()
+		try{
+			let variant = await window.getVariantById(variant_id);
+			console.log("variant ==>", variant);
+
+			let product = await window.getProductById(variant.product_id);
+			console.log("product==>", product);
+
+
+			let stock_location_id,  quantity = 1, locations = [];
+			let cart_data;
+			if(cart_id)
+				cart_data = await window.getOrderByID(cart_id);
+
+			if(!cart_data ){
+				cart_data = this.getNewCartData(lat_long, formatted_address)
+			}
+
+			console.log("cart data ==>");
+
+			if(!cart_data.stock_location_id){
+				locations = await window.getLocationWithStock(variant_id, quantity);
+				if(!locations.length)
+					throw new Error('Quantity not availble');
 			}
 			else{
-				this.displayError(res.data.message);
+				locations = await window.getLocation(cart_data.stock_location_id)
 			}
-			this.setState({apiCallInProgress : false});
-			window.removeBackDrop();
-		})
-		.catch((error)=>{
+
+			console.log("get locations data");
+
+			// let deliverable_locations = window.isDeliverable(locations, lat_long);
+			let deliverable_locations = locations;
+
+			if(deliverable_locations && !deliverable_locations.length){
+				throw new Error('Not deliverable at your location');
+			}
+
+			console.log("check deliverable_locations", deliverable_locations)
+			stock_location_id = deliverable_locations[0].id;
+
+			let item = {
+				attributes : {
+					title : product.title,
+					images : product.image_url,
+					size : variant.size,
+					mrp : variant.mrp,
+					sale_price : variant.sale_price,
+					discount_per : 0,
+					description : product.description,
+					veg : product.veg
+				},
+				quantity : quantity,
+				variant_id : variant_id,
+				product_id : variant.product_id
+			}
+			let order_data = await window.updateOrder(item, cart_id, cart_data, stock_location_id)
+
+			console.log("update order data");
+
+			let res = {
+				success: true, 
+				message: 'Successfully added to cart',
+				item : item,
+				summary : order_data.summary,
+				cart_count : order_data.cart_count,
+				cart_id : order_data.id,
+			}
+
+			console.log("response ==>", res);
+			this.addItems(res.item);
+				window.updateViewCartCompoent(res);
+				this.displaySuccess("Successfully added to cart")
+				if(!cart_id && res.cart_id){
+					window.writeInLocalStorage('cart_id' , res.cart_id);
+				}
+				this.setState({apiCallInProgress : false});
+				window.removeBackDrop();
+
+		}
+		catch (error) {
 			console.log("error in add to cart ==>", error);
 			this.setState({apiCallInProgress : false});
 			let msg = error && error.message ? error.message : error;
 			this.displayError(msg);
 			window.removeBackDrop();
-		})
+		}
+
+	}
+
+	getNewCartData (lat_long, formatted_address) {
+		let cart_data = {
+			user_id : firebase.auth().currentUser.uid,
+			summary : {
+				mrp_total : 0,
+				sale_price_total : 0,
+				cart_discount : 0,
+				shipping_fee : 50,
+				you_pay : 0 + 50,
+			},
+			order_type : 'cart',
+			cart_count : 0,
+			lat_long : lat_long,
+			formatted_address : formatted_address,
+			stock_location_id : '',
+			verified : !firebase.auth().currentUser.isAnonymous,
+			business_id : "zq6Rzdvcx0UrULwzeSEr",
+			mobile_number : firebase.auth().currentUser.phoneNumber ? firebase.auth().currentUser.phoneNumber : '',
+			items : []
+		}
+		return cart_data;
 	}
 
 	addItems(item){
@@ -276,9 +412,12 @@ window.updateItemQuantity = (item, action) => {
 }
 
 window.addToCartFromVariant = (product_id, variant_id) => {
+	let found = false;
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == product_id){
+		if(component.props.product_data.product_id == product_id && !found){
+			console.log("product id match");
 			component.addToCart(variant_id);
+			found = true;
 		}
 	})
 }
