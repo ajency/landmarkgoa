@@ -22,7 +22,6 @@ class Cart extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			apiEndPoint : generalConfig.apiEndPoint,
 			cartEmpty : false,
 			redirectToSummary:false,
 			cartSummary:null
@@ -134,7 +133,7 @@ class Cart extends Component {
 
 	handleCheckout(e) {
 		e.preventDefault();
-		let url = this.state.apiEndPoint + "/anonymous/cart/create-order"
+		let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
 		let data = {
 			address_id:e.target.getAttribute("data-address"),
 			cart_id: this._currentCart //e.target.getAttribute("data-id")
@@ -169,7 +168,7 @@ class Cart extends Component {
 		let cart_id =  window.readFromLocalStorage('cart_id');
 		if(cart_id){
 			// let url = "https://demo8558685.mockable.io/get-cart";
-			 let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
+			 let url = generalConfig.apiEndPoint + "/anonymous/cart/fetch";
 			let body = {
 				cart_id : cart_id
 			}
