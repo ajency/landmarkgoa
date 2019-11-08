@@ -42,7 +42,7 @@ class Cart extends Component {
 			this.setState({cartData : {}, fetchCartComplete : false, cartEmpty : false})
 			this.fetchCart();
 		});
-		// window.checkPushNotificationPermissions();
+		window.checkPushNotificationPermissions();
 	}
 
 	getItems(){
