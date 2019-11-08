@@ -133,7 +133,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardend",
+			"class" : "cardfour",
 			"put_empty" : false
 		},
 		{
@@ -172,7 +172,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardone",
+			"class" : "cardfive",
 			"put_empty" : true
 		},
 
@@ -200,7 +200,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardtwo",
+			"class" : "cardsix",
 			"put_empty" : false
 		},
 
@@ -228,7 +228,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardthree",
+			"class" : "cardseven",
 			"put_empty" : true
 		},
 
