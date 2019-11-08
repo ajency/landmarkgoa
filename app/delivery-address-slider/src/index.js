@@ -450,7 +450,7 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	gpsModalPromptComponent.setState({showNoAddressMsg : false, locations : [], locError : '', gpsError : '', fetchingGPS : false, searchText : '', settingUserLocation : false});
 	document.querySelector('#gpsModal').classList.add('visible');
 	window.addBackDrop();
-	window.checkPushNotificationPermissions();
+	// window.checkPushNotificationPermissions();
 }
 
 window.updateAddresses = (addresses = null) => {
