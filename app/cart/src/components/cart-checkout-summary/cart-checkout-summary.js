@@ -10,10 +10,10 @@ import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
 import Payments from '../payment-gateway/payments'
 import CartSummary from '../cart-summary/cart-summary';
-const apiEndPont = 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1';
+import {generalConfig} from "../config";
 
 
-// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1'
+
 class CartCheckoutSummary extends Component {
     _webSiteLink = "#/cart";
     _isMounted = false;
@@ -25,8 +25,6 @@ class CartCheckoutSummary extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			cartEmpty : false
         }
     }
@@ -42,7 +40,7 @@ class CartCheckoutSummary extends Component {
 				window.removeCartLoader();
 			} else {
 				console.log(this.props.match.params);
-				let url = apiEndPont+ '/anonymous/cart/create-order'
+				let url = generalConfig.apiEndPont+ '/anonymous/cart/create-order'
 				axios.post(url, {cart_id:this.props.match.params.cart_id, fetchDraft:true})
 				.then((res) => {
 					if(res.data.code =='PAYMENT_DONE') {

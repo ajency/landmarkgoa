@@ -10,7 +10,7 @@ import axios from 'axios';
 import {generalConfig} from '../config'
 
 class OrderSummary extends Component {
-    _webSiteLink = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/";
+    _webSiteLink = generalConfig.webSiteLink;
     _isUnMount = false;
     constructor(props){
         super(props)
