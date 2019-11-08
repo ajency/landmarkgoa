@@ -87,9 +87,11 @@ class variantSelection extends React.Component {
 			.forEach((domContainer) => {
 				domContainer.classList.remove('transform-none');
 			});
-		let product_element = document.querySelector('#product-'+this.state.productId)
-		if(product_element)
-			product_element.classList.add('zindex');
+
+		document.querySelectorAll('.product-list-item')
+			.forEach((domContainer) => {
+				domContainer.classList.remove('zindex');
+			});	
 		window.showScroll();
 	}
 

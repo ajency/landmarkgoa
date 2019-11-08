@@ -44,50 +44,50 @@ workbox.routing.registerRoute(
 
 
 //cache js and css - production
-workbox.routing.registerRoute(
-    new RegExp('https://order.greengrainbowl.com/*'),
-    new workbox.strategies.CacheFirst({
-        cacheName: 'ggb-prod',
-        plugins: [
-            new workbox.expiration.Plugin({
-                maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
-                maxEntries: 50, 
-                purgeOnQuotaError: true
-            })
-        ]
-    })
-);
+// workbox.routing.registerRoute(
+//     new RegExp('https://order.greengrainbowl.com/*'),
+//     new workbox.strategies.CacheFirst({
+//         cacheName: 'ggb-prod',
+//         plugins: [
+//             new workbox.expiration.Plugin({
+//                 maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+//                 maxEntries: 50, 
+//                 purgeOnQuotaError: true
+//             })
+//         ]
+//     })
+// );
 
 
-//cache js and css - staging
-workbox.routing.registerRoute(
-    new RegExp('http://order-staging.greengrainbowl.com/*'),
-    new workbox.strategies.CacheFirst({
-        cacheName: 'ggb-stage',
-        plugins: [
-            new workbox.expiration.Plugin({
-                maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
-                maxEntries: 50, 
-                purgeOnQuotaError: true
-            })
-        ]
-    })
-);
+// //cache js and css - staging
+// workbox.routing.registerRoute(
+//     new RegExp('http://order-staging.greengrainbowl.com/*'),
+//     new workbox.strategies.CacheFirst({
+//         cacheName: 'ggb-stage',
+//         plugins: [
+//             new workbox.expiration.Plugin({
+//                 maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+//                 maxEntries: 50, 
+//                 purgeOnQuotaError: true
+//             })
+//         ]
+//     })
+// );
 
-//cache js and css - local
-workbox.routing.registerRoute(
-    new RegExp('/greengrainbowl/app/build/*'),
-    new workbox.strategies.CacheFirst({
-        cacheName: 'ggb-local',
-        plugins: [
-            new workbox.expiration.Plugin({
-                maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
-                maxEntries: 50, 
-                purgeOnQuotaError: true
-            })
-        ]
-    })
-);
+// //cache js and css - local
+// workbox.routing.registerRoute(
+//     new RegExp('/greengrainbowl/app/build/*'),
+//     new workbox.strategies.CacheFirst({
+//         cacheName: 'ggb-local',
+//         plugins: [
+//             new workbox.expiration.Plugin({
+//                 maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+//                 maxEntries: 50, 
+//                 purgeOnQuotaError: true
+//             })
+//         ]
+//     })
+// );
 
 workbox.precaching.precacheAndRoute([]);
 
