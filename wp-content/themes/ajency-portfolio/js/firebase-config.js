@@ -10,9 +10,27 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+console.log("firebase initialisation");
 
-const messaging = firebase.messaging();
-messaging.usePublicVapidKey("BJplW7H_YA8Ii_slb0DTqh8U9UsuexByioSBOk4xKxAwdw2xcqUwzTTNy2HSvs_MncRZHRtUwsQ6nQqFSonHEaA");
+
+try{
+    const messaging = firebase.messaging();
+    messaging.usePublicVapidKey("BJplW7H_YA8Ii_slb0DTqh8U9UsuexByioSBOk4xKxAwdw2xcqUwzTTNy2HSvs_MncRZHRtUwsQ6nQqFSonHEaA");
+
+    // monitor refresh token
+    messaging.onTokenRefresh(() => {
+      messaging.getToken().then((refreshed_token) => {
+        console.log('Token refreshed.', refreshed_token);
+        updateToken(refreshed_token);
+      }).catch((err) => {
+        console.log('Unable to retrieve refreshed token ', err);
+        showToken('Unable to retrieve refreshed token ', err);
+      });
+    });
+}
+catch(error){
+    console.log("error in messaging ==>", error);
+}
 
 
 function checkPushNotificationPermissions(){
@@ -57,21 +75,6 @@ function askPermissions(){
     });
 }
 
-// monitor refresh token
-messaging.onTokenRefresh(() => {
-  messaging.getToken().then((refreshed_token) => {
-    console.log('Token refreshed.', refreshed_token);
-    updateToken(refreshed_token);
-  }).catch((err) => {
-    console.log('Unable to retrieve refreshed token ', err);
-    showToken('Unable to retrieve refreshed token ', err);
-  });
-});
-
-
-messaging.onMessage((payload) => {
-  console.log('Message received. ', payload);
-});
 
 
 navigator.serviceWorker.addEventListener("message", (message) => {
