@@ -10,26 +10,6 @@
 				"sale_price" : 100,
 				"size" : "Small"
 			},
-			"variants" : [
-				{
-					"id" : "72mIBZ9aTr8Okr05SfSN",
-					"mrp" : 150,
-					"sale_price" : 100,
-					"size" : "Small"
-				},
-				{
-					"id" : "bupD3ekj2qEketZ0Kpf9",
-					"mrp" : 300,
-					"sale_price" : 250,
-					"size" : "Regular"
-				},
-				{
-					"id" : "EvG1uPu3uFKZpxAh35OP",
-					"mrp" : 500,
-					"sale_price" : 450,
-					"size" : "Large"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -50,14 +30,6 @@
 				"sale_price" : 400,
 				"size" : "Regular"
 			},
-			"variants" : [
-				{
-					"id" : "5awRHIDbXVNMEZhoYjtZ",
-					"mrp" : 500,
-					"sale_price" : 400,
-					"size" : "Regular"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -78,14 +50,6 @@
 				"sale_price" : 400,
 				"size" : "Regular"
 			},
-			"variants" : [
-				{
-					"id" : "Nwn6e8h6OWVBpMFN0c9z",
-					"mrp" : 450,
-					"sale_price" : 400,
-					"size" : "Regular"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -107,26 +71,6 @@
 				"sale_price" : 200,
 				"size" : "Small"
 			},
-			"variants" : [
-				{
-					"id" : "WpKYzupzbBimyAt3WOrg",
-					"mrp" : 200,
-					"sale_price" : 200,
-					"size" : "Small"
-				},
-				{
-					"id" : "dlI88p2ORp3Wk6W0Hq3t",
-					"mrp" : 300,
-					"sale_price" : 300,
-					"size" : "Regular"
-				},
-				{
-					"id" : "auYzBeDEuvqIiu1gxx9J",
-					"mrp" : 400,
-					"sale_price" : 400,
-					"size" : "Large"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -137,7 +81,7 @@
 			"put_empty" : false
 		},
 		{
-			"product_id" : "yykiWcEv48MtR2oRiWla",
+			"product_id" : "yykiWcEv48MtR2oRiWla1",
 			"title" : "Orange Barley Bowl",
 			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
 			"default" : {
@@ -146,26 +90,6 @@
 				"sale_price" : 100,
 				"size" : "Small"
 			},
-			"variants" : [
-				{
-					"id" : "72mIBZ9aTr8Okr05SfSN",
-					"mrp" : 150,
-					"sale_price" : 100,
-					"size" : "Small"
-				},
-				{
-					"id" : "bupD3ekj2qEketZ0Kpf9",
-					"mrp" : 300,
-					"sale_price" : 250,
-					"size" : "Regular"
-				},
-				{
-					"id" : "EvG1uPu3uFKZpxAh35OP",
-					"mrp" : 500,
-					"sale_price" : 450,
-					"size" : "Large"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -177,7 +101,7 @@
 		},
 
 		{	
-			"product_id" : "ReAlsVnx73KSVrYGvbsn",
+			"product_id" : "ReAlsVnx73KSVrYGvbsn2",
 			"title" : "Cracked Wheat & Chickpea Bowl",
 			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
 			"default" : {
@@ -186,14 +110,6 @@
 				"sale_price" : 400,
 				"size" : "Regular"
 			},
-			"variants" : [
-				{
-					"id" : "5awRHIDbXVNMEZhoYjtZ",
-					"mrp" : 500,
-					"sale_price" : 400,
-					"size" : "Regular"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -205,7 +121,7 @@
 		},
 
 		{	
-			"product_id" : "moVonufnFw46emRbKy7W",
+			"product_id" : "moVonufnFw46emRbKy7W3",
 			"title" : "Thai Brown Rice Bowl",
 			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
 			"default" : {
@@ -214,14 +130,6 @@
 				"sale_price" : 400,
 				"size" : "Regular"
 			},
-			"variants" : [
-				{
-					"id" : "Nwn6e8h6OWVBpMFN0c9z",
-					"mrp" : 450,
-					"sale_price" : 400,
-					"size" : "Regular"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
@@ -234,7 +142,7 @@
 
 
 		{	
-			"product_id" : "JS42fGblvs7VJ8uxXuaD",
+			"product_id" : "JS42fGblvs7VJ8uxXuaD4",
 			"title" : "Quinoa & Nuts Bowl",
 			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
 			"default" : {
@@ -243,26 +151,6 @@
 				"sale_price" : 200,
 				"size" : "Small"
 			},
-			"variants" : [
-				{
-					"id" : "WpKYzupzbBimyAt3WOrg",
-					"mrp" : 200,
-					"sale_price" : 200,
-					"size" : "Small"
-				},
-				{
-					"id" : "dlI88p2ORp3Wk6W0Hq3t",
-					"mrp" : 300,
-					"sale_price" : 300,
-					"size" : "Regular"
-				},
-				{
-					"id" : "auYzBeDEuvqIiu1gxx9J",
-					"mrp" : 400,
-					"sale_price" : 400,
-					"size" : "Large"
-				}
-			],
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
