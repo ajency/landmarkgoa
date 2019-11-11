@@ -122,6 +122,7 @@ class verifyOtp extends React.Component {
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
 		           this.fetchAddresses(idToken);
+		           this.updateUserDetails();
 		        });
 			})
 			.catch((error)=>{
