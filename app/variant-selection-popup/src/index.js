@@ -109,7 +109,7 @@ class variantSelection extends React.Component {
 
 		axios.get(url, {params : body})
 		.then((res) => {
-			if(res.data.success){
+			if(res.data.success && res.data.variants.length){
 				if(!last_selected){
 					this.setState({variants : res.data.variants, selectedVariant : res.data.variants[0].id});
 				}
@@ -117,9 +117,17 @@ class variantSelection extends React.Component {
 					this.setState({variants : res.data.variants, selectedVariant : last_selected});
 				}
 			}
+			else{
+				this.hideVariantModal();
+				let msg = 'No active variants found'
+				this.displayError(msg);
+			}
 		})
 		.catch((error)=>{
 			console.log("error in add to cart ==>", error);
+			this.hideVariantModal();
+			let msg = 'Something unexpected just happened';
+			this.displayError(msg);
 		})
 	}
 
@@ -127,6 +135,16 @@ class variantSelection extends React.Component {
 		this.hideVariantModal();
 		let cart_id = window.readFromLocalStorage('cart_id');
 		window.addToCartFromVariant(this.state.productId, variant_id);
+	}
+
+	displayError(msg){
+		document.querySelector('#failure-toast').innerHTML = msg;
+		document.querySelector('#failure-toast').classList.remove('d-none');
+		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
+		setTimeout(()=>{
+			document.querySelector('#failure-toast').classList.add('d-none');
+			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
+		},30000)
 	}
 }
 
