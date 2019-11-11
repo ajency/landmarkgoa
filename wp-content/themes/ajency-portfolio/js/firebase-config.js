@@ -131,12 +131,16 @@ var variants = [];
 var products = [];
 var locations = [];
 var stocks = [];
+var cartData;
 
 getVariants();
 getProducts();
 getLocations();
 getStocks();
 
+if(window.readFromLocalStorage('cart_id')){
+    sycnCartData(window.readFromLocalStorage('cart_id'));
+}
 
 function getVariants(){
     let query = db.collection('variants');
@@ -230,6 +234,13 @@ function getStocks(){
     });
 }
 
+function sycnCartData(id){
+    let query = db.collection('orders').doc(id);
+    query.onSnapshot(function(doc) {
+        cartData = doc.data();
+    });
+}
+
 async function getVariantById(id) {
     let variant = variants.find((v) => v.id == id);
     return variant;
@@ -291,11 +302,16 @@ async function getLocationWithStock (id, quantity) {
 
 
 async function getOrderByID (id ) {
-        let order = await db.collection('orders').doc(id).get();
-        if(order.exists){
-            return order.data();
+        if(cartData){
+            return cartData;
         }
-        return null;
+        else{
+            let order = await db.collection('orders').doc(id).get();
+            if(order.exists){
+                return order.data();
+            }
+            return null;
+        }
     }
 
 async function getLocation (loc_id ) {
@@ -348,6 +364,7 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
             await cart_ref.set(cart_data);
             cart_data.id = cart_ref.id;
             cart_id_for_order_line = cart_ref.id
+            sycnCartData(cart_ref.id);
         }
         return cart_data;
     }
