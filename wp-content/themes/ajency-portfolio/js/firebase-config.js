@@ -11,6 +11,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+console.log("firebase initialisation");
 var db = firebase.firestore();
 
 const messaging = firebase.messaging();
@@ -312,19 +313,36 @@ async function getLocation (loc_id ) {
 
 async function updateOrder (item, cart_id, cart_data, stock_location_id) {
 
-        cart_data.summary.mrp_total         += item.attributes.mrp * item.quantity;
-        cart_data.summary.sale_price_total     += item.attributes.sale_price * item.quantity;
-        cart_data.summary.you_pay             = cart_data.summary.sale_price_total + cart_data.summary.shipping_fee;
+        cart_data.summary.mrp_total          += item.attributes.mrp * item.quantity;
+        cart_data.summary.sale_price_total   += item.attributes.sale_price * item.quantity;
+        cart_data.summary.you_pay            = cart_data.summary.sale_price_total + cart_data.summary.shipping_fee;
         cart_data.cart_count                 += item.quantity;
-        cart_data.stock_location_id                 =  stock_location_id;
+        cart_data.stock_location_id          =  stock_location_id;
 
         if(cart_id){
+            console.log("cart items ==>", cart_data.items);
+            if(cart_data.items.length){
+                let index = cart_data.items.findIndex((i) => { return i.variant_id == item.variant_id})
+                if(index !== -1){
+                    console.log("item already in cart");
+                    cart_data.items[index].quantity += item.quantity;
+                    cart_data.items[index].timestamp = '';
+                }
+                else{
+                    console.log("new item");
+                    cart_data.items[cart_data.items.length] = item;
+                }
+            }
+            else{
+                cart_data.items = [item];
+            }
             await db.collection('orders').doc(cart_id).set(cart_data);
         }
         else{
             let cart_ref = db.collection('orders').doc();
             // cart_data.created_at = admin.db.FieldValue.serverTimestamp()
             cart_data.created_at = '';
+            cart_data.items = [item];
             await cart_ref.set(cart_data);
             cart_data.id = cart_ref.id;
             cart_id_for_order_line = cart_ref.id
