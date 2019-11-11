@@ -27,6 +27,25 @@ try{
         showToken('Unable to retrieve refreshed token ', err);
       });
     });
+
+    navigator.serviceWorker.addEventListener("message", (message) => {
+        console.log("check ==>",message)
+        let data = message.data['firebase-messaging-msg-data'].notification;
+        const notificationTitle = data.title;
+          const notificationOptions = {
+            body: data.body,
+            icon: data.icon
+        };
+
+        navigator.serviceWorker.getRegistration()
+        .then( function(reg){
+            if(reg) {
+            reg.showNotification(notificationTitle, notificationOptions);
+           } else {
+             console.log('GOT undefined');
+           }
+        });
+    });
 }
 catch(error){
     console.log("error in messaging ==>", error);
@@ -75,26 +94,6 @@ function askPermissions(){
     });
 }
 
-
-
-navigator.serviceWorker.addEventListener("message", (message) => {
-    console.log("check ==>",message)
-    let data = message.data['firebase-messaging-msg-data'].notification;
-    const notificationTitle = data.title;
-      const notificationOptions = {
-        body: data.body,
-        icon: data.icon
-    };
-
-    navigator.serviceWorker.getRegistration()
-    .then( function(reg){
-        if(reg) {
-        reg.showNotification(notificationTitle, notificationOptions);
-       } else {
-         console.log('GOT undefined');
-       }
-    });
-});
 
 function updateToken(token){
      let old_token = readFromLocalStorage('fcm_token')
