@@ -138,7 +138,7 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js?_15" type="text/javascript">
 </script>
 
 <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
