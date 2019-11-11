@@ -19,7 +19,8 @@ let generalConfig = {
     apiEndPoint:'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
     //webSiteLink:"http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/"
     webSiteLink:"https://greengrainbowl.com/",
-    company_name:"GGB"
+    company_name:"GGB",
+    googleApiKey:'AIzaSyC-w19gW41OaoyjuK4jHPVN5JtviKGB7KQ'
     
 }
 
