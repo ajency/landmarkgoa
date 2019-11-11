@@ -107,14 +107,14 @@ class variantSelection extends React.Component {
 			product_id 	: product_id,
 		}
 
-		axios.get(url, {params : body})
-		.then((res) => {
-			if(res.data.success && res.data.variants.length){
+		if(window.variants){
+			let variants = window.variants.filter((variant) => variant.product_id == product_id);
+			if(variants.length){
 				if(!last_selected){
-					this.setState({variants : res.data.variants, selectedVariant : res.data.variants[0].id});
+					this.setState({variants : variants, selectedVariant : variants[0].id});
 				}
 				else{
-					this.setState({variants : res.data.variants, selectedVariant : last_selected});
+					this.setState({variants : variants, selectedVariant : last_selected});
 				}
 			}
 			else{
@@ -122,13 +122,31 @@ class variantSelection extends React.Component {
 				let msg = 'No active variants found'
 				this.displayError(msg);
 			}
-		})
-		.catch((error)=>{
-			console.log("error in add to cart ==>", error);
-			this.hideVariantModal();
-			let msg = 'Something unexpected just happened';
-			this.displayError(msg);
-		})
+		}
+		else{
+			axios.get(url, {params : body})
+			.then((res) => {
+				if(res.data.success && res.data.variants.length){
+					if(!last_selected){
+						this.setState({variants : res.data.variants, selectedVariant : res.data.variants[0].id});
+					}
+					else{
+						this.setState({variants : res.data.variants, selectedVariant : last_selected});
+					}
+				}
+				else{
+					this.hideVariantModal();
+					let msg = 'No active variants found'
+					this.displayError(msg);
+				}
+			})
+			.catch((error)=>{
+				console.log("error in add to cart ==>", error);
+				this.hideVariantModal();
+				let msg = 'Something unexpected just happened';
+				this.displayError(msg);
+			})
+		}
 	}
 
 	addToCart(variant_id = null) {
