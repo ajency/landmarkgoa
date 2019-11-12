@@ -135,13 +135,11 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js?_15" type="text/javascript">
-</script>
-
 <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
 <!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> -->
+<script src="<?php echo $app_url; ?>/firebase-functions.js" type="text/javascript"></script>
 <script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript"></script>
 <script src="<?php echo $app_url; ?>/variant-selection-popup.<?php echo $js_json['variant-selection-popup'];?>.js" type="text/javascript"></script>
 <script src="<?php echo $app_url; ?>/add-to-cart.<?php echo $js_json['add-to-cart'];?>.js" type="text/javascript"></script>

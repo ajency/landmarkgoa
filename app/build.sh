@@ -38,6 +38,12 @@ buildVariationSelection(){
 	npm run build
 }
 
+buildFirebaseFunctions(){
+	cd ../firebase
+	npm install
+	cp src/index.js ../build/firebase-functions.js
+}
+
 buildCartApp(){
 	cd ../cart
 	npm install
@@ -57,4 +63,5 @@ buildVerifyOtp
 buildViewCart
 buildVariationSelection
 buildCartApp
+buildFirebaseFunctions
 removePreBuildFolder
