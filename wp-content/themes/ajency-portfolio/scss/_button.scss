@@ -32,6 +32,8 @@
             font-size: 20px;
             color: #fff;
             transition: all .12s ease;
+            // -webkit-animation: side-arrow 2.5s infinite;
+            // animation: side-arrow 2.5s infinite;
         }        
     }
     &-disabled{
@@ -81,4 +83,15 @@
     top: 25px;
     right: 8px;
     z-index: 9999;
+}
+
+
+@keyframes side-arrow {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(12px, 0);
+    }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './header.scss';
-import logo from '../../assets/images/NewLogo.png';
+import logo from '../../assets/images/app-logo.png';
 import logoCheckout from '../../assets/images/checkout.png';
 import closeIcon from '../../assets/images/remove.png';
 
