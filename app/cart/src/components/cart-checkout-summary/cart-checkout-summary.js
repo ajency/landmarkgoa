@@ -92,7 +92,7 @@ class CartCheckoutSummary extends Component {
 				cartContainer = 
 					<div>
                         <div className="cart-heading p-15 pt-0 pb-0">
-							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted">Your cart summary</h1>
+							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
 						<div>
 							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} delivery_time={this.state.orderSummary.approx_delivery_time}/>

@@ -32,10 +32,10 @@ class DeliveryAddress extends Component {
 			return (
 				<div>
 					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
-						<span className="text-green font-weight-semibold">Mobile No.: </span> 
+						<span className="font-weight-semibold">Mobile No: </span> 
 						<span id="cart-delivery-address"> 9823353495 </span>
 					</div>
-						<div className="btn-edit" onClick={() => this.openChangeLocationModal()}>
+					<div className="btn-edit d-none" onClick={() => this.openChangeLocationModal()}>
 						<img src={editImage} className="app-log" alt="Edit address" title="Edit address"/>
 					</div>
 				</div>
