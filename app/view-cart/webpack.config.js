@@ -6,7 +6,7 @@ module.exports = {
   output : {
     // filename : "sign-in.js",
     filename: 'view-cart.[contenthash].js',
-    path: path.resolve(__dirname, "../build/")
+    path: path.resolve(__dirname, "../pre_build/")
   },
   module: {
     rules: [

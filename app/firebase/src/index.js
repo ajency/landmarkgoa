@@ -389,3 +389,47 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
         return error;
     }
 }
+
+
+async function fetchCart(cart_id){
+    let cart_data = await window.getCartByID(cart_id);
+    let products = window.products;
+    let items = [];
+    cart_data = JSON.parse(JSON.stringify(cart_data));
+    cart_data.items.forEach((item)=>{
+        let product = products.find((product) => { return product.id == item.product_id})
+        let deliverable = true; //check if deliverable
+        let in_stock = true;     // check if in stock
+        let formatted_item = {
+            variant_id : item.variant_id,
+            attributes: {
+                title: item.product_name,
+                images: {
+                  "1x": product.image_urls[0]
+                },
+                size : item.size,
+                price_mrp : item.mrp,
+                price_final : item.sale_price,
+                discount_per : 0
+            },
+              availability : in_stock,
+              quantity : item.quantity,
+              timestamp : item.timestamp,
+              deliverable : deliverable,
+              product_id : product.id
+        }
+        items.push(formatted_item);
+    })
+    
+    cart_data.items = items;
+    let response = {
+            success: true, 
+            cart : cart_data,
+            coupon_applied: null,
+            coupons: [],
+            approx_delivery_time : "40 mins"
+    }
+
+    return response;
+
+}

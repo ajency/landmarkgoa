@@ -42,6 +42,7 @@ buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
 	cp src/index.js ../build/firebase-functions.js
+	cd ..
 }
 
 buildCartApp(){
@@ -49,7 +50,6 @@ buildCartApp(){
 	npm install
 	npm run build
 	node postbuild.js
-	cd ..
 }
 
 

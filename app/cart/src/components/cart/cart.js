@@ -161,28 +161,48 @@ class Cart extends Component {
 		window.removeBackDrop();
 	}
 
-	fetchCart() {
+	async fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
-		this._currentCart = window.readFromLocalStorage('cart_id');
+		// this._currentCart = window.readFromLocalStorage('cart_id');
 		let cart_id =  window.readFromLocalStorage('cart_id');
+		// if(cart_id){
+		// 	// let url = "https://demo8558685.mockable.io/get-cart";
+		// 	 let url = generalConfig.apiEndPoint + "/anonymous/cart/fetch";
+		// 	let body = {
+		// 		cart_id : cart_id
+		// 	}
+		// 	axios.get(url, {params : body})
+		// 		.then((res) => {
+		// 			window.removeCartLoader();
+		// 			console.log("fetch cart response ==>", res);
+		// 			this.setState({cartData : res.data, fetchCartComplete : true});
+		// 		})
+		// 		.catch((error)=>{
+		// 			window.removeCartLoader();
+		// 			this.setState({fetchCartFailureMsg : error.message,  fetchCartComplete : true})
+		// 			console.log("error in fetch cart ==>", error);
+		// 		})
+		// }
+		// else{
+		// 	console.log("inside else")
+		// 	setTimeout(()=>{
+		// 		window.removeCartLoader();
+		// 		this.setState({cartEmpty : true, fetchCartComplete : true});
+		// 	},100)
+		// }
 		if(cart_id){
-			// let url = "https://demo8558685.mockable.io/get-cart";
-			 let url = generalConfig.apiEndPoint + "/anonymous/cart/fetch";
-			let body = {
-				cart_id : cart_id
+			try{
+				let cart_data = await window.fetchCart(cart_id);
+				console.log("cart_data ==>", cart_data);
+				window.removeCartLoader();
+				this.setState({cartData : cart_data, fetchCartComplete : true});
 			}
-			axios.get(url, {params : body})
-				.then((res) => {
-					window.removeCartLoader();
-					console.log("fetch cart response ==>", res);
-					this.setState({cartData : res.data, fetchCartComplete : true});
-				})
-				.catch((error)=>{
-					window.removeCartLoader();
-					this.setState({fetchCartFailureMsg : error.message,  fetchCartComplete : true})
-					console.log("error in fetch cart ==>", error);
-				})
+			catch(error){
+				window.removeCartLoader();
+				this.setState({fetchCartFailureMsg : error.message,  fetchCartComplete : true})
+				console.log("error in fetch cart ==>", error);
+			}
 		}
 		else{
 			console.log("inside else")
