@@ -12,7 +12,8 @@ class variantSelection extends React.Component {
 			variants : [], // variants fetched from firestore
 			selectedVariant : '',
 			productId : '',
-			title : ''
+			title : '',
+			product : null
 		};
 	}
 
@@ -104,58 +105,43 @@ class variantSelection extends React.Component {
 	}
 
 
-	fetchVariants(product_id, last_selected){
-		let url = this.state.apiEndPoint + "/misc/fetch-variants";
-		let body = {
-			product_id 	: product_id,
+	async fetchVariants(product_id, last_selected){
+		if(window.products && window.products.length){
+			let product = window.products.filter((product) => product.id == product_id);
+			this.setVariants(product[0], last_selected)
 		}
+		else{
+			let product = await window.fetchProduct(product_id);
+			this.setVariants(product, last_selected);	
+		}
+	}
 
-		if(window.variants){
-			let variants = window.variants.filter((variant) => variant.product_id == product_id);
-			if(variants.length){
-				if(!last_selected){
-					this.setState({variants : variants, selectedVariant : variants[0].id});
-				}
-				else{
-					this.setState({variants : variants, selectedVariant : last_selected});
-				}
+	setVariants(product, last_selected){
+		this.setState(({product : product}));
+		console.log("product ==>", product);
+		let variants = [];
+		if(product){
+			variants = product.variants.filter((variant) => {return variant.active})
+		}
+		if(variants.length){
+			if(!last_selected){
+				this.setState({variants : variants, selectedVariant : variants[0].id});
 			}
 			else{
-				this.hideVariantModal();
-				let msg = 'No active variants found'
-				this.displayError(msg);
+				this.setState({variants : variants, selectedVariant : last_selected});
 			}
 		}
 		else{
-			axios.get(url, {params : body})
-			.then((res) => {
-				if(res.data.success && res.data.variants.length){
-					if(!last_selected){
-						this.setState({variants : res.data.variants, selectedVariant : res.data.variants[0].id});
-					}
-					else{
-						this.setState({variants : res.data.variants, selectedVariant : last_selected});
-					}
-				}
-				else{
-					this.hideVariantModal();
-					let msg = 'No active variants found'
-					this.displayError(msg);
-				}
-			})
-			.catch((error)=>{
-				console.log("error in add to cart ==>", error);
-				this.hideVariantModal();
-				let msg = 'Something unexpected just happened';
-				this.displayError(msg);
-			})
+			this.hideVariantModal();
+			let msg = 'No active variants found'
+			this.displayError(msg);
 		}
 	}
 
 	addToCart(variant_id = null) {
+		console.log("variant id==>", variant_id);
 		this.hideVariantModal();
-		let cart_id = window.readFromLocalStorage('cart_id');
-		window.addToCartFromVariant(this.state.productId, variant_id);
+		window.addToCartFromVariant(this.state.productId, variant_id, this.state.product);
 	}
 
 	displayError(msg){
