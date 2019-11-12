@@ -115,41 +115,67 @@ class addToCart extends React.Component {
 		}
 	}
 
-	removeFromCart(variant_id = null){
+	async removeFromCart(variant_id = null){
 		window.addBackDrop();
 		this.setState({apiCallInProgress : true});
-		let url = this.state.apiEndPoint + "/anonymous/cart/delete";
-		// let url = "https://demo8558685.mockable.io/remove-from-cart";
-		let body = {
-			variant_id 	: variant_id,
-			quantity 	: 1,
-			cart_id 	: window.readFromLocalStorage('cart_id')
-		}
+		// let url = this.state.apiEndPoint + "/anonymous/cart/delete";
+		// // let url = "https://demo8558685.mockable.io/remove-from-cart";
+		// let body = {
+		// 	variant_id 	: variant_id,
+		// 	quantity 	: 1,
+		// 	cart_id 	: window.readFromLocalStorage('cart_id')
+		// }
 
-		axios.post(url, body)
-		.then((res) => {
-			if(res.data.success){
+		// axios.post(url, body)
+		// .then((res) => {
+		// 	if(res.data.success){
+		// 		this.displaySuccess("Successfully removed from cart");
+		// 		let item = {
+		// 			variant_id : variant_id,
+		// 			quantity : 1
+		// 		}
+		// 		this.removeItems(item);
+		// 		window.updateViewCartCompoent(res.data);
+		// 	}
+		// 	else{
+		// 		this.displayError(res.data.message);
+		// 	}
+		// 	this.setState({apiCallInProgress : false});
+		// 	window.removeBackDrop();
+		// })
+		// .catch((error)=>{
+		// 	console.log("error in add to cart ==>", error);
+		// 	this.setState({apiCallInProgress : false});
+		// 	let msg = error && error.message ? error.message : error;
+		// 	this.displayError(msg);
+		// 	window.removeBackDrop();
+		// })
+		try{
+			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
+			let res = await window.removeItemFromCart(variant_id, cart_id, quantity);
+			if(res.success){
 				this.displaySuccess("Successfully removed from cart");
 				let item = {
 					variant_id : variant_id,
 					quantity : 1
 				}
 				this.removeItems(item);
-				window.updateViewCartCompoent(res.data);
+				window.updateViewCartCompoent(res);
 			}
 			else{
-				this.displayError(res.data.message);
+				this.displayError(res.message);
 			}
 			this.setState({apiCallInProgress : false});
 			window.removeBackDrop();
-		})
-		.catch((error)=>{
-			console.log("error in add to cart ==>", error);
+
+		}
+		catch(error){
+			console.log("error in remove from cart ==>", error);
 			this.setState({apiCallInProgress : false});
 			let msg = error && error.message ? error.message : error;
 			this.displayError(msg);
 			window.removeBackDrop();
-		})
+		}
 	}
 
 	async addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
@@ -212,7 +238,8 @@ class addToCart extends React.Component {
 				},
 				quantity : quantity,
 				variant_id : variant_id,
-				product_id : product.id
+				product_id : product.id,
+				timestamp : new Date().getTime()
 			}
 
 			let order_data = await window.updateOrder(item, user_id, cart_data, stock_location_id)
@@ -354,7 +381,7 @@ window.updateaddToCartComponent = (item) => {
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
-	  			return b.timestamp._seconds - a.timestamp._seconds;
+	  			return b.timestamp - a.timestamp;
 	  		})
 			let last_added = items[0].variant_id;
 			let qty = 0;

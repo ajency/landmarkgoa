@@ -274,15 +274,17 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
             if(index !== -1){
                 console.log("item already in cart");
                 cart_data.items[index].quantity += item.quantity;
-                cart_data.items[index].timestamp = '';
+                cart_data.items[index].timestamp = new Date().getTime();
             }
             else{
                 console.log("new item");
-                cart_data.items[cart_data.items.length] = item;
+                let order_line_item = formateOrderLine(item);
+                cart_data.items[cart_data.items.length] = order_line_item;
             }
         }
         else{
-            cart_data.items = [item];
+            let order_line_item = formateOrderLine(item);
+            cart_data.items = [order_line_item];
         }
         console.log("cart data before set ==>", cart_data);
         await db.collection('carts').doc(cart_id).set(cart_data);
@@ -290,6 +292,22 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
         sycnCartData(cart_id);
         
         return cart_data;
+}
+
+function formateOrderLine(item){
+    let order_line_item = {
+        variant_id : item.variant_id,
+        quantity : item.quantity,
+        product_name : item.attributes.title,
+        description : item.attributes.description,
+        mrp : item.attributes.mrp,
+        sale_price : item.attributes.sale_price,
+        veg : item.attributes.veg,
+        size : item.attributes.size,
+        product_id : item.product_id,
+        timestamp : new Date().getTime()
+    }
+    return order_line_item;
 }
 
 
@@ -329,5 +347,45 @@ function headingDistanceTo(lat1, lon1, lat2, lon2) {
         dist = dist * 1.609344 * 1000;
         console.log("distance ==>", dist);
         return dist;
+    }
+}
+
+
+async function removeItemFromCart(variant_id, cart_id, quantity){
+    try{
+        let cart_data = await window.getCartByID(cart_id);
+        let index = cart_data.items.findIndex((item) => item.variant_id == variant_id);
+        let item_data = cart_data.items[index];
+        let new_quantity = Number(item_data.quantity) - quantity;
+
+        if(new_quantity<=0) {
+            cart_data.summary.mrp_total -= item_data.mrp * item_data.quantity;
+            cart_data.summary.sale_price_total -= item_data.sale_price * item_data.quantity;
+            cart_data.cart_count -= item_data.quantity;
+            if(cart_data.cart_count == 0){
+                cart_data.shipping_fee = 0;
+            }
+            cart_data.items.splice(index, 1);
+        } else {
+        
+            cart_data.summary.mrp_total -= item_data.mrp * quantity;
+            cart_data.summary.sale_price_total     -= item_data.sale_price * quantity;
+            cart_data.cart_count = Number(cart_data.cart_count)-quantity;
+            cart_data.items[index].quantity = new_quantity
+        }
+        cart_data.summary.you_pay = cart_data.summary.sale_price_total + cart_data.summary.shipping_fee;
+        await db.collection("carts").doc(cart_id).set(cart_data);
+        let response = {
+            "message": "Successfully updated the cart",
+            "cart_count": cart_data.cart_count,
+            "summary": cart_data.summary,
+            success : true
+        }
+        return response;
+
+    }
+    catch(error){
+        console.log("error in remove item from cart ==>", error);
+        return error;
     }
 }
