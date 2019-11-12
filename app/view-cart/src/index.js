@@ -67,23 +67,30 @@ class viewCart extends React.Component {
         window.location = url;
 	}
 
-	fetchCart() {
+	async fetchCart() {
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
-			let body = {
-				cart_id : cart_id
-			}
-			axios.get(url, {params : body})
-				.then((res) => {
-					this.setState({cart : res.data.cart})
-					res.data.cart.items.forEach((item)=>{
-						window.updateaddToCartComponent(item);
-					})
-				})
-				.catch((error)=>{
-					console.log("error in fetch cart ==>", error);
-				})
+			let cart_data = await window.getCartByID(cart_id);
+			this.setState({cart : cart_data})
+			cart_data.items.forEach((item)=>{
+				window.updateaddToCartComponent(item);
+			})
+			// let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
+			// let body = {
+			// 	cart_id : cart_id
+			// }
+			// axios.get(url, {params : body})
+			// 	.then((res) => {
+			// 		this.setState({cart : res.data.cart})
+			// 		res.data.cart.items.forEach((item)=>{
+			// 			window.updateaddToCartComponent(item);
+			// 		})
+			// 	})
+			// 	.catch((error)=>{
+			// 		console.log("error in fetch cart ==>", error);
+			// 	})
+
+
 		}
 	}
 }
