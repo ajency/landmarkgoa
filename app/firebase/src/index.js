@@ -412,6 +412,16 @@ async function fetchCart(cart_id){
         let product = products.find((product) => { return product.id == item.product_id})
         let deliverable = true; //check if deliverable
         let in_stock = true;     // check if in stock
+        if(!cart_data.stock_location_id){
+            deliverable = false;
+        }
+        else{
+            let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
+            let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
+            if(stock_location.quantity < item.quantity){
+                in_stock = false;
+            }
+        }
         let formatted_item = {
             variant_id : item.variant_id,
             attributes: {
