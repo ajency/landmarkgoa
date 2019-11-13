@@ -31,7 +31,7 @@ class gpsModalPrompt extends React.Component {
 		}
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log("check user ==>", user);
-			if(user){
+			if(user && !user.isAnonymous){
 				console.log("user found ==== setting showSign in button to false");
 				this.setState({showSignInBtn : false})
 			}
@@ -316,38 +316,33 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	setUserLocations(lat_lng, formatted_address){
-		this.setSliderLoader();
-		this.setState({settingUserLocation : true});
-		let cart_id = window.readFromLocalStorage('cart_id');
-		if(cart_id){
-			let url = this.state.apiEndPoint + "/anonymous/cart/change-location";
-			let body = {
-				cart_id : cart_id,
-				lat_long : lat_lng,
-				formatted_address : formatted_address
-			};
-			axios.post(url, body)
-			.then((res) => {
-				this.removeSliderLoader();
-				this.updateLocationUI(lat_lng, formatted_address);
-				this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
-				this.closeGpsModal();
-
-			})
-			.catch((error)=>{
-				this.removeSliderLoader();
-				this.setState({ fetchingGPS : false, settingUserLocation : false});
-				console.log("error in updating cart location ==>", error);
-				let msg = error.message ? error.message : error;
-				this.setState({locError : msg});
-			})
+		try{
+			this.setSliderLoader();
+			this.setState({settingUserLocation : true});
+			let cart_id = firebase.auth().currentUser.uid;
+			window.getCartByID(cart_id).then((res)=>{
+				if(res){
+					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
+						this.removeSliderLoader();
+						this.updateLocationUI(lat_lng, formatted_address);
+						this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
+						this.closeGpsModal();
+					})
+				}
+				else{
+					this.removeSliderLoader();
+					this.setState({ fetchingGPS : false, searchText: '', settingUserLocation : false});
+					this.updateLocationUI(lat_lng, formatted_address);
+					this.closeGpsModal();
+				}
+			})	
 		}
-		else{
+		catch(error){
 			this.removeSliderLoader();
 			this.setState({ fetchingGPS : false, searchText: '', settingUserLocation : false});
 			this.updateLocationUI(lat_lng, formatted_address);
 			this.closeGpsModal();
-		}		
+		}	
 	}
 
 	updateLocationUI(lat_lng, formatted_address){
