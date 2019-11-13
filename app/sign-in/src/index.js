@@ -6,9 +6,6 @@ class signInModal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -103,22 +100,6 @@ class signInModal extends React.Component {
 		window.modal_closed = true;
 	}
 
-	// checkUserExist(){
-	// 	this.setState({disableButtons : true, showSignInLoader : true});
-	// 	let url = this.state.apiEndPoint + "/check-user-exist";
-	// 		let body = {
-	// 			phone_number : this.state.phoneNumber
-	// 		}
-	// 		axios.get(url, {params : body})
-	// 			.then((res) => {
-	// 				this.signInWithPhoneNumber();
-	// 			})
-	// 			.catch((error)=>{
-	// 				console.log("error in check user exist ==>", error);
-	// 				this.signInAnonymously();
-	// 			})
-	// }
-
 	signInWithPhoneNumber(){
 		window.addCartLoader();
 		this.setState({disableButtons : true, showSignInLoader : true, showCapta : true}, () => {
@@ -147,42 +128,6 @@ class signInModal extends React.Component {
 		});
 		
 	}
-
-	// signInAnonymously(){
-	// 	firebase.auth().signInAnonymously()
-	// 		.then((res)=>{
-	// 			res.user.getIdToken().then((idToken) => {
-	// 	           this.updateUserDetails(idToken);
-	// 	        });
-	// 			this.showGpsSlider();
-	// 		})
-	// 		.catch((error) => {
-	// 		  	console.log("error in anonymouse sign in", error);
-	// 		  	this.setState({errorMessage : error, disableButtons : false, showSignInLoader : false});
-	// 		});
-	// }
-
-	// updateUserDetails(idToken){
-	// 	let body = {
-	// 		phone : this.state.phoneNumber
-	// 	}
-	// 	let headers = {
-	// 		Authorization : 'Bearer '+ idToken
-	// 	}
-	// 	let url = this.state.apiEndPoint + "/user/update-user-details";
-	// 	axios.post(url, body, {headers :  headers })
-	// 		.then((res) => {
-	// 			console.log("update user details response ==>", res);
-	// 		})
-	// 		.catch((error)=>{
-	// 			console.log("error in update user details ==>", error);
-	// 		})
-	// }
-
-	// showGpsSlider(){
-	// 	// $('#signInModalPrompt').modal('hide');
-	// 	window.showGpsModalPrompt(true);
-	// }
 
 	closeSignInSlider(){
 		document.querySelector('#phone_number').classList.remove('visible');

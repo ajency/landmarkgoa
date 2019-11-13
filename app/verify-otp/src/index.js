@@ -6,8 +6,6 @@ class verifyOtp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
 			phoneNumber : '',
 			otp : '',
@@ -48,7 +46,7 @@ class verifyOtp extends React.Component {
 				  <div className="btn-wrapper pt-4">
 			        {this.getOtpButtons()}
 			      </div>
-				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" href="#">Skip.</a></h5>
+				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" onClick={() => this.skipOtp()}>Skip.</a></h5>
 
 			      {this.displayOtpErrorMsg()}
 			  </div>
@@ -74,11 +72,6 @@ class verifyOtp extends React.Component {
 					</div>
 			);
 		}
-		// return (<div> 
-		// 			<button onClick={()=>{this.skipOtp()}}>SKIP OTP</button>
-		// 			<button onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>VERIFY OTP</button>
-		// 		</div>
-		// 	);
 
 		return (
 			 <div className="btn-inner-wrap">
@@ -187,7 +180,8 @@ class verifyOtp extends React.Component {
 	}
 
 	skipOtp(){
-
+		this.closeSignInSlider();
+		this.hideVerifyOtpSlider();
 	}
 
 	showGpsSlider(){

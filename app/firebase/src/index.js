@@ -255,44 +255,6 @@ function sycnCartData(id){
     });
 }
 
-
-async function getLocationWithStock (id, quantity) {
-        let available_stocks = stocks.filter((stock) => {return stock.variant_id == id && stock.quantity >= quantity })
-        console.log("check stocks ==>",available_stocks);
-        // if stock is available in atleast one location
-        if(available_stocks.length){
-            //get locations
-            let availableLoc  = [], location, data;
-            for (const stock of available_stocks) {
-                // location = await db.collection('locations').doc(stock.loc_id).get();
-                location = locations.find((loc) => loc.id == stock.loc_id)
-                console.log("location ==>", location)
-                if(location)
-                    availableLoc.push(location)
-            }
-            return availableLoc;
-        }
-        else
-            return [];
- }
-
- function isDeliverable (locations, lat_long) {
-        console.log("finding deliverableLocation");
-        let deliverble = [] ;
-        // locations.forEach((loc)=>{
-        //     let location_1 = {lat: loc.lat_long[0].lat, lon: loc.lat_long[0].long}
-        //     let location_2 = {lat: lat_long[0], lon: lat_long[1]};
-        //     let diff = geo_utils.headingDistanceTo(location_1, location_2);
-        //     console.log("radius diff==>", diff);
-        //     if(diff.distance < loc.radius){
-        //         deliverble.push(loc);
-        //         return;
-        //     }
-        // })
-        return locations;
-}
-
-
 async function getCartByID (id ) {
         if(cartData){
             return cartData;
@@ -304,13 +266,6 @@ async function getCartByID (id ) {
             }
             return null;
         }
-}
-
-async function getLocation (loc_id ) {
-        let location = locations.find((loc) => loc.id == loc_id );
-        if(location)
-            return [location]
-        return []
 }
 
 async function updateOrder (item, cart_id, cart_data, stock_location_id) {
@@ -439,7 +394,11 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
     }
     catch(error){
         console.log("error in remove item from cart ==>", error);
-        return error;
+        let res = {
+            success: false, 
+            message: error,
+        }
+        return res;
     }
 }
 
