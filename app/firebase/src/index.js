@@ -255,7 +255,7 @@ function sycnCartData(id){
     });
 }
 
-async function getCartByID (id ) {
+async function getCartByID(id ) {
         if(cartData){
             return cartData;
         }
@@ -626,4 +626,12 @@ async function getAddresses(){
         return obj;
     });
     return addresses;
+}
+
+async function createCartForVerifiedUser(cart_id){
+    let cart_data = await window.getCartByID(cart_id);
+    cart_data.user_id = firebase.auth().currentUser.uid;
+    cart_data.verified = true;
+    await db.collection("carts").doc(firebase.auth().currentUser.uid).set(cart_data);
+    sycnCartData(firebase.auth().currentUser.uid);
 }
