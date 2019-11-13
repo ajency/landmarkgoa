@@ -108,14 +108,22 @@ class variantSelection extends React.Component {
 			this.setVariants(product[0], last_selected)
 		}
 		else{
-			let product = await window.fetchProduct(product_id);
-			this.setVariants(product, last_selected);	
+			try{
+				let product = await window.fetchProduct(product_id);
+				this.setVariants(product, last_selected);	
+			}
+			catch(error){
+				setTimeout(()=>{
+					this.hideVariantModal();
+				},100)
+				let msg = 'No active variants found'
+				this.displayError(msg);
+			}
 		}
 	}
 
 	setVariants(product, last_selected){
 		this.setState(({product : product}));
-		console.log("product ==>", product);
 		let variants = [];
 		if(product){
 			variants = product.variants.filter((variant) => {return variant.active})
@@ -129,7 +137,9 @@ class variantSelection extends React.Component {
 			}
 		}
 		else{
-			this.hideVariantModal();
+			setTimeout(()=>{
+				this.hideVariantModal();
+			},100)
 			let msg = 'No active variants found'
 			this.displayError(msg);
 		}
