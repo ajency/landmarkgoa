@@ -17,7 +17,7 @@ class AddNewAddress extends Component {
         this.state = {
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
 			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-            apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+            apiEndPoint : generalConfig.apiEndPoint,
 			locError : '',
 			gpsError : '',
             showLoader : false,
@@ -25,8 +25,8 @@ class AddNewAddress extends Component {
             landmark:"",
             building:"",
             latlng: {
-                lat:this.props.latlng.lat,
-                lng:this.props.latlng.lng
+                lat:'',
+                lng:''
             },
             address_type:'',
             addressInput: false,
@@ -96,6 +96,7 @@ class AddNewAddress extends Component {
                 <Header/>
                 <div className="map-container">
                     <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng}/>
+                    <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
                     <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
                 </div>
                 <div className="p-15">

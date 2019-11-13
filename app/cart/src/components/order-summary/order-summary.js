@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './order-summary.scss';
 import Header from '../header/header.js';
-import GoogleMap from '../google-map/google-map.js';
+import GoogleMap from '../google-map/google-map';
 import scooter from '../../assets/images/scooter.png';
 import list from '../../assets/images/list.png';
 import ricecooker from '../../assets/images/rice-cooker.png';
