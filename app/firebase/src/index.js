@@ -470,20 +470,32 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
         // TODO : check if the item is already in cart and update the qunatity value accordingly.
         // create new variable called updated quantity
 
+        let item_from_cart = cart_data.items.find((i) => { return i.variant_id == variant_id});
+        let new_quantity = quantity;
+        if(item_from_cart){
+            new_quantity += item_from_cart.quantity;
+        }
+
         if(cart_data.stock_location_id){
             location = variant.stock_locations.find((loc)=>{ return loc.id == cart_data.stock_location_id});
-            if(location && location.quantity < quantity){
-                throw 'Product is out of stock';
+            if(location && location.quantity < new_quantity){
+                throw 'Quantity Not Available';
             }
         }
         else{
-            locations = variant.stock_locations.filter((loc)=>{ return loc.quantity >= quantity});
-            console.log("locations ==>", locations);
-            if(locations && locations.length){
-                location = window.findDeliverableLocation(locations, cart_data.lat_long)
+            //new code
+            if(!window.findDeliverableLocation(window.stock_locations, cart_data.lat_long)){
+                throw 'Not deliverable at your location';
             }
+            //end of new code
             else{
-                throw 'Product is out of stock';
+                locations = variant.stock_locations.filter((loc)=>{ return loc.quantity >= new_quantity});
+                if(locations && locations.length){
+                    location = window.findDeliverableLocation(locations, cart_data.lat_long)
+                }
+                else{
+                    throw 'Quantity Not Available';
+                }
             }
         }
         console.log("check deliverable_locations", location)
@@ -491,7 +503,7 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
             stock_location_id = location.id;
         }
         else{
-            throw 'Not deliverable at your location';
+            throw 'Quantity Not Available';
         }
 
         let item = {
