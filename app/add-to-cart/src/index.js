@@ -180,121 +180,39 @@ class addToCart extends React.Component {
 
 	async addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
 		window.addBackDrop()
-		try{
-			let stock_location_id,  quantity = 1, locations = [], location;
-			let cart_data;
-			let user_id = firebase.auth().currentUser.uid;
-			let variant = product.variants.find((v) => v.id === variant_id);
-			console.log("varaint ==>", variant);
-
-			if(cart_id){
-				cart_data = await window.getCartByID(user_id);
-				console.log("cart data from db ==> cart_data");
-			}
-
-			if(!cart_data ){
-				cart_data = this.getNewCartData(lat_long, formatted_address);
-				window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
-			}
-			console.log("cart data ==>",cart_data);
-
-			// TODO : check if the item is already in cart and update the qunatity value accordingly.
-			// create new variable called updated quantity
-
-			if(cart_data.stock_location_id){
-				location = variant.stock_locations.find((loc)=>{ return loc.id == cart_data.stock_location_id});
-				if(location && location.quantity < quantity){
-					throw new Error('Product is out of stock');
-				}
-			}
-			else{
-				locations = variant.stock_locations.filter((loc)=>{ return loc.quantity >= quantity});
-				console.log("locations ==>", locations);
-				if(locations && locations.length){
-					location = window.findDeliverableLocation(locations, lat_long)
+		// try{
+			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
+				console.log("response ==>", res);
+				if(res.success){
+					console.log("response ==>", res);
+					this.addItems(res.item);
+					window.updateViewCartCompoent(res);
+					this.displaySuccess("Successfully added to cart")
+					this.setState({apiCallInProgress : false});
+					window.removeBackDrop();
 				}
 				else{
-					throw new Error('Product is out of stock');
+					this.setState({apiCallInProgress : false});
+					this.displayError(res.message);
+					window.removeBackDrop();
 				}
-			}
-			console.log("check deliverable_locations", location)
-			if(location){
-				stock_location_id = location.id;
-			}
-			else{
-				throw new Error('Not deliverable at your location');
-			}
-
-			let item = {
-				attributes : {
-					title : product.title,
-					images : product.image_urls,
-					size : variant.size,
-					mrp : variant.mrp,
-					sale_price : variant.sale_price,
-					discount_per : 0,
-					description : product.description,
-					veg : product.veg
-				},
-				quantity : quantity,
-				variant_id : variant_id,
-				product_id : product.id,
-				timestamp : new Date().getTime()
-			}
-
-			let order_data = await window.updateOrder(item, user_id, cart_data, stock_location_id)
-
-			console.log("update order data");
-
-			let res = {
-				success: true, 
-				message: 'Successfully added to cart',
-				item : item,
-				summary : order_data.summary,
-				cart_count : order_data.cart_count,
-				cart_id : order_data.id,
-			}
-
-			console.log("response ==>", res);
-			this.addItems(res.item);
-				window.updateViewCartCompoent(res);
-				this.displaySuccess("Successfully added to cart")
+			})
+			.catch((error)=>{
+				console.log("error in add to cart ==>", error);
 				this.setState({apiCallInProgress : false});
-				window.removeBackDrop();
+				let msg = error && error.message ? error.message : error;
+				this.displayError(msg);
+				window.removeBackDrop();		
+			})
+		// }
+		// catch (error) {
+		// 	console.log("error in add to cart ==>", error);
+		// 	this.setState({apiCallInProgress : false});
+		// 	let msg = error && error.message ? error.message : error;
+		// 	this.displayError(msg);
+		// 	window.removeBackDrop();
+		// }
 
-		}
-		catch (error) {
-			console.log("error in add to cart ==>", error);
-			this.setState({apiCallInProgress : false});
-			let msg = error && error.message ? error.message : error;
-			this.displayError(msg);
-			window.removeBackDrop();
-		}
-
-	}
-
-	getNewCartData (lat_long, formatted_address) {
-		let cart_data = {
-			user_id : firebase.auth().currentUser.uid,
-			summary : {
-				mrp_total : 0,
-				sale_price_total : 0,
-				cart_discount : 0,
-				shipping_fee : 50,
-				you_pay : 0 + 50,
-			},
-			order_type : 'cart',
-			cart_count : 0,
-			lat_long : lat_long,
-			formatted_address : formatted_address,
-			stock_location_id : '',
-			verified : !firebase.auth().currentUser.isAnonymous,
-			business_id : "zq6Rzdvcx0UrULwzeSEr",
-			mobile_number : firebase.auth().currentUser.phoneNumber ? firebase.auth().currentUser.phoneNumber : '',
-			items : [],
-			created_at : new Date().getTime()
-		}
-		return cart_data;
 	}
 
 	addItems(item){
