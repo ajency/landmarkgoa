@@ -39,9 +39,9 @@ class gpsModalPrompt extends React.Component {
 				this.setState({showSignInBtn : true})
 			}
 
-		  	if (user && !this.state.notLoggedIn) {
+		  	if (user && !this.state.notLoggedIn && !user.isAnonymous) {
 		    	user.getIdToken().then((idToken) => {
-		   			this.fetchAddresses(idToken);        
+		   			this.fetchAddresses();        
 		        });
 		  	}
 		  	else {
@@ -159,11 +159,11 @@ class gpsModalPrompt extends React.Component {
 		if(this.state.addresses && this.state.addresses.length && !this.state.locations.length && !this.state.settingUserLocation && !this.state.fetchingGPS){
 			let addresses = this.state.addresses.map((address)=>{
 				return (
-					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.address.lat_long, address.address.formatted_address)}>
-						{this.getAddressIcon(address.address.type)}
+					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
+						{this.getAddressIcon(address.type)}
 						<div className="address-text">
-							<h5>{address.address.type}</h5>
-							<span className=" font-weight-light h6">{address.address.address}, {address.address.landmark}, {address.address.city}, {address.address.state}, {address.address.pincode}</span>
+							<h5>{address.type}</h5>
+							<span className=" font-weight-light h6">{address.address}, {address.landmark}, {address.city}, {address.state}, {address.pincode}</span>
 						</div>
 					</li>
 				)
@@ -391,19 +391,16 @@ class gpsModalPrompt extends React.Component {
 		},geoOptions);
 	}
 
-	fetchAddresses(idToken){
-		let headers = {
-			Authorization : 'Bearer '+ idToken
+	fetchAddresses(){
+		try{
+			window.getAddresses().then((res)=>{
+				this.setState({ addresses : res });
+			})
 		}
-		let url = this.state.apiEndPoint + "/user/get-addresses";
-		axios.get(url, {headers :  headers })
-			.then((res) => {
-				this.setState({ addresses : res.data.addresses });
-				// this.setDefaultAddress(res.data.addresses)
-			})
-			.catch((error)=>{
-				console.log("error in fetch addresses ==>", error);
-			})
+		catch(error){
+			console.log("error in fetching addresses", error);
+		}
+
 	}
 
 	setDefaultAddress(addresses){

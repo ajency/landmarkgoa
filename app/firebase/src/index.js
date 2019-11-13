@@ -140,9 +140,11 @@ function sendTokenToServer(token){
 var products = [];
 var cartData;
 var stock_locations = []
+var user_addresses = [];
 
 syncProducts();
 syncLocations()
+syncAddresses();
 
 if(window.readFromLocalStorage('cart_id')){
     sycnCartData(window.readFromLocalStorage('cart_id'));
@@ -181,7 +183,6 @@ function syncLocations() {
 
         snapshot.docChanges().forEach(function(change) {
             if (change.type === "added") {
-                console.log("data ==>", change.doc.data());
                 let data = change.doc.data();
                 data.id = change.doc.id;
                 stock_locations.push(data);
@@ -195,6 +196,34 @@ function syncLocations() {
         });
     });
 }
+
+function syncAddresses() {
+    firebase.auth().onAuthStateChanged((user) => {
+        if(user && !user.isAnonymous){
+            let query = db.collection('user-details').doc(firebase.auth().currentUser.uid).collection('addresses');
+            query.onSnapshot(function(snapshot) {
+                if (!snapshot.size){
+                    user_addresses = [];
+                }
+
+                snapshot.docChanges().forEach(function(change) {
+                    if (change.type === "added") {
+                        let data = change.doc.data();
+                        data.id = change.doc.id;
+                        user_addresses.push(data);
+                    }
+                    if (change.type === "modified") {
+                        //update variant
+                    }
+                    if (change.type === "removed") {
+                        // remove variant
+                    }
+                });
+            });
+        }
+    });
+}
+
 
 async function getAllStockLocations(){
     let location_ref = await db.collection('locations').get()
@@ -601,4 +630,19 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
+}
+
+
+async function getAddresses(){
+    if(window.user_addresses.length){
+        return window.user_addresses
+    }
+    
+    let addresses_ref = await db.collection('user-details').doc(firebase.auth().currentUser.uid).collection('addresses').get();
+    let addresses = addresses_ref.docs.map(doc => {
+        let obj = doc.data();
+        obj.id = doc.id;
+        return obj;
+    });
+    return addresses;
 }
