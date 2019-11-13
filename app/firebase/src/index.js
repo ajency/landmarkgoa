@@ -139,15 +139,16 @@ function sendTokenToServer(token){
 
 var products = [];
 var cartData;
+var stock_locations = []
 
-getProducts();
-
+syncProducts();
+syncLocations
 
 if(window.readFromLocalStorage('cart_id')){
     sycnCartData(window.readFromLocalStorage('cart_id'));
 }
 
-function getProducts(){
+function syncProducts(){
     let query = db.collection('products');
     query.onSnapshot(function(snapshot) {
         if (!snapshot.size){
@@ -160,6 +161,30 @@ function getProducts(){
                 let data = change.doc.data();
                 data.id = change.doc.id;
                 products.push(data);
+            }
+            if (change.type === "modified") {
+                //update variant
+            }
+            if (change.type === "removed") {
+                // remove variant
+            }
+        });
+    });
+}
+
+function syncLocations() {
+    let query = db.collection('locations');
+    query.onSnapshot(function(snapshot) {
+        if (!snapshot.size){
+            stock_locations = [];
+        }
+
+        snapshot.docChanges().forEach(function(change) {
+            if (change.type === "added") {
+                console.log("data ==>", change.doc.data());
+                let data = change.doc.data();
+                data.id = change.doc.id;
+                stock_locations.push(data);
             }
             if (change.type === "modified") {
                 //update variant
@@ -437,6 +462,7 @@ async function fetchCart(cart_id){
 
 async function addToCart(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
     try{
+        console.log("product ==>", product);
         let stock_location_id,  quantity = 1, locations = [], location;
         let cart_data;
         let user_id = firebase.auth().currentUser.uid;
@@ -467,7 +493,7 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
             locations = variant.stock_locations.filter((loc)=>{ return loc.quantity >= quantity});
             console.log("locations ==>", locations);
             if(locations && locations.length){
-                location = window.findDeliverableLocation(locations, lat_long)
+                location = window.findDeliverableLocation(locations, cart_data.lat_long)
             }
             else{
                 throw 'Product is out of stock';
