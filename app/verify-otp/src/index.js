@@ -8,7 +8,7 @@ class verifyOtp extends React.Component {
 		this.state = {
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
 			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -123,8 +123,9 @@ class verifyOtp extends React.Component {
 		this.state.confirmationResult.confirm(this.state.otp)
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
-		           this.fetchAddresses(idToken);
-		           this.updateUserDetails();
+					window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+		            this.updateUserDetails();
+		            this.fetchAddresses();
 		        });
 			})
 			.catch((error)=>{
@@ -135,25 +136,21 @@ class verifyOtp extends React.Component {
 			})
 	}
 
-	fetchAddresses(idToken){
-		let headers = {
-			Authorization : 'Bearer '+ idToken
-		}
-		let url = this.state.apiEndPoint + "/user/get-addresses";
-		axios.get(url, {headers :  headers })
-			.then((res) => {
+	fetchAddresses(){
+		try{
+			window.getAddresses().then((res)=>{
 				this.closeSignInSlider();
 				this.hideVerifyOtpSlider();
-		      	// this.showGpsSlider();
-		      	window.updateAddresses(res.data.addresses);
+		      	window.updateAddresses(res);
 		      	window.removeCartLoader();
 			})
-			.catch((error)=>{
-				window.removeCartLoader();
-				console.log("error in fetch addresses ==>", error);
-				let msg = error.message ? error.message : error;
-				this.setState({showOtpLoader : false, disableButtons : false, otpErrorMsg : msg});
-			})
+		}
+		catch(error){
+			this.closeSignInSlider();
+			this.hideVerifyOtpSlider();
+	      	window.updateAddresses([]);
+	      	window.removeCartLoader();
+		}
 	}
 
 	hideVerifyOtpSlider(){
