@@ -70,6 +70,7 @@
 <?php
     $app_url = APP_URL;
     $json_path = JSON_PATH;
+    $site_url = SITE_URL;
     $js_json = json_decode(file_get_contents($json_path.'/react_component_file_hash.json'), true);
     $css_json = json_decode(file_get_contents($json_path.'/cart_app_css_file_hash.json'), true);
     // $show_pn = SHOW_PN;
@@ -98,6 +99,8 @@
           var react_css_file_hashes = <?php echo json_encode($css_json); ?>;
           var app_url = "<?php echo $app_url; ?>";
           var show_pn = "<?php echo $show_pn; ?>";
+          var site_url = "<?php echo $site_url?>";
+          console.log(site_url);
           console.log("show push notifications ==>", true);
     </script>
 <?php } ?>

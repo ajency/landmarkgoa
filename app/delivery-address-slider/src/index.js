@@ -55,8 +55,8 @@ class gpsModalPrompt extends React.Component {
 		return (
 		    <div className="slide-in" id="gpsModal">
 			  <div className="slide-in-header header-container d-flex align-items-center">
-			      <div className="app-name d-flex align-items-center">				
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+			      <div className="app-name d-flex align-items-center">			
+			          <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
 			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
