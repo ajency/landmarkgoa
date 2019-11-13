@@ -142,7 +142,7 @@ var cartData;
 var stock_locations = []
 
 syncProducts();
-syncLocations
+syncLocations()
 
 if(window.readFromLocalStorage('cart_id')){
     sycnCartData(window.readFromLocalStorage('cart_id'));
@@ -196,6 +196,16 @@ function syncLocations() {
     });
 }
 
+async function getAllStockLocations(){
+    let location_ref = await db.collection('locations').get()
+    let all_locations = location_ref.docs.map(doc => {
+        let obj = doc.data();
+        obj.id = doc.id;
+        return obj;
+    });
+    return all_locations;
+}
+
 async function fetchProduct(product_id){
     let product = await db.collection('products').doc(product_id).get();
     let product_obj = product.data();
@@ -214,17 +224,6 @@ function sycnCartData(id){
         if(doc.exists)
             cartData = doc.data();
     });
-}
-
-async function getVariantById(id) {
-    let variant = variants.find((v) => v.id == id);
-    return variant;
-}
-
-
-async function getProductById(id){
-    let product = products.find((p) => p.id == id);
-    return product;
 }
 
 
@@ -571,4 +570,35 @@ function getNewCartData (lat_long, formatted_address) {
         created_at : new Date().getTime()
     }
     return cart_data;
+}
+
+async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
+    let cart_data = await getCartByID(cart_id), locations;
+
+    if(window.stock_locations.length){
+        locations = window.stock_locations;
+    }
+    else{
+        locations = await getAllStockLocations();
+    }
+
+    console.log("update delivery address all locations", locations);
+    let stock_location_id = '';
+
+    let closest_deliverable_location = findDeliverableLocation(locations, lat_long)
+    if(closest_deliverable_location){
+        stock_location_id = closest_deliverable_location.id;
+    }
+
+
+    console.log("update delivery address delivery id ==>", stock_location_id);
+    await db.collection('carts').doc(cart_id)
+            .update(
+                {
+                    formatted_address : formatted_address,
+                    lat_long : lat_long,
+                    stock_location_id : stock_location_id
+                })
+    let res = { success : true , message: 'Address updated successfully' }
+    return res;
 }
