@@ -22,9 +22,7 @@ class Cart extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			cartEmpty : false,
-			redirectToSummary:false,
-			cartSummary:null
+			cartEmpty : false
 		}
 		this.fetchCart();
 	}
@@ -115,7 +113,7 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Link to={{pathname: "/cart/add-address", state:{formatted_address:this.state.cartData.cart.address, lat_lng:this.state.cartData.cart.lat_long}}} ><button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" >Proceed to Checkout</button></Link>
+								<Link to="/cart/select-address"><button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" >Proceed to Checkout</button></Link>
 							</div>
 						</div>
 					</div>
@@ -125,33 +123,9 @@ class Cart extends Component {
 		return (
 			<div className="cart-container visible">
 				<Header/>
-				{this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`, state:{order_obj:this.state.cartSummary}}} />: null}
 				{cartContainer}
 			</div>
 		);
-	}
-
-	handleCheckout(e) {
-		e.preventDefault();
-		let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-		let data = {
-			address_id:e.target.getAttribute("data-address"),
-			cart_id: this._currentCart //e.target.getAttribute("data-id")
-		}
-		window.addCartLoader();
-		
-		return axios.post(url,data).then((res) => {
-			if(res.data.success) {
-				this.setState({cartSummary:res.data.cart, redirectToSummary:true})
-			} else {
-				window.removeCartLoader();
-				if(res.data.code =='PAYMENT_DONE') {
-					window.removeFromLocalStorage('cart_id')
-					window.location = this._webSiteLink
-				}
-				console.log(res.data.message)
-			}
-		})
 	}
 
 	closeCart(){
