@@ -66,6 +66,7 @@ var gulp = require("gulp"),
     autoprefixer = require("autoprefixer"),
     cssnano = require("cssnano"),
     sourcemaps = require("gulp-sourcemaps");
+    minifyCSS   = require('gulp-clean-css');
 
 // Put this after including our dependencies
 var paths = {
@@ -74,6 +75,16 @@ var paths = {
         dest: "wp-content/themes/ajency-portfolio/css"
     }
 };
+
+gulp.task('sass', function() {
+    return gulp.src([
+            'wp-content/themes/ajency-portfolio/scss/custom.scss'
+        ])
+        .pipe(sass())
+        .pipe(minifyCSS())
+        .pipe(concat('custom.min.css'))
+        .pipe(gulp.dest(paths.styles.dest))
+});
 
 // Define tasks after requiring dependencies
 function style() {

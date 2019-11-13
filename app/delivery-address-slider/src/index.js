@@ -140,7 +140,7 @@ class gpsModalPrompt extends React.Component {
 			)
 		else if(!this.state.settingUserLocation)
 			return (
-				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location text-grey border-green-2  w-100 p-3 text-left h5 mb-0 position-relative">Use Current Location <img className="position-absolute-right20" src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/location.png"/></button>
+				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location text-grey border-green-2  w-100 p-3 text-left h5 mb-0 position-relative">Use Current Location <img className="position-absolute-right20" src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/location.png"}/></button>
 			)
 	}
 

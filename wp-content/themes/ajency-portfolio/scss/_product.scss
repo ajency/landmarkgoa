@@ -136,31 +136,6 @@
     }
 }
 
-// a.btn-add-to-cart{
-//     text-decoration: none;
-//     overflow: hidden;
-//     display: inline-block;
-//     img{
-//         position: relative;
-//         top: -1px;
-//         right: -50px;
-//         transition: all .5s ease;
-//     }  
-//     &-desktop{
-//         @media (min-width: 992px) {
-//             color: #fff !important;
-//             border: 0 !important;
-//         }       
-//     }
-//     &:hover{
-//         text-decoration: none;
-//         color: #4aa751 !important;
-//         img{
-//             right: 0;
-//         }        
-//     }      
-// }
-
 .product-image .item {
     display: none;
 }
