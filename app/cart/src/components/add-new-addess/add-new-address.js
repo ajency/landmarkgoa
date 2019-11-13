@@ -29,9 +29,51 @@ class AddNewAddress extends Component {
             addressInput: false,
             locations : [],
             searchText:'',
-		};
+            address_obj:  {
+                formatted_address:'',
+                city:'',
+                state:'',
+                pincode:'',
+            },
+            name:'',
+            email:'',
+            phone:''
+        };
+        this.setInitData();
+
     }
 
+    setInitData() {
+        window.addCartLoader();
+        if(this.props.location) {
+            this.setState({latlng: {lat:this.props.location.state.lat_lng[0], lng:this.props.location.state.lat_lng[1]}})
+            this.setState({address:this.props.location.state.formatted_address})
+            window.removeCartLoader();
+        } else {
+            let cart_id = window.readFromLocalStorage('cart_id')
+            if(cart_id) {
+                // let url = "https://demo8558685.mockable.io/get-cart";
+                let url = generalConfig.apiEndPoint + "/anonymous/cart/fetch";
+                let body = {
+                    cart_id : cart_id
+                }
+                axios.get(url, {params : body})
+                    .then((res) => {
+                        window.removeCartLoader();
+                        console.log("fetch cart response ==>", res);
+                        let latlng = {lat:res.data.cart.lat_long[0], lng:res.data.cart.lat_long[1]}
+                        this.setState({latlng: latlng})
+                        this.reverseGeocode(latlng);
+                    })
+                    .catch((error)=>{
+                        window.removeCartLoader();
+                        console.log("error in fetch cart ==>", error);
+                    })
+            } else {  
+                window.removeCartLoader();
+            }
+        }
+    }
    
     
     render() {
@@ -75,6 +117,22 @@ class AddNewAddress extends Component {
                 <input type="text" value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={this.handleLandmarkChange}/>
             </label>
 
+            <div className="">
+                <h5 className="ft6 mb-4">Account details</h5>
+                <label className="d-block mb-4">
+                    Full Name
+                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({name:e.target.value})} required/>
+                </label>
+
+                <label className="d-block mb-4">
+                    Email
+                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({email:e.target.value})} required/>
+                </label>   
+                <label className="d-block mb-4">
+                    Moblie No.
+                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({phone:e.target.value})} required/>
+                </label>               
+            </div>
             <h5 className="ft6 mb-4">Save as</h5>
 
             <div className="d-flex mb-3">
@@ -179,9 +237,11 @@ class AddNewAddress extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let data = {
-            address: this.state.address,
-            latlng: this.state.latlng,
-            building:this.state.building,
+            name:this.state.name,
+            email:this.state.email,
+            phone:this.state.phone,
+            lat_long: [this.state.latlng.lat,this.state.latlng.lng],
+            address:this.state.building,
             landmark:this.state.landmark,
             address_type:this.state.address_type
         }
