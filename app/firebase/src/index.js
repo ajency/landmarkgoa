@@ -433,3 +433,116 @@ async function fetchCart(cart_id){
     return response;
 
 }
+
+
+async function addToCart(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
+    try{
+        let stock_location_id,  quantity = 1, locations = [], location;
+        let cart_data;
+        let user_id = firebase.auth().currentUser.uid;
+        let variant = product.variants.find((v) => v.id === variant_id);
+        console.log("varaint ==>", variant);
+
+        if(cart_id){
+            cart_data = await window.getCartByID(user_id);
+            console.log("cart data from db ==> cart_data");
+        }
+
+        if(!cart_data ){
+            cart_data = getNewCartData(lat_long, formatted_address);
+            window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+        }
+        console.log("cart data ==>",cart_data);
+
+        // TODO : check if the item is already in cart and update the qunatity value accordingly.
+        // create new variable called updated quantity
+
+        if(cart_data.stock_location_id){
+            location = variant.stock_locations.find((loc)=>{ return loc.id == cart_data.stock_location_id});
+            if(location && location.quantity < quantity){
+                throw 'Product is out of stock';
+            }
+        }
+        else{
+            locations = variant.stock_locations.filter((loc)=>{ return loc.quantity >= quantity});
+            console.log("locations ==>", locations);
+            if(locations && locations.length){
+                location = window.findDeliverableLocation(locations, lat_long)
+            }
+            else{
+                throw 'Product is out of stock';
+            }
+        }
+        console.log("check deliverable_locations", location)
+        if(location){
+            stock_location_id = location.id;
+        }
+        else{
+            throw 'Not deliverable at your location';
+        }
+
+        let item = {
+            attributes : {
+                title : product.title,
+                images : product.image_urls,
+                size : variant.size,
+                mrp : variant.mrp,
+                sale_price : variant.sale_price,
+                discount_per : 0,
+                description : product.description,
+                veg : product.veg
+            },
+            quantity : quantity,
+            variant_id : variant_id,
+            product_id : product.id,
+            timestamp : new Date().getTime()
+        }
+
+        let order_data = await window.updateOrder(item, user_id, cart_data, stock_location_id)
+
+        console.log("update order data");
+
+        let res = {
+            success: true, 
+            message: 'Successfully added to cart',
+            item : item,
+            summary : order_data.summary,
+            cart_count : order_data.cart_count,
+            cart_id : order_data.id,
+        }
+        return res;
+    }
+    catch(error){
+        console.log("firestore function error in add to cart ==>", error);
+        let res = {
+            success: false, 
+            message: error,
+        }
+        return res;
+    }
+}
+
+
+function getNewCartData (lat_long, formatted_address) {
+    let cart_data = {
+        user_id : firebase.auth().currentUser.uid,
+        summary : {
+            mrp_total : 0,
+            sale_price_total : 0,
+            cart_discount : 0,
+            shipping_fee : 50,
+            you_pay : 0 + 50,
+        },
+        order_type : 'cart',
+        cart_count : 0,
+        lat_long : lat_long,
+        formatted_address : formatted_address,
+        stock_location_id : '',
+        verified : !firebase.auth().currentUser.isAnonymous,
+        business_id : "zq6Rzdvcx0UrULwzeSEr",
+        mobile_number : firebase.auth().currentUser.phoneNumber ? firebase.auth().currentUser.phoneNumber : '',
+        items : [],
+        created_at : new Date().getTime()
+    }
+    return cart_data;
+}
