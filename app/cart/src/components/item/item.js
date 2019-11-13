@@ -63,7 +63,7 @@ class Item extends Component {
 	}
 
 	displayApiErrorMsg(){
-		if(this.state.apiErrorMsg){
+		if(this.state.apiErrorMsg && this.props.item.deliverable && this.props.item.availability ){
 			return <div className="alert-danger p-15 mb-3">{this.state.apiErrorMsg}</div>
 		}
 	}
