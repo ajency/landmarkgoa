@@ -22,9 +22,7 @@ class Cart extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			cartEmpty : false,
-			redirectToSummary:false,
-			cartSummary:null
+			cartEmpty : false
 		}
 		this.fetchCart();
 	}
@@ -128,33 +126,9 @@ class Cart extends Component {
 		return (
 			<div className="cart-container visible">
 				<Header/>
-				{this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`, state:{order_obj:this.state.cartSummary}}} />: null}
 				{cartContainer}
 			</div>
 		);
-	}
-
-	handleCheckout(e) {
-		e.preventDefault();
-		let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-		let data = {
-			address_id:e.target.getAttribute("data-address"),
-			cart_id: this._currentCart //e.target.getAttribute("data-id")
-		}
-		window.addCartLoader();
-		
-		return axios.post(url,data).then((res) => {
-			if(res.data.success) {
-				this.setState({cartSummary:res.data.cart, redirectToSummary:true})
-			} else {
-				window.removeCartLoader();
-				if(res.data.code =='PAYMENT_DONE') {
-					window.removeFromLocalStorage('cart_id')
-					window.location = this._webSiteLink
-				}
-				console.log(res.data.message)
-			}
-		})
 	}
 
 	closeCart(){

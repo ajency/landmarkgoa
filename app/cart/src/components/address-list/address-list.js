@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import {Link, Redirect} from 'react-router-dom';
 import Header from '../header/header.js';
+import {generalConfig} from '../config';
+import axios from 'axios';
 import './address-list.scss'
 import * as _ from 'underscore';
 import AddNewAddress from '../add-new-addess/add-new-address.js';
 class AddressList extends Component {
+    _webSiteLink = "#/cart"
     constructor(props) {
         super(props);
         this.assignAndProceed = this.assignAndProceed.bind(this);
@@ -19,9 +23,17 @@ class AddressList extends Component {
         }
     }
 
+    componentWillMount() {
+        console.log("mounting")
+        this.setState({cart_id:window.readFromLocalStorage('cart_id')})
+    }
+
     render() {
         return (
             <div className="address-container visible">
+                {this.state.redirectToAddAddress ? "redirect":null}
+                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary}}} />: null}
+                {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
                 <Header/>
                 {this.state.showAddressComponent ? <AddNewAddress showAddressComponent= {this.state.showAddressComponent} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
@@ -35,39 +47,7 @@ class AddressList extends Component {
                         <h3 className="mt-4 h1 ft6">Choose Delivery Address</h3>
                 </div>
                 <div className="address-list p-15 pt-0 mt-4">
-                    <div className="items mb-5">
-                        <div className="text-black text-link highlight">
-                            <h1 className="ft6">Office</h1>
-                            <h5 className="font-weight-light">
-                                <span className="p-name d-inline-block">Dhiraj Dessai</span> <span className="p-phone-number d-inline-block">9823353495</span>
-                            </h5>
-                            <h5 className="font-weight-light">
-                                Panjim Convention Center, Vistar Estates, Mala, Rua de Ourém, Neugi Nagar, Panaji, Goa 403001
-                            </h5>
-                        </div>
-                    </div>
-                    <div className="items mb-5">
-                        <div className="text-black text-link highlight">
-                            <h1 className="ft6">Home</h1>
-                            <h5 className="font-weight-light">
-                                <span className="p-name d-inline-block">Dhiraj Dessai</span> <span className="p-phone-number d-inline-block">9823353495</span>
-                            </h5>
-                            <h5 className="font-weight-light">
-                                Roland Apartment, Cabesa Ward, St. Cruz, Panaji, Goa 403005
-                            </h5>
-                        </div>
-                    </div>
-                    <div className="items mb-5">
-                        <div className="text-black text-link highlight">
-                            <h1 className="ft6">Dad's office</h1>
-                            <h5 className="font-weight-light">
-                                <span className="p-name d-inline-block">Dhiraj Dessai</span> <span className="p-phone-number d-inline-block">9823353495</span>
-                            </h5>
-                            <h5 className="font-weight-light">
-                                H. no. 1059/1, Bansai junction, Curchorem, Cacora, Goa 
-                            </h5>
-                        </div>
-                    </div>                    
+                    {this.state.fetchComplete ? this.displayAddressList():null}  
                     <div className="post-content pb-5"> 
                         <div className="next-title m-0" onClick={(e) => this.setState({showAddressComponent:true})}>Add new address <i className="fas fa-arrow-right text-green"></i></div>
                     </div>
