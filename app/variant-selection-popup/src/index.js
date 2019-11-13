@@ -6,9 +6,6 @@ class variantSelection extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			variants : [], // variants fetched from firestore
 			selectedVariant : '',
 			productId : '',
@@ -105,15 +102,16 @@ class variantSelection extends React.Component {
 	}
 
 
-	async fetchVariants(product_id, last_selected){
+	fetchVariants(product_id, last_selected){
 		if(window.products && window.products.length){
 			let product = window.products.filter((product) => product.id == product_id);
 			this.setVariants(product[0], last_selected)
 		}
 		else{
 			try{
-				let product = await window.fetchProduct(product_id);
-				this.setVariants(product, last_selected);	
+				window.fetchProduct(product_id).then((res)=>{
+					this.setVariants(res, last_selected);
+				})
 			}
 			catch(error){
 				setTimeout(()=>{

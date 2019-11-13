@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode : "production",
-  entry: ["@babel/polyfill", "./src/index"],
+  // entry: ["@babel/polyfill", "./src/index"],
   output : {
     // filename : "sign-in.js",
     filename: 'view-cart.[contenthash].js',

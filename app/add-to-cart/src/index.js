@@ -6,15 +6,11 @@ class addToCart extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			apiCallInProgress : false,
 			quantity : 0,
 			lastSelected : '',
 			items : [], // variants added to cart
 		};
-	}
-
-	componentDidMount(){
 	}
 
 	render() {
@@ -115,70 +111,39 @@ class addToCart extends React.Component {
 		}
 	}
 
-	async removeFromCart(variant_id = null){
+	removeFromCart(variant_id = null){
 		window.addBackDrop();
 		this.setState({apiCallInProgress : true});
-		// let url = this.state.apiEndPoint + "/anonymous/cart/delete";
-		// // let url = "https://demo8558685.mockable.io/remove-from-cart";
-		// let body = {
-		// 	variant_id 	: variant_id,
-		// 	quantity 	: 1,
-		// 	cart_id 	: window.readFromLocalStorage('cart_id')
-		// }
+		// try{
+			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
+			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
+				if(res.success){
+					this.displaySuccess("Successfully removed from cart");
+					let item = {
+						variant_id : variant_id,
+						quantity : 1
+					}
+					this.removeItems(item);
+					window.updateViewCartCompoent(res);
+				}
+				else{
+					this.displayError(res.message);
+				}
+				this.setState({apiCallInProgress : false});
+				window.removeBackDrop();
+			})
 
-		// axios.post(url, body)
-		// .then((res) => {
-		// 	if(res.data.success){
-		// 		this.displaySuccess("Successfully removed from cart");
-		// 		let item = {
-		// 			variant_id : variant_id,
-		// 			quantity : 1
-		// 		}
-		// 		this.removeItems(item);
-		// 		window.updateViewCartCompoent(res.data);
-		// 	}
-		// 	else{
-		// 		this.displayError(res.data.message);
-		// 	}
-		// 	this.setState({apiCallInProgress : false});
-		// 	window.removeBackDrop();
-		// })
-		// .catch((error)=>{
-		// 	console.log("error in add to cart ==>", error);
+		// }
+		// catch(error){
+		// 	console.log("error in remove from cart ==>", error);
 		// 	this.setState({apiCallInProgress : false});
 		// 	let msg = error && error.message ? error.message : error;
 		// 	this.displayError(msg);
 		// 	window.removeBackDrop();
-		// })
-		try{
-			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
-			let res = await window.removeItemFromCart(variant_id, cart_id, quantity);
-			if(res.success){
-				this.displaySuccess("Successfully removed from cart");
-				let item = {
-					variant_id : variant_id,
-					quantity : 1
-				}
-				this.removeItems(item);
-				window.updateViewCartCompoent(res);
-			}
-			else{
-				this.displayError(res.message);
-			}
-			this.setState({apiCallInProgress : false});
-			window.removeBackDrop();
-
-		}
-		catch(error){
-			console.log("error in remove from cart ==>", error);
-			this.setState({apiCallInProgress : false});
-			let msg = error && error.message ? error.message : error;
-			this.displayError(msg);
-			window.removeBackDrop();
-		}
+		// }
 	}
 
-	async addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
+	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
 		window.addBackDrop()
 		// try{
 			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{

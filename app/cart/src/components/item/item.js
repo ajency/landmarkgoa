@@ -57,7 +57,7 @@ class Item extends Component {
 
 	checkServiceability(){
 		if(!this.props.item.deliverable)
-			return <div className="alert-danger p-15 mb-3">Cannot be delivred at your location</div>
+			return <div className="alert-danger p-15 mb-3">Cannot be delivered at your location</div>
 		if(!this.props.item.availability)
 			return <div className="alert-danger p-15 mb-3">Quantity not available</div>
 	}

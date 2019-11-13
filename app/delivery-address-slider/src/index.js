@@ -15,8 +15,6 @@ class gpsModalPrompt extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			locations : [],
 			locError : '',
@@ -208,7 +206,7 @@ class gpsModalPrompt extends React.Component {
 				)
 		}
 
-		if(!this.state.locations.length && this.state.searchText.length > 2){
+		if(!this.state.locations.length && this.state.searchText.length > 2 && !this.state.settingUserLocation){
 			return (
 					<div className="no-results-msg">
 						No results, please enter a valid street address
@@ -347,8 +345,6 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	updateLocationUI(lat_lng, formatted_address){
-		// document.cookie = "lat_lng=" + lat_lng[0] + ',' +lat_lng[1] + ";path=/";
-		// document.cookie = "formatted_address=" + formatted_address + ";path=/";
 		window.writeInLocalStorage('lat_lng', lat_lng[0] + ',' +lat_lng[1]);
 		window.writeInLocalStorage('formatted_address', formatted_address);
 		window.lat_lng = lat_lng;
@@ -425,12 +421,10 @@ class gpsModalPrompt extends React.Component {
 
 	setSliderLoader(){
 		window.addCartLoader();
-		// document.querySelector('#react-add-delivery-address-container').classList.add('slider-loader');
 	}
 
 	removeSliderLoader(){
 		window.removeCartLoader();
-		// document.querySelector('#react-add-delivery-address-container').classList.remove('slider-loader');
 	}
 
 }
@@ -443,7 +437,6 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	gpsModalPromptComponent.setState({showNoAddressMsg : false, locations : [], locError : '', gpsError : '', fetchingGPS : false, searchText : '', settingUserLocation : false});
 	document.querySelector('#gpsModal').classList.add('visible');
 	window.addBackDrop();
-	// window.checkPushNotificationPermissions();
 }
 
 window.updateAddresses = (addresses = null) => {
