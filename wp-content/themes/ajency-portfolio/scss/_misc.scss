@@ -173,9 +173,9 @@
     width: 410px;
     padding-bottom: 52px;
     background: #fff;
-    &.active{
-        transform: translate(0,0);
-    }
+  }
+  .cart-wrapper.active{
+    transform: translate(0,0);
   }
 
   .cursor-pointer{
@@ -210,6 +210,12 @@
     text-align: left;
   }
 
+  @media (max-width: 480px){
+    .cart-wrapper{
+      width: 100%;
+    }
+  }
+
   .custom-modal {
     position: fixed;
     left: 0;
@@ -224,10 +230,4 @@
     visibility: hidden;
     transform: scale(1.1);
     transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
-}
-
-@media (max-width: 480px){
-    .cart-wrapper{
-        width: 100%;
-    }
-}
+}  
