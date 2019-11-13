@@ -57,6 +57,9 @@
         i{
             position: relative;
             top: 2px;
+            right: 5px;
+            -webkit-animation: side-arrow 2.5s infinite;
+            animation: side-arrow 2.5s infinite;
         }
         @media (min-width: 992px) {
             padding: 10px 15px!important;

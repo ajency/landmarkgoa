@@ -256,14 +256,14 @@
 <div class="backdrop"></div>
 
 <div class="site-loader text-center p-5">
-  <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.jpg" width="75px" class="mt-5"/> 
+  <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.png" width="75px" class="mt-5"/> 
 </div>
 
 <div class="push p-15 d-none">
     <div class="push-note">
         <div class="push-row d-flex mb-3">
             <div class="push-img">
-              <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.jpg" width="65"/> 
+              <img src="<?php echo get_template_directory_uri(); ?>/images/green_grain_bowl.png" width="65"/> 
             </div>
             <div class="push-text pl-3">
                 <h4 class="ft6">Get latest notifications from GGB</h4>
