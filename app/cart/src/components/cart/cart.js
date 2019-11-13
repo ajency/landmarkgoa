@@ -7,7 +7,7 @@ import DeliveryAddress from '../delivery-address/delevery-address.js';
 import add from '../../assets/images/add.png';
 import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import {generalConfig} from '../config'
 import axios from 'axios';
  declare var $: any;
@@ -115,7 +115,7 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR">Proceed to Checkout</button>
+								<Link to={{pathname: "/cart/add-address", state:{formatted_address:this.state.cartData.cart.address, lat_lng:this.state.cartData.cart.lat_long}}} ><button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" >Proceed to Checkout</button></Link>
 							</div>
 						</div>
 					</div>
