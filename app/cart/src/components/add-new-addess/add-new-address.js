@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Header from '../header/header.js';
 import './add-new-address.scss'
+import GoogleMap from '../google-map/google-map';
+import { generalConfig } from '../config.js';
+import * as _ from 'underscore'
 import GoogleMap from '../google-map/google-map.js';
 const CancelToken = axios.CancelToken;
 let cancel;
@@ -18,7 +21,7 @@ class AddNewAddress extends Component {
 			locError : '',
 			gpsError : '',
             showLoader : false,
-            address: this.props.address,
+            address: '',
             landmark:"",
             building:"",
             latlng: {
@@ -36,9 +39,20 @@ class AddNewAddress extends Component {
                 pincode:'',
             },
             name:'',
+            email:''
+            address_obj:  {
+                formatted_address:'',
+                city:'',
+                state:'',
+                pincode:'',
+            },
+            name:'',
             email:'',
             phone:''
         };
+        this.setInitData();
+
+    }
         this.setInitData();
 
     }
@@ -110,11 +124,11 @@ class AddNewAddress extends Component {
         <div>
             <label className="d-block mb-4">
                 House/Flat/Block no:
-                <input type="text" value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={this.handleBuildingChange}/>
+                <input type="text" value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={(e)=> this.setState({'building':e.target.value})} required/>
             </label>
             <label className="d-block mb-4">
                 Landmark:
-                <input type="text" value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={this.handleLandmarkChange}/>
+                <input type="text" value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({'landmark':e.target.value})} required/>
             </label>
 
             <div className="">
@@ -157,19 +171,6 @@ class AddNewAddress extends Component {
                         <span className="radio-text d-block">Other</span>
                     </label>
                 </div>
-            </div>
-
-            <div className="d-none">
-                <h5 className="ft6 mb-4">Account details</h5>
-                <label className="d-block mb-4">
-                    Full Name
-                    <input type="text" className="d-block w-100 rounded-0 input-bottom"/>
-                </label>
-
-                <label className="d-block mb-4">
-                    Email
-                    <input type="text" className="d-block w-100 rounded-0 input-bottom"/>
-                </label>               
             </div>
         </div>
         );
@@ -222,20 +223,14 @@ class AddNewAddress extends Component {
         this.reverseGeocode({'lat':map.getCenter().lat(), 'lng':map.getCenter().lng()});
     }
 
-    handleLandmarkChange = (e) => {
-        this.setState({'landmark':e.target.value});
-    }
-
-    handleBuildingChange = (e) => {
-        this.setState({'building':e.target.value});
-    }
 
     handleAddressTypeChange = (e) => {
         this.setState({'address_type':e.target.value})
     }
 
     handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
+        window.addCartLoader()
         let data = {
             name:this.state.name,
             email:this.state.email,
@@ -243,10 +238,25 @@ class AddNewAddress extends Component {
             lat_long: [this.state.latlng.lat,this.state.latlng.lng],
             address:this.state.building,
             landmark:this.state.landmark,
-            address_type:this.state.address_type
+            type:this.state.address_type,
+            set_default:false
         }
-        console.log(data);
         
+        let url = generalConfig.apiEndPoint + '/user/add-address'
+        axios.post(url, {...this.state.address_obj, ...data})
+        .then((res) => {
+            console.log(res)
+            if(this.props.cartRequest) {
+              
+                console.log(res.data.address.id, "lk")
+                this.props.assignAndProceed(null,res.data.address.id)
+            }
+
+        })
+        .catch(err => {
+            window.removeCartLoader()
+            console.log(err)
+        })        
     }
 
     changeAddress = (e) => {
@@ -268,15 +278,34 @@ class AddNewAddress extends Component {
             
 		axios.get(url, {params : body})
         .then((res) => {
+            let res_address = {};
             if(res.data.status === "OK"){
                 if(obj.loc) {
-                    this.setState({"address": res.data.result.formatted_address});
+                    res_address = res.data.result
+ 
                     this.setState({'latlng':{lat: res.data.result.geometry.location.lat,lng: res.data.result.geometry.location.lng}});
                     this.setState({'locations':[], 'addressInput':false});
                 } else if(obj.lat && obj.lng) {
-                    this.setState({"address":res.data.results[0].formatted_address});
+                    res_address = res.data.results[0]
+
                 }
+                this.setState({"address":res_address.formatted_address});
+                let city,state,pincode;
+                _.forEach(res_address.address_components,(obj) => {
+                    if(_.include(obj.types,'locality')) {
+                       city = obj.long_name;
+                    }
+                    if(_.include(obj.types,'administrative_area_level_1')) {
+                       state= obj.long_name;
+                    }
+                    if(_.include(obj.types,'postal_code')) {
+                       pincode = obj.long_name;
+                    }
+                    
+                })
+                this.setState({address_obj: {formatted_address: res_address.formatted_address, state: state,city: city, pincode: pincode}})
                 this.setState({showLoader : false})
+
             }
             else{
                 this.setState({locError : res.data.error_message})
