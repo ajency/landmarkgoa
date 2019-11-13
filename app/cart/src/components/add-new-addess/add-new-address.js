@@ -81,21 +81,21 @@ class AddNewAddress extends Component {
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
                         <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="home"  checked={this.state.address_type ==='home'} />
-                        <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/home_location.png" className="mb-1" height="30"/>
+                        <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/home_location.png"} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Home</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
                         <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="work" checked={this.state.address_type ==='work'} />
-                        <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/office_location.png" className="mb-1" height="30"/>
+                        <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/office_location.png"} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Work</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block">
                     <label className="text-center">
                         <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange}  value="other" checked={this.state.address_type ==='other'} />
-                        <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/address_location.png" className="mb-1" height="30"/>
+                        <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/address_location.png"} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Other</span>
                     </label>
                 </div>

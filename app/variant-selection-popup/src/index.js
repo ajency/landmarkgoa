@@ -32,7 +32,10 @@ class variantSelection extends React.Component {
 			          </div>
 			        </div>
 			        <div className="custom-modal-footer d-flex justify-content-between">
-			          <button type="button" className="btn-reset btn-continue btn-arrow font-size-15 text-uppercase p-15 bg-primary text-white text-left w-100 position-relative" onClick={()=>this.addToCart(this.state.selectedVariant)} >Select & Continue</button>
+						<button type="button" className="btn-reset btn-continue btn-arrow-icon font-size-15 text-uppercase p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={()=>this.addToCart(this.state.selectedVariant)} >
+							Select & Continue
+							<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+						</button>
 			        </div>
 			    </div>
 			</div>

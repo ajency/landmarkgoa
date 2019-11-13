@@ -56,14 +56,15 @@ class gpsModalPrompt extends React.Component {
 		    <div className="slide-in" id="gpsModal">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">			
-			          <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+			          <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+
+			          <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/checkout.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			          Secure <br/>Checkout
 			      </div>
 			      <h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.closeGpsSlider()}>
-			          <span aria-hidden="true"><img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/remove.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
+			          <span aria-hidden="true"><img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/remove.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
@@ -121,7 +122,7 @@ class gpsModalPrompt extends React.Component {
 						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
 			        		<input type="text" className="border-grey-2 w-100 rounded-0 p-3 h5 mb-0 plceholder-text" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} />
-			       			<img className="position-absolute-right20" src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/search.png"/>
+			       			<img className="position-absolute-right20" src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/search.png"}/>
 			      		</div>
 			      	</div>
 			)

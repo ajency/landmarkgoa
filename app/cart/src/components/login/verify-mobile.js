@@ -15,8 +15,8 @@ class VerifyMobile extends Component {
                     <h3 className="mt-4 h1 ft6">Verify mobile</h3>
                     <h4 className="font-weight-light mt-4 pb-4">Looks like you already have account with an saved address. Sign in with OTP for faster checkout.</h4>    
                     <div className="d-flex justify-content-between">
-                    <button className="btn btn-primary btn-inverted btn-arrow p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48">Cancel</button>                             
-                    <button className="btn btn-primary btn-arrow p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48">Sign in</button>         
+                    <button className="btn btn-primary btn-inverted btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between">Cancel <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>                             
+                    <button className="btn btn-primary btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between">Sign in <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>         
                     </div>
                 </div>
             </div>

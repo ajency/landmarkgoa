@@ -70,7 +70,7 @@
 <?php
     $app_url = APP_URL;
     $json_path = JSON_PATH;
-    $site_url = SITE_URL;
+    $site_url = get_site_url();
     $js_json = json_decode(file_get_contents($json_path.'/react_component_file_hash.json'), true);
     $css_json = json_decode(file_get_contents($json_path.'/cart_app_css_file_hash.json'), true);
     // $show_pn = SHOW_PN;
@@ -239,7 +239,5 @@
         });
     }
 </script>
-
-    <?php  wp_footer(); ?>
     </body>
 </html>

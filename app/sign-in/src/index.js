@@ -24,14 +24,14 @@ class signInModal extends React.Component {
 			<div className="slide-in flex-slide-in" id="phone_number">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">					
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/checkout.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			          Secure <br/>Checkout
 			      </div>
 			      <h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.closeSignInSlider()} disabled={this.state.disableButtons}>
-			          <span aria-hidden="true"><img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/remove.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
+			          <span aria-hidden="true"><img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/remove.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
@@ -74,8 +74,7 @@ class signInModal extends React.Component {
 		// 	);
 		// }
 		return (<div className="btn-inner-wrap">
-		          <button type="button" className="btn-reset text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>Submit</button>
-		          <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
+		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>Submit <i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
 		        </div>
 		);
 	}
