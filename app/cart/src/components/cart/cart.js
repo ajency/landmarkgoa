@@ -151,38 +151,11 @@ class Cart extends Component {
 			if(!user_details || !user_details.phone){
 				this.props.history.push('/cart/login');
 			}
-			else if(window.firebase.auth().currentUser.isAnonymous){
-				this.props.history.push('/cart/add-address');
-			}
-			else if(window.userAddresses && !window.userAddresses.length){
-				this.props.history.push('/cart/add-address');
-			}
 			else{
-				this.props.history.push('/cart/address-list');	
+				this.props.history.push('/cart/select-address');
 			}
+			
 		})
-
-
-		// e.preventDefault();
-		// let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-		// let data = {
-		// 	address_id:e.target.getAttribute("data-address"),
-		// 	cart_id: this._currentCart //e.target.getAttribute("data-id")
-		// }
-		// window.addCartLoader();
-		
-		// return axios.post(url,data).then((res) => {
-		// 	if(res.data.success) {
-		// 		this.setState({cartSummary:res.data.cart, redirectToSummary:true})
-		// 	} else {
-		// 		window.removeCartLoader();
-		// 		if(res.data.code =='PAYMENT_DONE') {
-		// 			window.removeFromLocalStorage('cart_id')
-		// 			window.location = this._webSiteLink
-		// 		}
-		// 		console.log(res.data.message)
-		// 	}
-		// })
 	}
 
 	closeCart(){
