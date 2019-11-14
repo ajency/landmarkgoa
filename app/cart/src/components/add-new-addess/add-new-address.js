@@ -55,14 +55,18 @@ class AddNewAddress extends Component {
         if(window.firebase.auth().currentUser.isAnonymous) {
             returnState['showUserDetailsFields'] =true;
         } else {
-            let user_details_ref = window.db.collection('user-details').doc(window.firebase.auth().currentUser.uid).get();
-            if(user_details_ref.data().name.length == 0 || user_details_ref.data().email.length == 0) {
-                returnState['showUserDetailsFields'] = true;
-            } 
-            returnState["name"] = user_details_ref.data().name;
-            returnState["email"] = user_details_ref.data().email;
-            returnState["phone"] = user_details_ref.data().phone;
+             window.db.collection('user-details').doc(window.firebase.auth().currentUser.uid).get()
+            .then(user_details_ref => {
+                if(user_details_ref.data().name.length == 0 || user_details_ref.data().email.length == 0) {
+                    returnState['showUserDetailsFields'] = true;
+                } 
+                returnState["name"] = user_details_ref.data().name;
+                returnState["email"] = user_details_ref.data().email;
+                returnState["phone"] = user_details_ref.data().phone;
+            })
+           
         }
+        console.log(returnState)
         return returnState;
     }
 
@@ -75,13 +79,18 @@ class AddNewAddress extends Component {
                 window.removeCartLoader();
             } else {
                 let cart_id = window.readFromLocalStorage('cart_id')
+                console.log("setInitData ====>", cart_id)
                 if(cart_id) {
                     window.removeCartLoader();
-                    let cart = window.getCartByID(cart_id)
-                    console.log("fetch cart response ==>", cart);
-                    let latlng = {lat:cart.lat_long[0], lng:cart.lat_long[1]}
-                    this.setState({latlng: latlng})
-                    this.reverseGeocode(latlng);
+                    window.getCartByID(cart_id).then(cart => {
+                        console.log("fetch cart response ==>", cart);
+                        cart = JSON.parse(JSON.stringify(cart));
+                        console.log("fetch cart response ==>", cart);
+                        let latlng = {lat:cart.lat_long[0], lng:cart.lat_long[1]}
+                        this.setState({latlng: latlng})
+                        this.reverseGeocode(latlng);
+                    })
+                   
 
                 } else {
                     this.displayError("Cart not found.")
@@ -100,7 +109,7 @@ class AddNewAddress extends Component {
     render() {
         return (
             <div className="address-container">
-                <Header/>
+               {this.props.cartRequest ?  null:<Header/>}
                 <div className="map-container">
                     <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng}/>
                     <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
@@ -148,21 +157,21 @@ class AddNewAddress extends Component {
             <div className="d-flex mb-3">
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
-                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="home"  checked={this.state.address_type ==='home'} />
+                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="home"  checked={this.state.address_type ==='Home'} />
                         <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/home_location.png"} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Home</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
-                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="work" checked={this.state.address_type ==='work'} />
+                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="work" checked={this.state.address_type ==='Work'} />
                         <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/office_location.png"} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Work</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block">
                     <label className="text-center">
-                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange}  value="other" checked={this.state.address_type ==='other'} />
+                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange}  value="other" checked={this.state.address_type ==='Other'} />
                         <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/address_location.png"} className="mb-1" height="30"/>
                         <span className="radio-text d-block">Other</span>
                     </label>
@@ -238,7 +247,7 @@ class AddNewAddress extends Component {
             errors.email = "Email is required!"
             error = true;
         }
-        if(window.validEmailRegex.test(this.state.email)) {   
+        if(!window.validEmailRegex.test(this.state.email)) {   
             errors.email = "Please enter valid email";
             error = true;
         }
@@ -251,6 +260,7 @@ class AddNewAddress extends Component {
             error = true;
         }
         if(error) {
+            window.removeCartLoader();
             this.setState({"errors":errors});
             return false;
         }
@@ -267,12 +277,14 @@ class AddNewAddress extends Component {
         }
         
         try {
-            console.log()
-            let address = window.addAddress({...this.state.address_obj, ...data})
-            if(this.props.cartRequest) {
-                console.log(address.id, address)
-                this.props.assignAndProceed(null,address.id)
-            }
+             window.addAddress({...this.state.address_obj, ...data}).then(address => {
+                console.log(this.props.cartRequest,address)
+                if(this.props.cartRequest) {
+                    console.log(address.id, address)
+                    this.props.assignAndProceed(null,address.id)
+                }
+             })
+            
 
         }catch(err) {
             window.removeCartLoader()
@@ -412,15 +424,18 @@ class AddNewAddress extends Component {
     }
 
     isAddressDeliverable(lat_lng) {
-        let locations = window.getCurrentStockLocation()
-        if(!locations.length) {
-            this.displayError("Something went wrong...")
-            return false;
-        }
-       let deliverable =  window.findDeliverableLocation(locations,lat_lng)
 
-       return !!deliverable
-
+       return window.getCurrentStockLocation().then(locations => {
+            if(!locations.length) {
+                this.displayError("Something went wrong...")
+                return false;
+            }
+           let deliverable =  window.findDeliverableLocation(locations,lat_lng)
+    
+           return !!deliverable
+    
+        })
+      
     }
 
 

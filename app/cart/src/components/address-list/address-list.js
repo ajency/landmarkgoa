@@ -52,7 +52,7 @@ class AddressList extends Component {
                 {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
                 <Header/>
-                {this.state.showAddressComponent ? <AddNewAddress showAddressComponent= {this.state.showAddressComponent} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
+                {this.state.showAddressComponent ? <AddNewAddress cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
         );
     }
@@ -105,56 +105,57 @@ class AddressList extends Component {
 
     assignAndProceed(e,address_id) {
         console.log(this.state, address_id)
-        // if(this.state.showAddressComponent) {
-        //     this.setState({showAddressComponent:false})
-        // }
+        if(this.state.showAddressComponent) {
+            this.setState({showAddressComponent:false})
+        }
 
-        // //let cart_id =  e.target.getAttribute("data-id")
-        // this._currentCart = window.readFromLocalStorage('cart_id');
-		// let cart_id =  window.readFromLocalStorage('cart_id');
-        // if(cart_id) {
-        //      if(e) {
-        //         e.preventDefault();
-        //         if(!this.isAddressDeliverable(e.target.getAttribute("data-lat-long"))) {
-        //             this.displayError("Selected address is not deliverable :(");
-        //             return false;
-        //         }
-        //      }
-        //     let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-        //     let data = {
-        //         address_id: address_id,
-        //         cart_id: cart_id
-        //     }
-        //     window.addCartLoader();
-            
-        //     return axios.post(url,data).then((res) => {
-        //         if(res.data.success) {
-        //             this.setState({cartSummary:res.data.cart, redirectToSummary:true})
-        //         } else {
-        //             window.removeCartLoader();
-        //             if(res.data.code =='PAYMENT_DONE') {
-        //                 window.removeFromLocalStorage('cart_id')
-        //                 this.setState({redirectToCart:true})
-        //             }
-        //             console.log(res.data.message)
-        //         }
-        //     })
-        // } else {
-        //     this.setState({redirectToCart:true})
-        // }
+        //let cart_id =  e.target.getAttribute("data-id")
+        this._currentCart = window.readFromLocalStorage('cart_id');
+		let cart_id =  window.readFromLocalStorage('cart_id');
+        if(cart_id) {
+             if(e) {
+                e.preventDefault();
+                if(!this.isAddressDeliverable(e.target.getAttribute("data-lat-long"))) {
+                    this.displayError("Selected address is not deliverable :(");
+                    return false;
+                }
+             }
+            // let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
+            // let data = {
+            //     address_id: address_id,
+            //     cart_id: cart_id
+            // }
+            window.addCartLoader();
+            return window.assignAddressToCart(address_id)
+            .then((res) => {
+                if(res.success) {
+                    this.setState({cartSummary:res.cart, redirectToSummary:true})
+                } else {
+                    window.removeCartLoader();
+                    if(res.code =='PAYMENT_DONE') {
+                        window.removeFromLocalStorage('cart_id')
+                        this.setState({redirectToCart:true})
+                    }
+                }
+            })
+        } else {
+            this.setState({redirectToCart:true})
+        }
         
         
     }
     isAddressDeliverable(address_id) {
         let address = window.user_addresses.filter((address) => { return address.id == address_id;})[0];
-        let locations = window.getCurrentStockLocation()
-        if(!locations.length) {
-            this.displayError("Something went wrong...")
-            return false;
-        }
-       let deliverable =  window.findDeliverableLocation(locations,address.lat_long)
-
-       return !!deliverable
+        window.getCurrentStockLocation().then(locations => {
+            if(!locations.length) {
+                this.displayError("Something went wrong...")
+                return false;
+            }
+            let deliverable =  window.findDeliverableLocation(locations,address.lat_long)
+        
+            return !!deliverable
+        })
+       
 
     }
 }
