@@ -656,7 +656,8 @@ async function addAddress(addressObj) {
             default 	: addressObj.set_default,
             lat_long	: addressObj.lat_long,
             formatted_address : addressObj.formatted_address,
-            type		: addressObj.type
+            type		: addressObj.type,
+            verified    : !firebase.auth().currentUser.isAnonymous()
 
         }
         let address_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).collection('addresses').doc();
