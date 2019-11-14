@@ -204,7 +204,7 @@ function syncLocations() {
 var unsubscribeAddressListner
 function syncAddresses() {
     firebase.auth().onAuthStateChanged((user) => {
-        if(user && !user.isAnonymous){
+        if(user){
 
             if(unsubscribeAddressListner){
                 unsubscribeAddressListner();
@@ -680,7 +680,7 @@ async function addAddress(addressObj) {
             name    : addressObj.name,
             email   : addressObj.email
         })
-
+        console.log("addressObj ==>", addressObj, userDetails_ref.data().phone);
         let address_obj = {
             name		: addressObj.name,
             email       :addressObj.email,
@@ -689,7 +689,7 @@ async function addAddress(addressObj) {
             landmark 	: addressObj.landmark,
             city 		: addressObj.city,
             state 		: addressObj.state,
-            pincode 	: addressObj.pincode,
+            pincode     : addressObj.pincode ? addressObj.pincode : '',
             default 	: addressObj.set_default,
             lat_long	: addressObj.lat_long,
             formatted_address : addressObj.formatted_address,
