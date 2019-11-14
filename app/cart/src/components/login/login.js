@@ -80,16 +80,30 @@ class LogIn extends Component {
 	    }
 	}
 
-	modalClosed(){
-		window.modal_closed = true;
-	}
 
 	signInWithPhoneNumber(){
-		// TODO : check if user already exist
 		window.addCartLoader();
-		window.firebase.auth().currentUser.getIdToken().then((idToken)=>{
-			this.updateUserDetails(idToken)
-		})
+		let url = generalConfig.apiEndPoint + "/check-user-exist";
+		let body = {
+			phone_number : this.state.phoneNumber
+		}
+		axios.get(url, {params : body})
+			.then((res) => {
+				if(res.data.success){
+					this.props.history.push({pathname : '/cart/verify-mobile', state : {phoneNumber : this.state.phoneNumber}});
+					window.removeCartLoader();
+				}
+				else{
+					window.firebase.auth().currentUser.getIdToken().then((idToken)=>{
+						this.updateUserDetails(idToken)
+					})
+				}
+			})
+			.catch((error)=>{
+				let msg = error.message ? error.message : error;
+				this.setState({errorMessage : error.message});
+				window.removeCartLoader();
+			})
 	}
 
 	updateUserDetails(idToken){
@@ -110,15 +124,6 @@ class LogIn extends Component {
 				console.log("error in update user details ==>", error);
 				window.removeCartLoader();
 			})
-	}
-
-	closeSignInSlider(){
-		document.querySelector('#phone_number').classList.remove('visible');
-	}
-
-	showOtpSlider(confirmationResult, phone_number){
-		window.showOTPSlider(true);
-		window.updateOtpSLider(confirmationResult, phone_number);
 	}
 
 }
