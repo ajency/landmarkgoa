@@ -9,8 +9,7 @@ import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
 import {Redirect} from 'react-router-dom';
 import {generalConfig} from '../config'
-
- declare var $: any;
+declare var $: any;
 
 class Cart extends Component {
     _webSiteLink = "#/cart";
@@ -115,7 +114,7 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR">Proceed to Checkout</button>
+								<button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>Proceed to Checkout</button>
 							</div>
 						</div>
 					</div>
@@ -129,6 +128,21 @@ class Cart extends Component {
 				{cartContainer}
 			</div>
 		);
+	}
+
+	disableCheckoutButton(){
+		if(this.state.cartData && this.state.cartData.cart && this.state.cartData.cart.items.length){
+			let disable = false;
+			for(const item of this.state.cartData.cart.items){
+				if(!item.deliverable || !item.availability){
+					disable = true;
+					break;
+
+				}
+			}
+			return disable;
+		}
+		return true;
 	}
 
 	handleCheckout(e) {

@@ -18,7 +18,7 @@ class viewCart extends React.Component {
 			return (
 				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : '')}>
 						{this.getItemsCount()}
-					<div id="view-cart-btn cursor-pointer" onClick={() => this.loadCart()}>
+					<div id="view-cart-btn" className="cursor-pointer" onClick={() => this.loadCart()}>
 						VIEW CART
 					</div>
 				</div>

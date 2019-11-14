@@ -54,13 +54,6 @@ class LogIn extends Component {
 	}
 
 	getSignInButtons(){
-		// if(this.state.showSignInLoader){
-		// 	return (
-		// 		<div className="btn-icon">
-		// 				<i className="fas fa-circle-notch fa-spin fa-lg"></i>
-		// 		</div>
-		// 	);
-		// }
 		return (<div className="btn-inner-wrap">
 		          <button type="button" className="btn-reset text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>Submit</button>
 		          <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
