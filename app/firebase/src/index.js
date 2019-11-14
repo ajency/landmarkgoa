@@ -1,3 +1,4 @@
+
  // Your web app's Firebase configuration
 
 // var firebaseConfig = {
@@ -698,5 +699,30 @@ async function addAddress(addressObj) {
         }
         let address_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).collection('addresses').doc();
         await address_ref.set(address_obj);
-        return address_ref.data()
+        let address = address_ref.data();
+        address.id = address_ref.id;
+        return address
 }
+
+
+async function getCurrentStockLocation() {
+    let location = [];
+    let cart_id = window.readFromLocalStorage('cart_id');
+    if(cart_id) {
+        let cart = fetchCardById(cart_id);
+        if(window.stock_locations.length) {
+           location = window.stock_locations.filter((loc) => {return loc.id == cart.stock_location_id});
+        } else {
+            if(cart.stock_location_id) {
+                location =await db.collection('locations').doc(cart.stock_location_id).get()
+                if(location.exists) {
+                    location = [location.data()];
+                }
+            }
+        }
+    }
+
+    return location;
+        
+}
+

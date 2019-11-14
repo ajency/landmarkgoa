@@ -11,7 +11,6 @@ class AddressList extends Component {
     constructor(props) {
         super(props);
         this.assignAndProceed = this.assignAndProceed.bind(this);
-        this.fetchAllAddresses()
         this.state = {
             fetchComplete:false,
             addresses:[],
@@ -23,9 +22,27 @@ class AddressList extends Component {
         }
     }
 
-    componentWillMount() {
-        console.log("mounting")
-        this.setState({cart_id:window.readFromLocalStorage('cart_id')})
+   static getDerivedStateFromProps(props, state) {
+        window.addCartLoader()
+        let returnState = {};
+        returnState["cart_id"]=window.readFromLocalStorage('cart_id')
+        if(window.firebase.auth().currentUser.isAnonymous) {
+            returnState["showAddressComponent"] = true
+        } else {
+            if(window.firebase.auth().currentUser) {
+                let addresses = window.getAddresses();
+                if(_.isEmpty(addresses)) {
+                    returnState["showAddressComponent"] = true
+                } else {
+                    returnState["addresses"] = window.getAddresses()
+                    returnState["fetchComplete"] = true
+                }
+            } else {
+                this.displayError("Please login to continue");
+            }            
+        }
+        window.removeCartLoader()
+        return returnState
     }
 
     render() {
@@ -40,6 +57,15 @@ class AddressList extends Component {
         );
     }
 
+    displayError(msg){
+		document.querySelector('#failure-toast').innerHTML = msg;
+		document.querySelector('#failure-toast').classList.remove('d-none');
+		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
+		setTimeout(()=>{
+			document.querySelector('#failure-toast').classList.add('d-none');
+			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
+		},30000)
+	}
     showAllAddresses() {
         return (
             <div>
@@ -56,39 +82,18 @@ class AddressList extends Component {
         );
     }
 
-    fetchAllAddresses() {
-        window.addCartLoader()
-        let user_id  = "PAg9uqIv63C84rylubLYLK";
-        let url = generalConfig.apiEndPoint + "/user/get-addresses?uid="+user_id;
-        axios.get(url, {uid: user_id})
-        .then((res) => {
-            if(res.data.addresses) {
-                this.setState({"addresses": res.data.addresses})
-                this.setState({"fetchComplete": true})
-            } else {
-                //redirect
-            }
-            window.removeCartLoader();
-            console.log(res);
-        })
-        .catch((err) => {
-            window.removeCartLoader();
-            console.log (err);
-        })
-    }
-
     displayAddressList() {
        let addressMarkups =  _.map(this.state.addresses, (obj,index) => {
             return( 
-                <div key={index}  className="items mb-5" onClick={(e) => this.assignAndProceed(e,obj.id)} data-id="0DCg3e7Cw30fvQoXeHwR">
+                <div key={index}  className="items mb-5" onClick={(e) => this.assignAndProceed(e,obj.id)} data-lat-long={obj.lat_long}>
                     <div className="text-black text-link highlight">
-                        <h1 className="ft6">{obj.address.type}</h1>
+                        <h1 className="ft6">{obj.type}</h1>
                         <h5 className="font-weight-light">
-                            <span className="p-name d-inline-block">{obj.address.name}</span>
-                            <span className="p-phone-number d-inline-block">{obj.address.phone}</span>
+                            <span className="p-name d-inline-block">{obj.name}</span>
+                            <span className="p-phone-number d-inline-block">{obj.phone}</span>
                         </h5>
                         <h5 className="font-weight-light">
-                           {obj.address.formatted_address}
+                           {obj.formatted_address}
                         </h5>
                     </div>
                 </div>                
@@ -99,43 +104,59 @@ class AddressList extends Component {
     }
 
     assignAndProceed(e,address_id) {
-        console.log(this.state)
-        if(this.state.showAddressComponent) {
-            this.setState({showAddressComponent:false})
-        }
-        //let cart_id =  e.target.getAttribute("data-id")
-        this._currentCart = window.readFromLocalStorage('cart_id');
-		let cart_id =  window.readFromLocalStorage('cart_id');
-        if(cart_id) {
-             if(e) {
-                e.preventDefault();
-             }
-            let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-            let data = {
-                address_id: address_id,
-                cart_id: cart_id
-            }
-            window.addCartLoader();
+        console.log(this.state, address_id)
+        // if(this.state.showAddressComponent) {
+        //     this.setState({showAddressComponent:false})
+        // }
+
+        // //let cart_id =  e.target.getAttribute("data-id")
+        // this._currentCart = window.readFromLocalStorage('cart_id');
+		// let cart_id =  window.readFromLocalStorage('cart_id');
+        // if(cart_id) {
+        //      if(e) {
+        //         e.preventDefault();
+        //         if(!this.isAddressDeliverable(e.target.getAttribute("data-lat-long"))) {
+        //             this.displayError("Selected address is not deliverable :(");
+        //             return false;
+        //         }
+        //      }
+        //     let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
+        //     let data = {
+        //         address_id: address_id,
+        //         cart_id: cart_id
+        //     }
+        //     window.addCartLoader();
             
-            return axios.post(url,data).then((res) => {
-                if(res.data.success) {
-                    this.setState({cartSummary:res.data.cart, redirectToSummary:true})
-                } else {
-                    window.removeCartLoader();
-                    if(res.data.code =='PAYMENT_DONE') {
-                        window.removeFromLocalStorage('cart_id')
-                        this.setState({redirectToCart:true})
-                    }
-                    console.log(res.data.message)
-                }
-            })
-        } else {
-            this.setState({redirectToCart:true})
-        }
+        //     return axios.post(url,data).then((res) => {
+        //         if(res.data.success) {
+        //             this.setState({cartSummary:res.data.cart, redirectToSummary:true})
+        //         } else {
+        //             window.removeCartLoader();
+        //             if(res.data.code =='PAYMENT_DONE') {
+        //                 window.removeFromLocalStorage('cart_id')
+        //                 this.setState({redirectToCart:true})
+        //             }
+        //             console.log(res.data.message)
+        //         }
+        //     })
+        // } else {
+        //     this.setState({redirectToCart:true})
+        // }
         
         
     }
+    isAddressDeliverable(address_id) {
+        let address = window.user_addresses.filter((address) => { return address.id == address_id;})[0];
+        let locations = window.getCurrentStockLocation()
+        if(!locations.length) {
+            this.displayError("Something went wrong...")
+            return false;
+        }
+       let deliverable =  window.findDeliverableLocation(locations,address.lat_long)
 
+       return !!deliverable
+
+    }
 }
 
 export default AddressList;
