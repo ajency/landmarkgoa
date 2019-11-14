@@ -1,3 +1,4 @@
+
  // Your web app's Firebase configuration
 
 // var firebaseConfig = {
@@ -671,3 +672,144 @@ async function createCartForVerifiedUser(cart_id){
     await db.collection("carts").doc(firebase.auth().currentUser.uid).set(cart_data);
     sycnCartData(firebase.auth().currentUser.uid);
 }
+
+async function addAddress(addressObj) {
+        //TODO : get UID from id token
+        userDetails_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get()
+        await db.collection("user-details").doc(firebase.auth().currentUser.uid).update({
+            name    : addressObj.name,
+            email   : addressObj.email
+        })
+
+        let address_obj = {
+            name		: addressObj.name,
+            email       :addressObj.email,
+            phone       :userDetails_ref.data().phone,
+            address 	: addressObj.address,
+            landmark 	: addressObj.landmark,
+            city 		: addressObj.city,
+            state 		: addressObj.state,
+            pincode 	: addressObj.pincode,
+            default 	: addressObj.set_default,
+            lat_long	: addressObj.lat_long,
+            formatted_address : addressObj.formatted_address,
+            type		: addressObj.type,
+            verified    : !firebase.auth().currentUser.isAnonymous
+
+        }
+        let address_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).collection('addresses').doc();
+        await address_ref.set(address_obj);
+        
+        address_obj.id = address_ref.id;
+        return address_obj
+}
+
+
+async function getCurrentStockLocation() {
+    let location = [];
+    let cart_id = window.readFromLocalStorage('cart_id');
+    if(cart_id) {
+        let cart = await getCartByID(cart_id);
+        if(window.stock_locations.length) {
+           location = window.stock_locations.filter((loc) => {return loc.id == cart.stock_location_id});
+        } else {
+            if(cart.stock_location_id) {
+                location =await db.collection('locations').doc(cart.stock_location_id).get()
+                if(location.exists) {
+                    location = [location.data()];
+                }
+            }
+        }
+    }
+
+    return location;
+        
+}
+
+async function assignAddressToCart (address_id, fetchDraft) {
+    let  order_line_items = [], items = [];
+    let cart_id = window.readFromLocalStorage('cart_id');
+    let cart = await window.getCartByID(cart_id);
+    let lat_lng = [], shipping_address
+    if(fetchDraft) {
+        console.log("here")
+        lat_lng = cart.shipping_address.lat_long
+        shipping_address = cart.shipping_address
+        console.log('here')
+    } else {
+        let address = user_addresses.filter((address) => {return address.id == address_id})[0]
+        lat_lng = address.lat_long
+        shipping_address = address
+    }
+
+
+    let user_details = {}
+    let user_details_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get();
+    if(user_details_ref.exists) {
+        user_details = {
+            name:user_details_ref.data().name,
+            email:user_details_ref.data().email,
+            contact:user_details_ref.data().phone,
+        }
+    }		
+    
+    if(!fetchDraft) {
+        await db.collection('carts').doc(cart_id).update({
+            shipping_address: shipping_address,
+        })
+    }
+    let cart_data = JSON.parse(JSON.stringify(cart));
+    cart_data.items.forEach((item)=>{
+    let product = products.find((product) => { return product.id == item.product_id})
+    let deliverable = true; //check if deliverable
+    let in_stock = true;     // check if in stock
+    if(!cart_data.stock_location_id){
+        deliverable = false;
+    }
+    else{
+        let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
+        let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
+        if(stock_location.quantity < item.quantity){
+            in_stock = false;
+        }
+    }
+    let formatted_item = {
+        variant_id : item.variant_id,
+        attributes: {
+            title: item.product_name,
+            images: {
+              "1x": product.image_urls[0]
+            },
+            size : item.size,
+            price_mrp : item.mrp,
+            price_final : item.sale_price,
+            discount_per : 0
+        },
+          availability : in_stock,
+          quantity : item.quantity,
+          timestamp : item.timestamp,
+          deliverable : deliverable,
+          product_id : product.id
+    }
+    items.push(formatted_item);
+})
+
+cart_data.items = items;
+let response = {
+        success: true, 
+        cart : cart_data,
+        coupon_applied: null,
+        coupons: [],
+        approx_delivery_time : "40 mins"
+}
+
+
+    response.cart.items = items;
+    response.cart.order_id = cart_id;
+    response.cart.shipping_address = shipping_address;
+    response.cart.user_details = user_details
+    return response;
+
+}
+
+

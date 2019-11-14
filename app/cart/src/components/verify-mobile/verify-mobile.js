@@ -88,7 +88,7 @@ class VerifyMobile extends Component {
     }
 
     skipLogin(){
-        this.props.history.push('/cart/add-address');   
+        this.props.history.push('/cart/select-address');   
     }
 
     setOtp(value){
