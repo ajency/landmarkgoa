@@ -9,7 +9,7 @@ import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
 import {Redirect, Link} from 'react-router-dom';
 import {generalConfig} from '../config'
-import axios from 'axios';
+
  declare var $: any;
 
 class Cart extends Component {
@@ -129,6 +129,35 @@ class Cart extends Component {
 				{cartContainer}
 			</div>
 		);
+	}
+
+	handleCheckout(e) {
+
+		//TODO : check if all items in cart are in stock and deliverable to user
+
+		if(window.firebase.auth().currentUser.isAnonymous){
+			this.props.history.push('/cart/login')
+		}
+		// e.preventDefault();
+		// let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
+		// let data = {
+		// 	address_id:e.target.getAttribute("data-address"),
+		// 	cart_id: this._currentCart //e.target.getAttribute("data-id")
+		// }
+		// window.addCartLoader();
+		
+		// return axios.post(url,data).then((res) => {
+		// 	if(res.data.success) {
+		// 		this.setState({cartSummary:res.data.cart, redirectToSummary:true})
+		// 	} else {
+		// 		window.removeCartLoader();
+		// 		if(res.data.code =='PAYMENT_DONE') {
+		// 			window.removeFromLocalStorage('cart_id')
+		// 			window.location = this._webSiteLink
+		// 		}
+		// 		console.log(res.data.message)
+		// 	}
+		// })
 	}
 
 	closeCart(){
