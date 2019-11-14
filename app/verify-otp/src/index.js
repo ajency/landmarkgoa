@@ -116,7 +116,7 @@ class verifyOtp extends React.Component {
 				res.user.getIdToken().then((idToken) => {
 					window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
 					window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
-		            this.updateUserDetails();
+		            this.updateUserDetails(idToken);
 		            this.fetchAddresses();
 		        });
 			})
