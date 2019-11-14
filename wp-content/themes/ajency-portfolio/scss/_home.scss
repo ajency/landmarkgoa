@@ -343,15 +343,19 @@
     }
 }
 .logo {
+    min-height: 250px;
     @media (min-width: 992px) and (max-width: 1400px) {
         width: 170px !important;
+        min-height: 170px;
     }
     @media (min-width: 768px) and (max-width: 991px) {
         width: 110px !important;
+        min-height: 110px;
         margin: 0 auto;
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
         width: 100px !important;
+        min-height: 100px;
         margin: 0 auto;
     }
 }
