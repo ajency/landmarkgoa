@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 let razorPayConfig = {
     api_key:'rzp_test_FSfmJofoQNnVG6',
     customJs:"https://checkout.razorpay.com/v1/razorpay.js",
