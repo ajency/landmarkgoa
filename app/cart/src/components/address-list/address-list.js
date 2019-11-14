@@ -145,7 +145,7 @@ class AddressList extends Component {
         
     }
     isAddressDeliverable(address_id) {
-        let address = window.user_addresses.filter((address) => { return address.id == address_id;})[0];
+        let address = window.userAddresses.filter((address) => { return address.id == address_id;})[0];
         window.getCurrentStockLocation().then(locations => {
             if(!locations.length) {
                 this.displayError("Something went wrong...")

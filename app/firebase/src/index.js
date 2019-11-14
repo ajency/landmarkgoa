@@ -710,8 +710,8 @@ async function getCurrentStockLocation() {
     let cart_id = window.readFromLocalStorage('cart_id');
     if(cart_id) {
         let cart = await getCartByID(cart_id);
-        if(window.stock_locations.length) {
-           location = window.stock_locations.filter((loc) => {return loc.id == cart.stock_location_id});
+        if(window.stockLocations.length) {
+           location = window.stockLocations.filter((loc) => {return loc.id == cart.stock_location_id});
         } else {
             if(cart.stock_location_id) {
                 location =await db.collection('locations').doc(cart.stock_location_id).get()
@@ -737,7 +737,7 @@ async function assignAddressToCart (address_id, fetchDraft) {
         shipping_address = cart.shipping_address
         console.log('here')
     } else {
-        let address = user_addresses.filter((address) => {return address.id == address_id})[0]
+        let address = userAddresses.filter((address) => {return address.id == address_id})[0]
         lat_lng = address.lat_long
         shipping_address = address
     }
@@ -811,5 +811,3 @@ let response = {
     return response;
 
 }
-
-

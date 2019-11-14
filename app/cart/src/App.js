@@ -5,7 +5,7 @@ import './assets/scss/main.scss';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import Cart from './components/cart/cart.js';
 import AddNewAddress from './components/add-new-addess/add-new-address';
-// import AddressList from './components/address-list/address-list';
+import AddressList from './components/address-list/address-list';
 import VerifyMobile from './components/verify-mobile/verify-mobile';
 import CartCheckoutSummary from './components/cart-checkout-summary/cart-checkout-summary';
 import OrderSummary from './components/order-summary/order-summary';
