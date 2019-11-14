@@ -635,3 +635,31 @@ async function createCartForVerifiedUser(cart_id){
     await db.collection("carts").doc(firebase.auth().currentUser.uid).set(cart_data);
     sycnCartData(firebase.auth().currentUser.uid);
 }
+
+async function addAddress(addressObj) {
+        //TODO : get UID from id token
+        userDetails_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get()
+        await db.collection("user-details").doc(firebase.auth().currentUser.uid).update({
+            name    : addAddress.name,
+            email   : addAddress.email
+        })
+
+        let address_obj = {
+            name		: addressObj.name,
+            email       :addAddress.email,
+            phone       :userDetails_ref.data().phone,
+            address 	: addressObj.address,
+            landmark 	: addressObj.landmark,
+            city 		: addressObj.city,
+            state 		: addressObj.state,
+            pincode 	: addressObj.pincode,
+            default 	: addressObj.set_default,
+            lat_long	: addressObj.lat_long,
+            formatted_address : addressObj.formatted_address,
+            type		: addressObj.type
+
+        }
+        let address_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).collection('addresses').doc();
+        await address_ref.set(address_obj);
+        return address_ref.data()
+}
