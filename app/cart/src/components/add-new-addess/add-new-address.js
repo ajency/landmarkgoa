@@ -4,8 +4,7 @@ import Header from '../header/header.js';
 import './add-new-address.scss'
 import GoogleMap from '../google-map/google-map';
 import { generalConfig } from '../config.js';
-import * as _ from 'underscore'
-import GoogleMap from '../google-map/google-map.js';
+import * as _ from 'underscore';
 const CancelToken = axios.CancelToken;
 let cancel;
 let debounceTimer;
@@ -40,53 +39,37 @@ class AddNewAddress extends Component {
             },
             name:'',
             email:''
-            address_obj:  {
-                formatted_address:'',
-                city:'',
-                state:'',
-                pincode:'',
-            },
-            name:'',
-            email:'',
-            phone:''
         };
-        this.setInitData();
-
-    }
-        this.setInitData();
+        this.setInitData(); 
 
     }
 
     setInitData() {
-        window.addCartLoader();
-        if(this.props.location) {
-            this.setState({latlng: {lat:this.props.location.state.lat_lng[0], lng:this.props.location.state.lat_lng[1]}})
-            this.setState({address:this.props.location.state.formatted_address})
-            window.removeCartLoader();
-        } else {
-            let cart_id = window.readFromLocalStorage('cart_id')
-            if(cart_id) {
-                // let url = "https://demo8558685.mockable.io/get-cart";
-                let url = generalConfig.apiEndPoint + "/anonymous/cart/fetch";
-                let body = {
-                    cart_id : cart_id
-                }
-                axios.get(url, {params : body})
-                    .then((res) => {
-                        window.removeCartLoader();
-                        console.log("fetch cart response ==>", res);
-                        let latlng = {lat:res.data.cart.lat_long[0], lng:res.data.cart.lat_long[1]}
-                        this.setState({latlng: latlng})
-                        this.reverseGeocode(latlng);
-                    })
-                    .catch((error)=>{
-                        window.removeCartLoader();
-                        console.log("error in fetch cart ==>", error);
-                    })
-            } else {  
+        try {
+            window.addCartLoader();
+            if(this.props.location) {
+                this.setState({latlng: {lat:this.props.location.state.lat_lng[0], lng:this.props.location.state.lat_lng[1]}})
+                this.setState({address:this.props.location.state.formatted_address})
                 window.removeCartLoader();
+            } else {
+                let cart_id = window.readFromLocalStorage('cart_id')
+                if(cart_id) {
+                    cart = window.getCartByID(cart_id)
+                    console.log("fetch cart response ==>", res);
+                    let latlng = {lat:cart.lat_long[0], lng:cart.lat_long[1]}
+                    this.setState({latlng: latlng})
+                    this.reverseGeocode(latlng);
+
+                } else {
+                    this.displayError("Cart not found.")
+                }
+                window.removeCartLoader();
+
             }
+        } catch (error) {
+        
         }
+        
     }
    
     
@@ -360,6 +343,16 @@ class AddNewAddress extends Component {
 			}
 		},600);
     }
+
+    displayError(msg){
+		document.querySelector('#failure-toast').innerHTML = msg;
+		document.querySelector('#failure-toast').classList.remove('d-none');
+		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
+		setTimeout(()=>{
+			document.querySelector('#failure-toast').classList.add('d-none');
+			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
+		},30000)
+	}
 }
 
 export default AddNewAddress;
