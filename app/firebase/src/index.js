@@ -139,12 +139,14 @@ function sendTokenToServer(token){
 
 var products = [];
 var cartData;
-var stock_locations = []
-var user_addresses = [];
+var stockLocations = []
+var userAddresses = [];
+var userDetails;
 
 syncProducts();
 syncLocations()
 syncAddresses();
+syncUserDetails();
 
 if(window.readFromLocalStorage('cart_id')){
     sycnCartData(window.readFromLocalStorage('cart_id'));
@@ -178,14 +180,14 @@ function syncLocations() {
     let query = db.collection('locations');
     query.onSnapshot(function(snapshot) {
         if (!snapshot.size){
-            stock_locations = [];
+            stockLocations = [];
         }
 
         snapshot.docChanges().forEach(function(change) {
             if (change.type === "added") {
                 let data = change.doc.data();
                 data.id = change.doc.id;
-                stock_locations.push(data);
+                stockLocations.push(data);
             }
             if (change.type === "modified") {
                 //update variant
@@ -197,20 +199,26 @@ function syncLocations() {
     });
 }
 
+
+var unsubscribeAddressListner
 function syncAddresses() {
     firebase.auth().onAuthStateChanged((user) => {
         if(user && !user.isAnonymous){
+
+            if(unsubscribeAddressListner){
+                unsubscribeAddressListner();
+            }
             let query = db.collection('user-details').doc(firebase.auth().currentUser.uid).collection('addresses');
-            query.onSnapshot(function(snapshot) {
+            unsubscribeAddressListner = query.onSnapshot(function(snapshot) {
                 if (!snapshot.size){
-                    user_addresses = [];
+                    userAddresses = [];
                 }
 
                 snapshot.docChanges().forEach(function(change) {
                     if (change.type === "added") {
                         let data = change.doc.data();
                         data.id = change.doc.id;
-                        user_addresses.push(data);
+                        userAddresses.push(data);
                     }
                     if (change.type === "modified") {
                         //update variant
@@ -222,6 +230,34 @@ function syncAddresses() {
             });
         }
     });
+}
+
+var unsubscribeUserDetailsListner
+function syncUserDetails() {
+    firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+            if(unsubscribeUserDetailsListner){
+                unsubscribeUserDetailsListner();
+            }
+
+            let query = db.collection('user-details').doc(firebase.auth().currentUser.uid);
+            unsubscribeUserDetailsListner = query.onSnapshot(function(doc) {
+                if(doc.exists)
+                    userDetails = doc.data();
+            });
+        }
+    });
+}
+
+async function getUserDetails(){
+    if(window.userDetails){
+        return userDetails
+    }
+    let user_details = await db.collection('user-details').doc(firebase.auth().currentUser.uid).get();
+    if(user_details.exists){
+        return user_details.data();
+    }
+    return null;
 }
 
 
@@ -494,7 +530,7 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
         }
         else{
             //new code
-            if(!window.findDeliverableLocation(window.stock_locations, cart_data.lat_long)){
+            if(!window.findDeliverableLocation(window.stockLocations, cart_data.lat_long)){
                 throw 'Not deliverable at your location';
             }
             //end of new code
@@ -585,8 +621,8 @@ function getNewCartData (lat_long, formatted_address) {
 async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
     let cart_data = await getCartByID(cart_id), locations;
 
-    if(window.stock_locations.length){
-        locations = window.stock_locations;
+    if(window.stockLocations.length){
+        locations = window.stockLocations;
     }
     else{
         locations = await getAllStockLocations();
@@ -615,8 +651,8 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
 
 
 async function getAddresses(){
-    if(window.user_addresses.length){
-        return window.user_addresses
+    if(window.userAddresses.length){
+        return window.userAddresses
     }
     
     let addresses_ref = await db.collection('user-details').doc(firebase.auth().currentUser.uid).collection('addresses').get();

@@ -146,12 +146,22 @@ class Cart extends Component {
 	}
 
 	handleCheckout(e) {
+		window.getUserDetails().then((user_details)=>{
+			if(!user_details.phone){
+				this.props.history.push('/cart/login');
+			}
+			else if(window.firebase.auth().currentUser.isAnonymous){
+				this.props.history.push('/cart/add-address');
+			}
+			else if(window.userAddresses && !window.userAddresses.length){
+				this.props.history.push('/cart/add-address');
+			}
+			else{
+				this.props.history.push('/cart/address-list');	
+			}
+		})
 
-		//TODO : check if all items in cart are in stock and deliverable to user
 
-		if(window.firebase.auth().currentUser.isAnonymous){
-			this.props.history.push('/cart/login')
-		}
 		// e.preventDefault();
 		// let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
 		// let data = {
