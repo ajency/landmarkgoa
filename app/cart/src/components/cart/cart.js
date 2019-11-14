@@ -148,8 +148,11 @@ class Cart extends Component {
 			if(!user_details || !user_details.phone){
 				this.props.history.push('/cart/login');
 			}
-			this.props.history.push('/cart/select-address');
+			else{
+				this.props.history.push('/cart/select-address');
+			}
 			
+
 			// else if(window.firebase.auth().currentUser.isAnonymous){
 			// 	this.props.history.push('/cart/select-address');
 			// }
