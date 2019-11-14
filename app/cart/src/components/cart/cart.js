@@ -9,8 +9,7 @@ import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
 import {Redirect, Link} from 'react-router-dom';
 import {generalConfig} from '../config'
-
- declare var $: any;
+declare var $: any;
 
 class Cart extends Component {
     _webSiteLink = "#/cart";
@@ -129,6 +128,21 @@ class Cart extends Component {
 				{cartContainer}
 			</div>
 		);
+	}
+
+	disableCheckoutButton(){
+		if(this.state.cartData && this.state.cartData.cart && this.state.cartData.cart.items.length){
+			let disable = false;
+			for(const item of this.state.cartData.cart.items){
+				if(!item.deliverable || !item.availability){
+					disable = true;
+					break;
+
+				}
+			}
+			return disable;
+		}
+		return true;
 	}
 
 	handleCheckout(e) {
