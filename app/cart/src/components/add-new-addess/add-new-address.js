@@ -8,7 +8,6 @@ import * as _ from 'underscore';
 const CancelToken = axios.CancelToken;
 let cancel;
 let debounceTimer;
-
 class AddNewAddress extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +26,7 @@ class AddNewAddress extends Component {
                 lat:'',
                 lng:''
             },
-            address_type:'',
+            address_type:'Other',
             addressInput: false,
             locations : [],
             searchText:'',
@@ -38,10 +37,33 @@ class AddNewAddress extends Component {
                 pincode:'',
             },
             name:'',
-            email:''
+            email:'',
+            errors: {
+                building:'',
+                landmark:'',
+                name:'',
+                landmark:'',
+                type:'',
+                email:''
+            }
         };
         this.setInitData(); 
 
+    }
+    static getDerivedStateFromProps(props, state) {
+        let returnState ={}
+        if(window.firebase.auth().currentUser.isAnonymous) {
+            returnState['showUserDetailsFields'] =true;
+        } else {
+            let user_details_ref = window.db.collection('user-details').doc(window.firebase.auth().currentUser.uid).get();
+            if(user_details_ref.data().name.length == 0 || user_details_ref.data().email.length == 0) {
+                returnState['showUserDetailsFields'] = true;
+            } 
+            returnState["name"] = user_details_ref.data().name;
+            returnState["email"] = user_details_ref.data().email;
+            returnState["phone"] = user_details_ref.data().phone;
+        }
+        return returnState;
     }
 
     setInitData() {
@@ -54,8 +76,9 @@ class AddNewAddress extends Component {
             } else {
                 let cart_id = window.readFromLocalStorage('cart_id')
                 if(cart_id) {
-                    cart = window.getCartByID(cart_id)
-                    console.log("fetch cart response ==>", res);
+                    window.removeCartLoader();
+                    let cart = window.getCartByID(cart_id)
+                    console.log("fetch cart response ==>", cart);
                     let latlng = {lat:cart.lat_long[0], lng:cart.lat_long[1]}
                     this.setState({latlng: latlng})
                     this.reverseGeocode(latlng);
@@ -67,7 +90,8 @@ class AddNewAddress extends Component {
 
             }
         } catch (error) {
-        
+            window.removeCartLoader();
+            this.displayError(error)
         }
         
     }
@@ -104,53 +128,41 @@ class AddNewAddress extends Component {
     }
 
     getAddressTypeRadio = () => {
+        const {errors} = this.state
        return (
         <div>
             <label className="d-block mb-4">
                 House/Flat/Block no:
                 <input type="text" value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={(e)=> this.setState({'building':e.target.value})} required/>
+                {errors.building.length > 0 &&  <span className='error'>{errors.building}</span>}
             </label>
             <label className="d-block mb-4">
                 Landmark:
                 <input type="text" value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({'landmark':e.target.value})} required/>
+                {errors.landmark.length > 0 &&  <span className='error'>{errors.landmark}</span>}
             </label>
 
-            <div className="">
-                <h5 className="ft6 mb-4">Account details</h5>
-                <label className="d-block mb-4">
-                    Full Name
-                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({name:e.target.value})} required/>
-                </label>
-
-                <label className="d-block mb-4">
-                    Email
-                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({email:e.target.value})} required/>
-                </label>   
-                <label className="d-block mb-4">
-                    Moblie No.
-                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({phone:e.target.value})} required/>
-                </label>               
-            </div>
+            {this.showUserDetailsFields? this.showUserDetailsFields():null}
             <h5 className="ft6 mb-4">Save as</h5>
 
             <div className="d-flex mb-3">
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
-                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="home"  checked={this.state.address_type ==='home'} />
+                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="Home"  checked={this.state.address_type ==='home'} />
                         <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/home_location.png" className="mb-1" height="30"/>
                         <span className="radio-text d-block">Home</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block pr-5">
                     <label className="text-center">
-                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="work" checked={this.state.address_type ==='work'} />
+                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange} value="Work" checked={this.state.address_type ==='work'} />
                         <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/office_location.png" className="mb-1" height="30"/>
                         <span className="radio-text d-block">Work</span>
                     </label>
                 </div>
                 <div className="radio d-inline-block">
                     <label className="text-center">
-                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange}  value="other" checked={this.state.address_type ==='other'} />
+                        <input class="invisible position-absolute radio-input" type="radio" onChange={this.handleAddressTypeChange}  value="Other" checked={this.state.address_type ==='other'} />
                         <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/address_location.png" className="mb-1" height="30"/>
                         <span className="radio-text d-block">Other</span>
                     </label>
@@ -194,6 +206,7 @@ class AddNewAddress extends Component {
         if(this.state.showLoader && !this.state.locations.length){
             return (
                     <div>
+                        {/* Need better loader */}
                         <i >loading...</i>
                     </div>
                 )
@@ -215,6 +228,33 @@ class AddNewAddress extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
         window.addCartLoader()
+        let errors = this.state.errors;
+        let error = false
+        if(this.state.name.length <1) {
+            errors.name =  "Name is required!";
+            error = true;
+        }
+        if(this.state.email.length <1) {
+            errors.email = "Email is required!"
+            error = true;
+        }
+        if(window.validEmailRegex.test(this.state.email)) {   
+            errors.email = "Please enter valid email";
+            error = true;
+        }
+        if(this.state.landmark.length < 1) {  
+            errors.landmark = 'Landmark is required';
+            error = true;
+        }
+        if(this.state.building.length < 1) {  
+            errors.building = ' House/Flat/Block no: is required';
+            error = true;
+        }
+        if(error) {
+            this.setState({"errors":errors});
+            return false;
+        }
+        
         let data = {
             name:this.state.name,
             email:this.state.email,
@@ -226,21 +266,38 @@ class AddNewAddress extends Component {
             set_default:false
         }
         
-        let url = generalConfig.apiEndPoint + '/user/add-address'
-        axios.post(url, {...this.state.address_obj, ...data})
-        .then((res) => {
-            console.log(res)
+        try {
+            console.log()
+            let address = window.addAddress({...this.state.address_obj, ...data})
             if(this.props.cartRequest) {
-              
-                console.log(res.data.address.id, "lk")
-                this.props.assignAndProceed(null,res.data.address.id)
+                console.log(address.id, address)
+                this.props.assignAndProceed(null,address.id)
             }
 
-        })
-        .catch(err => {
+        }catch(err) {
             window.removeCartLoader()
             console.log(err)
-        })        
+        }       
+    }
+
+    showUserDetailsFields() {
+        const {errors} = this.state;
+        return (
+            <div className="user-details">
+                <h5 className="ft6 mb-4">Account details</h5>
+                <label className="d-block mb-4">
+                    Full Name
+                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({name:e.target.value})} required/>
+                    {errors.name.length > 0 &&  <span className='error'>{errors.name}</span>}
+                </label>
+
+                <label className="d-block mb-4">
+                    Email
+                    <input type="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({email:e.target.value})} required/>
+                    {errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
+                </label>              
+            </div>
+        );
     }
 
     changeAddress = (e) => {
@@ -258,6 +315,10 @@ class AddNewAddress extends Component {
             body.place_id = obj.loc.place_id;
         } else if(obj.lat && obj.lng) {
             body.latlng = obj.lat + ',' +obj.lng;
+            if(!this.isAddressDeliverable([obj.lat, obj.lng])) {
+                this.displayError("Cannot deliver to this address. :(")
+                return false; 
+            }
         }
             
 		axios.get(url, {params : body})
@@ -266,7 +327,10 @@ class AddNewAddress extends Component {
             if(res.data.status === "OK"){
                 if(obj.loc) {
                     res_address = res.data.result
- 
+                    if(!this.isAddressDeliverable([res.data.result.geometry.location.lat, res.data.result.geometry.location.lng])) {
+                        this.displayError("Cannot deliver to this address. :(")
+                        return false; 
+                    }
                     this.setState({'latlng':{lat: res.data.result.geometry.location.lat,lng: res.data.result.geometry.location.lng}});
                     this.setState({'locations':[], 'addressInput':false});
                 } else if(obj.lat && obj.lng) {
@@ -295,11 +359,14 @@ class AddNewAddress extends Component {
                 this.setState({locError : res.data.error_message})
                 this.setState({showLoader : false});
             }
+            return;
         })
         .catch((error)=>{
             this.setState({showLoader : false});
             let msg = error.message ? error.message : error;
             this.setState({locError : msg})
+            this.displayError(msg)
+            return;
         })
     }
 
@@ -344,6 +411,19 @@ class AddNewAddress extends Component {
 		},600);
     }
 
+    isAddressDeliverable(lat_lng) {
+        let locations = window.getCurrentStockLocation()
+        if(!locations.length) {
+            this.displayError("Something went wrong...")
+            return false;
+        }
+       let deliverable =  window.findDeliverableLocation(locations,lat_lng)
+
+       return !!deliverable
+
+    }
+
+
     displayError(msg){
 		document.querySelector('#failure-toast').innerHTML = msg;
 		document.querySelector('#failure-toast').classList.remove('d-none');
@@ -352,7 +432,8 @@ class AddNewAddress extends Component {
 			document.querySelector('#failure-toast').classList.add('d-none');
 			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
 		},30000)
-	}
+    }
+    
 }
 
 export default AddNewAddress;
