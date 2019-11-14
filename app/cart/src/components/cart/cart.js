@@ -147,7 +147,8 @@ class Cart extends Component {
 
 	handleCheckout(e) {
 		window.getUserDetails().then((user_details)=>{
-			if(!user_details.phone){
+			console.log("user_details ==>", user_details);
+			if(!user_details || !user_details.phone){
 				this.props.history.push('/cart/login');
 			}
 			else if(window.firebase.auth().currentUser.isAnonymous){
