@@ -33,16 +33,16 @@
                   <div class="product-wrapper <?php echo $product['class'] ?>">
                       <div class="product-image lg-w-50">
                           <div class="item">
-                              <img src="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                            <img src="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img src="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img src="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                       </div>
 
@@ -224,7 +224,7 @@
     <span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative" id="failure-toast">
       Add to cart failed
     </span>
-    <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><i class="sprite sprite-close_btn"></i></button>
   </div>
 
   <!-- Add to cart success  -->
@@ -232,7 +232,7 @@
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
     </span>
-    <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><i class="sprite sprite-close_btn"></i></button>
   </div>
 
    <!-- Offline toast  -->

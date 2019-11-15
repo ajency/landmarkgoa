@@ -27,11 +27,11 @@ class signInModal extends React.Component {
 				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
-				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/checkout.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				 	 <i class="sprite sprite-checkout"></i>
 			          Secure <br/>Checkout
 			      </div>
 			      <h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.closeSignInSlider()} disabled={this.state.disableButtons}>
-			          <span aria-hidden="true"><img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/remove.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
+			          <span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
