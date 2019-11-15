@@ -224,7 +224,7 @@
     <span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative" id="failure-toast">
       Add to cart failed
     </span>
-    <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><i class="sprite sprite-close_btn"></i></button>
   </div>
 
   <!-- Add to cart success  -->
@@ -232,7 +232,7 @@
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
     </span>
-    <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><img src="<?php echo get_template_directory_uri(); ?>/images/close_btn.png" class="" alt="" title=""/></button>
+    <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><i class="sprite sprite-close_btn"></i></button>
   </div>
 
    <!-- Offline toast  -->
