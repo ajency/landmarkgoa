@@ -19,7 +19,8 @@ class AddressList extends Component {
             cartSummary:null,
             cart_id:'',
             redirectToCart:false,
-            showAddressComponent: false
+            showAddressComponent: false,
+            approxDeliveryTime:''
         }
     }
 
@@ -49,7 +50,7 @@ class AddressList extends Component {
         return (
             <div className="address-container visible">
                 {this.state.redirectToAddAddress ? "redirect":null}
-                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary}}} />: null}
+                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
                 <Header/>
                 {this.state.showAddressComponent ? <AddNewAddress closeAddAddress={this.closeAddAddress} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
@@ -103,7 +104,7 @@ class AddressList extends Component {
         return addressMarkups;
     }
 
-    assignAndProceed(e,address_id) {
+   async assignAndProceed(e,address_id) {
         console.log(this.state, address_id)
         if(this.state.showAddressComponent) {
             this.setState({showAddressComponent:false})
@@ -115,7 +116,8 @@ class AddressList extends Component {
         if(cart_id) {
              if(e) {
                 e.preventDefault();
-                if(!this.isAddressDeliverable(e.target.getAttribute("data-lat-long"))) {
+                if(!await this.isAddressDeliverable(address_id)) {
+                    
                     this.displayError("Selected address is not deliverable :(");
                     return false;
                 }
@@ -129,7 +131,7 @@ class AddressList extends Component {
             return window.assignAddressToCart(address_id)
             .then((res) => {
                 if(res.success) {
-                    this.setState({cartSummary:res.cart, redirectToSummary:true})
+                    this.setState({cartSummary:res.cart, approxDeliveryTime : res.approx_delivery_time, redirectToSummary:true,})
                 } else {
                     window.removeCartLoader();
                     if(res.code =='PAYMENT_DONE') {
@@ -148,7 +150,7 @@ class AddressList extends Component {
     }
     isAddressDeliverable(address_id) {
         let address = window.userAddresses.filter((address) => { return address.id == address_id;})[0];
-        window.getCurrentStockLocation().then(locations => {
+        return window.getCurrentStockLocation().then(locations => {
             if(!locations.length) {
                 this.displayError("Something went wrong...")
                 return false;
@@ -157,8 +159,6 @@ class AddressList extends Component {
         
             return !!deliverable
         })
-       
-
     }
 
     closeAddAddress() {

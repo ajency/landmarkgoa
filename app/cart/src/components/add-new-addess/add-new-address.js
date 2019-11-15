@@ -21,6 +21,7 @@ class AddNewAddress extends Component {
 			locError : '',
 			gpsError : '',
             showLoader : false,
+            showUserDetailsFields:false,
             address: '',
             landmark:"",
             building:"",
@@ -60,7 +61,7 @@ class AddNewAddress extends Component {
         } else {
             
       
-                if(!window.userDetails.name.hasOwnProperty("name")|| window.userDetails.name.hasOwnProperty("email")) {
+                if(!window.userDetails.hasOwnProperty("name") || !window.userDetails.hasOwnProperty("email")) {
                     returnState['showUserDetailsFields'] = true;
                 } 
                 returnState["name"] = window.userDetails.name;
@@ -175,7 +176,7 @@ class AddNewAddress extends Component {
                 {errors.landmark.length > 0 &&  <span className='error'>{errors.landmark}</span>}
             </label>
 
-            {this.showUserDetailsFields? this.showUserDetailsFields():null}
+            {this.state.showUserDetailsFields? this.showUserDetailsFields():null}
             <h5 className="ft6 mb-4">Save as</h5>
 
             <div className="d-flex mb-3">
@@ -371,7 +372,7 @@ class AddNewAddress extends Component {
         this.setState({'addressInput': !this.state.addressInput, 'searchText':''});
     }
    
-    reverseGeocode = (obj) => {
+   async reverseGeocode(obj) {
 		this.setState({locError : ''});
         this.setState({showLoader : true});
         this.setState({address:null});
@@ -382,19 +383,19 @@ class AddNewAddress extends Component {
             body.place_id = obj.loc.place_id;
         } else if(obj.lat && obj.lng) {
             body.latlng = obj.lat + ',' +obj.lng;
-            if(!this.isAddressDeliverable([obj.lat, obj.lng])) {
+            if(! await this.isAddressDeliverable([obj.lat, obj.lng])) {
                 this.displayError("Cannot deliver to this address. :(")
                 return false; 
             }
         }
             
 		axios.get(url, {params : body})
-        .then((res) => {
+        .then(async (res) => {
             let res_address = {};
             if(res.data.status === "OK"){
                 if(obj.loc) {
                     res_address = res.data.result
-                    if(!this.isAddressDeliverable([res.data.result.geometry.location.lat, res.data.result.geometry.location.lng])) {
+                    if(! await this.isAddressDeliverable([res.data.result.geometry.location.lat, res.data.result.geometry.location.lng])) {
                         this.displayError("Cannot deliver to this address. :(")
                         return false; 
                     }
