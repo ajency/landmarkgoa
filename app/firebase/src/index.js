@@ -680,11 +680,11 @@ async function addAddress(addressObj) {
             name    : addressObj.name,
             email   : addressObj.email
         })
-        console.log("addressObj ==>", addressObj, userDetails_ref.data().phone);
+        console.log("addressObj ==>", addressObj, userDetails.phone);
         let address_obj = {
             name		: addressObj.name,
-            email       :addressObj.email,
-            phone       :userDetails_ref.data().phone,
+            email       : addressObj.email,
+            phone       : userDetails.hasOwnProperty('phone')? userDetails.phone:'',
             address 	: addressObj.address,
             landmark 	: addressObj.landmark,
             city 		: addressObj.city,
@@ -733,25 +733,18 @@ async function assignAddressToCart (address_id, fetchDraft) {
     let lat_lng = [], shipping_address
     if(fetchDraft) {
         console.log("here")
-        lat_lng = cart.shipping_address.lat_long
         shipping_address = cart.shipping_address
         console.log('here')
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
-        lat_lng = address.lat_long
         shipping_address = address
     }
 
 
-    let user_details = {}
-    let user_details_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get();
-    if(user_details_ref.exists) {
-        user_details = {
-            name:user_details_ref.data().name,
-            email:user_details_ref.data().email,
-            contact:user_details_ref.data().phone,
-        }
-    }		
+    let user_details = {...{contact:''},...userDetails}
+    if(user_details.hasOwnProperty("phone")) {
+        user_details.contact = user_details.phone;
+    }
     
     if(!fetchDraft) {
         await db.collection('carts').doc(cart_id).update({

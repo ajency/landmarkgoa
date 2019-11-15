@@ -17,7 +17,6 @@ class App extends Component {
       <Router>
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/cart/login" component={LogIn} />
-        <Route exact path="/cart/address" component={AddressList} />
         <Route exact path="/cart/select-address" component={AddressList} />
         <Route exact path="/cart/add-address" component={AddNewAddress} />
         <Route exact path="/cart/verify-mobile" component={VerifyMobile} />

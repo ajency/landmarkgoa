@@ -154,7 +154,6 @@ class Cart extends Component {
 			else{
 				this.props.history.push('/cart/select-address');
 			}
-			
 		})
 	}
 

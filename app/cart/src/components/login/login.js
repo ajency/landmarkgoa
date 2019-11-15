@@ -118,7 +118,7 @@ class LogIn extends Component {
 			.then((res) => {
 				console.log("update user details response ==>", res);
 				window.removeCartLoader();
-				this.props.history.push('/cart/add-address')
+				this.props.history.push('/cart/select-address')
 			})
 			.catch((error)=>{
 				console.log("error in update user details ==>", error);
