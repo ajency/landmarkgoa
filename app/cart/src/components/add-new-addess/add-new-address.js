@@ -122,33 +122,6 @@ class AddNewAddress extends Component {
                 }
                 window.removeCartLoader();
 
-    setInitData() {
-        try {
-            window.addCartLoader();
-            if(this.props.location) {
-                this.setState({latlng: {lat:this.props.location.state.lat_lng[0], lng:this.props.location.state.lat_lng[1]}})
-                this.setState({address:this.props.location.state.formatted_address})
-                window.removeCartLoader();
-            } else {
-                let cart_id = window.readFromLocalStorage('cart_id')
-                console.log("setInitData ====>", cart_id)
-                if(cart_id) {
-                    window.removeCartLoader();
-                    window.getCartByID(cart_id).then(cart => {
-                        console.log("fetch cart response ==>", cart);
-                        cart = JSON.parse(JSON.stringify(cart));
-                        console.log("fetch cart response ==>", cart);
-                        let latlng = {lat:cart.lat_long[0], lng:cart.lat_long[1]}
-                        this.setState({latlng: latlng})
-                        this.reverseGeocode(latlng);
-                    })
-                   
-
-                } else {
-                    this.displayError("Cart not found.")
-                }
-                window.removeCartLoader();
-
             }
         } catch (error) {
             window.removeCartLoader();
