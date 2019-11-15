@@ -25,7 +25,8 @@ class CartCheckoutSummary extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			cartEmpty : false
+			cartEmpty : false,
+			approxDeliveryTime:''
         }
     }
 
@@ -34,20 +35,25 @@ class CartCheckoutSummary extends Component {
 	}
     componentDidMount() {
         if(this._isMounted) {
+			console.log(this.props)
 			if(this.props.location.state) {
+				console.log("inside location state =>>",this.props.location.state)
 				this.setState({orderSummary: this.props.location.state.order_obj})
+				this.setState({approxDeliveryTime: this.props.location.state.approx_delivery_time})
 				this.setState({dataLoading:false, fetchCartComplete:true})
 				window.removeCartLoader();
 			} else {
 				console.log(this.props.match.params);
-				let url = generalConfig.apiEndPoint+ '/anonymous/cart/create-order'
-				axios.post(url, {cart_id:this.props.match.params.cart_id, fetchDraft:true})
+				
+				window.assignAddressToCart(null,true)
 				.then((res) => {
-					if(res.data.code =='PAYMENT_DONE') {
+					console.log(res)
+					if(res.code =='PAYMENT_DONE') {
 						window.removeFromLocalStorage('cart_id')
-						window.location = this._webSiteLink
+						this.props.history.push('/cart');
 					}
-					this.setState({orderSummary: res.data.cart, dataLoading:false, fetchCartComplete:true})
+					this.setState({approxDeliveryTime:res.approx_delivery_time});
+					this.setState({orderSummary: res.cart, dataLoading:false, fetchCartComplete:true});
 					window.removeCartLoader();
 				}).catch(err => {
 					console.log(err)
@@ -95,7 +101,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted">Your cart summary</h1>
 						</div>
 						<div>
-							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} delivery_time={this.state.orderSummary.approx_delivery_time}/>
+							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} userDetails={this.state.orderSummary.shipping_address}/>
                             
                         </div>
 
@@ -117,7 +123,7 @@ class CartCheckoutSummary extends Component {
 							</div>
 							<div className="w-50 text-align-right font-weight-medium">
 								<img src={clockLogo} alt="Estimated time" title="Estimated time" className="d-inline-block vertical-align-middle mr-1"/> 
-								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">30 mins</span>
+								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">{this.state.approxDeliveryTime}</span>
 							</div>
 						</div>
 
@@ -137,7 +143,7 @@ class CartCheckoutSummary extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Payments pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:this.state.orderSummary.order_id, amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
+								<Payments pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
 							</div>
 						</div>
 					</div>
@@ -163,15 +169,15 @@ class CartCheckoutSummary extends Component {
 	removeItem(variant_id){
 		console.log("remove item ==>", variant_id);
 		let cart_data = this.state.orderSummary;
-		cart_data.cart.items = cart_data.cart.items.filter(item => item.variant_id != variant_id);
-		if(!cart_data.cart.items.length)
+		cart_data.items = cart_data.items.filter(item => item.variant_id != variant_id);
+		if(!cart_data.items.length)
 			this.setState({cartEmpty : true});
 		this.setState({orderSummary : cart_data});
 	}
 
 	updateSummary(summary){
 		let cart_data = this.state.orderSummary;
-		cart_data.cart.summary = summary;
+		cart_data.summary = summary;
 		this.setState({orderSummary : cart_data});
 	}
 

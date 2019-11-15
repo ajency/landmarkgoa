@@ -743,10 +743,8 @@ async function assignAddressToCart (address_id, fetchDraft) {
     }
 
 
-    let user_details = {...{contact:''},...userDetails}
-    if(user_details.hasOwnProperty("phone")) {
-        user_details.contact = user_details.phone;
-    }
+    let user_details = {...userDetails}
+   
     
     if(!fetchDraft) {
         await db.collection('carts').doc(cart_id).update({

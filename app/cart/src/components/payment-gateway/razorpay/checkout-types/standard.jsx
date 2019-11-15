@@ -49,7 +49,7 @@ class Standard extends Component {
             "prefill": {
                 "email": this.props.user_details.email,
                 "name": this.props.user_details.name ,
-                "contact": this.props.user_details.contact
+                "contact": this.props.user_details.phone
             },
             "modal.escape":false,
             "modal.backdropclose":false
