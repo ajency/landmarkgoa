@@ -25,7 +25,12 @@ class DeliveryAddress extends Component {
 
 	openChangeLocationModal(){
 		console.log("openChangeLocationModal");
-		 window.showGpsModalPrompt(true);
+		if(!this.props.showSummaryContent){
+		 	window.showGpsModalPrompt(true);
+		}
+		else{
+			this.props.history.push('/cart/select-address');
+		}
 	}
 
 	showSummaryContent() {
@@ -38,9 +43,9 @@ class DeliveryAddress extends Component {
 						<span className="text-green font-weight-semibold">Mobile No.: </span> 
 						<span id="cart-delivery-address"> {this.props.userDetails ? this.props.userDetails.phone:''} </span>
 					</div>
-						<div className="btn-edit" onClick={() => this.changeShippingAddress()}>
+						{/*<div className="btn-edit" onClick={() => this.changeShippingAddress()}>
 						<img src={editImage} className="app-log" alt="Edit address" title="Edit address"/>
-					</div>
+					</div>*/}
 				</div>
 			);
 		}
