@@ -20,7 +20,7 @@ class LogIn extends Component {
 
 	render() {
 		return (
-			<div className="slide-in flex-slide-in active">
+			<div className="slide-in flex-slide-in visible">
 			  <Header/>
 			  <div className="slide-in-content">
 			      <div className="spacer-2101"></div>
