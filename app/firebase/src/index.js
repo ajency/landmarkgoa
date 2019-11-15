@@ -169,6 +169,10 @@ function syncProducts(){
             }
             if (change.type === "modified") {
                 //update variant
+                let data = change.doc.data();
+                data.id = change.doc.id;
+                let index = products.findIndex((product)=>{ return product.id == change.doc.id});
+                products[index] = data;
             }
             if (change.type === "removed") {
                 // remove variant
