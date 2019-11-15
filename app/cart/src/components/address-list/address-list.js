@@ -10,6 +10,7 @@ class AddressList extends Component {
     _webSiteLink = "#/cart"
     constructor(props) {
         super(props);
+        this.closeAddAddress = this.closeAddAddress.bind(this);
         this.assignAndProceed = this.assignAndProceed.bind(this);
         this.state = {
             fetchComplete:false,
@@ -30,11 +31,10 @@ class AddressList extends Component {
             returnState["showAddressComponent"] = true
         } else {
             if(window.firebase.auth().currentUser) {
-                let addresses = window.getAddresses();
-                if(_.isEmpty(addresses)) {
+                if(_.isEmpty(window.userAddresses)) {
                     returnState["showAddressComponent"] = true
                 } else {
-                    returnState["addresses"] = window.getAddresses()
+                    returnState["addresses"] = window.userAddresses
                     returnState["fetchComplete"] = true
                 }
             } else {
@@ -52,7 +52,7 @@ class AddressList extends Component {
                 {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
                 <Header/>
-                {this.state.showAddressComponent ? <AddNewAddress cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
+                {this.state.showAddressComponent ? <AddNewAddress closeAddAddress={this.closeAddAddress} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
         );
     }
@@ -137,6 +137,8 @@ class AddressList extends Component {
                         this.setState({redirectToCart:true})
                     }
                 }
+            }).catch(err => {
+                console.log(err);
             })
         } else {
             this.setState({redirectToCart:true})
@@ -157,6 +159,10 @@ class AddressList extends Component {
         })
        
 
+    }
+
+    closeAddAddress() {
+        this.setState({showAddressComponent:false})
     }
 }
 

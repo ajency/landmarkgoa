@@ -12,6 +12,8 @@ class AddNewAddress extends Component {
     constructor(props) {
         super(props);
         this.handleCenter = this.handleCenter.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
 			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
 			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
@@ -23,8 +25,8 @@ class AddNewAddress extends Component {
             landmark:"",
             building:"",
             latlng: {
-                lat:'',
-                lng:''
+                lat:'15.49359569999',
+                lng:'73.8301322'
             },
             address_type:'Other',
             addressInput: false,
@@ -38,6 +40,7 @@ class AddNewAddress extends Component {
             },
             name:'',
             email:'',
+            btnLable:'Add Address',
             errors: {
                 building:'',
                 landmark:'',
@@ -55,16 +58,19 @@ class AddNewAddress extends Component {
         if(window.firebase.auth().currentUser.isAnonymous) {
             returnState['showUserDetailsFields'] =true;
         } else {
-             window.db.collection('user-details').doc(window.firebase.auth().currentUser.uid).get()
-            .then(user_details_ref => {
-                if(user_details_ref.data().name.length == 0 || user_details_ref.data().email.length == 0) {
+            
+      
+                if(!window.userDetails.name.hasOwnProperty("name")|| window.userDetails.name.hasOwnProperty("email")) {
                     returnState['showUserDetailsFields'] = true;
                 } 
-                returnState["name"] = user_details_ref.data().name;
-                returnState["email"] = user_details_ref.data().email;
-                returnState["phone"] = user_details_ref.data().phone;
-            })
+                returnState["name"] = window.userDetails.name;
+                returnState["email"] = window.userDetails.email;
+                returnState["phone"] = window.userDetails.phone;
            
+        }
+
+        if(props.cartRequest) {
+            returnState["btnLable"] = "Save and Proceed";
         }
         console.log(returnState)
         return returnState;
@@ -104,8 +110,8 @@ class AddNewAddress extends Component {
         }
         
     }
-   
     
+   
     render() {
         return (
             <div className="address-container">
@@ -128,7 +134,7 @@ class AddNewAddress extends Component {
                             {this.getAddressTypeRadio()} 
                         </div>
                         <div className="secure-checkout fixed-bottom visible bg-white p-15">
-                            <button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={this.handleSubmit}>Add Address</button>
+                            <button className="btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0" onClick={this.handleSubmit}>{this.state.btnLable}</button>
 						</div>
                     </form>
                 </div>
@@ -142,12 +148,12 @@ class AddNewAddress extends Component {
         <div>
             <label className="d-block mb-4">
                 House/Flat/Block no:
-                <input type="text" value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={(e)=> this.setState({'building':e.target.value})} required/>
+                <input type="text" name='building' value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={(e)=> {this.setState({'building':e.target.value}); this.handleChange(e)}} required/>
                 {errors.building.length > 0 &&  <span className='error'>{errors.building}</span>}
             </label>
             <label className="d-block mb-4">
                 Landmark:
-                <input type="text" value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({'landmark':e.target.value})} required/>
+                <input type="text" name='landmark' value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({'landmark':e.target.value}); this.handleChange(e)}} required/>
                 {errors.landmark.length > 0 &&  <span className='error'>{errors.landmark}</span>}
             </label>
 
@@ -222,6 +228,11 @@ class AddNewAddress extends Component {
         }
     }
 
+    closeAddAddress = (e) => {
+        if(this.props.cartRequest) {
+            this.props.closeAddAddress()
+        }
+    }
     
     handleCenter = (mapProps,map) => {
         this.setState({'landmark':'','latlng':{lat:map.getCenter().lat(), lng: map.getCenter().lng()}});
@@ -234,7 +245,33 @@ class AddNewAddress extends Component {
         this.setState({'address_type':e.target.value})
     }
 
+    handleChange = (e) => {
+        let { name, value} = e.target;
+        let errors = this.state.errors;
+        switch (name) {
+            case "name":
+                  errors.name = value.length >1 ? '':'Name is required!';
+            break;
+            case "email":
+                if( value.length >1) {
+                    errors.email ='' 
+                } else if(window.validEmailRegex.test(value)) {
+                    errors.email = "Please enter valid email";
+                }
+            break;
+            case "landmark":
+                  errors.landmark = value.length >1 ? '':'Landmark is required!';
+            break;
+            case "building":
+                  errors.building = value.length >1 ? '':'House/Flat/Block no: is required';
+            break;      
+            default:
+                break;
+        }
+    }
+
     handleSubmit = (e) => {
+        console.log("handle submit is called")
         e.preventDefault()
         window.addCartLoader()
         let errors = this.state.errors;
@@ -299,13 +336,13 @@ class AddNewAddress extends Component {
                 <h5 className="ft6 mb-4">Account details</h5>
                 <label className="d-block mb-4">
                     Full Name
-                    <input type="text" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({name:e.target.value})} required/>
+                    <input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({name:e.target.value}); this.handleChange(e)}} required/>
                     {errors.name.length > 0 &&  <span className='error'>{errors.name}</span>}
                 </label>
 
                 <label className="d-block mb-4">
                     Email
-                    <input type="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => this.setState({email:e.target.value})} required/>
+                    <input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({email:e.target.value}); this.handleChange(e)}} required/>
                     {errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
                 </label>              
             </div>
@@ -319,7 +356,8 @@ class AddNewAddress extends Component {
    
     reverseGeocode = (obj) => {
 		this.setState({locError : ''});
-		this.setState({showLoader : true})
+        this.setState({showLoader : true});
+        this.setState({address:null});
 		let url = this.state.apiEndPoint + "/reverse-geocode";
 		let body = {};
         
