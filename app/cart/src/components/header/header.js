@@ -12,11 +12,11 @@ class Header extends Component {
 					<img src={logo} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 				</div>
 				<div className="app-chekout text-green">
-					<img src={logoCheckout} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+					<i class="sprite sprite-checkout"></i>
 					Secure <br/>Checkout
 				</div>
 				<h3 className="app-close m-0 text-white btn-pay m-0" onClick={() => this.closeCart()}>
-					<span aria-hidden="true"><img src={closeIcon} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/></span>
+					<span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 				</h3>
 			</div>
 		);
