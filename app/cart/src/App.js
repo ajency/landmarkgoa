@@ -25,22 +25,6 @@ class App extends Component {
       </Router>
     );
   }
-
-  getComponent(){
-  	console.log("check ==>", window.location.hash);
-  	if(window.location.hash === '#/cart'){
-  		return (<Cart/>)
-  	}
-  	else if(window.location.hash === '#/cart/address'){
-  		return ( <AddressList/>);
-  	}
-  	else if(window.location.hash === '#/cart/add-address'){
-  		return (  <AddNewAddress latlng={{lat:15.487590683051524,lng:73.83213189817026}} address={"Panjim Convention Centre, Panjim goa"}/> );
-  	}
-    else if(window.location.hash === '#/cart/verify-mobile'){
-      return ( <VerifyMobile/>);
-    }
-  }
 }
 
 export default App;
