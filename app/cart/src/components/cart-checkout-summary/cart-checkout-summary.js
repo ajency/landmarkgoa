@@ -101,7 +101,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
 						<div>
-							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} userDetails={this.state.orderSummary.shipping_address}/>
+							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()}/>
                             
                         </div>
 
@@ -165,6 +165,9 @@ class CartCheckoutSummary extends Component {
 		window.removeBackDrop();
 	}
 
+	navigateToAddress(){
+		this.props.history.push('/cart/select-address');
+	}
 
 	removeItem(variant_id){
 		console.log("remove item ==>", variant_id);

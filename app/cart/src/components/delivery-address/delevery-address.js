@@ -29,7 +29,7 @@ class DeliveryAddress extends Component {
 		 	window.showGpsModalPrompt(true);
 		}
 		else{
-			this.props.history.push('/cart/select-address');
+			this.props.navigateToAddress();
 		}
 	}
 
