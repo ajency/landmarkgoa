@@ -113,10 +113,9 @@
       lazySizesConfig.loadMode = 3;
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/TweenMax.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/ScrollMagic.min.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/animation.gsap.js" type="text/javascript"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
 
 <script>
     // init controller
