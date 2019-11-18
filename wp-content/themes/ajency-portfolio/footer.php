@@ -113,9 +113,8 @@
       lazySizesConfig.loadMode = 3;
 </script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/TweenMax.min.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/js/ScrollMagic.min.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/js/animation.gsap.js" type="text/javascript"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/combine.js" type="text/javascript">
+</script>
 
 <script>
     // init controller
@@ -123,10 +122,6 @@
     var controller2 = new ScrollMagic.Controller();
 </script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.scrollify.js" type="text/javascript"></script>
-
-<script src="<?php echo get_template_directory_uri(); ?>/js/combine.js" type="text/javascript">
-</script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_13" type="text/javascript">
 </script>
 
@@ -150,73 +145,7 @@
 <script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    if ($(window).innerWidth() < 767) {
-
-        $('.product-list').find('.product-list-item:last').removeClass('effect');
-
-        // build scene
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger1", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardone", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger1", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger2", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardtwo", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger2", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger3", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardthree", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger3", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger4", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardfour", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger4", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger5", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardfive", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger5", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger6", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardsix", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger6", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-
-    }
+    
 </script>
 
 

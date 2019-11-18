@@ -7,15 +7,7 @@
 //     sass = require('gulp-sass'),
 //     minify = require('gulp-minify');
 
-// // Minifies JS
-// gulp.task('scripts', function(){
-//     return gulp.src(['./wp-content/themes/ajency-portfolio/js/bootstrap.min.js',
-//         './wp-content/themes/ajency-portfolio/js/lazysizes.min.js',
-//         './wp-content/themes/ajency-portfolio/js/slick.min.js'])
-//     .pipe(uglify())
-//     .pipe(concat('combine.js'))
-//     .pipe(gulp.dest('./wp-content/themes/ajency-portfolio/js'))
-// });
+
 
 // gulp.task('compress', function() {
 //     return gulp.src('./wp-content/themes/ajency-portfolio/js/custom.js')
@@ -67,6 +59,19 @@ var gulp = require("gulp"),
     cssnano = require("cssnano"),
     sourcemaps = require("gulp-sourcemaps");
     minifyCSS   = require('gulp-clean-css');
+
+
+// // Minifies JS
+gulp.task('scripts', function(){
+    return gulp.src(['./wp-content/themes/ajency-portfolio/js/bootstrap.min.js',
+        './wp-content/themes/ajency-portfolio/js/TweenMax.min.js',
+        './wp-content/themes/ajency-portfolio/js/ScrollMagic.min.js',
+        './wp-content/themes/ajency-portfolio/js/animation.gsap.js',
+        './wp-content/themes/ajency-portfolio/js/slick.min.js'])
+    .pipe(uglify())
+    .pipe(concat('combine.js'))
+    .pipe(gulp.dest('./wp-content/themes/ajency-portfolio/js'))
+});
 
 // Put this after including our dependencies
 var paths = {
