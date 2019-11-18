@@ -15,7 +15,7 @@ class gpsModalPrompt extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
 			locations : [],
 			locError : '',
 			gpsError : '',
@@ -27,26 +27,32 @@ class gpsModalPrompt extends React.Component {
 			notLoggedIn : false,
 			showSignInBtn : false
 		}
-		firebase.auth().onAuthStateChanged((user) => {
-			console.log("check user ==>", user);
-			if(user && !user.isAnonymous){
-				console.log("user found ==== setting showSign in button to false");
-				this.setState({showSignInBtn : false})
-			}
-			else{
-				this.setState({showSignInBtn : true})
-			}
+		
+	}
 
-		  	if (user && !this.state.notLoggedIn && !user.isAnonymous) {
-		    	user.getIdToken().then((idToken) => {
-		   			this.fetchAddresses();        
-		        });
-		  	}
-		  	else {
-		  		this.setState({notLoggedIn : true })
-		  		console.log("no user");
-		  	}
-		});
+	componentDidMount(){
+		if(firebase && firebase.app()){
+			firebase.auth().onAuthStateChanged((user) => {
+				console.log("check user ==>", user);
+				if(user && !user.isAnonymous){
+					console.log("user found ==== setting showSign in button to false");
+					this.setState({showSignInBtn : false})
+				}
+				else{
+					this.setState({showSignInBtn : true})
+				}
+
+			  	if (user && !this.state.notLoggedIn && !user.isAnonymous) {
+			    	user.getIdToken().then((idToken) => {
+			   			this.fetchAddresses();        
+			        });
+			  	}
+			  	else {
+			  		this.setState({notLoggedIn : true })
+			  		console.log("no user");
+			  	}
+			});
+		}
 	}
 
 	render() {
@@ -352,8 +358,7 @@ class gpsModalPrompt extends React.Component {
 		document.querySelector("#selected-location-address").innerHTML = '<div>' + formatted_address + '</div><i class="fas fa-pencil-alt number-edit cursor-pointer"></i>';
 		let cart_address = document.querySelector("#cart-delivery-address");
 		if(cart_address){
-			cart_address.innerHTML = formatted_address;
-			
+			// cart_address.innerHTML = formatted_address;			
 			let cart_add_trigger = document.querySelector("#cart-address-change-trigger");
 			if(cart_add_trigger && document.getElementById("root").classList.contains('active')){
 				cart_add_trigger.click();
