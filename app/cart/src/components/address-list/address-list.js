@@ -76,7 +76,7 @@ class AddressList extends Component {
                 <div className="address-list p-15 pt-0 mt-4">
                     {this.state.fetchComplete ? this.displayAddressList():null}  
                     <div className="post-content pb-5"> 
-                        <div className="next-title m-0" onClick={(e) => this.setState({showAddressComponent:true})}>Add new address <i className="fas fa-arrow-right text-green"></i></div>
+                        <div className="next-title m-0 cursor-pointer" onClick={(e) => this.setState({showAddressComponent:true})}>Add new address <i className="fas fa-arrow-right text-green"></i></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +85,15 @@ class AddressList extends Component {
 
     displayAddressList() {
        let addressMarkups =  _.map(this.state.addresses, (obj,index) => {
+           let shipping_address='';
+            if (obj.hasOwnProperty('address')) {
+                shipping_address = obj.address+', '
+            }
+            if(obj.hasOwnProperty('landmark')) {
+                shipping_address = shipping_address + obj.landmark+', '
+            }
+            shipping_address = shipping_address + obj.formatted_address;
+           
             return( 
                 <div key={index}  className="items mb-5" onClick={(e) => this.assignAndProceed(e,obj.id)} data-lat-long={obj.lat_long}>
                     <div className="text-black text-link highlight">
@@ -94,7 +103,7 @@ class AddressList extends Component {
                             <span className="p-phone-number d-inline-block">{obj.phone}</span>
                         </h5>
                         <h5 className="font-weight-light">
-                           {obj.formatted_address}
+                            {shipping_address}
                         </h5>
                     </div>
                 </div>                
