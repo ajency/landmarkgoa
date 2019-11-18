@@ -48,11 +48,10 @@ class AddressList extends Component {
 
     render() {
         return (
-            <div className="address-container visible">
+            <div>
                 {this.state.redirectToAddAddress ? "redirect":null}
                 {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
-                <Header/>
                 {this.state.showAddressComponent ? <AddNewAddress closeAddAddress={this.closeAddAddress} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
         );
@@ -69,7 +68,8 @@ class AddressList extends Component {
 	}
     showAllAddresses() {
         return (
-            <div>
+            <div className="address-container visible">
+                <Header/>
                 <div className="cart-heading p-15 pb-0">
                         <h3 className="mt-4 h1 ft6">Choose Delivery Address</h3>
                 </div>
