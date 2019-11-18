@@ -505,9 +505,12 @@ document.addEventListener("DOMContentLoaded", function() {
       window.addEventListener("resize", lazyload);
       window.addEventListener("orientationChange", lazyload);
     }
+    
+  })
 
+window.addEventListener("load", function() {
     $('.product-image').on('init', function(event, slick){
-        console.log("initialized")
+        // console.log("initialized")
     });
     
     $('.product-image').slick({
@@ -591,5 +594,4 @@ document.addEventListener("DOMContentLoaded", function() {
                         .addTo(controller);
 
     }
-    
-  })
+});
