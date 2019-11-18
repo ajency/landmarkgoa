@@ -126,7 +126,7 @@ class AddNewAddress extends Component {
                             {this.state.addressInput ? this.getChangeAddressInput() : this.state.address?<span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span>:null}
                         </div>
                     </div>
-                    <form>
+                    <form className="add-address-form">
                         <div>
                             {this.getAddressTypeRadio()} 
                         </div>
