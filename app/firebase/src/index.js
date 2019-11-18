@@ -26,116 +26,116 @@ console.log("initialising firebase");
 firebase.initializeApp(firebaseConfig)
 var db = firebase.firestore();
 
-initialiseMessaging();
+// initialiseMessaging();
 
-function initialiseMessaging(){
-    try{
-        const messaging = firebase.messaging();
-        messaging.usePublicVapidKey("BJplW7H_YA8Ii_slb0DTqh8U9UsuexByioSBOk4xKxAwdw2xcqUwzTTNy2HSvs_MncRZHRtUwsQ6nQqFSonHEaA");
+// function initialiseMessaging(){
+//     try{
+//         const messaging = firebase.messaging();
+//         messaging.usePublicVapidKey("BJplW7H_YA8Ii_slb0DTqh8U9UsuexByioSBOk4xKxAwdw2xcqUwzTTNy2HSvs_MncRZHRtUwsQ6nQqFSonHEaA");
 
-        // monitor refresh token
-        messaging.onTokenRefresh(() => {
-          messaging.getToken().then((refreshed_token) => {
-            console.log('Token refreshed.', refreshed_token);
-            updateToken(refreshed_token);
-          }).catch((err) => {
-            console.log('Unable to retrieve refreshed token ', err);
-            showToken('Unable to retrieve refreshed token ', err);
-          });
-        });
-
-
-        messaging.onMessage((payload) => {
-          console.log('Message received. ', payload);
-        });
+//         // monitor refresh token
+//         messaging.onTokenRefresh(() => {
+//           messaging.getToken().then((refreshed_token) => {
+//             console.log('Token refreshed.', refreshed_token);
+//             updateToken(refreshed_token);
+//           }).catch((err) => {
+//             console.log('Unable to retrieve refreshed token ', err);
+//             showToken('Unable to retrieve refreshed token ', err);
+//           });
+//         });
 
 
-        navigator.serviceWorker.addEventListener("message", (message) => {
-            console.log("check ==>",message)
-            let data = message.data['firebase-messaging-msg-data'].notification;
-            const notificationTitle = data.title;
-              const notificationOptions = {
-                body: data.body,
-                icon: data.icon
-            };
-
-            navigator.serviceWorker.getRegistration()
-            .then( function(reg){
-                if(reg) {
-                reg.showNotification(notificationTitle, notificationOptions);
-               } else {
-                 console.log('GOT undefined');
-               }
-            });
-        });
-
-    }
-    catch(error){
-        console.log("error messaging==>", error);
-    }    
-}
-// firebase messaging - push notitifcations
+//         messaging.onMessage((payload) => {
+//           console.log('Message received. ', payload);
+//         });
 
 
+//         navigator.serviceWorker.addEventListener("message", (message) => {
+//             console.log("check ==>",message)
+//             let data = message.data['firebase-messaging-msg-data'].notification;
+//             const notificationTitle = data.title;
+//               const notificationOptions = {
+//                 body: data.body,
+//                 icon: data.icon
+//             };
 
-function checkPushNotificationPermissions(){
-    if(show_pn && 'Notification' in window && navigator.serviceWorker){
-        askPermissions();
-    }
-}
+//             navigator.serviceWorker.getRegistration()
+//             .then( function(reg){
+//                 if(reg) {
+//                 reg.showNotification(notificationTitle, notificationOptions);
+//                } else {
+//                  console.log('GOT undefined');
+//                }
+//             });
+//         });
+
+//     }
+//     catch(error){
+//         console.log("error messaging==>", error);
+//     }    
+// }
+// // firebase messaging - push notitifcations
 
 
-function askPermissions(){
-    Notification.requestPermission()
-    .then( () => {
-        messaging.getToken().then((current_token) => {
-            if (current_token) {
-                console.log("fcm token =>",current_token);
-                updateToken(current_token);
-            } 
-          else {
-            // Show permission request.
-            console.log('No Instance ID token available. Request permission to generate one.');
-            // Show permission UI.
-            // updateUIForPushPermissionRequired();
-            // setTokenSentToServer(false);
-          }
-        }).catch((err) => {
-          console.log('An error occurred while retrieving token. ', err);
-          // showToken('Error retrieving Instance ID token. ', err);
-          // setTokenSentToServer(false);
-        });
-    })
-    .catch(function(err) {
-        console.log("Unable to get permission to notify.", err);
-    });
-}
 
-function updateToken(token){
-     let old_token = readFromLocalStorage('fcm_token')
-    if(!old_token || old_token != token){
-        sendTokenToServer(token);
-        writeInLocalStorage('fcm_token', token)
-    }
-}
+// function checkPushNotificationPermissions(){
+//     if(show_pn && 'Notification' in window && navigator.serviceWorker){
+//         askPermissions();
+//     }
+// }
 
-function sendTokenToServer(token){
-    let url = 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1/store-fcm-token';
-    // let url = 'http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/store-fcm-token';
-    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    let body = {
-        fcm_token : token,
-        device : isMobile ? 'mobile' : 'desktop'
-    }
-    axios.get(url, {params : body})
-        .then((res) => {
-            console.log("fcm token stored successfully");
-        })
-        .catch((error)=>{
-            console.log("error in storing fcm token ==>", error);
-        })
-}
-// end of firebase messaging - push notitifcations
+
+// function askPermissions(){
+//     Notification.requestPermission()
+//     .then( () => {
+//         messaging.getToken().then((current_token) => {
+//             if (current_token) {
+//                 console.log("fcm token =>",current_token);
+//                 updateToken(current_token);
+//             } 
+//           else {
+//             // Show permission request.
+//             console.log('No Instance ID token available. Request permission to generate one.');
+//             // Show permission UI.
+//             // updateUIForPushPermissionRequired();
+//             // setTokenSentToServer(false);
+//           }
+//         }).catch((err) => {
+//           console.log('An error occurred while retrieving token. ', err);
+//           // showToken('Error retrieving Instance ID token. ', err);
+//           // setTokenSentToServer(false);
+//         });
+//     })
+//     .catch(function(err) {
+//         console.log("Unable to get permission to notify.", err);
+//     });
+// }
+
+// function updateToken(token){
+//      let old_token = readFromLocalStorage('fcm_token')
+//     if(!old_token || old_token != token){
+//         sendTokenToServer(token);
+//         writeInLocalStorage('fcm_token', token)
+//     }
+// }
+
+// function sendTokenToServer(token){
+//     let url = 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1/store-fcm-token';
+//     // let url = 'http://localhost:5000/project-ggb-dev/asia-east2/api/rest/v1/store-fcm-token';
+//     var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+//     let body = {
+//         fcm_token : token,
+//         device : isMobile ? 'mobile' : 'desktop'
+//     }
+//     axios.get(url, {params : body})
+//         .then((res) => {
+//             console.log("fcm token stored successfully");
+//         })
+//         .catch((error)=>{
+//             console.log("error in storing fcm token ==>", error);
+//         })
+// }
+// // end of firebase messaging - push notitifcations
 
 
 var products = [];
@@ -300,13 +300,14 @@ async function getCartByID(id ) {
         if(cartData){
             return cartData;
         }
-        else{
+        else if(id){
             let cart = await db.collection('carts').doc(id).get();
             if(cart.exists){
                 return cart.data();
             }
             return null;
         }
+        return null;
 }
 
 async function updateOrder (item, cart_id, cart_data, stock_location_id) {
@@ -678,10 +679,12 @@ async function getAddresses(){
 
 async function createCartForVerifiedUser(cart_id){
     let cart_data = await window.getCartByID(cart_id);
-    cart_data.user_id = firebase.auth().currentUser.uid;
-    cart_data.verified = true;
-    await db.collection("carts").doc(firebase.auth().currentUser.uid).set(cart_data);
-    sycnCartData(firebase.auth().currentUser.uid);
+    if(cart_data){
+        cart_data.user_id = firebase.auth().currentUser.uid;
+        cart_data.verified = true;
+        await db.collection("carts").doc(firebase.auth().currentUser.uid).set(cart_data);
+        sycnCartData(firebase.auth().currentUser.uid);
+    }
 }
 
 async function addAddress(addressObj) {

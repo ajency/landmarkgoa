@@ -133,7 +133,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script> -->
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -231,7 +231,7 @@
             navigator.serviceWorker.register(sw).then(function(registration) {
                 // Registration was successful
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                messaging.useServiceWorker(registration);
+                // messaging.useServiceWorker(registration);
             }, function(err) {
                 // registration failed :(
                 console.log('ServiceWorker registration failed: ', err);
