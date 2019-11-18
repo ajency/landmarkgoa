@@ -69,7 +69,7 @@ class Cart extends Component {
 				cartContainer = 
 					<div>
 						<div>
-							<DeliveryAddress address={this.state.cartData.cart.formatted_address} delivery_time={this.state.cartData.approx_delivery_time}/>
+							<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
 						</div>
 
 						<div className="cart-heading p-15 pt-0 pb-0">

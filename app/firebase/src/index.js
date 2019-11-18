@@ -507,6 +507,9 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
         let variant = product.variants.find((v) => v.id === variant_id);
         console.log("varaint ==>", variant);
 
+
+        // this check is done to avoid getting cart if cart does not exist
+        // user_id is not used as user is creted as on click of add to cart and will exist at this point but cart may not exist
         if(cart_id){
             cart_data = await window.getCartByID(user_id);
             console.log("cart data from db ==> cart_data");
@@ -535,14 +538,14 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
         }
         else{
             //new code
-            if(!window.findDeliverableLocation(window.stockLocations, cart_data.lat_long)){
+            if(!window.findDeliverableLocation(window.stockLocations, cart_data.shipping_address.lat_long)){
                 throw 'Not deliverable at your location';
             }
             //end of new code
             else{
                 locations = variant.stock_locations.filter((loc)=>{ return loc.quantity >= new_quantity});
                 if(locations && locations.length){
-                    location = window.findDeliverableLocation(locations, cart_data.lat_long)
+                    location = window.findDeliverableLocation(locations, cart_data.shipping_address.lat_long)
                 }
                 else{
                     throw 'Quantity Not Available';
@@ -611,8 +614,10 @@ function getNewCartData (lat_long, formatted_address) {
         },
         order_type : 'cart',
         cart_count : 0,
-        lat_long : lat_long,
-        formatted_address : formatted_address,
+        shipping_address : {
+            lat_long : lat_long,
+            formatted_address : formatted_address
+        },
         stock_location_id : '',
         verified : !firebase.auth().currentUser.isAnonymous,
         business_id : "zq6Rzdvcx0UrULwzeSEr",
@@ -646,8 +651,10 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
     await db.collection('carts').doc(cart_id)
             .update(
                 {
-                    formatted_address : formatted_address,
-                    lat_long : lat_long,
+                    shipping_address : {
+                        lat_long : lat_long,
+                        formatted_address : formatted_address
+                    },
                     stock_location_id : stock_location_id
                 })
     let res = { success : true , message: 'Address updated successfully' }
