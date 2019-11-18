@@ -610,8 +610,8 @@ function getNewCartData (lat_long, formatted_address) {
             mrp_total : 0,
             sale_price_total : 0,
             cart_discount : 0,
-            shipping_fee : 50,
-            you_pay : 0 + 50,
+            shipping_fee : 50, // get from config or db
+            you_pay : 50, // change accordingly
         },
         order_type : 'cart',
         cart_count : 0,
@@ -621,7 +621,7 @@ function getNewCartData (lat_long, formatted_address) {
         },
         stock_location_id : '',
         verified : !firebase.auth().currentUser.isAnonymous,
-        business_id : "zq6Rzdvcx0UrULwzeSEr",
+        business_id : "zq6Rzdvcx0UrULwzeSEr",  // get from config or db
         mobile_number : firebase.auth().currentUser.phoneNumber ? firebase.auth().currentUser.phoneNumber : '',
         items : [],
         created_at : new Date().getTime()
