@@ -459,6 +459,9 @@ function disableSite(){
 
 document.addEventListener("DOMContentLoaded", function() {
     var lazyloadImages;    
+    var config = {
+        rootMargin: '250px',
+    }
   
     if ("IntersectionObserver" in window) {
       lazyloadImages = document.querySelectorAll(".lazy");
@@ -471,7 +474,7 @@ document.addEventListener("DOMContentLoaded", function() {
             imageObserver.unobserve(image);
           }
         });
-      });
+      }, config);
   
       lazyloadImages.forEach(function(image) {
         imageObserver.observe(image);
