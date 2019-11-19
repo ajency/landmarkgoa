@@ -69,7 +69,7 @@ class addToCart extends React.Component {
 		else{
 			if(this.state.items.length > 1){
 				let msg = "Item has multiple variants added. Remove correct item from cart";
-				this.displayError(msg);
+				window.displayError(msg);
 			}
 			else{
 				this.removeFromCart(this.state.items[0].variant_id);
@@ -106,7 +106,7 @@ class addToCart extends React.Component {
 			.catch((error) => {
 				this.setState({apiCallInProgress : false});
 				console.log("error ==>", error);
-				this.displayError(error);
+				window.displayError(error);
 			});
 		}
 	}
@@ -114,11 +114,10 @@ class addToCart extends React.Component {
 	removeFromCart(variant_id = null){
 		window.addBackDrop();
 		this.setState({apiCallInProgress : true});
-		// try{
 			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
 			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
 				if(res.success){
-					this.displaySuccess("Successfully removed from cart");
+					window.displaySuccess(this.props.product_data.title + " removed from cart");
 					let item = {
 						variant_id : variant_id,
 						quantity : 1
@@ -127,38 +126,28 @@ class addToCart extends React.Component {
 					window.updateViewCartCompoent(res);
 				}
 				else{
-					this.displayError(res.message);
+					window.displayError(res.message);
 				}
 				this.setState({apiCallInProgress : false});
 				window.removeBackDrop();
 			})
-
-		// }
-		// catch(error){
-		// 	console.log("error in remove from cart ==>", error);
-		// 	this.setState({apiCallInProgress : false});
-		// 	let msg = error && error.message ? error.message : error;
-		// 	this.displayError(msg);
-		// 	window.removeBackDrop();
-		// }
 	}
 
 	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
 		window.addBackDrop()
-		// try{
 			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
 				console.log("response ==>", res);
 				if(res.success){
 					console.log("response ==>", res);
 					this.addItems(res.item);
 					window.updateViewCartCompoent(res);
-					this.displaySuccess("Successfully added to cart")
+					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + " added to cart");
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
 				}
 				else{
 					this.setState({apiCallInProgress : false});
-					this.displayError(res.message);
+					window.displayError(res.message);
 					window.removeBackDrop();
 				}
 			})
@@ -166,18 +155,9 @@ class addToCart extends React.Component {
 				console.log("error in add to cart ==>", error);
 				this.setState({apiCallInProgress : false});
 				let msg = error && error.message ? error.message : error;
-				this.displayError(msg);
+				window.displayError(msg);
 				window.removeBackDrop();		
 			})
-		// }
-		// catch (error) {
-		// 	console.log("error in add to cart ==>", error);
-		// 	this.setState({apiCallInProgress : false});
-		// 	let msg = error && error.message ? error.message : error;
-		// 	this.displayError(msg);
-		// 	window.removeBackDrop();
-		// }
-
 	}
 
 	addItems(item){
@@ -207,26 +187,6 @@ class addToCart extends React.Component {
 			last_selected = items[0].variant_id;
 		}
 		this.setState({quantity : quantity, items : items, lastSelected : last_selected});
-	}
-
-	displayError(msg){
-		document.querySelector('#failure-toast').innerHTML = msg;
-		document.querySelector('#failure-toast').classList.remove('d-none');
-		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
-		setTimeout(()=>{
-			document.querySelector('#failure-toast').classList.add('d-none');
-			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
-		},30000)
-	}
-
-	displaySuccess(msg){
-		document.querySelector('#success-toast').innerHTML = msg;
-		document.querySelector('#success-toast').classList.remove('d-none');
-		document.querySelector('#success-toast-close-btn').classList.remove('d-none');
-		setTimeout(()=>{
-			document.querySelector('#success-toast').classList.add('d-none');
-			document.querySelector('#success-toast-close-btn').classList.add('d-none');
-		},30000)
 	}
 
 	getGeolocation(){

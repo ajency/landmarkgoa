@@ -113,8 +113,22 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	checkGpsErrorMsg(){
-		if(this.state.gpsError){
-			return <div className="alert-danger p-15 mb-3">{this.state.gpsError}</div>
+		if(this.state.gpsError == 'permission_denied'){
+			return (<div className="alert-danger p-15 mb-3">
+					<p>You have blocked GreenGrainBowl from tracking your location.</p> 
+					<p> <a target="_blank" href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DDesktop&hl=en&oco=2">Tap this link to change location permission in browser. </a> 
+					</p> 
+					<p> Or use location search option below.</p>
+				</div>
+			)
+		}
+		else if(this.state.gpsError == 'other_error'){
+			return (
+				<div className="alert-danger p-15 mb-3">
+					<p>Error in getting current location using GPS.</p> 
+					<p>Use location search option below.</p>
+				</div>
+			)
 		}
 	}
 
@@ -363,6 +377,7 @@ class gpsModalPrompt extends React.Component {
 				cart_add_trigger.click();
 			}
 		}
+		window.displaySuccess("Location is set to - " + formatted_address)
 	}
 
 	getLocation(){
@@ -378,17 +393,16 @@ class gpsModalPrompt extends React.Component {
 			this.reverseGeocode(null, [position.coords.latitude, position.coords.longitude]);
 		},
 		(geoError) =>{
-			this.removeSliderLoader();
-			this.setState({fetchingGPS : false});
+			this.removeSliderLoader();			
 			console.log("error in getting geolocation", geoError);
+			let gps_error = '';
 			if(geoError.code === 1){
-				// permission denied
-				this.setState({gpsError : 'You have blocked Green Grain Bowl from tracking your location. To use this, change your location settings in browser.'})
+				gps_error = 'permission_denied'
 			}
 			else{
-				// other errors
-				this.setState({gpsError : 'Error in getting current location using GPS'});
+				gps_error = 'other_error'
 			}
+			this.setState({fetchingGPS : false, gpsError : gps_error});
 		},geoOptions);
 	}
 

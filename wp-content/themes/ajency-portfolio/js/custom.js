@@ -600,3 +600,36 @@ window.addEventListener("load", function() {
 
     }
 });
+
+
+
+function displayError(msg){
+    displayToast(msg, 'failure');
+}
+
+function displaySuccess(msg){
+    displayToast(msg, 'success')
+}
+
+function displayToast(msg, type){
+    let length = $('#success-failure-toast-container div').length, element
+    if(type == 'success'){
+        element = '<div class="success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative"><span class="p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-lg-center text-capitalize">' + msg +'</span><button class="btn-reset close-img" onclick="removeToast(this)"><i class="sprite sprite-close_btn"></i></button></div>';
+    }
+    else{
+        element = '<div class="failure toast d-flex justify-content-center position-relative mt-lg-5"><span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-capitalize">'+ msg +'</span><button class="btn-reset close-img" onclick="removeToast(this)"><i class="sprite sprite-close_btn"></i></button></div>'
+    }
+
+    if(length == 2){
+        $('#success-failure-toast-container').children().first().remove();
+    }
+    $('#success-failure-toast-container').append(element);
+
+    setTimeout(()=>{
+       $('#success-failure-toast-container').children().first().remove();
+    },30000)
+}
+
+function removeToast(element){
+    $(element).parent().remove();
+}

@@ -118,7 +118,7 @@ class variantSelection extends React.Component {
 					this.hideVariantModal();
 				},100)
 				let msg = 'No active variants found'
-				this.displayError(msg);
+				window.displayError(msg);
 			}
 		}
 	}
@@ -142,7 +142,7 @@ class variantSelection extends React.Component {
 				this.hideVariantModal();
 			},100)
 			let msg = 'No active variants found'
-			this.displayError(msg);
+			window.displayError(msg);
 		}
 	}
 
@@ -150,16 +150,6 @@ class variantSelection extends React.Component {
 		console.log("variant id==>", variant_id);
 		this.hideVariantModal();
 		window.addToCartFromVariant(this.state.productId, variant_id, this.state.product);
-	}
-
-	displayError(msg){
-		document.querySelector('#failure-toast').innerHTML = msg;
-		document.querySelector('#failure-toast').classList.remove('d-none');
-		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
-		setTimeout(()=>{
-			document.querySelector('#failure-toast').classList.add('d-none');
-			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
-		},30000)
 	}
 }
 
