@@ -111,6 +111,9 @@
 				width: 100%;
 			}			
 		}
+		@media (min-width: 320px) and (max-width: 991px) and (orientation : landscape) {
+			height: auto;
+		}
 	}
 }
 
