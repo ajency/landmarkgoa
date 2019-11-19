@@ -117,7 +117,7 @@ class addToCart extends React.Component {
 			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
 			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
 				if(res.success){
-					window.displaySuccess("Successfully removed from cart");
+					window.displaySuccess(this.props.product_data.title + " removed from cart");
 					let item = {
 						variant_id : variant_id,
 						quantity : 1
@@ -141,7 +141,7 @@ class addToCart extends React.Component {
 					console.log("response ==>", res);
 					this.addItems(res.item);
 					window.updateViewCartCompoent(res);
-					window.displaySuccess("Successfully added to cart")
+					window.displaySuccess(this.props.product_data.title + " added to cart")
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
 				}
