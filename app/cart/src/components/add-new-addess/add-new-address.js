@@ -474,13 +474,14 @@ class AddNewAddress extends Component {
 
 
     displayError(msg){
-		document.querySelector('#failure-toast').innerHTML = msg;
-		document.querySelector('#failure-toast').classList.remove('d-none');
-		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
-		setTimeout(()=>{
-			document.querySelector('#failure-toast').classList.add('d-none');
-			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
-		},30000)
+		// document.querySelector('#failure-toast').innerHTML = msg;
+		// document.querySelector('#failure-toast').classList.remove('d-none');
+		// document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
+		// setTimeout(()=>{
+		// 	document.querySelector('#failure-toast').classList.add('d-none');
+		// 	document.querySelector('#failure-toast-close-btn').classList.add('d-none');
+		// },30000)
+        window.displayError(msg);
     }
     
 }
