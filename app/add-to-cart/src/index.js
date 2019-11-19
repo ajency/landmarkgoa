@@ -114,7 +114,6 @@ class addToCart extends React.Component {
 	removeFromCart(variant_id = null){
 		window.addBackDrop();
 		this.setState({apiCallInProgress : true});
-		// try{
 			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
 			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
 				if(res.success){
@@ -132,20 +131,10 @@ class addToCart extends React.Component {
 				this.setState({apiCallInProgress : false});
 				window.removeBackDrop();
 			})
-
-		// }
-		// catch(error){
-		// 	console.log("error in remove from cart ==>", error);
-		// 	this.setState({apiCallInProgress : false});
-		// 	let msg = error && error.message ? error.message : error;
-		// 	this.displayError(msg);
-		// 	window.removeBackDrop();
-		// }
 	}
 
 	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
 		window.addBackDrop()
-		// try{
 			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
 				console.log("response ==>", res);
 				if(res.success){
@@ -169,15 +158,6 @@ class addToCart extends React.Component {
 				this.displayError(msg);
 				window.removeBackDrop();		
 			})
-		// }
-		// catch (error) {
-		// 	console.log("error in add to cart ==>", error);
-		// 	this.setState({apiCallInProgress : false});
-		// 	let msg = error && error.message ? error.message : error;
-		// 	this.displayError(msg);
-		// 	window.removeBackDrop();
-		// }
-
 	}
 
 	addItems(item){
