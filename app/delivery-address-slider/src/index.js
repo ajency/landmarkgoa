@@ -363,6 +363,7 @@ class gpsModalPrompt extends React.Component {
 				cart_add_trigger.click();
 			}
 		}
+		window.displaySuccess("Location is set to " + formatted_address)
 	}
 
 	getLocation(){

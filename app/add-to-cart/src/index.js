@@ -141,7 +141,7 @@ class addToCart extends React.Component {
 					console.log("response ==>", res);
 					this.addItems(res.item);
 					window.updateViewCartCompoent(res);
-					window.displaySuccess(this.props.product_data.title + " added to cart")
+					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + " added to cart");
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
 				}
