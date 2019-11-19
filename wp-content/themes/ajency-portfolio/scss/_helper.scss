@@ -237,6 +237,10 @@ footer {
     min-width: 120px;
 }
 
+.mw-70{
+    min-width: 70px;
+}
+
 .bg-off-green{
     background-color: rgba(71,167,72,0.1);
 }
@@ -411,4 +415,8 @@ nav{
     width: 16px;
     height: 16px;
     background-position: -117px -5px;
+}
+
+.zindex{
+    z-index: 99;    
 }

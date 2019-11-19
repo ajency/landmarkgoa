@@ -38,5 +38,9 @@
 				transform: translateY(-50%);
 			}
 		}
+		&-name{
+			position: relative;
+			top: 7px;
+		}
 	}
 }

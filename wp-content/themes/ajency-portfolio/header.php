@@ -10,6 +10,11 @@
         opacity:0;
         visibility:hidden;
       }
+      @media (min-width: 992px) {
+        .product-wrapper{
+          min-height: 400px;
+        }
+      }   
     </style>
     <!-- <script>
 
@@ -27,7 +32,7 @@
             ga('send', 'pageview');
     </script> -->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500|Libre+Baskerville:400,400i" rel="stylesheet">  
-    <link rel='icon' type='image/x-icon' href='<?php echo get_template_directory_uri(); ?>/images/logo_new.png'/>
+    <link rel='icon' type='image/x-icon' href='<?php echo get_template_directory_uri(); ?>/images/favicon.png'/>
   </head>
 
   <body>

@@ -114,7 +114,7 @@ class gpsModalPrompt extends React.Component {
 
 	checkGpsErrorMsg(){
 		if(this.state.gpsError){
-			return <div className="alert-danger">{this.state.gpsError}</div>
+			return <div className="alert-danger p-15 mb-3">{this.state.gpsError}</div>
 		}
 	}
 
@@ -222,7 +222,7 @@ class gpsModalPrompt extends React.Component {
 
 	checkLocationErrorMsg(){
 		if(this.state.locError){
-			return <div className="alert-danger">{this.state.locError}</div>
+			return <div className="alert-danger p-15 mb-3">{this.state.locError}</div>
 		}
 	}
 

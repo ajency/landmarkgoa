@@ -57,8 +57,10 @@ class VerifyMobile extends Component {
                         <h6 className="mb-2 pb-3">Didn't receive the code? <a href="javascript:void(0)" className="text-underline" onClick={()=>{this.resendOtpCode()}}>Resend</a></h6>
                         <div className="btn-wrapper pt-4">
                             <div className="btn-inner-wrap">
-                                <button type="button" className="btn-reset text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>Verify OTP</button>
-                                  <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
+                                <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between text-capitalize" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>
+                                    Verify OTP
+                                    <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>                                  
                             </div>
                         </div>
                         <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" onClick={() => this.skipLogin()}>Skip.</a></h5>
