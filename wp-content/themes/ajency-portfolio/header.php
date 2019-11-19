@@ -10,6 +10,11 @@
         opacity:0;
         visibility:hidden;
       }
+      @media (min-width: 992px) {
+        .product-wrapper{
+          min-height: 400px;
+        }
+      }   
     </style>
     <!-- <script>
 
