@@ -26,7 +26,8 @@ class CartCheckoutSummary extends Component {
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
 			cartEmpty : false,
-			approxDeliveryTime:''
+			approxDeliveryTime:'',
+			shippingAddress:''
         }
     }
 
@@ -35,10 +36,22 @@ class CartCheckoutSummary extends Component {
 	}
     componentDidMount() {
         if(this._isMounted) {
+			let shipping_address_extra =''
+
 			console.log(this.props)
 			if(this.props.location.state) {
+				let cart =this.props.location.state.order_obj
 				console.log("inside location state =>>",this.props.location.state)
 				this.setState({orderSummary: this.props.location.state.order_obj})
+
+				if (cart.shipping_address.hasOwnProperty('address')) {
+					shipping_address_extra = cart.shipping_address.address+', '
+				}
+				if(cart.shipping_address.hasOwnProperty('landmark')) {
+					shipping_address_extra = shipping_address_extra + cart.shipping_address.landmark+', '
+				}
+				shipping_address_extra = shipping_address_extra + cart.shipping_address.formatted_address
+				this.setState({shippingAddress: shipping_address_extra})
 				this.setState({approxDeliveryTime: this.props.location.state.approx_delivery_time})
 				this.setState({dataLoading:false, fetchCartComplete:true})
 				window.removeCartLoader();
@@ -54,6 +67,14 @@ class CartCheckoutSummary extends Component {
 					}
 					this.setState({approxDeliveryTime:res.approx_delivery_time});
 					this.setState({orderSummary: res.cart, dataLoading:false, fetchCartComplete:true});
+					if (res.cart.shipping_address.hasOwnProperty('address')) {
+						shipping_address_extra = res.cart.shipping_address.address+', '
+					}
+					if(res.cart.shipping_address.hasOwnProperty('landmark')) {
+						shipping_address_extra = shipping_address_extra + res.cart.shipping_address.landmark+', '
+					}
+					shipping_address_extra = shipping_address_extra + res.cart.shipping_address.formatted_address
+					this.setState({shippingAddress: shipping_address_extra})
 					window.removeCartLoader();
 				}).catch(err => {
 					console.log(err)
@@ -101,8 +122,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
 						<div>
-							<DeliveryAddress showSummaryContent={true} address={this.state.orderSummary.shipping_address.formatted_address} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()}/>
-                            
+							<DeliveryAddress showSummaryContent={true} address={this.state.shippingAddress} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()}/>           
                         </div>
 
 						

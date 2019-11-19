@@ -48,11 +48,10 @@ class AddressList extends Component {
 
     render() {
         return (
-            <div className="address-container visible">
+            <div>
                 {this.state.redirectToAddAddress ? "redirect":null}
                 {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
-                <Header/>
                 {this.state.showAddressComponent ? <AddNewAddress closeAddAddress={this.closeAddAddress} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
         );
@@ -69,14 +68,15 @@ class AddressList extends Component {
 	}
     showAllAddresses() {
         return (
-            <div>
+            <div className="address-container visible">
+                <Header/>
                 <div className="cart-heading p-15 pb-0">
                         <h3 className="mt-4 h1 ft6">Choose Delivery Address</h3>
                 </div>
                 <div className="address-list p-15 pt-0 mt-4">
                     {this.state.fetchComplete ? this.displayAddressList():null}  
                     <div className="post-content pb-5"> 
-                        <div className="next-title m-0" onClick={(e) => this.setState({showAddressComponent:true})}>Add new address <i className="fas fa-arrow-right text-green"></i></div>
+                        <div className="next-title m-0 cursor-pointer" onClick={(e) => this.setState({showAddressComponent:true})}>Add new address <i className="fas fa-arrow-right text-green"></i></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +85,15 @@ class AddressList extends Component {
 
     displayAddressList() {
        let addressMarkups =  _.map(this.state.addresses, (obj,index) => {
+           let shipping_address='';
+            if (obj.hasOwnProperty('address')) {
+                shipping_address = obj.address+', '
+            }
+            if(obj.hasOwnProperty('landmark')) {
+                shipping_address = shipping_address + obj.landmark+', '
+            }
+            shipping_address = shipping_address + obj.formatted_address;
+           
             return( 
                 <div key={index}  className="items mb-5" onClick={(e) => this.assignAndProceed(e,obj.id)} data-lat-long={obj.lat_long}>
                     <div className="text-black text-link highlight">
@@ -94,7 +103,7 @@ class AddressList extends Component {
                             <span className="p-phone-number d-inline-block">{obj.phone}</span>
                         </h5>
                         <h5 className="font-weight-light">
-                           {obj.formatted_address}
+                            {shipping_address}
                         </h5>
                     </div>
                 </div>                

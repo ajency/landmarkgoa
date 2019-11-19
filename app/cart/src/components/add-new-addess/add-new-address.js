@@ -59,43 +59,21 @@ class AddNewAddress extends Component {
         if(window.firebase.auth().currentUser.isAnonymous) {
             returnState['showUserDetailsFields'] =true;
         } else {
-            
-      
-                if(!window.userDetails.hasOwnProperty("name") || !window.userDetails.hasOwnProperty("email")) {
-                    returnState['showUserDetailsFields'] = true;
-                } 
-                returnState["name"] = window.userDetails.name;
-                returnState["email"] = window.userDetails.email;
-                returnState["phone"] = window.userDetails.phone;
+            if(!window.userDetails.hasOwnProperty("name") || !window.userDetails.hasOwnProperty("email")) {
+                returnState['showUserDetailsFields'] = true;
+            } 
+            returnState["name"] = window.userDetails.name;
+            returnState["email"] = window.userDetails.email;
+            returnState["phone"] = window.userDetails.phone;
            
         }
 
         if(props.cartRequest) {
             returnState["btnLable"] = "Save and Proceed";
         }
-        console.log(returnState)
         return returnState;
     }
-    static getDerivedStateFromProps(props, state) {
-        let returnState ={}
-        if(window.firebase.auth().currentUser.isAnonymous) {
-            returnState['showUserDetailsFields'] =true;
-        } else {
-             window.db.collection('user-details').doc(window.firebase.auth().currentUser.uid).get()
-            .then(user_details_ref => {
-                if(user_details_ref.data().name.length == 0 || user_details_ref.data().email.length == 0) {
-                    returnState['showUserDetailsFields'] = true;
-                } 
-                returnState["name"] = user_details_ref.data().name;
-                returnState["email"] = user_details_ref.data().email;
-                returnState["phone"] = user_details_ref.data().phone;
-            })
-           
-        }
-        console.log(returnState)
-        return returnState;
-    }
-
+ 
     setInitData() {
         try {
             window.addCartLoader();
@@ -134,7 +112,7 @@ class AddNewAddress extends Component {
     render() {
         return (
             <div className="address-container">
-               {this.props.cartRequest ?  null:<Header/>}
+              <Header/>
                 <div className="map-container">
                     <GoogleMap handleCenter={this.handleCenter} latlng={this.state.latlng}/>
                     <div id="marker"><i className="fas fa-map-marker-alt"></i></div>
@@ -148,7 +126,7 @@ class AddNewAddress extends Component {
                             {this.state.addressInput ? this.getChangeAddressInput() : this.state.address?<span className="text-green d-inline-block cursor-pointer" onClick={this.changeAddress}>. Change</span>:null}
                         </div>
                     </div>
-                    <form>
+                    <form className="add-address-form">
                         <div>
                             {this.getAddressTypeRadio()} 
                         </div>
