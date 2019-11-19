@@ -69,7 +69,7 @@ class addToCart extends React.Component {
 		else{
 			if(this.state.items.length > 1){
 				let msg = "Item has multiple variants added. Remove correct item from cart";
-				this.displayError(msg);
+				window.displayError(msg);
 			}
 			else{
 				this.removeFromCart(this.state.items[0].variant_id);
@@ -106,7 +106,7 @@ class addToCart extends React.Component {
 			.catch((error) => {
 				this.setState({apiCallInProgress : false});
 				console.log("error ==>", error);
-				this.displayError(error);
+				window.displayError(error);
 			});
 		}
 	}
@@ -117,7 +117,7 @@ class addToCart extends React.Component {
 			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
 			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
 				if(res.success){
-					this.displaySuccess("Successfully removed from cart");
+					window.displaySuccess("Successfully removed from cart");
 					let item = {
 						variant_id : variant_id,
 						quantity : 1
@@ -126,7 +126,7 @@ class addToCart extends React.Component {
 					window.updateViewCartCompoent(res);
 				}
 				else{
-					this.displayError(res.message);
+					window.displayError(res.message);
 				}
 				this.setState({apiCallInProgress : false});
 				window.removeBackDrop();
@@ -141,13 +141,13 @@ class addToCart extends React.Component {
 					console.log("response ==>", res);
 					this.addItems(res.item);
 					window.updateViewCartCompoent(res);
-					this.displaySuccess("Successfully added to cart")
+					window.displaySuccess("Successfully added to cart")
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
 				}
 				else{
 					this.setState({apiCallInProgress : false});
-					this.displayError(res.message);
+					window.displayError(res.message);
 					window.removeBackDrop();
 				}
 			})
@@ -155,7 +155,7 @@ class addToCart extends React.Component {
 				console.log("error in add to cart ==>", error);
 				this.setState({apiCallInProgress : false});
 				let msg = error && error.message ? error.message : error;
-				this.displayError(msg);
+				window.displayError(msg);
 				window.removeBackDrop();		
 			})
 	}
@@ -187,26 +187,6 @@ class addToCart extends React.Component {
 			last_selected = items[0].variant_id;
 		}
 		this.setState({quantity : quantity, items : items, lastSelected : last_selected});
-	}
-
-	displayError(msg){
-		document.querySelector('#failure-toast').innerHTML = msg;
-		document.querySelector('#failure-toast').classList.remove('d-none');
-		document.querySelector('#failure-toast-close-btn').classList.remove('d-none');
-		setTimeout(()=>{
-			document.querySelector('#failure-toast').classList.add('d-none');
-			document.querySelector('#failure-toast-close-btn').classList.add('d-none');
-		},30000)
-	}
-
-	displaySuccess(msg){
-		document.querySelector('#success-toast').innerHTML = msg;
-		document.querySelector('#success-toast').classList.remove('d-none');
-		document.querySelector('#success-toast-close-btn').classList.remove('d-none');
-		setTimeout(()=>{
-			document.querySelector('#success-toast').classList.add('d-none');
-			document.querySelector('#success-toast-close-btn').classList.add('d-none');
-		},30000)
 	}
 
 	getGeolocation(){
