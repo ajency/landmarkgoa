@@ -12,7 +12,7 @@
       }
       @media (min-width: 992px) {
         .product-wrapper{
-          min-height: 400px;
+          min-height: 33vh;
         }
       }   
     </style>
