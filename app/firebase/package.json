@@ -1,9 +1,8 @@
 {
-  "name": "add-to-cart",
+  "name": "firebase",
   "version": "1.0.0",
   "description": "",
-  "main": "add-to-cart.js",
-  "dependencies": {},
+  "main": "index.js",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/polyfill": "^7.7.0",

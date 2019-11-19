@@ -127,22 +127,22 @@
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js" type="text/javascript">
-</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
 <!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> -->
-<script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/variant-selection-popup.<?php echo $js_json['variant-selection-popup'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/add-to-cart.<?php echo $js_json['add-to-cart'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/delivery-address-slider.<?php echo $js_json['delivery-address-slider'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/sign-in.<?php echo $js_json['sign-in'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript"></script>
+<script src="<?php echo $app_url; ?>/firebase-functions.js?_1" type="text/javascript"></script>
+<script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/variant-selection-popup.<?php echo $js_json['variant-selection-popup'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/add-to-cart.<?php echo $js_json['add-to-cart'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/delivery-address-slider.<?php echo $js_json['delivery-address-slider'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/sign-in.<?php echo $js_json['sign-in'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript" defer></script>
 
 <script type="text/javascript">
     
@@ -159,7 +159,7 @@
             navigator.serviceWorker.register(sw).then(function(registration) {
                 // Registration was successful
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                messaging.useServiceWorker(registration);
+                // messaging.useServiceWorker(registration);
             }, function(err) {
                 // registration failed :(
                 console.log('ServiceWorker registration failed: ', err);

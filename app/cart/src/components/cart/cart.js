@@ -7,10 +7,9 @@ import DeliveryAddress from '../delivery-address/delevery-address.js';
 import add from '../../assets/images/add.png';
 import genuinityLogo from '../../assets/images/Genuien.png';
 import clockLogo from '../../assets/images/Time.png';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import {generalConfig} from '../config'
-import axios from 'axios';
- declare var $: any;
+declare var $: any;
 
 class Cart extends Component {
     _webSiteLink = "#/cart";
@@ -22,9 +21,7 @@ class Cart extends Component {
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
-			cartEmpty : false,
-			redirectToSummary:false,
-			cartSummary:null
+			cartEmpty : false
 		}
 		this.fetchCart();
 	}
@@ -41,7 +38,7 @@ class Cart extends Component {
 			this.setState({cartData : {}, fetchCartComplete : false, cartEmpty : false})
 			this.fetchCart();
 		});
-		window.checkPushNotificationPermissions();
+		// window.checkPushNotificationPermissions();
 	}
 
 	getItems(){
@@ -72,7 +69,7 @@ class Cart extends Component {
 				cartContainer = 
 					<div>
 						<div>
-							<DeliveryAddress address={this.state.cartData.cart.formatted_address} delivery_time={this.state.cartData.approx_delivery_time}/>
+							<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
 						</div>
 
 						<div className="cart-heading p-15 pt-0 pb-0">
@@ -115,7 +112,7 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR">
+								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
 									Proceed to Checkout
 									<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
 								</button>
@@ -128,31 +125,34 @@ class Cart extends Component {
 		return (
 			<div className="cart-container visible">
 				<Header/>
-				{this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${"16ZywalSNVRPLwmwAmLR"}`, state:{order_obj:this.state.cartSummary}}} />: null}
 				{cartContainer}
 			</div>
 		);
 	}
 
-	handleCheckout(e) {
-		e.preventDefault();
-		let url = generalConfig.apiEndPoint + "/anonymous/cart/create-order"
-		let data = {
-			address_id:e.target.getAttribute("data-address"),
-			cart_id: this._currentCart //e.target.getAttribute("data-id")
-		}
-		window.addCartLoader();
-		
-		return axios.post(url,data).then((res) => {
-			if(res.data.success) {
-				this.setState({cartSummary:res.data.cart, redirectToSummary:true})
-			} else {
-				window.removeCartLoader();
-				if(res.data.code =='PAYMENT_DONE') {
-					window.removeFromLocalStorage('cart_id')
-					window.location = this._webSiteLink
+	disableCheckoutButton(){
+		if(this.state.cartData && this.state.cartData.cart && this.state.cartData.cart.items.length){
+			let disable = false;
+			for(const item of this.state.cartData.cart.items){
+				if(!item.deliverable || !item.availability){
+					disable = true;
+					break;
+
 				}
-				console.log(res.data.message)
+			}
+			return disable;
+		}
+		return true;
+	}
+
+	handleCheckout(e) {
+		window.getUserDetails().then((user_details)=>{
+			console.log("user_details ==>", user_details);
+			if(!user_details || !user_details.phone){
+				this.props.history.push('/cart/login');
+			}
+			else{
+				this.props.history.push('/cart/select-address');
 			}
 		})
 	}
@@ -164,28 +164,22 @@ class Cart extends Component {
 		window.removeBackDrop();
 	}
 
-	fetchCart() {
+	async fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
-		this._currentCart = window.readFromLocalStorage('cart_id');
 		let cart_id =  window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			// let url = "https://demo8558685.mockable.io/get-cart";
-			 let url = generalConfig.apiEndPoint + "/anonymous/cart/fetch";
-			let body = {
-				cart_id : cart_id
+			try{
+				let cart_data = await window.fetchCart(cart_id);
+				console.log("cart_data ==>", cart_data);
+				window.removeCartLoader();
+				this.setState({cartData : cart_data, fetchCartComplete : true});
 			}
-			axios.get(url, {params : body})
-				.then((res) => {
-					window.removeCartLoader();
-					console.log("fetch cart response ==>", res);
-					this.setState({cartData : res.data, fetchCartComplete : true});
-				})
-				.catch((error)=>{
-					window.removeCartLoader();
-					this.setState({fetchCartFailureMsg : error.message,  fetchCartComplete : true})
-					console.log("error in fetch cart ==>", error);
-				})
+			catch(error){
+				window.removeCartLoader();
+				this.setState({fetchCartFailureMsg : error.message,  fetchCartComplete : true})
+				console.log("error in fetch cart ==>", error);
+			}
 		}
 		else{
 			console.log("inside else")

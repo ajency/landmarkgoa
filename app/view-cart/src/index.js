@@ -1,22 +1,10 @@
 'use strict';
 const e = React.createElement;
 
-const divStyle = {
-	// display : 'flex',
-	// 'justify-content': 'space-between',
-	// 'background' : '#A3DE9A'
-}
-
-const btnStyle = {
-	cursor : 'pointer'
-}
-
 class viewCart extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			cart : null,
 		};
@@ -28,10 +16,9 @@ class viewCart extends React.Component {
 
 	render() {
 			return (
-				<div style={divStyle} className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : '')}>
+				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : '')}>
 						{this.getItemsCount()}
-						{/* {this.getCartTotal()} */}
-					<div id="view-cart-btn" style={btnStyle} onClick={() => this.loadCart()}>
+					<div id="view-cart-btn" className="cursor-pointer" onClick={() => this.loadCart()}>
 						VIEW CART
 					</div>
 				</div>
@@ -62,7 +49,6 @@ class viewCart extends React.Component {
 	}
 
 	loadCart() {
-		// window.checkPushNotificationPermissions();
 		let url = window.location.href.split("#")[0] + '#/cart';
         window.location = url;
 	}
@@ -70,20 +56,12 @@ class viewCart extends React.Component {
 	fetchCart() {
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
-			let body = {
-				cart_id : cart_id
-			}
-			axios.get(url, {params : body})
-				.then((res) => {
-					this.setState({cart : res.data.cart})
-					res.data.cart.items.forEach((item)=>{
-						window.updateaddToCartComponent(item);
-					})
+			window.getCartByID(cart_id).then((cart_data)=>{
+				this.setState({cart : cart_data})
+				cart_data.items.forEach((item)=>{
+					window.updateaddToCartComponent(item);
 				})
-				.catch((error)=>{
-					console.log("error in fetch cart ==>", error);
-				})
+			})
 		}
 	}
 }

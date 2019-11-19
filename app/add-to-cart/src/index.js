@@ -5,18 +5,12 @@ const e = React.createElement;
 class addToCart extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { 
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+		this.state = {
 			apiCallInProgress : false,
 			quantity : 0,
 			lastSelected : '',
 			items : [], // variants added to cart
 		};
-	}
-
-	componentDidMount(){
 	}
 
 	render() {
@@ -57,6 +51,18 @@ class addToCart extends React.Component {
 
 	
 	checkVariant(action){
+		firebase.auth().onAuthStateChanged((user) => {
+			console.log("check user ==>", user);
+			if(user){
+				console.log("user exist");
+			}
+			else{
+				this.signInAnonymously();
+			}
+		});
+
+
+
 		if(action == 'add'){
 			this.showVariantModal()
 		}
@@ -71,18 +77,31 @@ class addToCart extends React.Component {
 		}
 	}
 
-	addToCart(variant_id = null) {
+	signInAnonymously(){
+		firebase.auth().signInAnonymously()
+			.then((res)=>{
+				// res.user.getIdToken().then((idToken) => {
+		  //          this.updateUserDetails(idToken);
+		  //       });
+			})
+			.catch((error) => {
+			  	console.log("error in anonymouse sign in", error);
+			});
+	}
+
+	addToCart(variant_id = null, product) {
+		console.log("add to cart function");
 		this.setState({apiCallInProgress : true});
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(cart_id){
-			this.addToCartApiCall(variant_id, null, cart_id);
+			this.addToCartApiCall(variant_id, window.lat_lng, cart_id, window.formatted_address, product);
 		}
 		else if(window.lat_lng){
-			this.addToCartApiCall(variant_id, window.lat_lng, null, window.formatted_address);
+			this.addToCartApiCall(variant_id, window.lat_lng, null, window.formatted_address, product);
 		}
 		else{
 			this.getGeolocation().then((res)=>{
-				this.addToCartApiCall(variant_id, window.lat_lng, null, window.formatted_address);
+				this.addToCartApiCall(variant_id, window.lat_lng, null, window.formatted_address, product);
 			})
 			.catch((error) => {
 				this.setState({apiCallInProgress : false});
@@ -95,76 +114,70 @@ class addToCart extends React.Component {
 	removeFromCart(variant_id = null){
 		window.addBackDrop();
 		this.setState({apiCallInProgress : true});
-		let url = this.state.apiEndPoint + "/anonymous/cart/delete";
-		// let url = "https://demo8558685.mockable.io/remove-from-cart";
-		let body = {
-			variant_id 	: variant_id,
-			quantity 	: 1,
-			cart_id 	: window.readFromLocalStorage('cart_id')
-		}
-
-		axios.post(url, body)
-		.then((res) => {
-			if(res.data.success){
-				this.displaySuccess("Successfully removed from cart");
-				let item = {
-					variant_id : variant_id,
-					quantity : 1
+		// try{
+			let cart_id = window.readFromLocalStorage('cart_id'), quantity = 1;
+			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
+				if(res.success){
+					this.displaySuccess("Successfully removed from cart");
+					let item = {
+						variant_id : variant_id,
+						quantity : 1
+					}
+					this.removeItems(item);
+					window.updateViewCartCompoent(res);
 				}
-				this.removeItems(item);
-				window.updateViewCartCompoent(res.data);
-			}
-			else{
-				this.displayError(res.data.message);
-			}
-			this.setState({apiCallInProgress : false});
-			window.removeBackDrop();
-		})
-		.catch((error)=>{
-			console.log("error in add to cart ==>", error);
-			this.setState({apiCallInProgress : false});
-			let msg = error && error.message ? error.message : error;
-			this.displayError(msg);
-			window.removeBackDrop();
-		})
+				else{
+					this.displayError(res.message);
+				}
+				this.setState({apiCallInProgress : false});
+				window.removeBackDrop();
+			})
+
+		// }
+		// catch(error){
+		// 	console.log("error in remove from cart ==>", error);
+		// 	this.setState({apiCallInProgress : false});
+		// 	let msg = error && error.message ? error.message : error;
+		// 	this.displayError(msg);
+		// 	window.removeBackDrop();
+		// }
 	}
 
-	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null){
-		window.addBackDrop();
-		let url = this.state.apiEndPoint + "/anonymous/cart/insert";
-		let body = {
-			variant_id : variant_id,
-			quantity : 1,
-			lat_long : lat_long,
-			formatted_address : formatted_address
-		}
-		if(cart_id)
-			body.cart_id = cart_id;
-
-		axios.post(url, body)
-		.then((res) => {
-			if(res.data.success){
-				this.addItems(res.data.item);
-				window.updateViewCartCompoent(res.data);
-				this.displaySuccess("Successfully added to cart")
-				if(!cart_id && res.data.cart_id){
-					// document.cookie = "cart_id=" + res.data.cart_id + ";path=/";
-					window.writeInLocalStorage('cart_id' , res.data.cart_id);
+	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
+		window.addBackDrop()
+		// try{
+			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
+				console.log("response ==>", res);
+				if(res.success){
+					console.log("response ==>", res);
+					this.addItems(res.item);
+					window.updateViewCartCompoent(res);
+					this.displaySuccess("Successfully added to cart")
+					this.setState({apiCallInProgress : false});
+					window.removeBackDrop();
 				}
-			}
-			else{
-				this.displayError(res.data.message);
-			}
-			this.setState({apiCallInProgress : false});
-			window.removeBackDrop();
-		})
-		.catch((error)=>{
-			console.log("error in add to cart ==>", error);
-			this.setState({apiCallInProgress : false});
-			let msg = error && error.message ? error.message : error;
-			this.displayError(msg);
-			window.removeBackDrop();
-		})
+				else{
+					this.setState({apiCallInProgress : false});
+					this.displayError(res.message);
+					window.removeBackDrop();
+				}
+			})
+			.catch((error)=>{
+				console.log("error in add to cart ==>", error);
+				this.setState({apiCallInProgress : false});
+				let msg = error && error.message ? error.message : error;
+				this.displayError(msg);
+				window.removeBackDrop();		
+			})
+		// }
+		// catch (error) {
+		// 	console.log("error in add to cart ==>", error);
+		// 	this.setState({apiCallInProgress : false});
+		// 	let msg = error && error.message ? error.message : error;
+		// 	this.displayError(msg);
+		// 	window.removeBackDrop();
+		// }
+
 	}
 
 	addItems(item){
@@ -251,7 +264,7 @@ window.updateaddToCartComponent = (item) => {
 			let items = component.state.items;
 			items.push(item)
 			items.sort((a,b)=>{
-	  			return b.timestamp._seconds - a.timestamp._seconds;
+	  			return b.timestamp - a.timestamp;
 	  		})
 			let last_added = items[0].variant_id;
 			let qty = 0;
@@ -275,10 +288,12 @@ window.updateItemQuantity = (item, action) => {
 	})
 }
 
-window.addToCartFromVariant = (product_id, variant_id) => {
+window.addToCartFromVariant = (product_id, variant_id , product) => {
+	let found = false;
 	addToCartComponents.forEach((component) =>{
-		if(component.props.product_data.product_id == product_id){
-			component.addToCart(variant_id);
+		if(component.props.product_data.product_id == product_id && !found){
+			component.addToCart(variant_id, product);
+			found = true;
 		}
 	})
 }

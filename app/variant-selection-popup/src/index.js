@@ -6,13 +6,11 @@ class variantSelection extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			variants : [], // variants fetched from firestore
 			selectedVariant : '',
 			productId : '',
-			title : ''
+			title : '',
+			product : null
 		};
 	}
 
@@ -105,39 +103,53 @@ class variantSelection extends React.Component {
 
 
 	fetchVariants(product_id, last_selected){
-		let url = this.state.apiEndPoint + "/misc/fetch-variants";
-		let body = {
-			product_id 	: product_id,
+		if(window.products && window.products.length){
+			let product = window.products.filter((product) => product.id == product_id);
+			this.setVariants(product[0], last_selected)
 		}
-
-		axios.get(url, {params : body})
-		.then((res) => {
-			if(res.data.success && res.data.variants.length){
-				if(!last_selected){
-					this.setState({variants : res.data.variants, selectedVariant : res.data.variants[0].id});
-				}
-				else{
-					this.setState({variants : res.data.variants, selectedVariant : last_selected});
-				}
+		else{
+			try{
+				window.fetchProduct(product_id).then((res)=>{
+					this.setVariants(res, last_selected);
+				})
 			}
-			else{
-				this.hideVariantModal();
+			catch(error){
+				setTimeout(()=>{
+					this.hideVariantModal();
+				},100)
 				let msg = 'No active variants found'
 				this.displayError(msg);
 			}
-		})
-		.catch((error)=>{
-			console.log("error in add to cart ==>", error);
-			this.hideVariantModal();
-			let msg = 'Something unexpected just happened';
+		}
+	}
+
+	setVariants(product, last_selected){
+		this.setState(({product : product}));
+		let variants = [];
+		if(product){
+			variants = product.variants.filter((variant) => {return variant.active})
+		}
+		if(variants.length){
+			if(!last_selected){
+				this.setState({variants : variants, selectedVariant : variants[0].id});
+			}
+			else{
+				this.setState({variants : variants, selectedVariant : last_selected});
+			}
+		}
+		else{
+			setTimeout(()=>{
+				this.hideVariantModal();
+			},100)
+			let msg = 'No active variants found'
 			this.displayError(msg);
-		})
+		}
 	}
 
 	addToCart(variant_id = null) {
+		console.log("variant id==>", variant_id);
 		this.hideVariantModal();
-		let cart_id = window.readFromLocalStorage('cart_id');
-		window.addToCartFromVariant(this.state.productId, variant_id);
+		window.addToCartFromVariant(this.state.productId, variant_id, this.state.product);
 	}
 
 	displayError(msg){

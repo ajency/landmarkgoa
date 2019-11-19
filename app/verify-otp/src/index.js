@@ -6,9 +6,7 @@ class verifyOtp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -48,7 +46,7 @@ class verifyOtp extends React.Component {
 				  <div className="btn-wrapper pt-4">
 			        {this.getOtpButtons()}
 			      </div>
-				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" href="#">Skip.</a></h5>
+				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" onClick={() => this.skipOtp()}>Skip.</a></h5>
 
 			      {this.displayOtpErrorMsg()}
 			  </div>
@@ -74,11 +72,6 @@ class verifyOtp extends React.Component {
 					</div>
 			);
 		}
-		// return (<div> 
-		// 			<button onClick={()=>{this.skipOtp()}}>SKIP OTP</button>
-		// 			<button onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>VERIFY OTP</button>
-		// 		</div>
-		// 	);
 
 		return (
 			 <div className="btn-inner-wrap">
@@ -123,8 +116,10 @@ class verifyOtp extends React.Component {
 		this.state.confirmationResult.confirm(this.state.otp)
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
-		           this.fetchAddresses(idToken);
-		           this.updateUserDetails();
+					window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
+					window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+		            this.updateUserDetails(idToken);
+		            this.fetchAddresses();
 		        });
 			})
 			.catch((error)=>{
@@ -135,25 +130,21 @@ class verifyOtp extends React.Component {
 			})
 	}
 
-	fetchAddresses(idToken){
-		let headers = {
-			Authorization : 'Bearer '+ idToken
-		}
-		let url = this.state.apiEndPoint + "/user/get-addresses";
-		axios.get(url, {headers :  headers })
-			.then((res) => {
+	fetchAddresses(){
+		try{
+			window.getAddresses().then((res)=>{
 				this.closeSignInSlider();
 				this.hideVerifyOtpSlider();
-		      	// this.showGpsSlider();
-		      	window.updateAddresses(res.data.addresses);
+		      	window.updateAddresses(res);
 		      	window.removeCartLoader();
 			})
-			.catch((error)=>{
-				window.removeCartLoader();
-				console.log("error in fetch addresses ==>", error);
-				let msg = error.message ? error.message : error;
-				this.setState({showOtpLoader : false, disableButtons : false, otpErrorMsg : msg});
-			})
+		}
+		catch(error){
+			this.closeSignInSlider();
+			this.hideVerifyOtpSlider();
+	      	window.updateAddresses([]);
+	      	window.removeCartLoader();
+		}
 	}
 
 	hideVerifyOtpSlider(){
@@ -192,7 +183,8 @@ class verifyOtp extends React.Component {
 	}
 
 	skipOtp(){
-
+		this.closeSignInSlider();
+		this.hideVerifyOtpSlider();
 	}
 
 	showGpsSlider(){

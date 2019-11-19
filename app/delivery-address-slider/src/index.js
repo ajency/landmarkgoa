@@ -15,9 +15,7 @@ class gpsModalPrompt extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
 			locations : [],
 			locError : '',
 			gpsError : '',
@@ -29,26 +27,32 @@ class gpsModalPrompt extends React.Component {
 			notLoggedIn : false,
 			showSignInBtn : false
 		}
-		firebase.auth().onAuthStateChanged((user) => {
-			console.log("check user ==>", user);
-			if(user){
-				console.log("user found ==== setting showSign in button to false");
-				this.setState({showSignInBtn : false})
-			}
-			else{
-				this.setState({showSignInBtn : true})
-			}
+		
+	}
 
-		  	if (user && !this.state.notLoggedIn) {
-		    	user.getIdToken().then((idToken) => {
-		   			this.fetchAddresses(idToken);        
-		        });
-		  	}
-		  	else {
-		  		this.setState({notLoggedIn : true })
-		  		console.log("no user");
-		  	}
-		});
+	componentDidMount(){
+		if(firebase && firebase.app()){
+			firebase.auth().onAuthStateChanged((user) => {
+				console.log("check user ==>", user);
+				if(user && !user.isAnonymous){
+					console.log("user found ==== setting showSign in button to false");
+					this.setState({showSignInBtn : false})
+				}
+				else{
+					this.setState({showSignInBtn : true})
+				}
+
+			  	if (user && !this.state.notLoggedIn && !user.isAnonymous) {
+			    	user.getIdToken().then((idToken) => {
+			   			this.fetchAddresses();        
+			        });
+			  	}
+			  	else {
+			  		this.setState({notLoggedIn : true })
+			  		console.log("no user");
+			  	}
+			});
+		}
 	}
 
 	render() {
@@ -159,11 +163,11 @@ class gpsModalPrompt extends React.Component {
 		if(this.state.addresses && this.state.addresses.length && !this.state.locations.length && !this.state.settingUserLocation && !this.state.fetchingGPS){
 			let addresses = this.state.addresses.map((address)=>{
 				return (
-					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.address.lat_long, address.address.formatted_address)}>
-						{this.getAddressIcon(address.address.type)}
+					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
+						{this.getAddressIcon(address.type)}
 						<div className="address-text">
-							<h5>{address.address.type}</h5>
-							<span className=" font-weight-light h6">{address.address.address}, {address.address.landmark}, {address.address.city}, {address.address.state}, {address.address.pincode}</span>
+							<h5>{address.type}</h5>
+							<span className=" font-weight-light h6">{address.address}, {address.landmark}, {address.city}, {address.state}, {address.pincode}</span>
 						</div>
 					</li>
 				)
@@ -207,7 +211,7 @@ class gpsModalPrompt extends React.Component {
 				)
 		}
 
-		if(!this.state.locations.length && this.state.searchText.length > 2){
+		if(!this.state.locations.length && this.state.searchText.length > 2 && !this.state.settingUserLocation){
 			return (
 					<div className="no-results-msg">
 						No results, please enter a valid street address
@@ -316,43 +320,36 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	setUserLocations(lat_lng, formatted_address){
-		this.setSliderLoader();
-		this.setState({settingUserLocation : true});
-		let cart_id = window.readFromLocalStorage('cart_id');
-		if(cart_id){
-			let url = this.state.apiEndPoint + "/anonymous/cart/change-location";
-			let body = {
-				cart_id : cart_id,
-				lat_long : lat_lng,
-				formatted_address : formatted_address
-			};
-			axios.post(url, body)
-			.then((res) => {
-				this.removeSliderLoader();
-				this.updateLocationUI(lat_lng, formatted_address);
-				this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
-				this.closeGpsModal();
-
-			})
-			.catch((error)=>{
-				this.removeSliderLoader();
-				this.setState({ fetchingGPS : false, settingUserLocation : false});
-				console.log("error in updating cart location ==>", error);
-				let msg = error.message ? error.message : error;
-				this.setState({locError : msg});
-			})
+		try{
+			this.setSliderLoader();
+			this.setState({settingUserLocation : true});
+			let cart_id = firebase.auth().currentUser.uid;
+			window.getCartByID(cart_id).then((res)=>{
+				if(res){
+					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
+						this.removeSliderLoader();
+						this.updateLocationUI(lat_lng, formatted_address);
+						this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
+						this.closeGpsModal();
+					})
+				}
+				else{
+					this.removeSliderLoader();
+					this.setState({ fetchingGPS : false, searchText: '', settingUserLocation : false});
+					this.updateLocationUI(lat_lng, formatted_address);
+					this.closeGpsModal();
+				}
+			})	
 		}
-		else{
+		catch(error){
 			this.removeSliderLoader();
 			this.setState({ fetchingGPS : false, searchText: '', settingUserLocation : false});
 			this.updateLocationUI(lat_lng, formatted_address);
 			this.closeGpsModal();
-		}		
+		}	
 	}
 
 	updateLocationUI(lat_lng, formatted_address){
-		// document.cookie = "lat_lng=" + lat_lng[0] + ',' +lat_lng[1] + ";path=/";
-		// document.cookie = "formatted_address=" + formatted_address + ";path=/";
 		window.writeInLocalStorage('lat_lng', lat_lng[0] + ',' +lat_lng[1]);
 		window.writeInLocalStorage('formatted_address', formatted_address);
 		window.lat_lng = lat_lng;
@@ -360,8 +357,7 @@ class gpsModalPrompt extends React.Component {
 		document.querySelector("#selected-location-address").innerHTML = '<div>' + formatted_address + '</div><i class="fas fa-pencil-alt number-edit cursor-pointer"></i>';
 		let cart_address = document.querySelector("#cart-delivery-address");
 		if(cart_address){
-			cart_address.innerHTML = formatted_address;
-			
+			// cart_address.innerHTML = formatted_address;			
 			let cart_add_trigger = document.querySelector("#cart-address-change-trigger");
 			if(cart_add_trigger && document.getElementById("root").classList.contains('active')){
 				cart_add_trigger.click();
@@ -374,8 +370,8 @@ class gpsModalPrompt extends React.Component {
 		this.setState({locations : [], fetchingGPS : true})
 		let geoOptions = {
 			maximumAge: 30 * 60 * 1000,
-			timeout: 20 * 1000,
-			enableHighAccuracy : true
+			timeout: 20 * 1000
+			// enableHighAccuracy : true
 		}
 		navigator.geolocation.getCurrentPosition((position) => {
 			console.log("position ==>", position.coords);
@@ -396,19 +392,16 @@ class gpsModalPrompt extends React.Component {
 		},geoOptions);
 	}
 
-	fetchAddresses(idToken){
-		let headers = {
-			Authorization : 'Bearer '+ idToken
+	fetchAddresses(){
+		try{
+			window.getAddresses().then((res)=>{
+				this.setState({ addresses : res });
+			})
 		}
-		let url = this.state.apiEndPoint + "/user/get-addresses";
-		axios.get(url, {headers :  headers })
-			.then((res) => {
-				this.setState({ addresses : res.data.addresses });
-				// this.setDefaultAddress(res.data.addresses)
-			})
-			.catch((error)=>{
-				console.log("error in fetch addresses ==>", error);
-			})
+		catch(error){
+			console.log("error in fetching addresses", error);
+		}
+
 	}
 
 	setDefaultAddress(addresses){
@@ -432,12 +425,10 @@ class gpsModalPrompt extends React.Component {
 
 	setSliderLoader(){
 		window.addCartLoader();
-		// document.querySelector('#react-add-delivery-address-container').classList.add('slider-loader');
 	}
 
 	removeSliderLoader(){
 		window.removeCartLoader();
-		// document.querySelector('#react-add-delivery-address-container').classList.remove('slider-loader');
 	}
 
 }
@@ -450,7 +441,6 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	gpsModalPromptComponent.setState({showNoAddressMsg : false, locations : [], locError : '', gpsError : '', fetchingGPS : false, searchText : '', settingUserLocation : false});
 	document.querySelector('#gpsModal').classList.add('visible');
 	window.addBackDrop();
-	// window.checkPushNotificationPermissions();
 }
 
 window.updateAddresses = (addresses = null) => {
