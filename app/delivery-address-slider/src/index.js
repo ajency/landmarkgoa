@@ -115,9 +115,7 @@ class gpsModalPrompt extends React.Component {
 	checkGpsErrorMsg(){
 		if(this.state.gpsError == 'permission_denied'){
 			return (<div className="alert-danger p-15 mb-3">
-					<p>You have blocked GreenGrainBowl from tracking your location.</p> 
-					<p> <a target="_blank" href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DDesktop&hl=en&oco=2">Tap this link to change location permission in browser. </a> 
-					</p> 
+					<p>You have blocked GreenGrainBowl from tracking your location. <a target="_blank" href="https://www.lifewire.com/denying-access-to-your-location-4027789">Know more</a> </p> 
 					<p> Or use location search option below.</p>
 				</div>
 			)
