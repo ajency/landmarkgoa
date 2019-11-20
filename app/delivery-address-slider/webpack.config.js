@@ -4,7 +4,7 @@ module.exports = {
   mode : "production",
   output : {
     // filename : "sign-in.js",
-    filename: 'delivery-address-slider.[contenthash].js',
+    filename: 'delivery-address-slider.js',
     path: path.resolve(__dirname, "../pre_build/")
   },
   module: {

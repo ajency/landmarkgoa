@@ -4,7 +4,7 @@ module.exports = {
   mode : "production",
   output : {
     // filename : "sign-in.js",
-    filename: 'verify-otp.[contenthash].js',
+    filename: 'verify-otp.js',
     path: path.resolve(__dirname, "../pre_build/")
   },
   module: {
