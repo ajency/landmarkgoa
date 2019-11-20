@@ -33,16 +33,16 @@
                   <div class="product-wrapper <?php echo $product['class'] ?>">
                       <div class="product-image lg-w-50">
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][0];?>" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                            <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                            <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][1];?>" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][2];?>" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][3];?>" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                       </div>
 
@@ -154,6 +154,7 @@
           <div class="col-md-6">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
                 class="lazy img-fluid"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Anuj Khurana" class="img-fluid">
           </div>
@@ -172,6 +173,7 @@
           <div class="col-md-6">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
                 class="lazy img-fluid"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
           </div>
@@ -190,6 +192,7 @@
           <div class="col-md-6">
             <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
                 class="lazy img-fluid"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
           </div>
