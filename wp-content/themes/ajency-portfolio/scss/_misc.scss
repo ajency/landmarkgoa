@@ -19,8 +19,11 @@
         bottom: 40px;
         right: 85px;
         left: auto;
-        max-width: 410px;
-        width: 100%;
+        width: auto;
+        .failure, .success{
+            max-width: 410px;
+            width: 100%;
+        }
     }
 }
 
@@ -157,7 +160,7 @@
     }
  
     100% {
-        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0)
+        box-shadow: 0 0 0 20px rgba(36, 117, 36, 0.35)
     }
 }
 
