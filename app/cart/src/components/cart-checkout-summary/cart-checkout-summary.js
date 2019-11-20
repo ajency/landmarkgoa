@@ -148,7 +148,7 @@ class CartCheckoutSummary extends Component {
 						</div>
 
 						<div className="p-15">
-							<label className="cart-summary-label font-weight-medium">Bill Details</label>
+							<label className="cart-summary-label font-weight-medium">Billing Details</label>
 							<CartSummary summary={this.state.orderSummary.summary}/>
 						</div>						
 

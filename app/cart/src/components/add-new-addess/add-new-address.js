@@ -144,12 +144,12 @@ class AddNewAddress extends Component {
        return (
         <div>
             <label className="d-block mb-4">
-                House/Flat/Block no:
+                House/Flat/Block no
                 <input type="text" name='building' value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={(e)=> {this.setState({'building':e.target.value}); this.handleChange(e)}} required/>
                 {errors.building.length > 0 &&  <span className='error'>{errors.building}</span>}
             </label>
             <label className="d-block mb-4">
-                Landmark:
+                Landmark
                 <input type="text" name='landmark' value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({'landmark':e.target.value}); this.handleChange(e)}} required/>
                 {errors.landmark.length > 0 &&  <span className='error'>{errors.landmark}</span>}
             </label>
