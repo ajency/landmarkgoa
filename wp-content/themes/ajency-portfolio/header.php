@@ -10,6 +10,24 @@
         opacity:0;
         visibility:hidden;
       }
+      .logo {
+        min-height: 250px;
+      }
+      @media (min-width: 992px) and (max-width: 1400px) {
+        .log{
+          min-height: 170px;
+        }
+      }
+      @media (min-width: 768px) and (max-width: 991px) {
+        .log{
+          min-height: 110px;
+        }
+      }
+      @media (min-width: 320px) and (max-width: 767.98px) {
+        .logo{
+          min-height: 150px;
+        }
+      }
       @media (min-width: 992px) {
         .product-wrapper{
           min-height: 33vh;

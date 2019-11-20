@@ -131,7 +131,10 @@ class AddNewAddress extends Component {
                             {this.getAddressTypeRadio()} 
                         </div>
                         <div className="secure-checkout fixed-bottom visible bg-white p-15">
-                            <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>{this.state.btnLable} <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
+                            <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>
+                                <span className="zindex-1">{this.state.btnLable}</span>
+                                <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+                            </button>
 						</div>
                     </form>
                 </div>

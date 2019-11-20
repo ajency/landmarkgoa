@@ -56,7 +56,7 @@ class LogIn extends Component {
 	getSignInButtons(){
 		return (<div className="btn-inner-wrap">
 		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 position-relative d-flex align-items-center justify-content-between text-capitalize" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>
-					  Submit <i className="text-white fa fa-arrow-right" aria-hidden="true"></i></button>		          
+					  <span className="zindex-1">Submit</span> <i className="text-white fa fa-arrow-right" aria-hidden="true"></i></button>		          
 		        </div>
 		);
 	}

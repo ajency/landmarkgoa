@@ -36,8 +36,8 @@ class VerifyMobile extends Component {
                     <h3 className="mt-4 h1 ft6">Verify mobile</h3>
                     <h4 className="font-weight-light mt-4 pb-4">Looks like you already have account with an saved address. Sign in with OTP for faster checkout.</h4>    
                     <div className="d-flex justify-content-between">
-                    <button className="btn btn-primary btn-inverted btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between" onClick={()=>{this.skipLogin()}}>Cancel <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>                             
-                    <button className="btn btn-primary btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between" onClick={()=>{this.signInWithPhoneNumber()}}>Sign in <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>         
+                    <button className="btn btn-primary btn-inverted btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between" onClick={()=>{this.skipLogin()}}><span className="zindex-1">Cancel</span> <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>                             
+                    <button className="btn btn-primary btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between" onClick={()=>{this.signInWithPhoneNumber()}}><span className="zindex-1">Sign in</span> <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>         
                     </div>
                 </div>
             )
@@ -58,7 +58,7 @@ class VerifyMobile extends Component {
                         <div className="btn-wrapper pt-4">
                             <div className="btn-inner-wrap">
                                 <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between text-capitalize" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>
-                                    Verify OTP
+                                    <span className="zindex-1">Verify OTP</span>
                                     <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
                                 </button>                                  
                             </div>

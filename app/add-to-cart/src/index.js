@@ -36,7 +36,6 @@ class addToCart extends React.Component {
 			return (
 				 <a className="btn-add-to-cart text-white bg-primary p-15 text-decoration-none m-0 font-size-25 ft6 cursor-pointer d-inline-block" onClick={() => this.checkVariant('add')} disabled={this.state.apiCallInProgress}>
 					<span>Add to cart</span>
-					<i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
                  </a>
 				)
 
