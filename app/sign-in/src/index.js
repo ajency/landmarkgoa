@@ -71,7 +71,7 @@ class signInModal extends React.Component {
 		// 	);
 		// }
 		return (<div className="btn-inner-wrap">
-		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>Submit <i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
+		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}><span className="zindex-1">Submit</span> <i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
 		        </div>
 		);
 	}

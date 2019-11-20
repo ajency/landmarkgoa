@@ -281,29 +281,6 @@ footer {
     margin-bottom: 29px
 }
 
-.full-screen-section{
-    min-height: calc(100vh - 361px);   
-    h1, p, img{
-        -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-        -moz-animation: fadein 2s; /* Firefox < 16 */
-        -ms-animation: fadein 2s; /* Internet Explorer */
-        -o-animation: fadein 2s; /* Opera < 12.1 */
-        animation: fadein 2s;
-    } 
-    @media (min-width: 992px) and (max-width: 1400px) {
-        min-height: calc(100vh - 235px);
-        .aj-home-title{
-            font-size: 40px !important;
-        }
-    }
-    @media (max-width: 991px) {
-        min-height: calc(100vh - 211px);
-    }
-    @media (max-width: 767px) {
-        min-height: calc(100vh - 175px);
-    }
-}
-
 .sb-shadow{
     -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
     -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.2);
@@ -420,4 +397,8 @@ nav{
 
 .zindex{
     z-index: 99;    
+}
+
+.zindex-1{
+    z-index: 1;
 }

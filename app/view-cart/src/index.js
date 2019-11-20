@@ -18,7 +18,7 @@ class viewCart extends React.Component {
 			return (
 				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : '')}>
 						{this.getItemsCount()}
-					<div id="view-cart-btn" className="cursor-pointer" onClick={() => this.loadCart()}>
+					<div id="view-cart-btn" className="cursor-pointer zindex-1" onClick={() => this.loadCart()}>
 						VIEW CART
 					</div>
 				</div>
@@ -28,11 +28,11 @@ class viewCart extends React.Component {
 	getItemsCount(){
 		if(this.state.cart && this.state.cart.cart_count){
 			return (
-				<div className="">
+				<div className="zindex-1">
 					<div className="cart-count d-inline-block d-lg-flex">
 						{this.state.cart.cart_count} 
 					</div>
-					<span className="d-inline-block d-lg-none">items(s)</span>
+					<span className="d-inline-block d-lg-none ml-1">Items(s)</span>
 				</div>
 			)
 		}

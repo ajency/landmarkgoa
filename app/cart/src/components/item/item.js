@@ -22,7 +22,7 @@ class Item extends Component {
 							{this.props.item.attributes.title}
 						</div>	
 						<div className="d-flex justify-content-between">
-							<div className="product-size-c font-italic">
+							<div className="product-size-c font-italic text-capitalize">
 								{this.props.item.attributes.size}
 							</div>
 							<div className="d-flex align-items-center">

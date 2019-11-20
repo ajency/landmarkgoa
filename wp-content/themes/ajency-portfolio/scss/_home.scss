@@ -310,7 +310,7 @@
 .mobile-header {
     margin: auto;
     font-style: italic;
-    text-transform: lowercase;
+    text-transform: capitalize;
     font-family: 'Libre Baskerville', Baskerville, georgia, serif!important;
 }
 .aj-our-work {
@@ -354,8 +354,8 @@
         margin: 0 auto;
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
-        width: 100px !important;
-        min-height: 100px;
+        width: 150px !important;
+        min-height: 150px;
         margin: 0 auto;
     }
 }
@@ -372,10 +372,13 @@ nav {
     padding-bottom: 16px;
     &.bg-white{
         @media (min-width: 992px) and (max-width: 1400px) {
-            padding-top: 50px !important;
+            padding-top: 30px !important;
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            padding-top: 30px !important;
         }
         @media (min-width: 320px) and (max-width: 767.98px) {
-            padding-top: 50px !important;
+            padding-top: 30px !important;
         }
     }    
     @media (min-width: 768px) and (max-width: 991px) {
@@ -802,4 +805,43 @@ body .fixed-header {
 }
 body{
     overflow-x: hidden;
+}
+
+.full-screen-section{
+    min-height: calc(100vh - 361px);   
+    h1, p, img{
+        -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+        -o-animation: fadein 2s; /* Opera < 12.1 */
+        animation: fadein 2s;
+    } 
+    .aj-home-title{
+        @media (min-width: 992px) and (max-width: 1400px) {
+            font-size: 40px !important;
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            font-size: 45px !important;
+        }
+        @media (max-width: 767px) {
+            font-size: 22px;
+        }
+    }
+    .body-text{
+        &.small-laptop-text{
+            @media (max-width: 767px) {
+                font-size: 16px;
+                line-height: 23px;
+            }
+        }
+    }
+    @media (min-width: 992px) and (max-width: 1400px) {
+        min-height: calc(100vh - 235px);
+    }
+    @media (max-width: 991px) {
+        min-height: calc(100vh - 211px);
+    }
+    @media (max-width: 767px) {
+        min-height: calc(100vh - 175px);
+    }
 }
