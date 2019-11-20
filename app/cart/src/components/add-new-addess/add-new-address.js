@@ -90,7 +90,7 @@ class AddNewAddress extends Component {
                         console.log("fetch cart response ==>", cart);
                         cart = JSON.parse(JSON.stringify(cart));
                         console.log("fetch cart response ==>", cart);
-                        let latlng = {lat:cart.lat_long[0], lng:cart.lat_long[1]}
+                        let latlng = {lat:cart.shipping_address.lat_long[0], lng:cart.shipping_address.lat_long[1]}
                         this.setState({latlng: latlng})
                         this.reverseGeocode(latlng);
                     })
