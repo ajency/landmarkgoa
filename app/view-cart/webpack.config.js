@@ -5,7 +5,7 @@ module.exports = {
   // entry: ["@babel/polyfill", "./src/index"],
   output : {
     // filename : "sign-in.js",
-    filename: 'view-cart.[contenthash].js',
+    filename: 'view-cart.js',
     path: path.resolve(__dirname, "../pre_build/")
   },
   module: {

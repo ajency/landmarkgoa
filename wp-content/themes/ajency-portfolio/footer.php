@@ -137,12 +137,13 @@
 <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
 <!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> -->
 <script src="<?php echo $app_url; ?>/firebase-functions.js?_1" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript" defer></script>
+<!-- <script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript" defer></script>
 <script src="<?php echo $app_url; ?>/variant-selection-popup.<?php echo $js_json['variant-selection-popup'];?>.js" type="text/javascript" defer></script>
 <script src="<?php echo $app_url; ?>/add-to-cart.<?php echo $js_json['add-to-cart'];?>.js" type="text/javascript" defer></script>
 <script src="<?php echo $app_url; ?>/delivery-address-slider.<?php echo $js_json['delivery-address-slider'];?>.js" type="text/javascript" defer></script>
 <script src="<?php echo $app_url; ?>/sign-in.<?php echo $js_json['sign-in'];?>.js" type="text/javascript" defer></script>
-<script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript" defer></script> -->
+<script src="<?php echo $app_url; ?>/react-components.<?php echo $js_json['react-components'];?>.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     

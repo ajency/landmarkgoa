@@ -4,7 +4,7 @@ module.exports = {
   mode : "production",
   output : {
     // filename : "sign-in.js",
-    filename: 'variant-selection-popup.[contenthash].js',
+    filename: 'variant-selection-popup.js',
     path: path.resolve(__dirname, "../pre_build/")
   },
   module: {
