@@ -33,16 +33,16 @@
                   <div class="product-wrapper <?php echo $product['class'] ?>">
                       <div class="product-image lg-w-50">
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][0];?>" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                            <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                            <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][1];?>" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][2];?>" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][3];?>" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                       </div>
 
@@ -154,6 +154,7 @@
           <div class="col-md-6">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
                 class="lazy img-fluid"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Anuj Khurana" class="img-fluid">
           </div>
@@ -172,6 +173,7 @@
           <div class="col-md-6">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
                 class="lazy img-fluid"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
           </div>
@@ -190,6 +192,7 @@
           <div class="col-md-6">
             <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
                 class="lazy img-fluid"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
           </div>
@@ -219,21 +222,26 @@
 <div id="react-variant-selection-modal"></div>
 
 <div class="msg-container">
+
+  <div id="success-failure-toast-container">
+
+  </div>
+
   <!-- Add to cart error  -->
-  <div class="failure toast d-flex justify-content-center position-relative">
+  <!-- <div class="failure toast d-flex justify-content-center position-relative">
     <span class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative" id="failure-toast">
       Add to cart failed
     </span>
     <button id="failure-toast-close-btn" class="btn-reset close-img d-none" onclick="closenoticationF()"><i class="sprite sprite-close_btn"></i></button>
-  </div>
+  </div> -->
 
   <!-- Add to cart success  -->
-  <div class="success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative">
+  <!-- <div class="success toast d-flex justify-content-center sb-shadow mt-lg-5 position-relative">
     <span class="p-15 pt-lg-2 pb-lg-2 w-100 d-none position-relative text-lg-center" id="success-toast">
       Item successfully added to cart
     </span>
     <button id="success-toast-close-btn" class="btn-reset close-img d-none" onclick="closenotication()"><i class="sprite sprite-close_btn"></i></button>
-  </div>
+  </div> -->
 
    <!-- Offline toast  -->
     <div class="success toast d-flex justify-content-center">
