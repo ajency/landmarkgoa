@@ -310,7 +310,7 @@
 .mobile-header {
     margin: auto;
     font-style: italic;
-    text-transform: capitalize;
+    text-transform: lowercase;
     font-family: 'Libre Baskerville', Baskerville, georgia, serif!important;
 }
 .aj-our-work {
@@ -818,7 +818,7 @@ body{
         animation: fadein 2s;
     } 
     .aj-home-title{
-        @media (min-width: 992px) and (max-width: 1400px) {
+        @media (min-width: 992px) and (max-width: 1450px) {
             font-size: 40px !important;
         }
         @media (min-width: 768px) and (max-width: 991px) {

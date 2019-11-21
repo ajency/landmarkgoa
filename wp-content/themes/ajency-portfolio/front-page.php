@@ -13,8 +13,16 @@
       </div>
     </div>
   </div>
-  <div class="text-center p-15">
+  <div class="text-center p-15 pt-0">
     <img src="<?php echo get_template_directory_uri(); ?>/images/Leaf_with_seperator@2x.png" class="img-fluid auto-width" alt="" title=""/>
+  </div>
+  <div class="container p5 pt-3">
+    <div class="row">
+      <div class="col  offset-xl-2 col-xl-8 col12 text-center">
+       <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">Our goals</h1>
+       <p class="body-text small-laptop-text mb-0">Green Grain Bowl was born out of a desire to eat well. That's what we stand for.</p>
+      </div>
+    </div>
   </div>
 </section>
 
