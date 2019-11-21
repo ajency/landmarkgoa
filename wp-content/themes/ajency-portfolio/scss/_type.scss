@@ -61,7 +61,7 @@ body{
     /*letter-spacing: .2px;*/
     line-height: 1.428;
     &.small-laptop-text {
-        @media (min-width: 992px) and (max-width: 1400px)  {
+        @media (min-width: 992px) and (max-width: 1450px)  {
             font-size: 1.2rem;
         }
         @media (max-width: 767px) {

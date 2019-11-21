@@ -13,8 +13,16 @@
       </div>
     </div>
   </div>
-  <div class="text-center p-15">
+  <div class="text-center p-15 pt-0">
     <img src="<?php echo get_template_directory_uri(); ?>/images/Leaf_with_seperator@2x.png" class="img-fluid auto-width" alt="" title=""/>
+  </div>
+  <div class="container p5 pt-3">
+    <div class="row">
+      <div class="col  offset-xl-2 col-xl-8 col12 text-center">
+       <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">Our goals</h1>
+       <p class="body-text small-laptop-text mb-0">Green Grain Bowl was born out of a desire to eat well. That's what we stand for.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -33,16 +41,16 @@
                   <div class="product-wrapper <?php echo $product['class'] ?>">
                       <div class="product-image lg-w-50">
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][0];?>" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][0];?>" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                            <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][1];?>" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                            <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][1];?>" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][2];?>" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][2];?>" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                           <div class="item">
-                              <img class="lazy" src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" data-src="<?php echo $product['images'][3];?>" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
+                              <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][3];?>" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
                       </div>
 
@@ -152,8 +160,8 @@
       <div>
         <div class="row">
           <div class="col-md-6">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
-                class="lazy img-fluid"
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                class="lazy img-fluid bg-image-animation"
                 data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Anuj Khurana" class="img-fluid">
@@ -171,8 +179,8 @@
       <div class="align-items-center">
         <div class="row flex ">
           <div class="col-md-6">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
-                class="lazy img-fluid"
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                class="lazy img-fluid bg-image-animation" 
                 data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
@@ -190,8 +198,8 @@
       <div>
         <div class="row">
           <div class="col-md-6">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png"
-                class="lazy img-fluid"
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                class="lazy img-fluid bg-image-animation"
                 data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
                 data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">

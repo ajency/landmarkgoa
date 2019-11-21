@@ -310,7 +310,7 @@
 .mobile-header {
     margin: auto;
     font-style: italic;
-    text-transform: capitalize;
+    text-transform: lowercase;
     font-family: 'Libre Baskerville', Baskerville, georgia, serif!important;
 }
 .aj-our-work {
@@ -371,6 +371,7 @@ nav {
     width: 100%;
     padding-bottom: 16px;
     &.bg-white{
+        padding-top: 32px !important;
         @media (min-width: 992px) and (max-width: 1400px) {
             padding-top: 30px !important;
         }
@@ -817,7 +818,7 @@ body{
         animation: fadein 2s;
     } 
     .aj-home-title{
-        @media (min-width: 992px) and (max-width: 1400px) {
+        @media (min-width: 992px) and (max-width: 1450px) {
             font-size: 40px !important;
         }
         @media (min-width: 768px) and (max-width: 991px) {
@@ -844,4 +845,15 @@ body{
     @media (max-width: 767px) {
         min-height: calc(100vh - 175px);
     }
+}
+
+.bg-image-animation{
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #F6F6F6;
+    background: linear-gradient(to right, #f6f7f9 0%, #e9ebee 20%, #f6f7f9 40%, #f6f7f9 100%);
+    background-size: 800px 504px;
 }
