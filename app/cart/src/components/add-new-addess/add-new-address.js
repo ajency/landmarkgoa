@@ -119,7 +119,10 @@ class AddNewAddress extends Component {
                     <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
                 </div>
                 <div className="p-15">
-                    <h3 class="mt-4 h1 ft6">Set a delivery address</h3>
+                    <div className="position-relative title-wrap">
+                        <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+                        <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
+                    </div>                    
                     <div className="list-text-block p-15 mb-4 mt-4">
                         <div className="font-weight-light h5 mb-0">
                             {this.state.showLoader?<div>Address is loading...</div>:this.state.address}
@@ -128,7 +131,7 @@ class AddNewAddress extends Component {
                     </div>
                     <form className="add-address-form">
                         <div>
-                            {this.getAddressTypeRadio()} 
+                            {this.getAddressTypeRadio()}
                         </div>
                         <div className="secure-checkout fixed-bottom visible bg-white p-15">
                             <button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={this.handleSubmit}>

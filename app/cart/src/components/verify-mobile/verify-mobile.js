@@ -46,7 +46,10 @@ class VerifyMobile extends Component {
             return(
                 <div>
                     <div className="slide-in-content">
-                        <h3 className="h1 ft6">Verify Mobile</h3>
+                        <div className="position-relative title-wrap">
+                            <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+                            <h3 className="h1 ft6">Verify Mobile</h3>
+                        </div>
                         <h4 className="font-weight-light mt-4 pb-4">
                             Enter the 6 digit code sent to the number 
                         </h4>

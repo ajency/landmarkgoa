@@ -72,7 +72,10 @@ class AddressList extends Component {
             <div className="address-container visible">
                 <Header/>
                 <div className="cart-heading p-15 pb-0">
+                    <div className="position-relative title-wrap">
+                        <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
                         <h3 className="mt-4 h1 ft6">Choose Delivery Address</h3>
+                    </div> 
                 </div>
                 <div className="address-list p-15 pt-0 mt-4">
                     {this.state.fetchComplete ? this.displayAddressList():null}  
