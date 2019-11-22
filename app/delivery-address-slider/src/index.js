@@ -72,7 +72,10 @@ class gpsModalPrompt extends React.Component {
 			  </div>
 			  <div className="slide-in-content">
 			      {this.showSignInButton()}
-			      <h3 className="mt-4 h1 ft6">Add delivery address</h3>
+					<div className="position-relative title-wrap">
+						<button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+						<h3 className="mt-4 h1 ft6">Add delivery address</h3>
+					</div>
 			      <h4 className="font-weight-light mt-4 pb-4">
 			        We currently serve at Panjim, Porvorim & its neighbourhood.
 			      </h4>
@@ -124,8 +127,9 @@ class gpsModalPrompt extends React.Component {
 					<div>
 						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
-			        		<input type="text" className="border-grey-2 w-100 rounded-0 p-3 h5 mb-0 plceholder-text" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} />
-							<i class="sprite sprite-search position-absolute-right20"></i>
+			        		<input type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} />
+							{/* <i class="sprite sprite-search position-absolute-right20"></i> */}
+							<i class="fa fa-search position-absolute-right20 text-primary"></i>
 			      		</div>
 			      	</div>
 			)

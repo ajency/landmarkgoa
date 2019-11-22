@@ -24,9 +24,12 @@ class LogIn extends Component {
 			  <Header/>
 			  <div className="slide-in-content">
 			      <div className="spacer-2101"></div>
-			      <h3 className="h1 ft6">Login</h3>
+			      <div className="position-relative title-wrap">
+					<button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+					<h3 className="h1 ft6">Mobile Number</h3>
+			      </div>
 			      <h4 className="font-weight-light mt-4 pb-4">
-			        Having an account with GGB makes it dead simple to place orders
+				  	Your Shipping and payment details will be associated with this number
 			      </h4>
 			      <div className="mb-3 pt-4 pb-2">
 			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="text" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} /> <br/>
