@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../header/header.js';
+import {generalConfig} from '../config';
+import axios from 'axios';
 import './verify-mobile.scss'
 
 class VerifyMobile extends Component {
@@ -93,7 +95,16 @@ class VerifyMobile extends Component {
     }
 
     skipLogin() {
-        this.props.history.push('/cart/select-address');
+        try {
+            window.firebase.auth().currentUser.getIdToken().then((idToken)=>{
+                window.addCartLoader();
+                this.updateUserDetails(idToken)
+            })
+        } catch (error) {
+            window.removeCartLoader();
+            this.setState({ errorMessage: error.message, showCapta: false });
+        }
+        
     }
 
     setOtp(value) {
@@ -135,6 +146,7 @@ class VerifyMobile extends Component {
                     window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
                     window.writeInLocalStorage('cart_id', window.firebase.auth().currentUser.uid);
                     // this.updateUserDetails(idToken);
+                    this.props.history.push('/cart/select-address')
                 });
             })
             .catch((error) => {
@@ -171,6 +183,27 @@ class VerifyMobile extends Component {
                 });
         });
     }
+
+    updateUserDetails(idToken){
+		let body = {
+			phone : this.state.phoneNumber
+		}
+		let headers = {
+			Authorization : 'Bearer '+ idToken
+		}
+		let url = generalConfig.apiEndPoint + "/user/update-user-details";
+		axios.post(url, body, {headers :  headers })
+			.then((res) => {
+				console.log("update user details response ==>", res);
+				window.removeCartLoader();
+				this.props.history.push('/cart/select-address')
+			})
+			.catch((error)=>{
+				console.log("error in update user details ==>", error);
+				window.removeCartLoader();
+			})
+	}
+
 }
 
 export default VerifyMobile;
