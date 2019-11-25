@@ -743,7 +743,14 @@ async function getCurrentStockLocation() {
 async function assignAddressToCart (address_id, fetchDraft) {
     let  order_line_items = [], items = [];
     let cart_id = window.readFromLocalStorage('cart_id');
+    if(!cart_id) {
+        return {code:"PAYMENT_DONE"}
+    }
     let cart = await window.getCartByID(cart_id);
+
+    if(!cart.items.length) {
+        return {code:"PAYMENT_DONE"}
+    }
     let lat_lng = [], shipping_address
     if(fetchDraft) {
         console.log("here")
@@ -821,9 +828,6 @@ let response = {
 async function orderSummary(transaction_id) {
     let  order_line_items = [], items = [];
     let lat_lng = [], shipping_address
-    if(!firebase.auth().currentUser) {
-        return {success: true,pending:1}
-    }
     currentUser_uid = firebase.auth().currentUser.uid;
 
     let paymentDoc = await db.collection('payments').where("pg_order_id","==", transaction_id).get()

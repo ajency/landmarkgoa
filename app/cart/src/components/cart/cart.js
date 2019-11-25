@@ -172,8 +172,13 @@ class Cart extends Component {
 			try{
 				let cart_data = await window.fetchCart(cart_id);
 				console.log("cart_data ==>", cart_data);
-				window.removeCartLoader();
-				this.setState({cartData : cart_data, fetchCartComplete : true});
+				if(!cart_data.cart.items.length) {
+					window.removeCartLoader();
+					this.setState({cartEmpty : true, fetchCartComplete : true});
+				} else {
+					window.removeCartLoader();
+					this.setState({cartData : cart_data, fetchCartComplete : true});
+				}				
 			}
 			catch(error){
 				window.removeCartLoader();

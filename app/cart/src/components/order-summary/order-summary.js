@@ -6,7 +6,6 @@ import scooter from '../../assets/images/scooter.png';
 import list from '../../assets/images/list.png';
 import ricecooker from '../../assets/images/rice-cooker.png';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import {generalConfig} from '../config'
 
 class OrderSummary extends Component {
@@ -20,11 +19,16 @@ class OrderSummary extends Component {
             loadingError:false,
             orderSummary:null
         }
-        if(window.firebase.auth().currentUser) {
-            this.getOrderDetails()        
-        } else {
-
-        }
+        // if(window.firebase.auth().currentUser) {
+        //     this.getOrderDetails()        
+        // } else {
+            window.firebase.auth().onAuthStateChanged(user => {
+                if(user) {
+                 this.getOrderDetails()     
+                }
+            })
+               
+        // }   
 
     }
 
@@ -47,7 +51,7 @@ class OrderSummary extends Component {
        
         window.orderSummary(this.props.match.params.transaction_id)
         .then((res) => {
-            console.log("fetching summary ==>");
+            console.log("fetching summary ==>", res);
             
             if(!res.success) {
                 window.displayError(res.msg);
