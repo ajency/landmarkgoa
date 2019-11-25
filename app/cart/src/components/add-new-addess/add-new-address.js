@@ -390,7 +390,7 @@ class AddNewAddress extends Component {
 
                 }
                 this.setState({"address":res_address.formatted_address});
-                let city,state,pincode;
+                let city = '',state='',pincode ='';
                 _.forEach(res_address.address_components,(obj) => {
                     if(_.include(obj.types,'locality')) {
                        city = obj.long_name;

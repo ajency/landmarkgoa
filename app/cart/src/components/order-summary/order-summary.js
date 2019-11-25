@@ -20,6 +20,12 @@ class OrderSummary extends Component {
             loadingError:false,
             orderSummary:null
         }
+        if(window.firebase.auth().currentUser) {
+            this.getOrderDetails()        
+        } else {
+
+        }
+
     }
 
     render() {
@@ -32,41 +38,39 @@ class OrderSummary extends Component {
         );
     }
 
-    componentDidMount() {
-        this.getOrderDetails()        
-    }
-
-    componentWillUnmount() {
-        this._isUnMount = true
-    }
 
     getOrderDetails() {
-        if(this._isUnMount) {
-            return ;
-        }
-        let url = generalConfig.apiEndPoint + "/anonymous/payment/get-order-details";
-        axios.post(url, {transaction_id: this.props.match.params.transaction_id})
+        // if(this._isUnMount) {
+        //     return ;
+        // }
+        window.addCartLoader();
+       
+        window.orderSummary(this.props.match.params.transaction_id)
         .then((res) => {
-
-            if(res.data.pending) {
-                this.getOrderDetails()
-                this.setState({"loader": true})
-        		window.addCartLoader();
-
-            } else {
-                window.removeCartLoader();
-                this.setState({orderSummary: {...res.data.summary}})
-                this.setState({"loader": false})
-                this.setState({"loadingError": false})
-                if(this.state.orderSummary.payment_summary.status== 'captured') {
-                    window.removeFromLocalStorage('cart_id');
-                }
-            }
+            console.log("fetching summary ==>");
             
+            if(!res.success) {
+                window.displayError(res.msg);
+                this.setState({"loadingError": true})
+                window.removeCartLoader();
+            } else {
+                if(res.pending) {
+                    this.getOrderDetails()
+                    this.setState({"loader": true})
+                    window.addCartLoader();
+
+                } else {
+                    window.removeCartLoader();
+                    this.setState({orderSummary: res})
+                    this.setState({"loader": false})
+                    this.setState({"loadingError": false})
+                }
+            } 
+            console.log("fetched summary",this.state.orderSummary)
         }).catch(err => {
             this.setState({"loader": false})
             this.setState({"loadingError": true})
-            // window.removeCartLoader();
+            window.removeCartLoader();
             console.log(err)
         }) 
     }

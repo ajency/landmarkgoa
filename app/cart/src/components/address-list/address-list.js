@@ -148,7 +148,7 @@ class AddressList extends Component {
                 } else {
                     window.removeCartLoader();
                     if(res.code =='PAYMENT_DONE') {
-                        window.removeFromLocalStorage('cart_id')
+                        // window.removeFromLocalStorage('cart_id')
                         this.setState({redirectToCart:true})
                     }
                 }

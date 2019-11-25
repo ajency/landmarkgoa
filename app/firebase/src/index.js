@@ -816,3 +816,83 @@ let response = {
     return response;
 
 }
+
+
+async function orderSummary(transaction_id) {
+    let  order_line_items = [], items = [];
+    let lat_lng = [], shipping_address
+    if(!firebase.auth().currentUser) {
+        return {success: true,pending:1}
+    }
+    currentUser_uid = firebase.auth().currentUser.uid;
+
+    let paymentDoc = await db.collection('payments').where("pg_order_id","==", transaction_id).get()
+    if(!paymentDoc.docs.length) {
+        return {success: false, msg:"Order not found"}
+    }
+    let data = paymentDoc.docs[0].data();
+    console.log("payment data ===> "+data)
+    console.log(data.user_id+ "!=" +currentUser_uid);
+    
+    if(data.user_id != currentUser_uid) {
+        return {success: false, msg:"Please login to view summary"}
+    }
+    if(data.status =="draft") {
+        return {success:true, pending:1};
+    }
+    if(data.other_details) {
+        data.other_details = JSON.parse(data.other_details)
+    }
+    
+    let order_ref = await db.collection('user-details').doc(currentUser_uid).collection('orders').doc(data.order_id).get()
+
+    if(!order_ref.exists) {
+        return {success:false, msg:"Order not found"};
+    }
+    let order_data = order_ref.data()
+    let shipping_address_obj = order_data.shipping_address
+    if(shipping_address_obj) {
+        let latlng = {}
+        latlng["lat"] = shipping_address_obj.lat_long[0]
+        latlng["lng"] = shipping_address_obj.lat_long[1]
+        order_data.shipping_address.lat_long = latlng
+
+    }
+   
+    order_data.items.forEach((item)=>{
+        let product = products.find((product) => { return product.id == item.product_id})
+        let deliverable = true; //check if deliverable
+        let in_stock = true;     // check if in stock
+    
+        let formatted_item = {
+            variant_id : item.variant_id,
+            attributes: {
+                title: item.product_name,
+                images: {
+                "1x": product.image_urls[0]
+                },
+                size : item.size,
+                price_mrp : item.mrp,
+                price_final : item.sale_price,
+                discount_per : 0
+            },
+            availability : in_stock,
+            quantity : item.quantity,
+            timestamp : item.timestamp,
+            deliverable : deliverable,
+            product_id : product.id
+        }
+        items.push(formatted_item);
+    })
+
+    order_data.items = items;
+    let response = {
+            success: true, 
+            order_data : order_data,
+            payment_summary:data,
+            coupon_applied: null,
+            coupons: [],
+            approx_delivery_time : "40 mins"
+    }
+        return response;
+}

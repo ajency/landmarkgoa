@@ -62,7 +62,7 @@ class CartCheckoutSummary extends Component {
 				.then((res) => {
 					console.log(res)
 					if(res.code =='PAYMENT_DONE') {
-						window.removeFromLocalStorage('cart_id')
+						// window.removeFromLocalStorage('cart_id')
 						this.props.history.push('/cart');
 					}
 					this.setState({approxDeliveryTime:res.approx_delivery_time});
