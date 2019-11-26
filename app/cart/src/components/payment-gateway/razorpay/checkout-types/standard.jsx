@@ -20,7 +20,10 @@ class Standard extends Component {
        
          await this.props.createOrder(e)
          let amount = this.state.amount*100
-         
+         if(!this.props.r_order_id) {
+            window.displayError("Something went wrong")
+            return
+         }
         //  let options = {
         //     "amount": 500000, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise or INR 500.
         //     "currency": "INR",
