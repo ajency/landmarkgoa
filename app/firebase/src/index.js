@@ -337,6 +337,9 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
             cart_data.items = [order_line_item];
         }
         console.log("cart data before set ==>", cart_data);
+        if(cart_data.hasOwnProperty('order_id')) {
+            cart_data.order_id = ''
+        }
         await db.collection('carts').doc(cart_id).set(cart_data);
         console.log("cart data after set")
         sycnCartData(cart_id);
@@ -424,6 +427,9 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
             cart_data.items[index].quantity = new_quantity
         }
         cart_data.summary.you_pay = cart_data.summary.sale_price_total + cart_data.summary.shipping_fee;
+        if(cart_data.hasOwnProperty('order_id')) {
+            cart_data.order_id = ''
+        }
         await db.collection("carts").doc(cart_id).set(cart_data);
         let response = {
             "message": "Successfully updated the cart",
@@ -753,9 +759,7 @@ async function assignAddressToCart (address_id, fetchDraft) {
     }
     let lat_lng = [], shipping_address
     if(fetchDraft) {
-        console.log("here")
         shipping_address = cart.shipping_address
-        console.log('here')
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
         shipping_address = address
