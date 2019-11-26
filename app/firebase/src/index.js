@@ -318,7 +318,7 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
         cart_data.cart_count                 += item.quantity;
         cart_data.stock_location_id          =  stock_location_id;
 
-        console.log("cart items ==>", cart_data.items);
+        console.log("in update order :cart items ==>", cart_data.items);
         if(cart_data.items.length){
             let index = cart_data.items.findIndex((i) => { return i.variant_id == item.variant_id})
             if(index !== -1){
@@ -340,9 +340,12 @@ async function updateOrder (item, cart_id, cart_data, stock_location_id) {
         if(cart_data.hasOwnProperty('order_id')) {
             cart_data.order_id = ''
         }
+        console.time("db carts update")
         await db.collection('carts').doc(cart_id).set(cart_data);
-        console.log("cart data after set")
+        console.timeEnd("db carts update")
+        console.time("cart sync")
         sycnCartData(cart_id);
+        console.timeEnd("cart sync")
         
         return cart_data;
 }
@@ -365,6 +368,7 @@ function formateOrderLine(item){
 
 
 function findDeliverableLocation(locations, lat_long){
+    console.time("findDeliverableLocation")
     let deliverble, min_diff = 9999999;
 
         locations.forEach((loc)=>{
@@ -376,6 +380,7 @@ function findDeliverableLocation(locations, lat_long){
                 deliverble = loc;
             }
         })
+        console.timeEnd("findDeliverableLocation")
     console.log("closest deliverable ==>", deliverble);
     return deliverble;
 }
@@ -507,26 +512,34 @@ async function fetchCart(cart_id){
 
 async function addToCart(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
     try{
-        console.log("product ==>", product);
+        console.log(" addToCart product ==>", product);
+
         let stock_location_id,  quantity = 1, locations = [], location;
         let cart_data;
         let user_id = firebase.auth().currentUser.uid;
+        console.time("fetch variant")
         let variant = product.variants.find((v) => v.id === variant_id);
-        console.log("varaint ==>", variant);
+        console.timeEnd("fetch variant")
+        console.log("addToCart varaint ==>", variant);
 
 
         // this check is done to avoid getting cart if cart does not exist
         // user_id is not used as user is creted as on click of add to cart and will exist at this point but cart may not exist
         if(cart_id){
+            console.time("fetch cart by id Time")
             cart_data = await window.getCartByID(user_id);
-            console.log("cart data from db ==> cart_data");
+            console.timeEnd("fetch cart by id Time")
         }
 
         if(!cart_data ){
+            console.time("getNewCartData")
             cart_data = getNewCartData(lat_long, formatted_address);
+            console.timeEnd("getNewCartData")
+            console.time("writeInLocalStorage")
             window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+            console.timeEnd("writeInLocalStorage")
         }
-        console.log("cart data ==>",cart_data);
+        console.log(" add to cart, cart data ==>",cart_data);
 
         // TODO : check if the item is already in cart and update the qunatity value accordingly.
         // create new variable called updated quantity
@@ -583,8 +596,9 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
             product_id : product.id,
             timestamp : new Date().getTime()
         }
-
+        console.time("updateOrder")
         let order_data = await window.updateOrder(item, user_id, cart_data, stock_location_id)
+        console.timeEnd("updateOrder")
 
         console.log("update order data");
 

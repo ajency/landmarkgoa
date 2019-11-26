@@ -100,6 +100,7 @@ class addToCart extends React.Component {
 		}
 		else{
 			this.getGeolocation().then((res)=>{
+				console.log("add to cart geolocation");			
 				this.addToCartApiCall(variant_id, window.lat_lng, null, window.formatted_address, product);
 			})
 			.catch((error) => {
@@ -135,11 +136,15 @@ class addToCart extends React.Component {
 	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
 		window.addBackDrop()
 			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
-				console.log("response ==>", res);
+				console.log("addToCart response ==>", res);
 				if(res.success){
-					console.log("response ==>", res);
+					console.log(" addToCart response success ==>", res);
+					console.time("addItems")
 					this.addItems(res.item);
+					console.timeEnd("addItems")
+					console.time("updateViewCartCompoent")
 					window.updateViewCartCompoent(res);
+					console.timeEnd("updateViewCartCompoent")
 					window.displaySuccess(res.item.attributes.size + '-' +res.item.attributes.title + " added to cart");
 					this.setState({apiCallInProgress : false});
 					window.removeBackDrop();
