@@ -68,7 +68,7 @@ class VerifyMobile extends Component {
                                 </button>
                             </div>
                         </div>
-                        <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" onClick={() => this.skipLogin()}>Skip</a></h5>
+                        <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipLogin()}>Skip</a></h5>
 
                         {this.displayOtpErrorMsg()}
                     </div>

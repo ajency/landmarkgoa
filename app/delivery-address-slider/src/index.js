@@ -119,7 +119,7 @@ class gpsModalPrompt extends React.Component {
 		if(this.state.gpsError == 'permission_denied'){
 			return (<div className="alert-danger p-15 mb-3">
 					<p>You have blocked GreenGrainBowl from tracking your location. <a target="_blank" href="https://www.lifewire.com/denying-access-to-your-location-4027789">Know more</a> </p> 
-					<p> Or use location search option below.</p>
+					<p className="mb-0"> Or use location search option below.</p>
 				</div>
 			)
 		}
@@ -139,7 +139,7 @@ class gpsModalPrompt extends React.Component {
 					<div>
 						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
-			        		<input type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
+			        		<input onfocus="scrollTop()" type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
 							{/* <i class="sprite sprite-search position-absolute-right20"></i> */}
 							<i class="fa fa-search position-absolute-right20 text-primary"></i>
 			      		</div>

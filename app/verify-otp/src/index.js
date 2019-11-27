@@ -46,7 +46,7 @@ class verifyOtp extends React.Component {
 				  <div className="btn-wrapper pt-4">
 			        {this.getOtpButtons()}
 			      </div>
-				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" onClick={() => this.skipOtp()}>Skip.</a></h5>
+				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipOtp()}>Skip</a></h5>
 
 			      {this.displayOtpErrorMsg()}
 			  </div>
@@ -75,7 +75,7 @@ class verifyOtp extends React.Component {
 
 		return (
 			 <div className="btn-inner-wrap">
-	        	<button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>Verify OTP
+	        	<button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}><span className="zindex-1">Verify OTP</span>
 				<i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
 				</button>
 	          	
