@@ -1,25 +1,25 @@
 
  // Your web app's Firebase configuration
 
-// var firebaseConfig = {
-//     apiKey: "AIzaSyC-w19gW41OaoyjuK4jHPVN5JtviKGB7KQ",
-//     authDomain: "project-ggb-dev.firebaseapp.com",
-//     databaseURL: "https://project-ggb-dev.firebaseio.com",
-//     projectId: "project-ggb-dev",
-//     storageBucket: "project-ggb-dev.appspot.com",
-//     messagingSenderId: "1034785903670",
-//     appId: "1:1034785903670:web:496c7762259b7fb3b9f497"
-// };
-
- var firebaseConfig = {
-    apiKey: "AIzaSyDkH2U1VrkRiXNHkyrhTOuL48zeq_2dwAw",
-    authDomain: "project-ggb.firebaseapp.com",
-    databaseURL: "https://project-ggb.firebaseio.com",
-    projectId: "project-ggb",
-    storageBucket: "project-ggb.appspot.com",
-    messagingSenderId: "854451069142",
-    appId: "1:854451069142:web:0e523576b2ef9c7f47e977"
+var firebaseConfig = {
+    apiKey: "AIzaSyC-w19gW41OaoyjuK4jHPVN5JtviKGB7KQ",
+    authDomain: "project-ggb-dev.firebaseapp.com",
+    databaseURL: "https://project-ggb-dev.firebaseio.com",
+    projectId: "project-ggb-dev",
+    storageBucket: "project-ggb-dev.appspot.com",
+    messagingSenderId: "1034785903670",
+    appId: "1:1034785903670:web:496c7762259b7fb3b9f497"
 };
+
+//  var firebaseConfig = {
+//     apiKey: "AIzaSyDkH2U1VrkRiXNHkyrhTOuL48zeq_2dwAw",
+//     authDomain: "project-ggb.firebaseapp.com",
+//     databaseURL: "https://project-ggb.firebaseio.com",
+//     projectId: "project-ggb",
+//     storageBucket: "project-ggb.appspot.com",
+//     messagingSenderId: "854451069142",
+//     appId: "1:854451069142:web:0e523576b2ef9c7f47e977"
+// };
 
 // Initialize Firebase
 console.log("initialising firebase");

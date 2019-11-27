@@ -150,12 +150,12 @@ class AddNewAddress extends Component {
        return (
         <div>
             <label className="d-block mb-4">
-                House/Flat/Block no
+                <span className='error'>*</span>House/Flat/Block no
                 <input type="text" name='building' value={this.state.building} class="d-block w-100 rounded-0 input-bottom" onChange={(e)=> {this.setState({'building':e.target.value}); this.handleChange(e)}} required/>
                 {errors.building.length > 0 &&  <span className='error'>{errors.building}</span>}
             </label>
             <label className="d-block mb-4">
-                Landmark
+                <span className='error'>*</span>Landmark
                 <input type="text" name='landmark' value={this.state.landmark}  class="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({'landmark':e.target.value}); this.handleChange(e)}} required/>
                 {errors.landmark.length > 0 &&  <span className='error'>{errors.landmark}</span>}
             </label>
@@ -253,20 +253,20 @@ class AddNewAddress extends Component {
         let errors = this.state.errors;
         switch (name) {
             case "name":
-                  errors.name = value.length >1 ? '':'Name is required!';
+                  errors.name = value.length >1 ? '':'required';
             break;
             case "email":
                 if( value.length >1) {
-                    errors.email ='' 
-                } else if(window.validEmailRegex.test(value)) {
+                    errors.email ='required' 
+                } else if(!window.validEmailRegex.test(value)) {
                     errors.email = "Please enter valid email";
                 }
             break;
             case "landmark":
-                  errors.landmark = value.length >1 ? '':'Landmark is required!';
+                  errors.landmark = value.length >1 ? '':'required';
             break;
             case "building":
-                  errors.building = value.length >1 ? '':'House/Flat/Block no: is required';
+                  errors.building = value.length >1 ? '':'required';
             break;      
             default:
                 break;
@@ -279,23 +279,22 @@ class AddNewAddress extends Component {
         let errors = this.state.errors;
         let error = false
         if(this.state.name.length <1) {
-            errors.name =  "Name is required!";
+            errors.name =  "required";
             error = true;
         }
         if(this.state.email.length <1) {
-            errors.email = "Email is required!"
+            errors.email = "required"
             error = true;
-        }
-        if(!window.validEmailRegex.test(this.state.email)) {   
+        } else if(!window.validEmailRegex.test(this.state.email)) {   
             errors.email = "Please enter valid email";
             error = true;
         }
         if(this.state.landmark.length < 1) {  
-            errors.landmark = 'Landmark is required';
+            errors.landmark = 'required';
             error = true;
         }
         if(this.state.building.length < 1) {  
-            errors.building = ' House/Flat/Block no: is required';
+            errors.building = 'required';
             error = true;
         }
         if(error) {
@@ -337,13 +336,13 @@ class AddNewAddress extends Component {
             <div className="user-details">
                 <h5 className="ft6 mb-4">Account details</h5>
                 <label className="d-block mb-4">
-                    Full Name
+                    <span className='error'>*</span>Full Name
                     <input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({name:e.target.value}); this.handleChange(e)}} required/>
                     {errors.name.length > 0 &&  <span className='error'>{errors.name}</span>}
                 </label>
 
                 <label className="d-block mb-4">
-                    Email
+                    <span className='error'>*</span>Email
                     <input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({email:e.target.value}); this.handleChange(e)}} required/>
                     {errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
                 </label>              
