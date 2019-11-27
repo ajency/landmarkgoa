@@ -13,6 +13,7 @@
     #react-view-cart-container{
         @media (max-width: 991px) {
             width: 100%;
+            position: relative;
         }
     }
     @media (min-width: 992px) {
