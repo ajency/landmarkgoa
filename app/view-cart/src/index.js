@@ -32,7 +32,7 @@ class viewCart extends React.Component {
 					<div className="cart-count d-inline-block d-lg-flex">
 						{this.state.cart.cart_count} 
 					</div>
-					<span className="d-inline-block d-lg-none ml-1">Items(s)</span>
+					<span className="d-inline-block d-lg-none ml-1">Item(s)</span>
 				</div>
 			)
 		}
