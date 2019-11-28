@@ -139,7 +139,7 @@ class gpsModalPrompt extends React.Component {
 					<div>
 						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
-			        		<input onFocus="scrollTop()" type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0 outline-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
+			        		<input onFocus={this.scrollTop} type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0 outline-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
 							{/* <i class="sprite sprite-search position-absolute-right20"></i> */}
 							<i class="fa fa-search position-absolute-right20 text-primary"></i>
 			      		</div>
