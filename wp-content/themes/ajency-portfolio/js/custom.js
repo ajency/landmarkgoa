@@ -580,6 +580,22 @@ window.addEventListener("load", function() {
                         // .offset(-10)
                         // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
                         .addTo(controller);
+        var scene = new ScrollMagic.Scene({
+                            triggerElement: ".effect.trigger7",
+                            triggerHook: 'onLeave', 
+                            duration: '150%'
+                        })
+                        .setTween(".cardseven", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
+                        .setPin(".effect.trigger7", {pushFollowers: false})
+                        .addTo(controller);
+       var scene = new ScrollMagic.Scene({
+                            triggerElement: ".effect.trigger8",
+                            triggerHook: 'onLeave', 
+                            duration: '150%'
+                        })
+                        .setTween(".cardend", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
+                        .setPin(".effect.trigger8", {pushFollowers: false})
+                        .addTo(controller);
 
     }
 });
