@@ -19,8 +19,8 @@
   <div class="container p5 pt-3">
     <div class="row">
       <div class="col  offset-xl-2 col-xl-8 col12 text-center">
-       <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">Our goals</h1>
-       <p class="body-text small-laptop-text mb-0">Green Grain Bowl was born out of a desire to eat well. That's what we stand for.</p>
+       <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">our bowls</h1>
+       <p class="body-text small-laptop-text mb-0">Wholesome, balanced and flavourful meals that will make you feel great.</p>
       </div>
     </div>
   </div>
