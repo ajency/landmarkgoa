@@ -1,5 +1,5 @@
 let razorPayConfig = {
-    api_key:'rzp_test_HZ5L6Z2Jm8bWco',
+    api_key:'rzp_test_cHyeKfTzk2SZj2',
     customJs:"https://checkout.razorpay.com/v1/razorpay.js",
     standardJs:"https://checkout.razorpay.com/v1/checkout.js",
     image:"https://i.imgur.com/n5tjHFD.png",
