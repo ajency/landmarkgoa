@@ -80,12 +80,13 @@
 			"class" : "cardfour",
 			"put_empty" : false
 		},
+		
 		{
-			"product_id" : "yykiWcEv48MtR2oRiWla1",
-			"title" : "Orange Barley Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
+			"product_id" : "ByklWaEt4eMsRhtRiWlb",
+			"title" : "Beet Root Bowl",
+			"description" : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
 			"default" : {
-				"id" : "72mIBZ9aTr8Okr05SfSN",
+				"id" : "72mIBZ9aTr8Okr05SftN",
 				"mrp" : 150,
 				"sale_price" : 100,
 				"size" : "Small"
@@ -101,11 +102,11 @@
 		},
 
 		{	
-			"product_id" : "ReAlsVnx73KSVrYGvbsn2",
-			"title" : "Cracked Wheat & Chickpea Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
+			"product_id" : "AeAlsAnt7eKSVhYGvbsn2",
+			"title" : "Chickpea Bowl",
+			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing",
 			"default" : {
-				"id" : "5awRHIDbXVNMEZhoYjtZ",
+				"id" : "5awRHIDbXKNMEZhoYltZ",
 				"mrp" : 500,
 				"sale_price" : 400,
 				"size" : "Regular"
@@ -121,11 +122,11 @@
 		},
 
 		{	
-			"product_id" : "moVonufnFw46emRbKy7W3",
-			"title" : "Thai Brown Rice Bowl",
+			"product_id" : "CoVonulnawt6emRsKh7W3",
+			"title" : "Chinese Brown Rice Bowl",
 			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
 			"default" : {
-				"id" : "Nwn6e8h6OWVBpMFN0c9z",
+				"id" : "Nwn6e8h6OLVKpMFN0c9z",
 				"mrp" : 450,
 				"sale_price" : 400,
 				"size" : "Regular"
