@@ -78,7 +78,7 @@
     
  if (!is_page_template('archive.php') && !is_singular('post') && !is_page_template('template-blogs.php') && !is_page_template('template-fullwidth.php') ) { ?>
     <noscript id="deferred-styles">
-        <link href="<?php echo get_template_directory_uri(); ?>/css/custom_7.min.css" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo get_template_directory_uri(); ?>/css/custom_8.min.css" rel="stylesheet" type="text/css"/>
         <!-- <link href="<?php echo get_bloginfo('url');  ?>/wp-content/themes/ajency-portfolio/style.css" rel="stylesheet" type="text/css"/> -->
          <!--<link href="<?php echo get_template_directory_uri(); ?>/css/zoom.css" rel="stylesheet" type="text/css"/>-->
         <!--  <link rel="stylesheet" type="text/css" href="http://filamentgroup.github.io/enlarge/src/enlarge.css">-->
@@ -122,7 +122,7 @@
     var controller2 = new ScrollMagic.Controller();
 </script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_14" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_15" type="text/javascript">
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
