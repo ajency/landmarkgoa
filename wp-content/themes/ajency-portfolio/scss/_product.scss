@@ -26,11 +26,17 @@
             }
             @media (max-width: 991px) {
                 margin-bottom: 60px;
+                overflow: auto;
             }
         }
         @media (min-width: 992px) {
             margin: 0 -16px !important;
             overflow: hidden;
+        }
+        @media (max-width: 767px) {
+            overflow: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
     }
     &-wrapper{
@@ -277,4 +283,8 @@
 .currency-symbol{
     font-size: 14px;
     margin-right: 2px;
+}
+
+.cardend{
+    opacity: 0 !important;
 }
