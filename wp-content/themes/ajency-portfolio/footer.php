@@ -122,7 +122,7 @@
     var controller2 = new ScrollMagic.Controller();
 </script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_15" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_16" type="text/javascript">
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
