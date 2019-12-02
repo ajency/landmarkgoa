@@ -75,8 +75,9 @@ class LogIn extends Component {
 	}
 
 	validateMobile(e){
-	    let key = e.keyCode || e.which;
-	    if ((key < 48 || key > 57 || e.target.value.length >9 ) && key !== 8 && key !== 13) {
+	    let key = e.key;
+	    let keyList = ["1","2","3","4","5","6","7","8","9","0"];
+	    if (key !== 'ArrowUp' && key !== 'ArrowDown' && key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'Backspace' && (!keyList.includes(key) || e.target.value.length >9 )) {
 	        if (e.preventDefault) 
 	        	e.preventDefault(); //normal browsers
 	        e.returnValue = false; //IE

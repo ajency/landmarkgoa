@@ -24,26 +24,28 @@ class AddressList extends Component {
         }
     }
 
-   static getDerivedStateFromProps(props, state) {
+    componentDidMount() {
         window.addCartLoader()
-        let returnState = {};
-        returnState["cart_id"]=window.readFromLocalStorage('cart_id')
-        if(window.firebase.auth().currentUser.isAnonymous) {
-            returnState["showAddressComponent"] = true
-        } else {
-            if(window.firebase.auth().currentUser) {
-                if(_.isEmpty(window.userAddresses)) {
-                    returnState["showAddressComponent"] = true
-                } else {
-                    returnState["addresses"] = window.userAddresses
-                    returnState["fetchComplete"] = true
-                }
+        window.firebase.auth().onAuthStateChanged((user) => {
+            let returnState = {};
+            returnState["cart_id"]=window.readFromLocalStorage('cart_id')
+            if(window.firebase.auth().currentUser.isAnonymous) {
+                returnState["showAddressComponent"] = true
             } else {
-                this.displayError("Please login to continue");
-            }            
-        }
-        window.removeCartLoader()
-        return returnState
+                if(window.firebase.auth().currentUser) {
+                    if(_.isEmpty(window.userAddresses)) {
+                        returnState["showAddressComponent"] = true
+                    } else {
+                        returnState["addresses"] = window.userAddresses
+                        returnState["fetchComplete"] = true
+                    }
+                } else {
+                    this.displayError("Please login to continue");
+                }            
+            }
+            this.setState(returnState);
+            window.removeCartLoader()
+        });
     }
 
     render() {
