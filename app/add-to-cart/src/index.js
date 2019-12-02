@@ -92,7 +92,7 @@ class addToCart extends React.Component {
 		console.log("add to cart function");
 		this.setState({apiCallInProgress : true});
 		let cart_id = window.readFromLocalStorage('cart_id');
-		if(cart_id){
+		if(cart_id && window.lat_lng){
 			this.addToCartApiCall(variant_id, window.lat_lng, cart_id, window.formatted_address, product);
 		}
 		else if(window.lat_lng){
