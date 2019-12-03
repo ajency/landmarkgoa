@@ -640,3 +640,64 @@ function displayToast(msg, type){
 function removeToast(element){
     $(element).parent().remove();
 }
+
+// function displayToast(msg, type){
+//     let length = $('#success-failure-toast-container div').length, element
+//     if(type == 'success'){
+//         $.notify({
+//             message: msg
+//         },{
+//             type: 'success',
+//             timer: 30000,
+//             spacing: 50,
+//             offset: {
+//                 x: 50,
+//                 y: 200,
+//             },
+//             placement: {
+//                 from: "bottom",
+//                 align: "right",
+//             },
+//             template: '<div data-notify="container" class="alert alert-{0} max-320 sb-shadow success toast p-0" role="alert">' +
+//                 '<button type="button" aria-hidden="true" class="close btn-reset close-img" data-notify="dismiss"><i class="sprite sprite-close_btn"></i></button>' +
+//                 '<span data-notify="icon"></span> ' +
+//                 '<span data-notify="title">{1}</span> ' +
+//                 '<span data-notify="message" class="p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-lg-center text-capitalize d-block">{2}</span>' +
+//                 '<div class="progress" data-notify="progressbar">' +
+//                     '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+//                 '</div>' +
+//                 '<a href="{3}" target="{4}" data-notify="url"></a>' +
+//             '</div>' 
+//         });
+//     }
+//     else{
+//         $.notify({
+//             message: msg
+//         },{
+//             type: 'danger',
+//             timer: 30000,
+//             spacing: 50,
+//             offset: {
+//                 x: 50,
+//                 y: 200,
+//             },
+//             placement: {
+//                 from: "bottom",
+//                 align: "right"
+//             },
+//             template: '<div data-notify="container" class="alert alert-{0} max-320 sb-shadow failure toast w-100 p-0" role="alert">' +
+//                 '<button type="button" aria-hidden="true" class="close btn-reset close-img" data-notify="dismiss"><i class="sprite sprite-close_btn"></i></button>' +
+//                 '<span data-notify="icon"></span> ' +
+//                 '<span data-notify="title">{1}</span> ' +
+//                 '<span data-notify="message" class="alert-danger p-15 pt-lg-2 pb-lg-2 w-100 position-relative text-lg-center text-capitalize d-block">{2}</span>' +
+//                 '<div class="progress" data-notify="progressbar">' +
+//                     '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+//                 '</div>' +
+//                 '<a href="{3}" target="{4}" data-notify="url"></a>' +
+//             '</div>' 
+//         });
+//     }
+//     if(length == 2){
+//         $('#success-failure-toast-container').children().first().remove();
+//     }
+// }
