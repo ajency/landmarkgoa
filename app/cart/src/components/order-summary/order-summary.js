@@ -167,9 +167,13 @@ class OrderSummary extends Component {
                             <h3 className="mt-4 h1 ft6 text-red">Your payment failed.</h3>
                             <h4 className="font-weight-light mt-4 pb-4">No worries, you can always try again</h4>
                         </div> 
-                        <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white">
-                            <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}`} auto_pay={true}><button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48"> Try Again </button></Link>
-                            <button className="btn btn-primary btn-arrow position-relative rounded-0 p-15 text-left w-48" onClick={(e)=> this.handleRedirect(e)}> Go To Homepage</button>
+                        <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white payment-button">
+                            <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}`} auto_pay={true}>
+                                <button className="btn btn-primary btn-arrow-icon position-relative rounded-0 p-15 text-left w-100 d-flex align-items-center justify-content-between">
+                                    <span className="zindex-1">Try Again </span>
+                                    <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 );
