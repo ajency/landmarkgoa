@@ -59,14 +59,16 @@ class AddNewAddress extends Component {
         if(window.firebase.auth().currentUser.isAnonymous) {
             returnState['showUserDetailsFields'] =true;
         } else {
-            console.log(window.userDetails)
             if(window.userDetails) {
                 if(window.userDetails.name == '' || window.userDetails.email == '') {
                     returnState['showUserDetailsFields'] = true;
                 } 
-            
-                returnState["name"] = window.userDetails.name;
-                returnState["email"] = window.userDetails.email;
+                if(state.name == '') {
+                    returnState["name"] = window.userDetails.name;
+                } 
+                if(state.email =='') {
+                    returnState["email"] = window.userDetails.email;
+                }
                 returnState["phone"] = window.userDetails.phone;
             } else {
                 returnState['showUserDetailsFields'] = true;
@@ -261,10 +263,12 @@ class AddNewAddress extends Component {
                   errors.name = value.length >1 ? '':'required';
             break;
             case "email":
-                if( value.length >1) {
-                    errors.email ='required' 
+                if( value.length < 1) {
+                    errors.email = '' 
                 } else if(!window.validEmailRegex.test(value)) {
                     errors.email = "Please enter valid email";
+                } else {
+                    errors.email = ''
                 }
             break;
             case "landmark":
@@ -318,6 +322,7 @@ class AddNewAddress extends Component {
             type:this.state.address_type,
             set_default:false
         }
+        console.log(data)
         
         try {
              window.addAddress({...this.state.address_obj, ...data}).then(address => {
@@ -326,6 +331,8 @@ class AddNewAddress extends Component {
                     console.log(address.id, address)
                     this.props.assignAndProceed(null,address.id)
                 }
+             }).catch(err => {
+                console.log(err)
              })
             
 
