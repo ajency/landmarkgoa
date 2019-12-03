@@ -41,7 +41,8 @@ buildVariationSelection(){
 buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
-	cp src/index.js ../build/firebase-functions.js
+	node addfirebasecred.js
+	cp src/firebase-functions.js ../build/firebase-functions.js
 	cd ..
 }
 
