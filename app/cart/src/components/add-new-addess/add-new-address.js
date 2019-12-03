@@ -59,13 +59,18 @@ class AddNewAddress extends Component {
         if(window.firebase.auth().currentUser.isAnonymous) {
             returnState['showUserDetailsFields'] =true;
         } else {
-            if(!window.userDetails.hasOwnProperty("name") || !window.userDetails.hasOwnProperty("email")) {
+            console.log(window.userDetails)
+            if(window.userDetails) {
+                if(window.userDetails.name == '' || window.userDetails.email == '') {
+                    returnState['showUserDetailsFields'] = true;
+                } 
+            
+                returnState["name"] = window.userDetails.name;
+                returnState["email"] = window.userDetails.email;
+                returnState["phone"] = window.userDetails.phone;
+            } else {
                 returnState['showUserDetailsFields'] = true;
-            } 
-            returnState["name"] = window.userDetails.name;
-            returnState["email"] = window.userDetails.email;
-            returnState["phone"] = window.userDetails.phone;
-           
+            }
         }
 
         if(props.cartRequest) {
