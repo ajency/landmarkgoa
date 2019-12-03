@@ -6,7 +6,7 @@ class verifyOtp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
