@@ -44,6 +44,8 @@ if ( !empty($meta_data['padding_mobile']) ) {
         <meta charset="<?php bloginfo('charset'); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="ravlaTcKn3NnDX_VrRBM0DoOFeLQT-kRXGu9dxEOWXY" />
+        <meta name="p:domain_verify" content="a5de96b26979d043731e40a9eb2f0e1f"/>
+        
         <?php wp_head(); ?>
     </head>
 <body <?php body_class(); ?>>
