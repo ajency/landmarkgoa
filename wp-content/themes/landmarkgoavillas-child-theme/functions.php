@@ -135,3 +135,30 @@ if ( ! function_exists( 'pado_site_logo' ) ) {
 		</a>
 	<?php }
 }
+
+
+ /* Custom login page logo
+================================================== */
+function my_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url('wp-content/uploads/sites/15/2019/10/imageedit_38_8901892709.png');
+            height:65px;
+            width:320px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            padding-bottom: 30px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+function my_login_logo_url() {
+    return home_url();
+}
+add_filter( 'login_headerurl', 'my_login_logo_url' );
+
+function my_login_logo_url_title() {
+    return 'Landmark Goa Villas';
+}
+add_filter( 'login_headertitle', 'my_login_logo_url_title' );
