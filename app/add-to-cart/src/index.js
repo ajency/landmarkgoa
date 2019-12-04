@@ -10,9 +10,8 @@ class addToCart extends React.Component {
 			quantity : 0,
 			lastSelected : '',
 			items : [], // variants added to cart
-			use_default_lat_lng : process.env.REACT_APP_USE_LAT_LNG,
+			site_mode : process.env.REACT_APP_SITE_MODE,
 			default_lat_lng : [process.env.REACT_APP_DEFAULT_LAT, process.env.REACT_APP_DEFAULT_LNG],
-			default_address : process.env.REACT_APP_ADDRESS,
 		};
 	}
 
@@ -95,9 +94,9 @@ class addToCart extends React.Component {
 		console.log("add to cart function");
 		this.setState({apiCallInProgress : true});
 		let cart_id = window.readFromLocalStorage('cart_id');
-		if(this.state.use_default_lat_lng) {
+		if(this.state.site_mode == 'kiosk') {
 			window.lat_lng = this.state.default_lat_lng;
-			window.formatted_address = this.state.default_address;
+			window.formatted_address = this.state.site_mode;
 		}
 		if(cart_id && window.lat_lng){
 			this.addToCartApiCall(variant_id, window.lat_lng, cart_id, window.formatted_address, product);

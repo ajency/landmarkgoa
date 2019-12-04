@@ -15,7 +15,8 @@ class gpsModalPrompt extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
+			webSiteLink : process.env.REACT_APP_WEBSITE_LINK,
 			locations : [],
 			locError : '',
 			gpsError : '',
@@ -201,11 +202,11 @@ class gpsModalPrompt extends React.Component {
 
 	getAddressIcon(type){
 		console.log("type :  ", type);
-		let src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/map.png"
+		let src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/map.png"
 		if(type == 'home')
-			src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/home.png"
+			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/home.png"
 		else if(type == 'office')
-			src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/office.png"
+			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/office.png"
 		return (<img src={src} className="address-icon"/>)
 	}
 

@@ -15,6 +15,7 @@ class VerifyMobile extends Component {
             showCapta: true,
             showOtpScreen: false
         }
+        this.signInWithPhoneNumber();
     }
 
     componentDidMount() {
@@ -36,11 +37,12 @@ class VerifyMobile extends Component {
             return (
                 <div className="d-flex flex-column p-15 pb-0">
                     <h3 className="mt-4 h1 ft6">Verify mobile</h3>
-                    <h4 className="font-weight-light mt-4 pb-4">Looks like you already have account with an saved address. Sign in with OTP for faster checkout.</h4>
+                    <h4 className="font-weight-light mt-4 pb-4">Sending OTP...</h4>
+                    {/*<h4 className="font-weight-light mt-4 pb-4">Looks like you already have account with an saved address. Sign in with OTP for faster checkout.</h4>
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-primary btn-inverted btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between" onClick={() => { this.skipLogin() }}><span className="zindex-1">Cancel</span> <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
                         <button className="btn btn-primary btn-arrow-icon p-15 rounded-0 text-left position-relative h5 ft6 mb-0 w-48 d-flex align-items-center justify-content-between" onClick={() => { this.signInWithPhoneNumber() }}><span className="zindex-1">Sign in</span> <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
-                    </div>
+                    </div>*/}
                 </div>
             )
         }

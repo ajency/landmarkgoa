@@ -8,6 +8,8 @@ class LogIn extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			site_mode : generalConfig.site_mode,
+			number_text : (generalConfig.site_mode == 'kiosk') ? 'Please enter your number' : 'Your Shipping and payment details will be associated with this number',
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -29,7 +31,7 @@ class LogIn extends Component {
 					<h3 className="h1 ft6">Mobile Number</h3>
 			      </div>
 			      <h4 className="font-weight-light mt-4 pb-4">
-				  	Your Shipping and payment details will be associated with this number
+				  	{this.state.number_text}
 			      </h4>
 			      <div className="mb-3 pt-4 pb-2">
 			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="text" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} /> <br/>

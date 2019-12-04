@@ -12,6 +12,7 @@ let payU = {
 };
 
 let generalConfig = {
+    site_mode : process.env.REACT_APP_SITE_MODE,
     apiEndPoint: process.env.REACT_APP_API_END_PT,
     webSiteLink: process.env.REACT_APP_WEBSITE_LINK,
     company_name: "GGB",

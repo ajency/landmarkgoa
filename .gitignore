@@ -38,9 +38,10 @@ node_modules/
 /app/env/
 
 /app/env.json
+/app/add-to-cart/.env
 /app/cart/.env
 /app/cart/build_location.json
-/app/verify-otp/.env
-/app/add-to-cart/.env
+/app/delivery-address-slider/.env
 /app/firebase/env.json
 /app/firebase/src/firebase-functions.js
+/app/verify-otp/.env
