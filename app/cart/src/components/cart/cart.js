@@ -69,20 +69,7 @@ class Cart extends Component {
 			else {
 				cartContainer = 
 					<div>
-						if(this.state.site_mode == 'kiosk'){
-							<div className="delivery-address-container p-15">
-								<div className="address-details list-text-block p-15 mb-0">
-									<div className="address-details-inner font-weight-light">
-										<span className="font-weight-semibold">Pick up from </span>
-										<span id="cart-delivery-address">GGB Counter</span>
-									</div>
-								</div>
-							</div>
-						} else {
-							<div>
-								<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
-							</div>
-						}
+						{this.getDeliveryAddressSection()}
 
 						<div className="cart-heading p-15 pt-0 pb-0">
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted">Your cart</h1>
@@ -140,6 +127,25 @@ class Cart extends Component {
 				{cartContainer}
 			</div>
 		);
+	}
+
+	getDeliveryAddressSection(){
+		let deliveryaddress = '';
+		if(this.state.site_mode == 'kiosk'){
+			deliveryaddress = <div className="delivery-address-container p-15">
+				<div className="address-details list-text-block p-15 mb-0">
+					<div className="address-details-inner font-weight-light">
+						<span className="font-weight-semibold">Pick up from </span>
+						<span id="cart-delivery-address">GGB Counter</span>
+					</div>
+				</div>
+			</div>
+		} else {
+			deliveryaddress = <div>
+				<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
+			</div>
+		}
+		return deliveryaddress
 	}
 
 	disableCheckoutButton(){
