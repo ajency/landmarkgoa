@@ -2,7 +2,7 @@ let razorPayConfig = {
     api_key:'rzp_test_cHyeKfTzk2SZj2',
     customJs:"https://checkout.razorpay.com/v1/razorpay.js",
     standardJs:"https://checkout.razorpay.com/v1/checkout.js",
-    image:"https://i.imgur.com/n5tjHFD.png",
+    image:"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/logo_new.png",
     // callback_url:"http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/#/order-summary",
     callback_url:"http://greengrainbowl.com/#/order-summary",
     cancel_url:"http://greengrainbowl.com/#/order-summary"
