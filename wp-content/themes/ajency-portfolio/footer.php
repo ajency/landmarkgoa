@@ -68,8 +68,12 @@
 </div>
 
 <?php
-    $app_url = APP_URL;
-    $json_path = JSON_PATH;
+    $build_location = "/site";
+    if (is_front_page()) $build_location = "/site";
+    else if (is_page_template('template-oyofourth')) $build_location = "/oyofourth";
+    else if (is_page_template('template-oyofifth')) $build_location = "/oyofifth";
+    $app_url = APP_URL . $build_location;
+    $json_path = JSON_PATH . $build_location;
     $site_url = get_site_url();
     $js_json = json_decode(file_get_contents($json_path.'/react_component_file_hash.json'), true);
     $css_json = json_decode(file_get_contents($json_path.'/cart_app_css_file_hash.json'), true);
