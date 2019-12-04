@@ -74,7 +74,7 @@ class Cart extends Component {
 								<div className="address-details list-text-block p-15 mb-0">
 									<div className="address-details-inner font-weight-light">
 										<span className="font-weight-semibold">Pick up from </span>
-										<span id="cart-delivery-address"> {GGB Counter}</span>
+										<span id="cart-delivery-address">GGB Counter</span>
 									</div>
 
 									{this.showSummaryContent()}
