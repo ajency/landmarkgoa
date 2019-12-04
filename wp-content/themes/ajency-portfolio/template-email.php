@@ -99,6 +99,9 @@
     background: #fff;
     padding: 0 10px;
   }
+  .d-block{
+    display: block;
+  }
 </style>
 
 <div class="email-container">
@@ -107,7 +110,7 @@
   </div>
   <div class="email-content">
       <p>Hi,</p>
-      <p>Thanks for your order <span class="bold">1111</span> for <span class="bold">Rs.400</span>. We are on it.</p>
+      <p>Thanks for placing an order with us.</p>
       <p>We are on it. We'll notify you when your bowl(s) is ready for pick-up.</p>
       <p class="bold">Order details</p>
       <div class="mb-25">
@@ -129,12 +132,12 @@
             <th class="text-right w-20">Price</th>
         </tr>
         <tr>
-            <td>Orange Barley Bowl</td>
+            <td>Orange Barley Bowl<span class="d-block">(Small)</span></td>
             <td class="text-center">1</td>
             <td class="text-right">200</td>
         </tr>
         <tr>
-          <td>Thai Brown Rice Bowl</td>
+          <td>Thai Brown Rice Bowl <span class="d-block">(Small)</span></td>
             <td class="text-center">1</td>
             <td class="text-right">200</td>
         </tr>
@@ -156,7 +159,7 @@
     <img src="https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/logo_new.png">
   </div>
   <div class="email-content">
-      <p>Hurry!</p>
+      <p>Hurray!</p>
       <p>Your meal has been prepared and kept ready for you. Token number for this order is <span class="bold">24</span>. Please make sure you show this Email at counter while takeaway.</p>
       <p>Looking forward to serve you again.</p>
       <p class="bold">Order details</p>
