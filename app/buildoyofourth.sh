@@ -1,6 +1,6 @@
 removePreBuildFolder(){
 	rm -rf pre_build
-	cp env/env.json env.json
+	cp env/envoyofourth.json env.json
 	node prebuild.js
 }
 
@@ -44,7 +44,7 @@ buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
 	node addfirebasecred.js
-	cp src/firebase-functions.js ../build/site/firebase-functions.js
+	cp src/firebase-functions.js ../build/oyofourth/firebase-functions.js
 	cd ..
 }
 

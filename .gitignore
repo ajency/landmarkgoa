@@ -35,8 +35,12 @@ node_modules/
 
 /app/build/
 /app/pre_build/
+/app/env/
 
+/app/env.json
 /app/cart/.env
+/app/cart/build_location.json
 /app/verify-otp/.env
+/app/add-to-cart/.env
 /app/firebase/env.json
 /app/firebase/src/firebase-functions.js

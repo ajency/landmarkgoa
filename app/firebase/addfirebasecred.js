@@ -6,10 +6,9 @@ fs.readFile('./src/index.js', function read(err, data) {
         throw err;
     }
 
-    fs.writeFile("./src/firebase-functions.js", "var firebaseConfig = " + JSON.stringify(jsonData) + ";" + data, function(err) {
+    fs.writeFile("./src/firebase-functions.js", "var firebaseConfig = " + JSON.stringify(jsonData) + ";\r\n" + data, function(err) {
         if(err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
     }); 
 });
