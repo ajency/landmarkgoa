@@ -76,8 +76,6 @@ class Cart extends Component {
 										<span className="font-weight-semibold">Pick up from </span>
 										<span id="cart-delivery-address">GGB Counter</span>
 									</div>
-
-									{this.showSummaryContent()}
 								</div>
 							</div>
 						} else {
