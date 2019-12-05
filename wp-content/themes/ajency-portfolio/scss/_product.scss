@@ -1,9 +1,9 @@
 @media(max-width: 767px){
   body{
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: y mandatory; 
+    // scroll-snap-type: y mandatory; 
     scroll-padding: 20px;
-    & > div{
+    & > div, & > section{
        scroll-snap-align: start;
        scroll-snap-stop: normal; 
     }
@@ -35,8 +35,8 @@
         }
         @media (max-width: 767px) {
             overflow: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            // scroll-behavior: smooth;
+            // -webkit-overflow-scrolling: touch;
         }
     }
     &-wrapper{
