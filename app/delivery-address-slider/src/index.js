@@ -213,8 +213,9 @@ class gpsModalPrompt extends React.Component {
 	getAutoCompleteLocations(){
 		if(this.state.locations.length){
 			let locs =  this.state.locations.map((loc)=>
-				<li key={loc.id} className="btn p-1" onClick={() => {this.reverseGeocode(loc)}}>
-					{loc.description}
+				<li key={loc.id} className="btn p-1 position-relative" onClick={() => {this.reverseGeocode(loc)}}>
+					<div class="address-icon"><i class="fas fa-map-marker-alt"></i></div>
+					<div class="address-text">{loc.description}</div>
 				</li>
 			);
 			this.scrollTop();
