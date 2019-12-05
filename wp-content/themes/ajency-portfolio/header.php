@@ -56,7 +56,7 @@
 
   <body>
 
-  <div class="d-none">
+  <div class="d-none header-location">
     <div class="delivery-location cursor-pointer d-inline-block pr-2 ml-lg-2 vertical-align-middle">
       <a href="javascript:void(0)" class="d-inline-block location-icon">
         <i class="fa fa-map-marker" aria-hidden="true"></i>

@@ -30,6 +30,11 @@
     &.show{
         display: block;
     }
+    @media (max-width: 992px) {
+        min-width: 320px;
+        width: 100%;
+        left: 0;
+    }
 }
 
 .menu-toggle{
@@ -91,12 +96,11 @@
 }
 
 #selected-location-address{
-    margin-top: 5px;
+    margin-top: 7px;
     &:after{        
         @media (max-width: 991px) {
             content: '';
             position: absolute;
-            // left: 28px;
             left: 5px;
             top: -9px;
             width: 0;
@@ -107,7 +111,6 @@
             border-bottom: 10px solid #eeefee;
         }    
         @media (min-width: 768px) and (max-width: 991px) {
-            // left: 44px;
             left: 19px;
         }   
     }
@@ -145,4 +148,11 @@
             width: 100%;
         }
     }
+}
+
+.header-location{
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1;
 }
