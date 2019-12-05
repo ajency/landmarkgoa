@@ -15,12 +15,12 @@ class VerifyMobile extends Component {
             showCapta: true,
             showOtpScreen: false
         }
-        this.signInWithPhoneNumber();
     }
 
     componentDidMount() {
         console.log("check state ==>", this.props.location, this.props.history)
         this.setState({ phoneNumber: this.props.location.state.phoneNumber });
+        this.signInWithPhoneNumber();
     }
 
     render() {
