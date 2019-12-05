@@ -35,8 +35,8 @@
         }
         @media (max-width: 767px) {
             overflow: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            // scroll-behavior: smooth;
+            // -webkit-overflow-scrolling: touch;
         }
     }
     &-wrapper{

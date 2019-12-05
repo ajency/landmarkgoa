@@ -160,7 +160,7 @@
   </div>
   <div class="email-content">
       <p>Hurray!</p>
-      <p>Your meal has been prepared and kept ready for you. Token number for this order is <span class="bold">24</span>. Please make sure you show this Email at counter while takeaway.</p>
+      <p>Your bowl(s) is ready to be picked up. The token number is <span class="bold">24</span>. Please show this SMS at the pick-up counter.</p>      
       <p>Looking forward to serve you again.</p>
       <p class="bold">Order details</p>
       <div class="mb-25">
