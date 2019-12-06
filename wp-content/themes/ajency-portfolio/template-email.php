@@ -274,7 +274,117 @@
   </div>
 
   <div class="email-footer text-center">
-    (C) 2018 Digital Dwarves Pvt Ltd. All Right Reserved
+    (C) 2019 Digital Dwarves Pvt Ltd. All Right Reserved
+  </div>
+
+</div>
+
+
+<div class="" style="height: 70px;"></div>
+
+
+<div class="email-container">
+
+  <div class="email-header">
+    <img src="https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/logo_new.png">
+  </div>
+
+  <div class="email-content">
+      <div class="px-15">
+        <p>Hurray!</p>
+        <p>Your bowl(s) is ready to be picked up. The token number is <strong>25</strong>. Please show this Email at the pick-up counter.</p>
+        <p>Looking forward to serve you again.</p>
+        <p class="bold mb-10">Order Details</p>
+      </div>
+      <div class="d-flex mb-25 justufy-between px-15">
+          <div class="mb-5 w-50">Order no: <i>11111</i></div>
+          <div class="w-50 text-right">Date: <i>03 Dec 2019</i></div>
+      </div>
+
+      <div class="order-items px-15">
+        <div class="item-container flex-column">
+          <div class="d-flex mb-4">
+            <div class="product-cartimage d-inline-block">
+              <img class="" alt="" title="" height="50" width="50" src="http://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/cracked-wheat-n-chickpea-bowl-chicken.jpg">
+            </div>
+            <div class="product-details d-inline-block">
+              <div class="product-title-c font-weight-light">
+                Cracked Wheat &amp; Chickpea Bowl
+              </div>
+              <div class="">
+                  <div class="product-size-c text-capitalize">
+                    Regular
+                  </div>
+                  <div class="product-size-c">
+                    Qty: 1
+                  </div>                      
+              </div>            
+            </div>
+            <div class="d-flex align-items-center">                            
+                <div class="product-price font-weight-light text-right pl-3">
+                  ₹400
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-container flex-column">
+          <div class="d-flex mb-4">
+            <div class="product-cartimage d-inline-block">
+              <img class="" alt="" title="" height="50" width="50" src="http://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/cracked-wheat-n-chickpea-bowl-chicken.jpg">
+            </div>
+            <div class="product-details d-inline-block">
+              <div class="product-title-c font-weight-light">
+                Cracked Wheat &amp; Chickpea Bowl
+              </div>
+              <div class="">
+                  <div class="product-size-c text-capitalize">
+                    Small
+                  </div>   
+                  <div class="product-size-c">
+                    Qty: 1
+                  </div>                     
+              </div>            
+            </div>
+            <div class="d-flex align-items-center">                            
+                <div class="product-price font-weight-light text-right pl-3">
+                  ₹400
+                </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="list-text-block">
+          <div class=""><strong>Delivery Address : </strong></div>Panjim Community Centre, Electricity Colony, Altinho, Panaji, Goa 403001, India
+      </div>
+
+      <div class="bill-details px-15">
+          <div class="summary-item pt-0">
+              <div class="w-50">
+                  <label class="font-weight-light">Total Item Price</label>
+              </div>
+              <div class="font-weight-light w-50 text-right">₹800 </div>
+          </div>
+          <div class="summary-item">
+              <div class="w-50">
+                  <label class="font-weight-light">Delivery fee</label>
+              </div> 
+              <div class="font-weight-light w-50 text-right">₹50</div>
+          </div>
+          <div class="summary-item border-grey-y mt-8">
+              <div class="w-50">
+                  <label class="font-weight-medium mb-0"><strong>Total</strong></label>
+              </div>
+              <div class="font-weight-bold w-50 text-right"><strong>₹850</strong></div>
+          </div>
+      </div>
+
+  </div>
+
+  <div class="email-footer text-center">
+    (C) 2019 Digital Dwarves Pvt Ltd. All Right Reserved
   </div>
 
 </div>
