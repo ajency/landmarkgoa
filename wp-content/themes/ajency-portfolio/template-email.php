@@ -5,6 +5,7 @@
       margin: 0 auto;
       font-family: 'Work Sans', sans-serif;
       color: #212529;
+      font-size: 16px;
   }
   .email-header{
     text-align: center;
@@ -17,6 +18,9 @@
   .email-content{
     padding: 15px;
     padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 0;
+    padding-right: 0;
   }
   .email-footer{
     padding: 15px;
@@ -116,8 +120,6 @@
     background-color: #f1f3f4;
     padding: 15px;
     margin-bottom: 30px;
-    margin-left: -15px;
-    margin-right: -15px;
     font-size: 16px;
     line-height: 22px;
   }  
@@ -160,6 +162,15 @@
     margin-top: 8px;
   }
 
+  .w-50{
+    width: 50%;
+  }
+
+  .px-15{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
 </style>
 
 <div class="email-container">
@@ -169,17 +180,18 @@
   </div>
 
   <div class="email-content">
-      <p>Hi <strong>Viraj Verlekar,</strong></p>
-      <p>Thanks for placing an order with us.</p>
-      <p>We are on it. We'll notify you when your bowl(s) is ready for pick-up.</p>
-      <p class="bold mb-10">Order Details</p>
-
-      <div class="d-flex mb-25 justufy-between">
-          <div class="mb-5">Order no: <i>11111</i></div>
-          <div class="">Date: <i>03 Dec 2019</i></div>
+      <div class="px-15">
+        <p>Hi <strong>Viraj Verlekar,</strong></p>
+        <p>Thanks for placing an order with us.</p>
+        <p>We are on it. We'll notify you when your bowl(s) is ready for pick-up.</p>
+        <p class="bold mb-10">Order Details</p>
+      </div>
+      <div class="d-flex mb-25 justufy-between px-15">
+          <div class="mb-5 w-50">Order no: <i>11111</i></div>
+          <div class="w-50 text-right">Date: <i>03 Dec 2019</i></div>
       </div>
 
-      <div class="order-items">
+      <div class="order-items px-15">
         <div class="item-container flex-column">
           <div class="d-flex mb-4">
             <div class="product-cartimage d-inline-block">
@@ -234,28 +246,28 @@
 
       </div>
 
-      <div class="list-text-block ">
+      <div class="list-text-block">
           <div class=""><strong>Delivery Address : </strong></div>Panjim Community Centre, Electricity Colony, Altinho, Panaji, Goa 403001, India
       </div>
 
-      <div class="bill-details">
+      <div class="bill-details px-15">
           <div class="summary-item pt-0">
-              <div>
+              <div class="w-50">
                   <label class="font-weight-light">Total Item Price</label>
               </div>
-              <div class="font-weight-light">₹800 </div>
+              <div class="font-weight-light w-50 text-right">₹800 </div>
           </div>
           <div class="summary-item">
-              <div>
+              <div class="w-50">
                   <label class="font-weight-light">Delivery fee</label>
-              </div>
-              <div class="font-weight-light">₹50</div>
+              </div> 
+              <div class="font-weight-light w-50 text-right">₹50</div>
           </div>
           <div class="summary-item border-grey-y mt-8">
-              <div>
+              <div class="w-50">
                   <label class="font-weight-medium mb-0"><strong>Total</strong></label>
               </div>
-              <div class="font-weight-bold"><strong>₹850</strong></div>
+              <div class="font-weight-bold w-50 text-right"><strong>₹850</strong></div>
           </div>
       </div>
 
