@@ -147,6 +147,19 @@
     margin-bottom: 10px;
   }
 
+  .text-capitalize{
+    text-transform: capitalize;
+  }
+
+  .border-grey-y{
+    border-top: 1px solid hsla(0,0%,48.6%,.5);
+    border-bottom: 1px solid hsla(0,0%,48.6%,.5);
+  }
+
+  .mt-8{
+    margin-top: 8px;
+  }
+
 </style>
 
 <div class="email-container">
@@ -178,7 +191,7 @@
               </div>
               <div class="">
                   <div class="product-size-c text-capitalize">
-                    regular
+                    Regular
                   </div>
                   <div class="product-size-c">
                     Qty: 1
@@ -222,11 +235,11 @@
       </div>
 
       <div class="list-text-block ">
-          <strong>Delivery Address: </strong>Panjim Community Centre, Electricity Colony, Altinho, Panaji, Goa 403001, India
+          <div class=""><strong>Delivery Address : </strong></div>Panjim Community Centre, Electricity Colony, Altinho, Panaji, Goa 403001, India
       </div>
 
       <div class="bill-details">
-          <div class="summary-item">
+          <div class="summary-item pt-0">
               <div>
                   <label class="font-weight-light">Total Item Price</label>
               </div>
@@ -238,7 +251,7 @@
               </div>
               <div class="font-weight-light">₹50</div>
           </div>
-          <div class="summary-item">
+          <div class="summary-item border-grey-y mt-8">
               <div>
                   <label class="font-weight-medium mb-0"><strong>Total</strong></label>
               </div>
