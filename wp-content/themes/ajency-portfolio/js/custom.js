@@ -197,7 +197,7 @@ $(window).on("load", function() {
 })
 
 $(document).ready(function(){
-    if(window.location.href.includes('#/cart') || window.location.href.includes('#/order-summary')){
+    if(window.location.href.includes('#/cart') || window.location.href.includes('#/order-summary') || window.location.href.includes('#/order-details')){
         loadCartApp();
         showCartSlider()
     }
