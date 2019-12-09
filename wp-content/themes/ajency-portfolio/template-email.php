@@ -328,8 +328,8 @@
     </div>
     <div class="contact-text w-50 text-right">
       <p class="mb-5"><strong>Need help?</strong></p>
-      <p class="mb-5">Email: <a class="text-green" href="mailto:test@test.com">test@test.com</a></p>
-      <p class="mb-15">Mobile: <a class="text-green" href="https://api.whatsapp.com/send?phone=+919823036238">9823036238</a></p>      
+      <p class="mb-5">Email: <a class="text-green" href="mailto:talktous@ajency.in">talktous@ajency.in</a></p>
+      <p class="mb-15">Mobile: <a class="text-green" href="https://api.whatsapp.com/send?phone=+917770004258">7770004258</a></p>      
     </div>
     
     <div class="text-center clearfix font-size-12">(C) 2019 Digital Dwarves Pvt Ltd. All Right Reserved</div>
