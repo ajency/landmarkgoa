@@ -214,10 +214,10 @@
 
   <div class="email-header">
     <div class="logo" style="width: 60%;display: inline-block;text-align: right;">
-      <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/GGB-logo.png">
+      <img src="https://greengrainbowl.com/greengrainbowl/wp-content/themes/ajency-portfolio/images/GGB-logo.png">
     </div>
     <div class="" style="display: inline-block;text-align: right;width: 38%;">
-      <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" style="width: 17px;display:inline-block;vertical-align:middle;">
+      <img src="https://greengrainbowl.com/greengrainbowl/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" style="width: 17px;display:inline-block;vertical-align:middle;">
       <span style="font-weight: 600;text-transform: uppercase;font-size: 12px;display:inline-block;vertical-align:middle;margin-left: 2px;">Order placed</span>
     </div>
   </div>
