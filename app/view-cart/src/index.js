@@ -16,14 +16,14 @@ class viewCart extends React.Component {
 
 	render() {
 			return (
-				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : 'view-cart-holder')}>
+				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : 'view-cart-holder empty-cart')}>
 						{this.getItemsCount()}
 					<div id="view-cart-btn" className="cursor-pointer zindex-1" onClick={() => this.loadCart()}>
 						VIEW CART
 					</div>
 					<div className="d-none">
 						<a href="javascript:void(0)" class="d-inline-block location-icon text-primary text-decoration-none">
-							<i class="fas fa-map-marker-alt text-primary font-size-24" aria-hidden="true"></i>
+							<i class="fas fa-map-marker-alt text-primary font-size-34" aria-hidden="true"></i>
 						</a> 
 					</div>
 				</div>

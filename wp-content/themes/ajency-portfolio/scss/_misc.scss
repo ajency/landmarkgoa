@@ -36,6 +36,23 @@
         color: #fff;
         display: flex;
         justify-content: space-between;
+        &.empty-cart{
+            a{
+                @media (min-width: 992px) {
+                    background-color: transparent;            
+                }    
+            }
+            @media (max-width: 991px) {
+                //justify-content: center;
+                a{
+                    i{
+                        color: #fff!important;
+                        position: relative;
+                        z-index: 1;
+                    }
+                }
+            }
+        }
         @media (min-width: 992px) {
             background: #fff;
             border: 2px solid #4aa751;
