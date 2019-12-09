@@ -213,11 +213,17 @@
 <div class="email-container">
 
   <div class="email-header">
-    <img src="https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/logo_new.png">
+    <div class="logo" style="width: 60%;display: inline-block;text-align: right;">
+      <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/GGB-logo.png">
+    </div>
+    <div class="" style="display: inline-block;text-align: right;width: 38%;">
+      <img src="http://localhost/greengrainbowl/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" style="width: 17px;display:inline-block;vertical-align:middle;">
+      <span style="font-weight: 600;text-transform: uppercase;font-size: 12px;display:inline-block;vertical-align:middle;margin-left: 2px;">Order placed</span>
+    </div>
   </div>
 
   <div class="email-content">
-      <div class="order-number mb-25 text-right">
+      <div class="order-number mb-25 text-right" style="padding-right:15px;">
         Order no: <strong>11111</strong>
       </div>
       <div class="px-15">
