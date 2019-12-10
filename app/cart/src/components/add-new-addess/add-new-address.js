@@ -262,7 +262,7 @@ class AddNewAddress extends Component {
             break;
             case "email":
                 if( value.length < 1) {
-                    errors.email = '' 
+                    errors.email = 'required' 
                 } else if(!window.validEmailRegex.test(value)) {
                     errors.email = "Please enter valid email";
                 } else {

@@ -153,7 +153,7 @@ class VerifyMobile extends Component {
                     if(this.state.site_mode == 'kiosk'){
                         if(cart_id) {
                             window.addCartLoader();
-                            window.assignAddressToCart(null, true)
+                            window.assignAddressToCart(null, true, this.state.phoneNumber)
                             .then((res) => {
                                 if(res.success) {
                                     this.props.history.push({pathname:'/cart/cart-summary/'+cart_id, state:{order_obj:res.cart}});
@@ -221,7 +221,7 @@ class VerifyMobile extends Component {
 				if(this.state.site_mode == 'kiosk'){
                     let cart_id =  window.readFromLocalStorage('cart_id');
                     if(cart_id) {
-                        window.assignAddressToCart(null, true)
+                        window.assignAddressToCart(null, true, this.state.phoneNumber)
                         .then((res) => {
                             if(res.success) {
                                 window.removeCartLoader();

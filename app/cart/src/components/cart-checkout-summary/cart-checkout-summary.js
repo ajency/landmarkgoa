@@ -28,7 +28,13 @@ class CartCheckoutSummary extends Component {
 			fetchCartFailureMsg : '',
 			cartEmpty : false,
 			approxDeliveryTime:'30 mins',
-			shippingAddress:''
+			shippingAddress:'',
+			accountName:'',
+            accountEmail:'',
+            errors: {
+                name:'',
+                email:''
+            }
         }
     }
 
@@ -182,6 +188,7 @@ class CartCheckoutSummary extends Component {
 						<span className="font-weight-semibold">Pick up from </span>
 						<span id="cart-delivery-address">GGB Counter</span>
 					</div>
+					{this.showUserDetailsFields()}
 				</div>
 			</div>
 		} else {
@@ -190,6 +197,108 @@ class CartCheckoutSummary extends Component {
 			</div>
 		}
 		return deliveryaddress
+	}
+
+	showUserDetailsFields(){
+		if(this.state.orderSummary.shipping_address.name) {
+			return (
+				<div>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
+						<span className="text-green font-weight-semibold">Name: </span> 
+						<span id="cart-delivery-address"> this.state.orderSummary.shipping_address.name </span>
+						<span className="text-green font-weight-semibold">Mobile No.: </span> 
+						<span id="cart-delivery-address"> this.state.orderSummary.shipping_address.phone </span>
+					</div>
+				</div>
+			);
+		} else {
+			let errors = this.state.errors;
+			return (
+				<div>
+					<div onClick={() => this.toggleAccountPopUp('show')}>Add Account details</div>
+					<div className="custom-modal user-details" id="cart-checkout-summary-user-details">
+		            	<h5 className="ft6 mb-4">Account details</h5>
+		                <label className="d-block mb-4">
+		                    <span className='error'>*</span>Full Name
+		                    <input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountName:e.target.value}); this.handleChange(e)}} required/>
+		                    {errors.name.length > 0 &&  <span className='error'>{errors.name}</span>}
+		                </label>
+
+		                <label className="d-block mb-4">
+		                    <span className='error'>*</span>Email
+		                    <input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountEmail:e.target.value}); this.handleChange(e)}} required/>
+		                    {errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
+		                </label>
+
+		                <div onClick={() => this.saveAccountInfo()}>Save</div>
+		                <div onClick={() => this.toggleAccountPopUp('hide')}>Close</div>
+		            </div>
+	            </div>
+			);
+		}
+	}
+
+	toggleAccountPopUp(action){
+		if(action == 'show'){
+			document.querySelector('#cart-checkout-summary-user-details').classList.add('show-modal');
+		} else {
+			document.querySelector('#cart-checkout-summary-user-details').classList.remove('show-modal');
+		}
+	}
+
+	handleChange = (e) => {
+        let { name, value} = e.target;
+        let errors = this.state.errors;
+        switch (name) {
+            case "name":
+                  errors.name = value.length >1 ? '':'required';
+            break;
+            case "email":
+                if( value.length < 1) {
+                    errors.email = 'required' 
+                } else if(!window.validEmailRegex.test(value)) {
+                    errors.email = "Please enter valid email";
+                } else {
+                    errors.email = ''
+                }
+            break;      
+            default:
+                break;
+        }
+    }
+
+	saveAccountInfo(){
+		window.addCartLoader()
+        let errors = this.state.errors;
+        let error = false
+        if(this.state.name.length <1) {
+            errors.name =  "required";
+            error = true;
+        }
+        if(this.state.email.length <1) {
+            errors.email = "required"
+            error = true;
+        } else if(!window.validEmailRegex.test(this.state.email)) {   
+            errors.email = "Please enter valid email";
+            error = true;
+        }
+        if(error) {
+            window.removeCartLoader();
+            this.setState({"errors":errors});
+            return false;
+        }
+
+		let data = {
+			name:this.state.accountName,
+			email:this.state.accountEmail,
+			phone:this.state.orderSummary.shipping_address.phone,
+		}
+		window.addUserDetails(data, window.readFromLocalStorage('cart_id')).then(user => {
+			window.removeCartLoader();
+            this.toggleAccountPopUp('hide');
+         }).catch(err => {
+            console.log(err)
+         })
 	}
 
 	closeCart(){
