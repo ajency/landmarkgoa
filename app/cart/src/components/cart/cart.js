@@ -67,8 +67,9 @@ class Cart extends Component {
 				cartContainer = <div className="text-center mt-5"> <h4> {this.state.fetchCartFailureMsg} </h4>  </div>
 			}
 			else {
-				cartContainer = 
-					<div>
+				cartContainer =
+				<div className=""> 
+					<div className="cart-container visible">
 						{this.getDeliveryAddressSection()}
 
 						<div className="cart-heading p-15 pt-0 pb-0">
@@ -108,21 +109,21 @@ class Cart extends Component {
 								</div>
 							</div>
 						</div>
-
-						<div className="p-15 pt-0 pb-0">
-							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize overflow-hidden" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
-									<span className="zindex-1">Proceed to Checkout</span>
-									<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
-								</button>
-							</div>
+					</div>
+					<div className="p-15 pt-0 pb-0">
+						<div className="secure-checkout fixed-bottom visible bg-white p-15">
+							<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize overflow-hidden" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
+								<span className="zindex-1">Proceed to Checkout</span>
+								<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+							</button>
 						</div>
 					</div>
+				</div>
 			}
 		}
 
 		return (
-			<div className="cart-container visible">
+			<div className="">
 				<Header/>
 				{cartContainer}
 			</div>
