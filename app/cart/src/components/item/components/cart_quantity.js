@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {generalConfig} from '../../config'
 
 class Quantity extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			site_mode : generalConfig.site_mode,
+			apiEndPoint : generalConfig.apiEndPoint,
 			apiCallInProgress : false,
 			quantity : 0
 		}
@@ -93,7 +93,7 @@ class Quantity extends Component {
 			product = await window.fetchProduct(this.props.product_id);
 		}
 
-		window.addToCart(this.props.variant_id, null, cart_id, null, product).then((res) =>{
+		window.addToCart(this.state.site_mode, this.props.variant_id, null, cart_id, null, product).then((res) =>{
 			console.log("response ==>", res);
 			window.removeCartLoader();
 			this.setState({apiCallInProgress : false});

@@ -141,7 +141,7 @@ class addToCart extends React.Component {
 
 	addToCartApiCall(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product){
 		window.addBackDrop()
-			window.addToCart(variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
+			window.addToCart(this.state.site_mode, variant_id, lat_long, cart_id, formatted_address, product).then((res) =>{
 				console.log("addToCart response ==>", res);
 				if(res.success){
 					console.log(" addToCart response success ==>", res);

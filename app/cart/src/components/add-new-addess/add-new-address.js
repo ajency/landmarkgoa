@@ -15,8 +15,6 @@ class AddNewAddress extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
             apiEndPoint : generalConfig.apiEndPoint,
 			locError : '',
 			gpsError : '',

@@ -489,7 +489,7 @@ async function fetchCart(cart_id){
 }
 
 
-async function addToCart(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
+async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
     try{
         console.log(" addToCart product ==>", product);
 
@@ -512,7 +512,7 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
 
         if(!cart_data ){
             console.time("getNewCartData")
-            cart_data = getNewCartData(lat_long, formatted_address);
+            cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
             console.time("writeInLocalStorage")
             window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
@@ -602,16 +602,17 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
 }
 
 
-function getNewCartData (lat_long, formatted_address) {
+function getNewCartData (lat_long, formatted_address, site_mode) {
     let cart_data = {
         user_id : firebase.auth().currentUser.uid,
         summary : {
             mrp_total : 0,
             sale_price_total : 0,
             cart_discount : 0,
-            shipping_fee : 50, // get from config or db
-            you_pay : 50, // change accordingly
+            shipping_fee : (site_mode == 'kiosk') ? 0 : 50, // get from config or db
+            you_pay : (site_mode == 'kiosk') ? 0 : 50, // change accordingly
         },
+        order_mode : site_mode,
         order_type : 'cart',
         cart_count : 0,
         shipping_address : {
