@@ -1,19 +1,12 @@
 .cart-container {
 	max-width: 410px;
 	margin-left: auto;
-	//background: #fff;
 	font-size: 16px;
 	line-height: 22px;
-	// position: fixed;
-	// top: 0;
-	// right: -100%;
-	// left: auto;
-	// width: 100%;
-	height: calc(100vh - 52px);
+	height: calc(100vh - 82px);
 	overflow-x: hidden;
 	overflow-y: scroll;
-	// transition: all 0.3s ease-in;
-	padding-bottom: 72px;
+	padding-bottom: 82px;
 	.cart-heading {
 		padding: 15px;
 		font-size: 18px;
