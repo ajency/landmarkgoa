@@ -128,8 +128,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
 						{this.getDeliveryAddressSection()}
-						{this.state.errors.accountInfo.length > 0 &&  <span className='error'>{this.state.errors.accountInfo}</span>}
-
+						
 						<div className="p-15 pt-0">
 							{this.getItems()}
 						</div>
@@ -192,6 +191,9 @@ class CartCheckoutSummary extends Component {
 					</div>
 					{this.showUserDetailsFields()}
 				</div>
+				<div className="alert-danger px-15">
+					{this.state.errors.accountInfo.length > 0 &&  <span className='error text-error'>{this.state.errors.accountInfo}</span>}
+				</div>
 			</div>
 		} else {
 			deliveryaddress = <div>
@@ -217,23 +219,28 @@ class CartCheckoutSummary extends Component {
 			let errors = this.state.errors;
 			return (
 				<div>
-					<div onClick={() => this.toggleAccountPopUp('show')}>Add Account details</div>
+					<div className="font-weight-semibold font-size-16 text-primary cursor-pointer" onClick={() => this.toggleAccountPopUp('show')}>Add Account details</div>
 					<div className="custom-modal user-details" id="cart-checkout-summary-user-details">
-		            	<h5 className="ft6 mb-4">Account details</h5>
-		                <label className="d-block mb-4">
-		                    <span className='error'>*</span>Full Name
-		                    <input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountName:e.target.value}); this.handleChange(e)}} required/>
-		                    {errors.name.length > 0 &&  <span className='error'>{errors.name}</span>}
-		                </label>
+						<div className="custom-modal-content p-15 width-calc">
+							<button type="button" class="btn-reset close-modal top-5" onClick={() => this.toggleAccountPopUp('hide')}><i class="fas fa-times text-silver"></i></button>
+							<h5 className="ft6 mb-4 h2">Account details</h5>
+							<label className="d-block mb-3 font-size-16">
+								<span className='error text-error'>*</span>Full Name
+								<input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountName:e.target.value}); this.handleChange(e)}} required/>
+								{errors.name.length > 0 &&  <span className='error text-error'>{errors.name}</span>}
+							</label>
 
-		                <label className="d-block mb-4">
-		                    <span className='error'>*</span>Email
-		                    <input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountEmail:e.target.value}); this.handleChange(e)}} required/>
-		                    {errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
-		                </label>
+							<label className="d-block mb-3 font-size-16">
+								<span className='error text-error'>*</span>Email
+								<input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountEmail:e.target.value}); this.handleChange(e)}} required/>
+								{errors.email.length > 0 &&  <span className='error text-error'>{errors.email}</span>}
+							</label>
 
-		                <div onClick={() => this.saveAccountInfo()}>Save</div>
-		                <div onClick={() => this.toggleAccountPopUp('hide')}>Close</div>
+							<button type="button" class="btn-reset btn-continue btn-arrow-icon font-size-15 text-capitalize p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={() => this.saveAccountInfo()}>
+								<span class="zindex-1">Save</span>
+								<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+							</button>
+						</div>
 		            </div>
 	            </div>
 			);
@@ -298,7 +305,7 @@ class CartCheckoutSummary extends Component {
 		window.addUserDetails(data, window.readFromLocalStorage('cart_id')).then(user => {
 			window.removeCartLoader();
             this.toggleAccountPopUp('hide');
-            orderSummary = this.state.orderSummary;
+            let orderSummary = this.state.orderSummary;
             orderSummary.shipping_address.name = user.name;
             orderSummary.shipping_address.email = user.email;
         	errors.accountInfo = '';

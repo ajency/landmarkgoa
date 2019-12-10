@@ -308,6 +308,13 @@ footer {
     }
 }
 
+.text-error{
+    color: $danger;
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
 @media (min-width: 320px) and (max-width: 767.98px) {
     .footer-section {
         padding-top: 2rem;
@@ -426,4 +433,9 @@ nav{
 
 .overflow-hidden{
     overflow: hidden !important;
+}
+
+.px-15{
+    padding-left: 15px;
+    padding-right: 15px;
 }

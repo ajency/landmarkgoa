@@ -19,6 +19,12 @@
     max-width: 600px;
     width: 100%;
     z-index: 9999;
+    &.width-calc{
+        width: calc(100% - 30px);
+        @media (max-width: 767px) {
+            width: 100%;
+        }
+    }
     @media (min-width: 768px) {
         top: 50%;
         left: 50%;
