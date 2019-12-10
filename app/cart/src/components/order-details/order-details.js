@@ -2,10 +2,97 @@ import React, { Component } from 'react';
 import Header from '../header/header.js';
 
 class OrderDetails extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            errorOnPage:  false,
+            loadingError: false,
+            loader:true,
+            addressLabel:'',
+            shippingAddress:'',
+            orderSummary:''
+        }
+    }
+
+    componentDidMount() {
+        window.addCartLoader();
+        window.firebase.auth().onAuthStateChanged((user) => {
+            this.getOrderDetails()
+        })
+    }
+
+    getOrderDetails() {
+        if(!this.props.match.params.transaction_id) {
+            window.orderDetails()
+            .then((res) => {
+                console.log("fetching summary ==>", res);
+                
+                if(!res.success) {
+                    window.displayError(res.msg);
+                    this.setState({"loadingError": true})
+                    window.removeCartLoader();
+                } else {
+                    if(res.pending) {
+                        this.getOrderDetails()
+                        this.setState({"loader": true})
+                        window.addCartLoader();
+    
+                    } else {
+                        window.removeCartLoader();
+                        this.setState({orderSummary: res})
+                        if(res.order_data.order_mode == 'kiosk') {
+                            this.setState({addressLabel: "Pick up from"})
+                            this.setState({shippingAddress: "GGb Counter"})
+                        } else {
+                            let shipping_address='';
+                            if (obj.address!='') {
+                                shipping_address = obj.address+', '
+                            }
+
+                            if(obj.landmark != '') {
+                                shipping_address = shipping_address + obj.landmark+', '
+                            }
+                            shipping_address = shipping_address + obj.formatted_address;
+                            this.setState({addressLabel: "Deliver to: "})
+                            this.setState({shippingAddress: shipping_address})
+                        }
+
+
+                        this.setState({"loader": false})
+                        this.setState({"loadingError": false})
+                    }
+                } 
+                console.log("fetched summary",this.state.orderSummary)
+            }).catch(err => {
+                this.setState({"loader": false})
+                this.setState({"loadingError": true})
+                window.removeCartLoader();
+                console.log(err)
+            }) 
+
+        }
+    }
+
     render() {
         return (
             <div className="cart-container visible">
                 <Header/>
+                {this.state.loader ? '':this.getOrderDetailsMarkup()}
+            </div>
+        );
+    } 
+    
+    
+    getOrderDetailsMarkup = () => {
+        if(this.state.loadingError) {
+            return (
+                <div className="">
+                    Something went wrong...
+                </div>
+            );
+        } else {
+            return (
                 <div className="">
                     <div class="cart-heading p-15 pt-0 pb-0">
                         <h1 class="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Order details</h1>
@@ -20,42 +107,29 @@ class OrderDetails extends Component {
                         <div className="delivery-address-container p-15">
                             <div className="address-details list-text-block p-15 mb-0">
                                 <div className="address-details-inner font-weight-light">
-                                    <span className="font-weight-semibold">Deliver to </span>
-                                    <span id="cart-delivery-address"> 70, test, Panjim Community Centre, Electricity Colony, Altinho, Panaji, Goa 403001, India</span>
+                                    <span className="font-weight-semibold">{this.state.addressLabel}</span>
+                                    <span id="cart-delivery-address">{this.state.shippingAddress}</span>
                                 </div>
                                 <div>
                                     <div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
                                         <div className="">
                                             <span className="text-green font-weight-semibold">Name: </span>
-                                            <span id="cart-delivery-address"> Vaibhav Arolkar </span>
+                                            <span id="cart-delivery-address"> {this.state.orderSummary.order_data.shipping_address.name} </span>
                                         </div>
                                         <div className="">
                                             <span className="text-green font-weight-semibold">Mobile No.: </span>
-                                            <span id="cart-delivery-address"> 9823036238 </span>
+                                            <span id="cart-delivery-address">  {this.state.orderSummary.order_data.shipping_address.phone} </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+    
                     <div class="p-15">
-                        <div class="item-container flex-column">
-                            <div class="d-flex mb-4">
-                                <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src="http://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/quinoa-n-nuts-bowl.jpg"/></div>
-                                <div class="product-details d-inline-block">
-                                    <div class="product-title-c font-weight-light">Quinoa &amp; Nuts Bowl</div>
-                                    <div class="d-flex justify-content-between">
-                                        <div class="product-size-c text-capitalize">Small | Qty: 1</div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="product-price font-weight-light text-right pl-3">₹200</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {this.getItems()}
                     </div>
-
+    
                     <div className="p-15">
                         <label className="cart-summary-label font-weight-medium">Payment information</label>
                         <div className="summary-item">
@@ -67,34 +141,73 @@ class OrderDetails extends Component {
                     </div>
                     <div className="p-15">
                         <label className="cart-summary-label font-weight-medium">Billing Details</label>
-                        <div className="cart-summary-container">
-                            <div className="summary-item">
-                                <div>
-                                    <label className="font-weight-light">Total Item Price</label>
-                                </div>
-                                <div className="font-weight-light">₹200 </div>
-                            </div>
-                            <div className="summary-item">
-                                <div>
-                                    <label className="font-weight-light">Delivery fee</label>
-                                </div>
-                                <div className="font-weight-light">₹50</div>
-                            </div>
-                            <div className="summary-item border-grey-50 border-0-left border-0-right mt-1 pt-2 pb-2">
-                                <div>
-                                    <label className="font-weight-medium mb-0">You Paid</label>
-                                </div>
-                                <div className="font-weight-bold">₹250</div>
-                            </div>
-                        </div>
+                        {this.getSummary()}
                     </div>
                     <div className="p-15">
                         * Please note: For any queries feel free to reach us out at <a className="text-underline" href="tel:7770004528">7770004528</a>
                     </div>
                 </div>
+            );
+        }
+       
+    }
+
+    getItems = () =>{
+        let items = ''
+        for(let item in this.state.orderSummary.order_data.items) {
+            items = items+ `
+            <div class="item-container flex-column">
+                <div class="d-flex mb-4">
+                    <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src="${item.image}"/></div>
+                    <div class="product-details d-inline-block">
+                        <div class="product-title-c font-weight-light">${item.product_name}</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="product-size-c text-capitalize">${item.size} | Qty: ${item.quantity}</div>
+                            <div class="d-flex align-items-center">
+                                <div class="product-price font-weight-light text-right pl-3">₹${item.sale_price}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            `
+
+        }
+    }
+
+    getSummary = () => {
+        let deliveryHtml = ''
+        if(this.state.orderSummary.order_data.order_mode == 'online') {
+            deliveryHtml = `
+            <div className="summary-item">
+                <div>
+                    <label className="font-weight-light">Delivery fee</label>
+                </div>
+                <div className="font-weight-light">₹${this.state.orderSummary.order_data.summary.shipping_fee}</div>
             </div>
-        );
-    }    
+
+            `
+        }
+        let summary = `
+        
+        <div className="cart-summary-container">
+            <div className="summary-item">
+                <div>
+                    <label className="font-weight-light">Total Item Price</label>
+                </div>
+                <div className="font-weight-light">₹${this.state.orderSummary.order_data.summary.sale_price_total} </div>
+            </div>
+            ${deliveryHtml}
+            <div className="summary-item border-grey-50 border-0-left border-0-right mt-1 pt-2 pb-2">
+                <div>
+                    <label className="font-weight-medium mb-0">You Paid</label>
+                </div>
+                <div className="font-weight-bold">₹${this.state.orderSummary.order_data.summary.you_pay}</div>
+            </div>
+        </div>
+        `
+
+    }
 }
 
 export default OrderDetails;

@@ -896,3 +896,82 @@ async function orderSummary(transaction_id) {
     }
         return response;
 }
+
+async function orderDetails(order_id) {
+    let  order_line_items = [], items = [];
+    let lat_lng = [], shipping_address
+    if(!order_id) {
+        return {success:false, msg:"order is empty"}
+    }
+
+
+    let user_order_map_ref = await db.collection("user-orders-map").doc(order_id).get()
+    
+    if(!user_order_map_ref.exists) {
+        return {success:false, msg:"Order cannot be found"}
+    }
+
+    let orderDoc = await db.collection('user-details').doc(user_order_map_ref.data().user_id).collection("orders").doc(order_id).get()
+    if(!orderDoc.exists) {
+        return {success: false, msg:"Order cannot be found"}
+    }
+    let order_data = orderDoc.data();
+    console.log("payment data ===> "+data)
+    
+    if(data.status =="draft") {
+        return {success:true, pending:1};
+    }
+    // if(data.other_details) {
+    //     data.other_details = JSON.parse(data.other_details)
+    // }
+   
+    let shipping_address_obj = order_data.shipping_address
+   
+    // let order_data = order_ref.data()
+    if(order_data.order_mode == "kiosk") {
+
+    } else {
+        if(shipping_address_obj) {
+            let latlng = {}
+            latlng["lat"] = shipping_address_obj.lat_long[0]
+            latlng["lng"] = shipping_address_obj.lat_long[1]
+            order_data.shipping_address.lat_long = latlng
+    
+        }
+    }
+   
+   
+    order_data.items.forEach((item)=>{
+        let product = products.find((product) => { return product.id == item.product_id})
+        let deliverable = true; //check if deliverable
+        let in_stock = true;     // check if in stock
+    
+        let formatted_item = {
+            variant_id : item.variant_id,
+            attributes: {
+                title: item.product_name,
+                image: product.image_urls[0],
+                size : item.size,
+                price_mrp : item.mrp,
+                price_final : item.sale_price,
+                discount_per : 0
+            },
+            availability : in_stock,
+            quantity : item.quantity,
+            timestamp : item.timestamp,
+            deliverable : deliverable,
+            product_id : product.id
+        }
+        items.push(formatted_item);
+    })
+
+    order_data.items = items;
+    let response = {
+            success: true, 
+            order_data : order_data,
+            coupon_applied: null,
+            coupons: [],
+            approx_delivery_time : "40 mins"
+    }
+        return response;
+}
