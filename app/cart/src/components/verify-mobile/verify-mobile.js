@@ -8,6 +8,7 @@ class VerifyMobile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            site_mode : generalConfig.site_mode,
             phoneNumber: '',
             otp: '',
             confirmationResult: '',
@@ -143,12 +144,32 @@ class VerifyMobile extends Component {
         console.log("this.state.otp ==>", this.state.otp);
         this.setState({ otpErrorMsg: '' });
         this.state.confirmationResult.confirm(this.state.otp)
-            .then((res) => {
-                res.user.getIdToken().then((idToken) => {
+            .then((resuser) => {
+                resuser.user.getIdToken().then((idToken) => {
+                    let cart_id = window.firebase.auth().currentUser.uid;
                     window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
-                    window.writeInLocalStorage('cart_id', window.firebase.auth().currentUser.uid);
+                    window.writeInLocalStorage('cart_id', cart_id);
                     // this.updateUserDetails(idToken);
-                    this.props.history.push('/cart/select-address')
+                    if(this.state.site_mode == 'kiosk'){
+                        if(cart_id) {
+                            window.addCartLoader();
+                            window.assignAddressToCart(null, true)
+                            .then((res) => {
+                                if(res.success) {
+                                    this.props.history.push({pathname:'/cart/cart-summary/'+cart_id, state:{order_obj:res.cart}});
+                                } else {
+                                    window.removeCartLoader();
+                                    if(res.code =='PAYMENT_DONE') {
+                                        this.props.history.push('/cart');
+                                    }
+                                }
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        }
+                    } else {
+                        this.props.history.push('/cart/select-address');
+                    }
                 });
             })
             .catch((error) => {
@@ -195,10 +216,30 @@ class VerifyMobile extends Component {
 		}
 		let url = generalConfig.apiEndPoint + "/user/update-user-details";
 		axios.post(url, body, {headers :  headers })
-			.then((res) => {
-				console.log("update user details response ==>", res);
-				window.removeCartLoader();
-				this.props.history.push('/cart/select-address')
+			.then((resuser) => {
+				console.log("update user details response ==>", resuser);
+				if(this.state.site_mode == 'kiosk'){
+                    let cart_id =  window.readFromLocalStorage('cart_id');
+                    if(cart_id) {
+                        window.assignAddressToCart(null, true)
+                        .then((res) => {
+                            if(res.success) {
+                                window.removeCartLoader();
+                                this.props.history.push({pathname:'/cart/cart-summary/'+cart_id, state:{order_obj:res.cart}});
+                            } else {
+                                window.removeCartLoader();
+                                if(res.code =='PAYMENT_DONE') {
+                                    this.props.history.push('/cart');
+                                }
+                            }
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                    }
+                } else {
+                    window.removeCartLoader();
+                    this.props.history.push('/cart/select-address');
+                }
 			})
 			.catch((error)=>{
 				console.log("error in update user details ==>", error);

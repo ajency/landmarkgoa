@@ -20,7 +20,7 @@ class AddressList extends Component {
             cart_id:'',
             redirectToCart:false,
             showAddressComponent: false,
-            approxDeliveryTime:''
+            approxDeliveryTime:'30 mins'
         }
     }
 
@@ -146,7 +146,7 @@ class AddressList extends Component {
             return window.assignAddressToCart(address_id)
             .then((res) => {
                 if(res.success) {
-                    this.setState({cartSummary:res.cart, approxDeliveryTime : res.approx_delivery_time, redirectToSummary:true,})
+                    this.setState({cartSummary:res.cart, redirectToSummary:true,})
                 } else {
                     window.removeCartLoader();
                     if(res.code =='PAYMENT_DONE') {
