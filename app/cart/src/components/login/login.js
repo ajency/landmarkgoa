@@ -126,7 +126,7 @@ class LogIn extends Component {
 				if(this.state.site_mode == 'kiosk'){
 					let cart_id =  window.readFromLocalStorage('cart_id');
 			        if(cart_id) {
-			            window.assignAddressToCart(null, true)
+			            window.assignAddressToCart(null, true, this.state.phoneNumber)
 			            .then((res) => {
 			                if(res.success) {
 			                    window.removeCartLoader();

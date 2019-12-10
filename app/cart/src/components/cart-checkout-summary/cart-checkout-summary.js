@@ -19,6 +19,7 @@ class CartCheckoutSummary extends Component {
     _isMounted = false;
     constructor(props) {
         super(props);
+        this.checkNameExists = this.checkNameExists.bind(this);
         this.state = {
             site_mode : generalConfig.site_mode,
             dataLoading: true,
@@ -28,7 +29,14 @@ class CartCheckoutSummary extends Component {
 			fetchCartFailureMsg : '',
 			cartEmpty : false,
 			approxDeliveryTime:'30 mins',
-			shippingAddress:''
+			shippingAddress:'',
+			accountName:'',
+            accountEmail:'',
+            errors: {
+                name:'',
+                email:'',
+                accountInfo:''
+            }
         }
     }
 
@@ -121,7 +129,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
 						{this.getDeliveryAddressSection()}
-
+						
 						<div className="p-15 pt-0">
 							{this.getItems()}
 						</div>
@@ -158,7 +166,7 @@ class CartCheckoutSummary extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Payments pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
+								<Payments checkNameExists={this.checkNameExists} pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
 							</div>
 						</div>
 					</div>
@@ -182,6 +190,10 @@ class CartCheckoutSummary extends Component {
 						<span className="font-weight-semibold">Pick up from </span>
 						<span id="cart-delivery-address">GGB Counter</span>
 					</div>
+					{this.showUserDetailsFields()}
+				</div>
+				<div className="alert-danger px-15">
+					{this.state.errors.accountInfo.length > 0 &&  <span className='error text-error'>{this.state.errors.accountInfo}</span>}
 				</div>
 			</div>
 		} else {
@@ -190,6 +202,119 @@ class CartCheckoutSummary extends Component {
 			</div>
 		}
 		return deliveryaddress
+	}
+
+	showUserDetailsFields(){
+		if(this.state.orderSummary.shipping_address.name) {
+			return (
+				<div>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
+						<span className="text-green font-weight-semibold">Name: </span> 
+						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.name} </span>
+						<span className="text-green font-weight-semibold">Mobile No.: </span> 
+						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
+					</div>
+				</div>
+			);
+		} else {
+			let errors = this.state.errors;
+			return (
+				<div>
+					<div className="font-weight-semibold font-size-16 text-primary cursor-pointer" onClick={() => this.toggleAccountPopUp('show')}>Add Account details</div>
+					<div className="custom-modal user-details" id="cart-checkout-summary-user-details">
+						<div className="custom-modal-content p-15 width-calc">
+							<button type="button" class="btn-reset close-modal top-5" onClick={() => this.toggleAccountPopUp('hide')}><i class="fas fa-times text-silver"></i></button>
+							<h5 className="ft6 mb-4 h2">Account details</h5>
+							<label className="d-block mb-3 font-size-16">
+								<span className='error text-error'>*</span>Full Name
+								<input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountName:e.target.value}); this.handleChange(e)}} required/>
+								{errors.name.length > 0 &&  <span className='error text-error'>{errors.name}</span>}
+							</label>
+
+							<label className="d-block mb-3 font-size-16">
+								<span className='error text-error'>*</span>Email
+								<input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({accountEmail:e.target.value}); this.handleChange(e)}} required/>
+								{errors.email.length > 0 &&  <span className='error text-error'>{errors.email}</span>}
+							</label>
+
+							<button type="button" class="btn-reset btn-continue btn-arrow-icon font-size-15 text-capitalize p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={() => this.saveAccountInfo()}>
+								<span class="zindex-1">Save</span>
+								<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+							</button>
+						</div>
+		            </div>
+	            </div>
+			);
+		}
+	}
+
+	toggleAccountPopUp(action){
+		if(action == 'show'){
+			document.querySelector('#cart-checkout-summary-user-details').classList.add('show-modal');
+		} else {
+			document.querySelector('#cart-checkout-summary-user-details').classList.remove('show-modal');
+		}
+	}
+
+	handleChange = (e) => {
+        let { name, value} = e.target;
+        let errors = this.state.errors;
+        switch (name) {
+            case "name":
+                  errors.name = value.length >1 ? '':'required';
+            break;
+            case "email":
+                if( value.length < 1) {
+                    errors.email = 'required' 
+                } else if(!window.validEmailRegex.test(value)) {
+                    errors.email = "Please enter valid email";
+                } else {
+                    errors.email = ''
+                }
+            break;      
+            default:
+                break;
+        }
+    }
+
+	saveAccountInfo(){
+		window.addCartLoader()
+        let errors = this.state.errors;
+        let error = false
+        if(this.state.accountName.length <1) {
+            errors.name =  "required";
+            error = true;
+        }
+        if(this.state.accountEmail.length <1) {
+            errors.email = "required"
+            error = true;
+        } else if(!window.validEmailRegex.test(this.state.accountEmail)) {   
+            errors.email = "Please enter valid email";
+            error = true;
+        }
+        if(error) {
+            window.removeCartLoader();
+            this.setState({"errors":errors});
+            return false;
+        }
+
+		let data = {
+			name:this.state.accountName,
+			email:this.state.accountEmail,
+			phone:this.state.orderSummary.shipping_address.phone,
+		}
+		window.addUserDetails(data, window.readFromLocalStorage('cart_id')).then(user => {
+			window.removeCartLoader();
+            this.toggleAccountPopUp('hide');
+            let orderSummary = this.state.orderSummary;
+            orderSummary.shipping_address.name = user.name;
+            orderSummary.shipping_address.email = user.email;
+        	errors.accountInfo = '';
+        	this.setState({"errors":errors});
+            this.setState({orderSummary:orderSummary});
+         }).catch(err => {
+            console.log(err)
+         })
 	}
 
 	closeCart(){
@@ -216,6 +341,17 @@ class CartCheckoutSummary extends Component {
 		let cart_data = this.state.orderSummary;
 		cart_data.summary = summary;
 		this.setState({orderSummary : cart_data});
+	}
+
+	checkNameExists(){
+		if(this.state.orderSummary.shipping_address.name) {
+			return true;
+		} else {
+			let errors = this.state.errors;
+			errors.accountInfo = 'Please enter account details';
+			this.setState({"errors":errors});
+			return false;
+	    }
 	}
 
 

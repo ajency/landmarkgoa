@@ -67,6 +67,9 @@ class Razorpay extends Component {
         if(e) {
             e.preventDefault();
         }
+        if(!this.props.checkNameExists()) {
+            return false;
+        }
         window.addCartLoader();
         let url = generalConfig.apiEndPoint + "/anonymous/payment/create-order";
 			let body = {

@@ -689,7 +689,7 @@ async function createCartForVerifiedUser(cart_id){
 
 async function addAddress(addressObj) {
         //TODO : get UID from id token
-        userDetails_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get()
+        //userDetails_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get()
         await db.collection("user-details").doc(firebase.auth().currentUser.uid).update({
             name    : addressObj.name,
             email   : addressObj.email
@@ -718,6 +718,21 @@ async function addAddress(addressObj) {
         return address_obj
 }
 
+async function addUserDetails(userObj, cart_id) {
+        await db.collection("user-details").doc(firebase.auth().currentUser.uid).update({
+            name    : userObj.name,
+            email   : userObj.email
+        })
+        await db.collection('carts').doc(cart_id).update({
+            shipping_address: {
+                name    : userObj.name,
+                email   : userObj.email,
+                phone   : userObj.phone
+            },
+        })
+        return userObj;
+}
+
 
 async function getCurrentStockLocation() {
     let location = [];
@@ -740,7 +755,7 @@ async function getCurrentStockLocation() {
         
 }
 
-async function assignAddressToCart (address_id, fetchDraft) {
+async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
     let  order_line_items = [], items = [];
     let cart_id = window.readFromLocalStorage('cart_id');
     if(!cart_id) {
@@ -754,6 +769,9 @@ async function assignAddressToCart (address_id, fetchDraft) {
     let lat_lng = [], shipping_address
     if(fetchDraft) {
         shipping_address = cart.shipping_address
+        if(phoneNumber) {
+            shipping_address = {phone : phoneNumber}
+        }
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
         shipping_address = address
@@ -763,7 +781,7 @@ async function assignAddressToCart (address_id, fetchDraft) {
     let user_details = {...userDetails}
    
     
-    if(!fetchDraft) {
+    if(!fetchDraft || phoneNumber) {
         await db.collection('carts').doc(cart_id).update({
             shipping_address: shipping_address,
         })
