@@ -111,7 +111,7 @@ class Cart extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
+								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize overflow-hidden" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
 									<span className="zindex-1">Proceed to Checkout</span>
 									<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
 								</button>
