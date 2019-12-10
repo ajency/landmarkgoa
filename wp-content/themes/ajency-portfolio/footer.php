@@ -70,6 +70,7 @@
 <?php
     $build_location = "/site";
     if (is_front_page()) $build_location = "/site";
+    else if (is_page_template('template-oyo.php')) $build_location = "/oyo";
     else if (is_page_template('template-oyofourth.php')) $build_location = "/oyofourth";
     else if (is_page_template('template-oyofifth.php')) $build_location = "/oyofifth";
     $app_url = APP_URL . $build_location;
