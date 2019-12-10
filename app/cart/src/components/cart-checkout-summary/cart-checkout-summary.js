@@ -19,6 +19,7 @@ class CartCheckoutSummary extends Component {
     _isMounted = false;
     constructor(props) {
         super(props);
+        this.checkNameExists = this.checkNameExists.bind(this);
         this.state = {
             site_mode : generalConfig.site_mode,
             dataLoading: true,
