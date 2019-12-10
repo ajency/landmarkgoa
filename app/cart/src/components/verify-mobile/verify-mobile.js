@@ -93,7 +93,7 @@ class VerifyMobile extends Component {
 
     displayOtpErrorMsg() {
         if (this.state.otpErrorMsg) {
-            return <div className="alert-danger">{this.state.otpErrorMsg}</div>
+            return <div className="alert-danger p-15">{this.state.otpErrorMsg}</div>
         }
     }
 
