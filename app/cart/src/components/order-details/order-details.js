@@ -16,15 +16,16 @@ class OrderDetails extends Component {
     }
 
     componentDidMount() {
-        window.addCartLoader();
         window.firebase.auth().onAuthStateChanged((user) => {
             this.getOrderDetails()
         })
     }
 
     getOrderDetails() {
-        if(!this.props.match.params.transaction_id) {
-            window.orderDetails()
+        if(this.props.match.params.order_id) {
+        window.addCartLoader();
+
+            window.orderDetails(this.props.match.params.order_id)
             .then((res) => {
                 console.log("fetching summary ==>", res);
                 
@@ -42,18 +43,18 @@ class OrderDetails extends Component {
                         window.removeCartLoader();
                         this.setState({orderSummary: res})
                         if(res.order_data.order_mode == 'kiosk') {
-                            this.setState({addressLabel: "Pick up from"})
-                            this.setState({shippingAddress: "GGb Counter"})
+                            this.setState({addressLabel: "Pick up from: "})
+                            this.setState({shippingAddress: " GGb Counter"})
                         } else {
                             let shipping_address='';
-                            if (obj.address!='') {
-                                shipping_address = obj.address+', '
+                            if (res.order_data.shipping_address.address!='') {
+                                shipping_address = res.order_data.shipping_address.address+', '
                             }
 
-                            if(obj.landmark != '') {
-                                shipping_address = shipping_address + obj.landmark+', '
+                            if(res.order_data.shipping_address.landmark != '') {
+                                shipping_address = shipping_address + res.order_data.shipping_address.landmark+', '
                             }
-                            shipping_address = shipping_address + obj.formatted_address;
+                            shipping_address = shipping_address + res.order_data.shipping_address.formatted_address;
                             this.setState({addressLabel: "Deliver to: "})
                             this.setState({shippingAddress: shipping_address})
                         }
@@ -71,7 +72,7 @@ class OrderDetails extends Component {
                 console.log(err)
             }) 
 
-        }
+        } 
     }
 
     render() {
@@ -136,7 +137,7 @@ class OrderDetails extends Component {
                             <div>
                                 <label className="font-weight-light">Payment mode</label>
                             </div>
-                            <div className="font-weight-light">Credit card</div>
+                            {this.getPaymentMode()}
                         </div>
                     </div>
                     <div className="p-15">
@@ -153,26 +154,24 @@ class OrderDetails extends Component {
     }
 
     getItems = () =>{
-        let items = ''
-        for(let item in this.state.orderSummary.order_data.items) {
-            items = items+ `
-            <div class="item-container flex-column">
-                <div class="d-flex mb-4">
-                    <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src="${item.image}"/></div>
-                    <div class="product-details d-inline-block">
-                        <div class="product-title-c font-weight-light">${item.product_name}</div>
-                        <div class="d-flex justify-content-between">
-                            <div class="product-size-c text-capitalize">${item.size} | Qty: ${item.quantity}</div>
-                            <div class="d-flex align-items-center">
-                                <div class="product-price font-weight-light text-right pl-3">₹${item.sale_price}</div>
-                            </div>
+        let items =   this.state.orderSummary.order_data.items.map((item) => {
+            return  <div class="item-container flex-column">
+            <div class="d-flex mb-4">
+                <div class="product-cartimage d-inline-block"><img class="border-radius-rounded" alt="" title="" height="50" width="50" src={item.attributes.image}/></div>
+                <div class="product-details d-inline-block">
+                    <div class="product-title-c font-weight-light">{item.attributes.title}</div>
+                    <div class="d-flex justify-content-between">
+                        <div class="product-size-c text-capitalize">{item.attributes.size} | Qty: {item.quantity}</div>
+                        <div class="d-flex align-items-center">
+                            <div class="product-price font-weight-light text-right pl-3">₹{item.attributes.price_final}</div>
                         </div>
                     </div>
                 </div>
-            </div>            
-            `
-
-        }
+            </div>
+             </div>         
+        })
+       
+        return items
     }
 
     getSummary = () => {
@@ -188,25 +187,42 @@ class OrderDetails extends Component {
 
             `
         }
-        let summary = `
+       return(
         
         <div className="cart-summary-container">
             <div className="summary-item">
                 <div>
                     <label className="font-weight-light">Total Item Price</label>
                 </div>
-                <div className="font-weight-light">₹${this.state.orderSummary.order_data.summary.sale_price_total} </div>
+                <div className="font-weight-light">₹{this.state.orderSummary.order_data.summary.sale_price_total} </div>
             </div>
-            ${deliveryHtml}
+            {deliveryHtml}
             <div className="summary-item border-grey-50 border-0-left border-0-right mt-1 pt-2 pb-2">
                 <div>
                     <label className="font-weight-medium mb-0">You Paid</label>
                 </div>
-                <div className="font-weight-bold">₹${this.state.orderSummary.order_data.summary.you_pay}</div>
+                <div className="font-weight-bold">₹{this.state.orderSummary.order_data.summary.you_pay}</div>
             </div>
-        </div>
-        `
+        </div>);
+    }
 
+    getPaymentMode = () => {
+        if(this.state.orderSummary.order_data.payment_details) {
+            let payment_mode = ''
+            let paymentObj = this.state.orderSummary.order_data.payment_details
+            if(paymentObj.method == 'card') {
+                payment_mode = paymentObj.card.type + "card"
+            }  else if(paymentObj.method == 'upi'){
+                payment_mode = "Upi"
+            } else if(paymentObj.method == 'wallet') {
+                payment_mode = "Wallet"
+            } else if(paymentObj.method == 'netbanking') {
+                payment_mode = "Net banking"
+            }
+            return (<div className="font-weight-light" style={{textTransform:"capitalize"}}>{payment_mode}</div>)
+
+        }
+        return (<div className="font-weight-light">COD</div>)
     }
 }
 

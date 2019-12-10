@@ -905,25 +905,34 @@ async function orderDetails(order_id) {
     }
 
 
-    let user_order_map_ref = await db.collection("user-orders-map").doc(order_id).get()
+    let user_order_map_ref = await db.collection("user-orders-map").where("order_id", "==",order_id).get()
     
-    if(!user_order_map_ref.exists) {
+    if(!user_order_map_ref.docs.length) {
         return {success:false, msg:"Order cannot be found"}
     }
 
-    let orderDoc = await db.collection('user-details').doc(user_order_map_ref.data().user_id).collection("orders").doc(order_id).get()
+    let orderDoc = await db.collection('user-details').doc(user_order_map_ref.docs[0].data().user_id).collection("orders").doc(order_id).get()
     if(!orderDoc.exists) {
         return {success: false, msg:"Order cannot be found"}
     }
+
+
     let order_data = orderDoc.data();
-    console.log("payment data ===> "+data)
     
-    if(data.status =="draft") {
+    if(order_data.status =="draft") {
         return {success:true, pending:1};
     }
-    // if(data.other_details) {
-    //     data.other_details = JSON.parse(data.other_details)
-    // }
+
+    let payment_ref = await db.collection("payments").where("user_id","==", user_order_map_ref.docs[0].data().user_id).where("order_id","==",order_id).get()
+    if(payment_ref.docs.length) {
+    
+
+        let payment_data = payment_ref.docs[0].data()
+
+        if(payment_data.other_details) {
+            order_data.payment_details = JSON.parse(payment_data.other_details)
+        }
+    }
    
     let shipping_address_obj = order_data.shipping_address
    
