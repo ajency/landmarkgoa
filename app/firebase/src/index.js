@@ -481,8 +481,7 @@ async function fetchCart(cart_id){
             success: true, 
             cart : cart_data,
             coupon_applied: null,
-            coupons: [],
-            approx_delivery_time : "40 mins"
+            coupons: []
     }
 
     return response;
@@ -809,8 +808,7 @@ let response = {
         success: true, 
         cart : cart_data,
         coupon_applied: null,
-        coupons: [],
-        approx_delivery_time : "40 mins"
+        coupons: []
 }
 
 
@@ -893,8 +891,7 @@ async function orderSummary(transaction_id) {
             order_data : order_data,
             payment_summary:data,
             coupon_applied: null,
-            coupons: [],
-            approx_delivery_time : "40 mins"
+            coupons: []
     }
         return response;
 }

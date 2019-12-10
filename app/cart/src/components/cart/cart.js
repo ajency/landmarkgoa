@@ -170,7 +170,27 @@ class Cart extends Component {
 				this.props.history.push('/cart/login');
 			}
 			else{
-				this.props.history.push('/cart/select-address');
+				if(this.state.site_mode == 'kiosk'){
+					let cart_id =  window.readFromLocalStorage('cart_id');
+			        if(cart_id) {
+			            window.addCartLoader();
+			            window.assignAddressToCart(null, true)
+			            .then((res) => {
+			                if(res.success) {
+			                    this.props.history.push({pathname:'/cart/cart-summary/'+cart_id, state:{order_obj:res.cart}});
+			                } else {
+			                    window.removeCartLoader();
+			                    if(res.code =='PAYMENT_DONE') {
+			                        this.props.history.push('/cart');
+			                    }
+			                }
+			            }).catch(err => {
+			                console.log(err);
+			            })
+			        }
+				} else {
+					this.props.history.push('/cart/select-address');
+				}
 			}
 		})
 	}

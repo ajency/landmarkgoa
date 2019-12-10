@@ -121,10 +121,30 @@ class LogIn extends Component {
 		}
 		let url = generalConfig.apiEndPoint + "/user/update-user-details";
 		axios.post(url, body, {headers :  headers })
-			.then((res) => {
-				console.log("update user details response ==>", res);
-				window.removeCartLoader();
-				this.props.history.push('/cart/select-address')
+			.then((resuser) => {
+				console.log("update user details response ==>", resuser);
+				if(this.state.site_mode == 'kiosk'){
+					let cart_id =  window.readFromLocalStorage('cart_id');
+			        if(cart_id) {
+			            window.assignAddressToCart(null, true)
+			            .then((res) => {
+			                if(res.success) {
+			                    window.removeCartLoader();
+			                    this.props.history.push({pathname:'/cart/cart-summary/'+cart_id, state:{order_obj:res.cart}});
+			                } else {
+			                    window.removeCartLoader();
+			                    if(res.code =='PAYMENT_DONE') {
+			                        this.props.history.push('/cart');
+			                    }
+			                }
+			            }).catch(err => {
+			                console.log(err);
+			            })
+			        }
+				} else {
+					window.removeCartLoader();
+					this.props.history.push('/cart/select-address');
+				}
 			})
 			.catch((error)=>{
 				console.log("error in update user details ==>", error);

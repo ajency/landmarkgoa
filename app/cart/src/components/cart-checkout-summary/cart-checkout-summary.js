@@ -20,13 +20,14 @@ class CartCheckoutSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            site_mode : generalConfig.site_mode,
             dataLoading: true,
             orderSummary:{},
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
 			cartEmpty : false,
-			approxDeliveryTime:'',
+			approxDeliveryTime:'30 mins',
 			shippingAddress:''
         }
     }
@@ -52,7 +53,6 @@ class CartCheckoutSummary extends Component {
 				}
 				shipping_address_extra = shipping_address_extra + cart.shipping_address.formatted_address
 				this.setState({shippingAddress: shipping_address_extra})
-				this.setState({approxDeliveryTime: this.props.location.state.approx_delivery_time})
 				this.setState({dataLoading:false, fetchCartComplete:true})
 				window.removeCartLoader();
 			} else {
@@ -65,7 +65,6 @@ class CartCheckoutSummary extends Component {
 						// window.removeFromLocalStorage('cart_id')
 						this.props.history.push('/cart');
 					}
-					this.setState({approxDeliveryTime:res.approx_delivery_time});
 					this.setState({orderSummary: res.cart, dataLoading:false, fetchCartComplete:true});
 					if (res.cart.shipping_address.hasOwnProperty('address')) {
 						shipping_address_extra = res.cart.shipping_address.address+', '
@@ -121,11 +120,7 @@ class CartCheckoutSummary extends Component {
                         <div className="cart-heading p-15 pt-0 pb-0">
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
-						<div>
-							<DeliveryAddress showSummaryContent={true} address={this.state.shippingAddress} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()}/>           
-                        </div>
-
-						
+						{this.getDeliveryAddressSection()}
 
 						<div className="p-15 pt-0">
 							{this.getItems()}
@@ -176,6 +171,25 @@ class CartCheckoutSummary extends Component {
 				{cartContainer}
 			</div>
 		);
+	}
+
+	getDeliveryAddressSection(){
+		let deliveryaddress = '';
+		if(this.state.site_mode == 'kiosk'){
+			deliveryaddress = <div className="delivery-address-container p-15">
+				<div className="address-details list-text-block p-15 mb-0">
+					<div className="address-details-inner font-weight-light">
+						<span className="font-weight-semibold">Pick up from </span>
+						<span id="cart-delivery-address">GGB Counter</span>
+					</div>
+				</div>
+			</div>
+		} else {
+			deliveryaddress = <div>
+				<DeliveryAddress showSummaryContent={true} address={this.state.shippingAddress} userDetails={this.state.orderSummary.shipping_address} navigateToAddress={() => this.navigateToAddress()}/>
+			</div>
+		}
+		return deliveryaddress
 	}
 
 	closeCart(){
