@@ -33,7 +33,8 @@ class CartCheckoutSummary extends Component {
             accountEmail:'',
             errors: {
                 name:'',
-                email:''
+                email:'',
+                accountInfo:''
             }
         }
     }
@@ -127,6 +128,7 @@ class CartCheckoutSummary extends Component {
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Your cart summary</h1>
 						</div>
 						{this.getDeliveryAddressSection()}
+						{this.state.errors.accountInfo.length > 0 &&  <span className='error'>{this.state.errors.accountInfo}</span>}
 
 						<div className="p-15 pt-0">
 							{this.getItems()}
@@ -164,7 +166,7 @@ class CartCheckoutSummary extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Payments pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
+								<Payments checkNameExists={this.checkNameExists} pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
 							</div>
 						</div>
 					</div>
@@ -205,9 +207,9 @@ class CartCheckoutSummary extends Component {
 				<div>
 					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
 						<span className="text-green font-weight-semibold">Name: </span> 
-						<span id="cart-delivery-address"> this.state.orderSummary.shipping_address.name </span>
+						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.name} </span>
 						<span className="text-green font-weight-semibold">Mobile No.: </span> 
-						<span id="cart-delivery-address"> this.state.orderSummary.shipping_address.phone </span>
+						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
 					</div>
 				</div>
 			);
@@ -271,14 +273,14 @@ class CartCheckoutSummary extends Component {
 		window.addCartLoader()
         let errors = this.state.errors;
         let error = false
-        if(this.state.name.length <1) {
+        if(this.state.accountName.length <1) {
             errors.name =  "required";
             error = true;
         }
-        if(this.state.email.length <1) {
+        if(this.state.accountEmail.length <1) {
             errors.email = "required"
             error = true;
-        } else if(!window.validEmailRegex.test(this.state.email)) {   
+        } else if(!window.validEmailRegex.test(this.state.accountEmail)) {   
             errors.email = "Please enter valid email";
             error = true;
         }
@@ -296,6 +298,12 @@ class CartCheckoutSummary extends Component {
 		window.addUserDetails(data, window.readFromLocalStorage('cart_id')).then(user => {
 			window.removeCartLoader();
             this.toggleAccountPopUp('hide');
+            orderSummary = this.state.orderSummary;
+            orderSummary.shipping_address.name = user.name;
+            orderSummary.shipping_address.email = user.email;
+        	errors.accountInfo = '';
+        	this.setState({"errors":errors});
+            this.setState({orderSummary:orderSummary});
          }).catch(err => {
             console.log(err)
          })
@@ -325,6 +333,17 @@ class CartCheckoutSummary extends Component {
 		let cart_data = this.state.orderSummary;
 		cart_data.summary = summary;
 		this.setState({orderSummary : cart_data});
+	}
+
+	checkNameExists(){
+		if(this.state.orderSummary.shipping_address.name) {
+			return true;
+		} else {
+			let errors = this.state.errors;
+			errors.accountInfo = 'Please enter account details';
+			this.setState({"errors":errors});
+			return false;
+	    }
 	}
 
 
