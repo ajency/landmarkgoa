@@ -21,22 +21,23 @@ class CartCheckoutSummary extends Component {
         super(props);
         this.checkNameExists = this.checkNameExists.bind(this);
         this.state = {
-            site_mode : generalConfig.site_mode,
-            dataLoading: true,
-            orderSummary:{},
+			site_mode : generalConfig.site_mode,
+			pickupPoint : generalConfig.pickupPoint,
+			dataLoading: true,
+			orderSummary:{},
 			fetchCartComplete : false,
 			fetchCartFailed : false,
 			fetchCartFailureMsg : '',
 			cartEmpty : false,
-			approxDeliveryTime:'30 mins',
+			approxDeliveryTime:generalConfig.preparationTime,
 			shippingAddress:'',
 			accountName:'',
-            accountEmail:'',
-            errors: {
-                name:'',
-                email:'',
-                accountInfo:''
-            }
+			accountEmail:'',
+			errors: {
+				name:'',
+				email:'',
+				accountInfo:''
+			}
         }
     }
 
@@ -188,7 +189,7 @@ class CartCheckoutSummary extends Component {
 				<div className="address-details list-text-block p-15 mb-0">
 					<div className="address-details-inner font-weight-light">
 						<span className="font-weight-semibold">Pick up from </span>
-						<span id="cart-delivery-address">GGB Counter</span>
+						<span id="cart-delivery-address">{this.state.pickupPoint}</span>
 					</div>
 					{this.showUserDetailsFields()}
 				</div>
