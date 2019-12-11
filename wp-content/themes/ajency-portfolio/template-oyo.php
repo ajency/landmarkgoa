@@ -72,10 +72,10 @@ $week = $date[0];
                             <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type"><?php echo isset($product['mark_type']) ? $product['mark_type'] : ''; ?></h3>
                             <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3> 
                           </div>
-                          <div class="product-availability  <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['date'].'' : 'Coming Soon'; ?></h4></div>
+                          <div class="product-availability  <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['date'] : 'Coming Soon'; ?></h4></div>
                       </div>
 
-                      <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['date'].'s' : 'Coming Soon'; ?></div>
+                      <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['date'] : 'Coming Soon'; ?></div>
 
                       <div class="product-info lg-w-50 pl-lg-2 hover-text">
                           <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type"><?php echo isset($product['mark_type']) ? $product['mark_type'] : ''; ?></h3>
