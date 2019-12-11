@@ -23,7 +23,7 @@ class variantSelection extends React.Component {
 					  <h3 class="h1 ft6 pr-4">Choose Your Bowl</h3>
 					  <div class="list-meta mt-4 mb-4">
 						<div class="list-author">{this.state.title}</div>
-						<div class="list-date">Veg</div>
+						{this.getItemType()}
 					  </div>				          
 			          <div className="variant-list mb-4">
 			          		{this.getVariants()}
@@ -79,6 +79,13 @@ class variantSelection extends React.Component {
 		}
 	}
 	
+	getItemType(){
+		if(this.state.product && this.state.product.veg){
+			return (<div class="list-date">Veg</div>)
+		} else {
+			return (<div class="list-date nv">Non Veg</div>)
+		}
+	}
 
 	showVariantModal(product_id, last_selected){
 		this.fetchVariants(product_id, last_selected);

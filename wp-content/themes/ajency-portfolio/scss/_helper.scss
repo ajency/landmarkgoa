@@ -442,16 +442,16 @@ nav{
 
 .close-lightbox-modal {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: -5px;
+    top: -35px;
     background: transparent;
     border: 0;
-    font-size: 24px;
+    font-size: 28px;
     color: #000;   
     line-height: 0; 
     z-index: 2;
     cursor: pointer;
-    outline: 0;
+    outline: 0 !important;
 }
 
 .lightbox {
@@ -463,7 +463,7 @@ nav{
         right: 0;
         z-index: 999;
         background: rgba(0, 0, 0, 0.2);
-        overflow: scroll;
+        overflow: auto; 
         height: 100vh;
         display: none;
 
@@ -483,7 +483,7 @@ nav{
         justify-content: center;
 
         &-wrap {
-            width: 100%;
+            position: relative;
         }
         img {
             max-width: 100%;

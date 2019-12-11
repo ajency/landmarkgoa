@@ -31,7 +31,7 @@
                         <div class="col-md-5 mt-5 mt-md-0 contact-details">
                             <h4 class="font-weight-light w-75">
                                 Green Grain Bowl Kitchen, 1st floor Panjim convention center, Mala. 
-                                <a class=" font-weight-light h5 " href="shorturl.at/fgpq1" target="_blank">
+                                <a class=" font-weight-light h5 " href="//shorturl.at/fgpq1" target="_blank">
                                     (Map)
                                 </a>
                             </h4>
@@ -174,6 +174,17 @@
             });
         });
     }
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('html,body').addClass('hide-scroll');
+            $('#lb-modal').addClass('open');
+        });
+        $('#close-modal').click(function(){
+            $('html,body').removeClass('hide-scroll');
+            $('#lb-modal').removeClass('open');
+        });
+    });
 </script>
     </body>
 </html>
