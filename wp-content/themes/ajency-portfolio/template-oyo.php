@@ -142,7 +142,7 @@ $week = $date[0];
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body">
               <p class="body-text">Each of our bowls are between 400 & 600 calories. This is a healthy meal where the calorie count is made up from protein, fat and carbohydrates.
-              <br><br>It is definitely not a low calorie food that is often mistaken as 'healthy' eating.</p>
+              <br><br>It is definitely not low calorie food that is often mistaken as 'healthy' eating.</p>
             </div>
           </div>
         </div>
@@ -199,7 +199,7 @@ $week = $date[0];
           </div>
           <div class="col-md-5 offset-md-1">
             <div class="w-75 team-desc">
-                <h5>The tech in food tech</h5>
+                <h5>The 'tech' in FoodTech</h5>
                 <h1 class="display-3">Anuj Khurana</h1>
                 <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">Order management, delivery, operations</h5></div>
               </div>
