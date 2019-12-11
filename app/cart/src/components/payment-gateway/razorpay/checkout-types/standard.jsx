@@ -36,11 +36,15 @@ class Standard extends Component {
         //     "handler": function (response){
         //          alert(response.razorpay_payment_id);
         //     },
+        let site_mode_append = '' 
+        if(generalConfig.site_mode) {
+            site_mode_append = '&site_mode='+generalConfig.site_mode
+        }
         let Razorpay = new window.Razorpay({
             "key": razorPayConfig.api_key,
             "image": razorPayConfig.image,
             "name": generalConfig.company_name,
-            "callback_url":generalConfig.apiEndPoint+"/anonymous/payment/verify-payment?r_order_id="+this.props.r_order_id,
+            "callback_url":generalConfig.apiEndPoint+"/anonymous/payment/verify-payment?r_order_id="+this.props.r_order_id + site_mode_append,
             "redirect": true,
             "amount": amount, 
             "currency": "INR",
