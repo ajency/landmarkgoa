@@ -106,7 +106,7 @@ class OrderDetails extends Component {
                             <h1 class="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Order details</h1>
                         </div>
                         <div className="p-15 pt-0">
-                            <span className="font-weight-semibold">Order no:</span> DEC09MX011KLM
+                            <span className="font-weight-semibold">Order no:</span> {order_data.order_no}
                         </div>
                         <div className="order-status p-15 pt-2 pb-2 bg-off-green-1 mb-1">
                             <div className="d-flex align-items-center">
