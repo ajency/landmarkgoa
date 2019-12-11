@@ -112,7 +112,7 @@ class OrderDetails extends Component {
                                     <span id="cart-delivery-address">{this.state.shippingAddress}</span>
                                 </div>
                                 <div>
-                                    <div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
+                                    <div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
                                         <div className="">
                                             <span className="text-green font-weight-semibold">Name: </span>
                                             <span id="cart-delivery-address"> {this.state.orderSummary.order_data.shipping_address.name} </span>

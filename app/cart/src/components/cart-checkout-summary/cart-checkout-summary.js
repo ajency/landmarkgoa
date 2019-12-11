@@ -208,13 +208,19 @@ class CartCheckoutSummary extends Component {
 		if(this.state.orderSummary.shipping_address.name) {
 			return (
 				<div>
-					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
-						<span className="text-green font-weight-semibold">Name: </span> 
-						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.name} </span>
-						<span className="text-green font-weight-semibold">Email ID: </span> 
-						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.email} </span>
-						<span className="text-green font-weight-semibold">Mobile No: </span> 
-						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
+						<div className="">
+							<span className="text-green font-weight-semibold">Name: </span> 
+							<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.name} </span>
+						</div>
+						<div className="">
+							<span className="text-green font-weight-semibold">Email ID: </span> 
+							<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.email} </span>
+						</div>
+						<div className="">
+							<span className="text-green font-weight-semibold">Mobile No: </span> 
+							<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
+						</div>						
 					</div>
 				</div>
 			);
@@ -222,16 +228,26 @@ class CartCheckoutSummary extends Component {
 			let errors = this.state.errors;
 			return (
 				<div>
-					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
-						<span className="text-green font-weight-semibold">Name: </span> 
-						<span id="cart-delivery-address"> {'<Not present>'} </span>
-						<span className="text-green font-weight-semibold">Email ID: </span> 
-						<span id="cart-delivery-address"> {'<Not present>'} </span>
-						<span className="text-green font-weight-semibold">Mobile No: </span> 
-						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
+						<div className="">
+							<span className="text-green font-weight-semibold">Name: </span> 
+							<span id="cart-delivery-address"> {'<Not present>'} </span>
+						</div>						
+						<div className="">
+							<span className="text-green font-weight-semibold">Email ID: </span> 
+							<span id="cart-delivery-address"> {'<Not present>'} </span>
+						</div>
+						<div className="">
+							<span className="text-green font-weight-semibold">Mobile No: </span> 
+							<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
+						</div>						
 					</div>
-					<div className="font-weight-semibold font-size-16 text-primary cursor-pointer" onClick={() => this.toggleAccountPopUp('show')}>Add Account details</div>
-					<div className="custom-modal user-details" id="cart-checkout-summary-user-details">
+
+					<div className="font-weight-semibold font-size-16 text-primary cursor-pointer mt-2"><i class="fas fa-pencil-alt number-edit cursor-pointer" onClick={() => this.toggleAccountPopUp('show')}></i></div>
+
+
+					
+					{/* <div className="custom-modal user-details" id="cart-checkout-summary-user-details">
 						<div className="custom-modal-content p-15 width-calc">
 							<button type="button" class="btn-reset close-modal top-5" onClick={() => this.toggleAccountPopUp('hide')}><i class="fas fa-times text-silver"></i></button>
 							<h5 className="ft6 mb-4 h2">Account details</h5>
@@ -252,7 +268,46 @@ class CartCheckoutSummary extends Component {
 								<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
 							</button>
 						</div>
-		            </div>
+		            </div> */}
+
+					<div className="slide-in flex-slide-in" id="account_details">
+						<div className="slide-in-header header-container d-flex align-items-center">
+							<div className="app-name d-flex align-items-center">					
+								<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+							</div>
+							<div className="app-chekout text-green">
+								<i class="sprite sprite-checkout"></i>
+								Secure <br/>Checkout
+							</div>
+							<h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.toggleAccountPopUp('hide')}>
+								<span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
+							</h3>
+						</div>
+						<div className="slide-in-content">
+							<div className="spacer-2101"></div>
+							<div className="position-relative title-wrap pl-0">
+								<h3 className="h1 ft6">Account details</h3>
+							</div>
+							
+							<label className="d-block mb-3 font-size-16 mb-3 pt-4 pb-2">
+								<input type="text" name="name" className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="Full Name" onChange={(e) => {this.setState({accountName:e.target.value}); this.handleChange(e)}} required/>
+								{errors.name.length > 0 &&  <span className='error text-error'>{errors.name}</span>}
+							</label>
+
+							<label className="d-block mb-3 font-size-16 mb-3 pt-4 pb-2">
+								<input type="email" name="email" className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="Email" onChange={(e) => {this.setState({accountEmail:e.target.value}); this.handleChange(e)}} required/>
+								{errors.email.length > 0 &&  <span className='error text-error'>{errors.email}</span>}
+							</label>
+
+							<div className="pt-4">
+								<button type="button" class="btn-reset btn-continue btn-arrow-icon ft6 text-capitalize p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={() => this.saveAccountInfo()}>
+									<span class="zindex-1">Save</span>
+								</button>
+							</div>
+
+						</div>						
+					</div>
+
 	            </div>
 			);
 		}
@@ -260,9 +315,9 @@ class CartCheckoutSummary extends Component {
 
 	toggleAccountPopUp(action){
 		if(action == 'show'){
-			document.querySelector('#cart-checkout-summary-user-details').classList.add('show-modal');
+			document.querySelector('#account_details').classList.add('visible');
 		} else {
-			document.querySelector('#cart-checkout-summary-user-details').classList.remove('show-modal');
+			document.querySelector('#account_details').classList.remove('visible');
 		}
 	}
 
