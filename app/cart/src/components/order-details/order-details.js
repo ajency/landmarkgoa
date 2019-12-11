@@ -7,6 +7,7 @@ class OrderDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            pickupPoint : generalConfig.pickupPoint,
             errorOnPage:  false,
             loadingError: false,
             loader:true,
@@ -45,7 +46,7 @@ class OrderDetails extends Component {
                         this.setState({orderSummary: res})
                         if(res.order_data.order_mode == 'kiosk') {
                             this.setState({addressLabel: "Pick up from: "})
-                            this.setState({shippingAddress: " GGb Counter"})
+                            this.setState({shippingAddress: " "+this.state.pickupPoint})
                         } else {
                             let shipping_address='';
                             if (res.order_data.shipping_address.address!='') {

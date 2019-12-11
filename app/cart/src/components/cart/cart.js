@@ -19,6 +19,7 @@ class Cart extends Component {
 		this.state = {
 			site_mode : generalConfig.site_mode,
 			pickupPoint : generalConfig.pickupPoint,
+			approxDeliveryTime : generalConfig.preparationTime,
 			cartData : {},
 			fetchCartComplete : false,
 			fetchCartFailed : false,
@@ -93,7 +94,7 @@ class Cart extends Component {
 							</div>
 							<div className="w-50 text-align-right font-weight-medium">
 								<img src={clockLogo} alt="Estimated time" title="Estimated time" className="d-inline-block vertical-align-middle mr-1"/> 
-								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">30 mins</span>
+								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">{this.state.approxDeliveryTime}</span>
 							</div>
 						</div>
 

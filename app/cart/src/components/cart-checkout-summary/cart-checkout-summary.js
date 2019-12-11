@@ -375,6 +375,9 @@ class CartCheckoutSummary extends Component {
             let orderSummary = this.state.orderSummary;
             orderSummary.shipping_address.name = user.name;
             orderSummary.shipping_address.email = user.email;
+            orderSummary.user_details.name = user.name;
+            orderSummary.user_details.email = user.email;
+            orderSummary.user_details.phone = user.phone;
         	errors.accountInfo = '';
         	this.setState({"errors":errors});
             this.setState({orderSummary:orderSummary});
