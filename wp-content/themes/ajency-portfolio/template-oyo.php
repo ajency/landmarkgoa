@@ -174,8 +174,8 @@ $week = $date[0];
           <div class="col-md-6">
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" 
                 class="lazy img-fluid bg-image-animation"
-                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/avanti-desktop.jpg"
-                data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/avanti-desktop.jpg"
+                data-src="<?php echo get_template_directory_uri() ?>/images/members/Avanti-GGB.jpg"
+                data-srcset="<?php echo get_template_directory_uri() ?>/images/members/Avanti-GGB.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw">
           </div>
           <div class="col-md-5 offset-md-1">
@@ -193,8 +193,8 @@ $week = $date[0];
           <div class="col-md-6">
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                 class="lazy img-fluid bg-image-animation"
-                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
-                data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/anuj-desktop.jpg"
+                data-src="<?php echo get_template_directory_uri() ?>/images/members/Anuj-GGB.jpg"
+                data-srcset="<?php echo get_template_directory_uri() ?>/images/members/Anuj-GGB.jpg"
                 data-sizes="(min-width: 768px) 42vw, 100vw" alt="Anuj Khurana" class="img-fluid">
           </div>
           <div class="col-md-5 offset-md-1">
