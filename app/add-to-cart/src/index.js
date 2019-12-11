@@ -11,6 +11,7 @@ class addToCart extends React.Component {
 			lastSelected : '',
 			items : [], // variants added to cart
 			site_mode : process.env.REACT_APP_SITE_MODE,
+			pickup_point : process.env.REACT_APP_PICKUP_POINT,
 			default_lat_lng : [process.env.REACT_APP_DEFAULT_LAT, process.env.REACT_APP_DEFAULT_LNG],
 		};
 	}
@@ -102,7 +103,7 @@ class addToCart extends React.Component {
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(this.state.site_mode == 'kiosk') {
 			window.lat_lng = this.state.default_lat_lng;
-			window.formatted_address = this.state.site_mode;
+			window.formatted_address = this.state.pickup_point;
 		}
 		if(cart_id && window.lat_lng){
 			this.addToCartApiCall(variant_id, window.lat_lng, cart_id, window.formatted_address, product);

@@ -37,8 +37,8 @@ class Standard extends Component {
         //          alert(response.razorpay_payment_id);
         //     },
         let site_mode_append = '' 
-        if(generalConfig.site_mode) {
-            site_mode_append = '&site_mode='+generalConfig.site_mode
+        if(generalConfig.site_mode == 'kiosk') {
+            site_mode_append = '&site_mode='+generalConfig.webSiteAddon
         }
         let Razorpay = new window.Razorpay({
             "key": razorPayConfig.api_key,

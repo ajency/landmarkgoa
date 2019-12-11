@@ -20,7 +20,7 @@ class AddressList extends Component {
             cart_id:'',
             redirectToCart:false,
             showAddressComponent: false,
-            approxDeliveryTime:'30 mins'
+            approxDeliveryTime:generalConfig.preparationTime
         }
     }
 
