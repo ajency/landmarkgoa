@@ -12,25 +12,25 @@
                         <div class="col-md-4 contact-details">
                             <h4 class="font-weight-light">
                                 <a class=" d-block h4 font-weight-light" href="tel:09975931402" onclick="ga('send', 'event', 'telephone', 'CallNow', 'tel:09975931402');">
-                                    +91 99759 31402
+                                    +91 7770004258
                                 </a>
                             </h4>
                             <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="mailto:talktous@ajency.in" onclick="ga('send', 'event', 'footerid', 'Contact', 'Footer - talktous@ajency.in');">
-                                    talktous@ajency.in
+                                    avantih@gmail.com
                                 </a>
-                                <br/>
+                                <!-- <br/>
                                 <span class="h5">
                                     Career Opportunities:
                                 </span>
                                 <a class=" d-block h4 font-weight-light" href="mailto:workwithus@ajency.in">
                                     workwithus@ajency.in
-                                </a>
+                                </a> -->
                             </h4>
                         </div>
                         <div class="col-md-5 mt-5 mt-md-0 contact-details">
                             <h4 class="font-weight-light w-75">
-                                Panjim Convention Center, Panjim. Goa, India.
+                                Green Grain Bowl Kitchen, 1st floor Panjim convention center, Mala. 
                                 <a class=" font-weight-light h5 " href="https://goo.gl/maps/qmCNWotzNhC2" target="_blank">
                                     (Map)
                                 </a>
@@ -38,19 +38,19 @@
                         </div>
                         <div class="col-md-3 mt-5 mt-md-0 contact-details-1">
                             <h4 class="font-weight-light">
-                                <a class="d-block h4 font-weight-light" href="https://www.facebook.com/Ajency.in/">
-                                    Facebook
+                                <a class="d-block h4 font-weight-light" href="https://www.instagram.com/greengrainbowl/">
+                                    Instagram
                                 </a>
                             </h4>
-                            <h4 class="font-weight-light">
+                            <!-- <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="https://www.linkedin.com/company/ajency-in">
                                     Linkedin
                                 </a>
-                            </h4>
+                            </h4> -->
                         </div>
                     </div>
                     <div class="mt-5">
-                        (C) 2018 Digital Dwarves Pvt Ltd. All Right Reserved
+                        (C) Green Grain Bowl 2019 All Right Reserved
                     </div>
                 </div>
             </div>

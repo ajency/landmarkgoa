@@ -34,7 +34,11 @@
     </div>
   </div>
 </section>
-
+<?php
+$today = date('l F j Y');
+$date = explode(' ',$today);
+$week = $date[0];
+?>
 <section class="pt-0">
   <div class="product-section">
     <div class="container-1">
@@ -63,18 +67,18 @@
                           </div>
                       </div>
 
-                      <div class="product-info lg-w-50 pl-lg-2 normal-text d-none d-lg-block">
+                      <div class="product-info lg-w-50 pl-lg-2 normal-text d-none d-lg-block">                     
                           <div class="content-center">
-                            <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
+                            <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type"><?php echo isset($product['mark_type']) ? $product['mark_type'] : ''; ?></h3>
                             <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3> 
                           </div>
-                          <div class="product-availability  <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['availability'].'s' : 'Coming Soon'; ?></h4></div>
+                          <div class="product-availability  <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['date'].'' : 'Coming Soon'; ?></h4></div>
                       </div>
 
-                      <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['availability'].'s' : 'Coming Soon'; ?></div>
+                      <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['date'].'s' : 'Coming Soon'; ?></div>
 
                       <div class="product-info lg-w-50 pl-lg-2 hover-text">
-                          <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
+                          <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type"><?php echo isset($product['mark_type']) ? $product['mark_type'] : ''; ?></h3>
                           <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3>    
                           <div class="product-content">
                             <h4 class="product-excerpt font-weight- font-size-18 mt-0 mb-lg-0">
@@ -83,14 +87,17 @@
                             <div class="product-meta d-flex mt-lg-3">
                                 <div class="product-price h1 ft6 mb-0">₹ <?php echo $product['default']['sale_price'] ?>
                                 </div>
-                                <?php
-                                  $today = date('l jS F Y');
-                                  //var_dump($today);
+                                <?php                                
+                                  if(isset($product['availability']) && $product['availability'] != '' ){
                                 ?>
-                                <!-- <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div> -->
-                                <div class="product-add-to-cart-wrap">
-                                  <label class="btn-add-to-cart text-white bg-primary p-15 text-decoration-none m-0 font-size-25 ft6 cursor-pointer d-inline-block"><span><?php echo isset($product['date']) ? $product['date'] : '' ;  ?></span></label>
-                                </div>
+                                  <?php if($product['availability'] == $week){ ?>
+                                    <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div>                                  
+                                  <?php } else { ?>
+                                    <div class="product-add-to-cart-wrap">
+                                      <label class="btn-add-to-cart text-white bg-primary p-15 text-decoration-none m-0 font-size-25 ft6 cursor-pointer d-inline-block"><span><?php echo isset($product['date']) ? $product['date'] : '' ;  ?></span></label>
+                                    </div>
+                                  <?php } ?>                                                                
+                                <?php } ?>                                                                
                             </div>
                           </div>
                       </div>
@@ -104,7 +111,7 @@
   </div>
 </section>
 
-<section>
+<!-- <section>
   <div class="container p5">
     <div class="row">
       <div class="col  offset-xl-2 col-xl-8 col12">
@@ -173,11 +180,30 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section class="p2">
   <div class="container slider-contanier">
     <div class="aj-team-member  d-flex">
+      <div>
+        <div class="row flex ">
+          <div class="col-md-6">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" 
+                class="lazy img-fluid bg-image-animation"
+                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/avanti-desktop.jpg"
+                data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/avanti-desktop.jpg"
+                data-sizes="(min-width: 768px) 42vw, 100vw">
+          </div>
+          <div class="col-md-5 offset-md-1">
+            <div class="w-75 team-desc">
+              <h5>Curating Recipes</h5>
+              <h1 class="display-3">Avanti Hiremath</h1>
+              <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">On a mission to help everyone eat well</h5></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div class="row">
           <div class="col-md-6">
@@ -189,51 +215,14 @@
           </div>
           <div class="col-md-5 offset-md-1">
             <div class="w-75 team-desc">
-                <h5>CEO/Co-founder</h5>
+                <h5>The tech part of food tech</h5>
                 <h1 class="display-3">Anuj Khurana</h1>
-                <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">13+ years of Digital experience.</h5></div>
+                <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">Order management, delivery, operations</h5></div>
               </div>
           </div>
         </div>
       </div>
 
-      <div class="align-items-center">
-        <div class="row flex ">
-          <div class="col-md-6">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                class="lazy img-fluid bg-image-animation" 
-                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
-                data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/nutan-desktop.jpg"
-                data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
-          </div>
-          <div class="col-md-5 offset-md-1">
-            <div class="w-75 team-desc">
-              <h5>Engineering Manager</h5>
-              <h1 class="display-3">Nutan Kamat</h1>
-              <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">6+ years.</h5></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="row">
-          <div class="col-md-6">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                class="lazy img-fluid bg-image-animation"
-                data-src="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
-                data-srcset="https://1z3o6ca02l43rp0zb3y1b2e1-wpengine.netdna-ssl.com/wp-content/themes/ajency-portfolio/img/team/robiul-desktop.jpg"
-                data-sizes="(min-width: 768px) 42vw, 100vw" alt="Avanti Hiremath" class="img-fluid">
-          </div>
-          <div class="col-md-5 offset-md-1">
-            <div class="w-75 team-desc">
-              <h5>Engineering Manager</h5>
-              <h1 class="display-3">Robiul Hoque</h1>
-              <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">8+ years.</h5></div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -301,6 +290,19 @@
 
 <div class="backdrop-wrap"></div>
 
+<div class="lightbox-modal" id="lb-modal">
+    <button class="close-lightbox-modal" id="close-modal"><i class="fas fa-times"></i></button>
+    <div class="lightbox-content">
+      <div class="lightbox-content-wrap">
+        <picture>
+        <source media="(min-width: 992px)" srcset="<?php echo get_template_directory_uri(); ?>/images/desktop_popup.jpg">
+        <source media="(max-width: 991px)" srcset="<?php echo get_template_directory_uri(); ?>/images/mobile_popup.jpg">
+        <img src="<?php echo get_template_directory_uri(); ?>/desktop_popup.jpg" alt="modal">
+      </picture>
+      </div>
+    </div>
+</div>
+
 <script>
   function closenotication() {
     var element = document.getElementById("success-toast");
@@ -314,6 +316,17 @@
     element.classList.add("d-none");
     elementBtn.classList.add("d-none");
   }
+  window.document.onload = function(e){ 
+    setTimeout(function(){
+      var lbmodal = document.getElementById("lb-modal");
+      lbmodal.classList.add('open');
+    },2000); 
+  }
+  const ccf_button2 = document.getElementById("close-modal")
+    ccf_button2.addEventListener('click', function(e) {		
+      var lbmodal = document.getElementById("lb-modal");
+      lbmodal.classList.remove('open');
+  });
 </script>
 
 <?php get_footer(); ?>
