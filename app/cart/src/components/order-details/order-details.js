@@ -104,10 +104,13 @@ class OrderDetails extends Component {
                         <div class="cart-heading p-15 pt-0 pb-0">
                             <h1 class="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Order details</h1>
                         </div>
+                        <div className="p-15 pt-0">
+                            <span className="font-weight-semibold">Order no:</span> DEC09MX011KLM
+                        </div>
                         <div className="order-status p-15 pt-2 pb-2 bg-off-green-1 mb-1">
                             <div className="d-flex align-items-center">
-                                <i class="far fa-check-circle font-size-20"></i>
-                                <span className="d-inline-block ml-2 font-weight-semibold">Order Placed</span>
+                                <i class="far fa-check-circle font-size-20 text-primary"></i>
+                                <span className="d-inline-block ml-2">Order Placed</span>
                             </div>
                         </div>
                         <div>
@@ -122,6 +125,10 @@ class OrderDetails extends Component {
                                             <div className="">
                                                 <span className="text-green font-weight-semibold">Name: </span>
                                                 <span id="cart-delivery-address"> {order_data.shipping_address.name} </span>
+                                            </div>
+                                            <div className="">
+                                                <span className="text-green font-weight-semibold">Email ID: </span>
+                                                <span id="cart-delivery-address">  {order_data.shipping_address.email} </span>
                                             </div>
                                             <div className="">
                                                 <span className="text-green font-weight-semibold">Mobile No: </span>
