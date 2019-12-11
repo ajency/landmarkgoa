@@ -15,6 +15,7 @@ let generalConfig = {
     site_mode : process.env.REACT_APP_SITE_MODE,
     apiEndPoint: process.env.REACT_APP_API_END_PT,
     webSiteLink: process.env.REACT_APP_WEBSITE_LINK,
+    webSiteAddon: process.env.REACT_APP_PICKUP_POINT,
     company_name: "GGB",
     googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     preparationTime: process.env.REACT_APP_PREPARATION_TIME,
