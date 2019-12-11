@@ -56,15 +56,6 @@ $week = $date[0];
                           <div class="item">
                               <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][0];?>" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
                           </div>
-                          <div class="item">
-                            <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][1];?>" data-srcset="<?php echo $product['images'][1];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
-                          </div>
-                          <div class="item">
-                              <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][2];?>" data-srcset="<?php echo $product['images'][2];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
-                          </div>
-                          <div class="item">
-                              <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][3];?>" data-srcset="<?php echo $product['images'][3];?>" alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
-                          </div>
                       </div>
 
                       <div class="product-info lg-w-50 pl-lg-2 normal-text d-none d-lg-block">                     
@@ -142,7 +133,7 @@ $week = $date[0];
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body">
               <p class="body-text">Each of our bowls are between 400 & 600 calories. This is a healthy meal where the calorie count is made up from protein, fat and carbohydrates.
-              <br><br>It is definitely not a low calorie food that is often mistaken as 'healthy' eating.</p>
+              <br><br>It is definitely not low calorie food that is often mistaken as 'healthy' eating.</p>
             </div>
           </div>
         </div>
@@ -199,7 +190,7 @@ $week = $date[0];
           </div>
           <div class="col-md-5 offset-md-1">
             <div class="w-75 team-desc">
-                <h5>The tech in food tech</h5>
+                <h5>The 'tech' in FoodTech</h5>
                 <h1 class="display-3">Anuj Khurana</h1>
                 <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">Order management, delivery, operations</h5></div>
               </div>
