@@ -193,8 +193,8 @@ class CartCheckoutSummary extends Component {
 					</div>
 					{this.showUserDetailsFields()}
 				</div>
-				<div className="alert-danger px-15">
-					{this.state.errors.accountInfo.length > 0 &&  <span className='error text-error'>{this.state.errors.accountInfo}</span>}
+				<div className="alert-danger mt-3">
+					{this.state.errors.accountInfo.length > 0 &&  <span className='error text-error p-15 mt-0'>{this.state.errors.accountInfo}</span>}
 				</div>
 			</div>
 		} else {
@@ -292,16 +292,16 @@ class CartCheckoutSummary extends Component {
 							
 							<label className="d-block mb-3 font-size-16 mb-3 pt-4 pb-2">
 								<input type="text" name="name" className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="Full Name" onChange={(e) => {this.setState({accountName:e.target.value}); this.handleChange(e)}} required/>
-								{errors.name.length > 0 &&  <span className='error text-error'>{errors.name}</span>}
+								{errors.name.length > 0 &&  <span className='error text-error mt-0'>{errors.name}</span>}
 							</label>
 
 							<label className="d-block mb-3 font-size-16 mb-3 pt-4 pb-2">
 								<input type="email" name="email" className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="Email" onChange={(e) => {this.setState({accountEmail:e.target.value}); this.handleChange(e)}} required/>
-								{errors.email.length > 0 &&  <span className='error text-error'>{errors.email}</span>}
+								{errors.email.length > 0 &&  <span className='error text-error mt-0'>{errors.email}</span>}
 							</label>
 
 							<div className="pt-4">
-								<button type="button" class="btn-reset btn-continue btn-arrow-icon ft6 text-capitalize p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={() => this.saveAccountInfo()}>
+								<button type="button" class="btn-reset btn-continue btn-arrow-icon ft6 text-uppercase p-15 bg-primary text-white text-left w-100 position-relative d-flex align-items-center justify-content-between" onClick={() => this.saveAccountInfo()}>
 									<span class="zindex-1">Save</span>
 								</button>
 							</div>

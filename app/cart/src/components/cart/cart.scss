@@ -36,6 +36,9 @@
 	&.visible{
 		right: 0;
 	}
+	&.order-details{
+		height: 100vh;
+	}
 	@media (max-width: 767px) {
 		max-width: 100%;
 	}

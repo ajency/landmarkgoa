@@ -124,8 +124,8 @@ class AddNewAddress extends Component {
                     <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
                 </div>
                 <div className="p-15">
-                    <div className="position-relative title-wrap">
-                        <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+                    <div className="position-relative title-wrap pl-0">
+                        {/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
                         <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
                     </div>                    
                     <div className="list-text-block p-15 mb-4 mt-4">

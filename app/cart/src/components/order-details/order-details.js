@@ -78,7 +78,7 @@ class OrderDetails extends Component {
 
     render() {
         return (
-            <div className="cart-container visible">
+            <div className="cart-container visible order-details">
                 <Header/>
                 {this.state.loader ? '':this.getOrderDetailsMarkup()}
             </div>
@@ -103,10 +103,10 @@ class OrderDetails extends Component {
                         <div class="cart-heading p-15 pt-0 pb-0">
                             <h1 class="font-weight-bold d-block mobile-header mb-4 text-muted pt-3">Order details</h1>
                         </div>
-                        <div className="order-status p-15 pt-0 pb-0">
-                            <div className="p-15 d-flex align-items-center justify-content-center bg-primary">
-                                <i class="far fa-check-circle text-white font-size-20"></i>
-                                <span className="d-inline-block ml-2 text-white">Order Placed</span>
+                        <div className="order-status p-15 pt-2 pb-2 bg-off-green-1 mb-1">
+                            <div className="d-flex align-items-center">
+                                <i class="far fa-check-circle font-size-20"></i>
+                                <span className="d-inline-block ml-2 font-weight-semibold">Order Placed</span>
                             </div>
                         </div>
                         <div>

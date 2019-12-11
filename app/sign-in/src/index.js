@@ -33,8 +33,8 @@ class signInModal extends React.Component {
 			  </div>
 			  <div className="slide-in-content">
 			      <div className="spacer-2101"></div>
-				  <div className="position-relative title-wrap">
-					<button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+				  <div className="position-relative title-wrap pl-0">
+					{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
 					<h3 className="h1 ft6">Mobile Number</h3>
 			      </div>
 				  <h4 className="font-weight-light mt-4 pb-4">
