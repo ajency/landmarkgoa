@@ -17,7 +17,7 @@
                             </h4>
                             <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="mailto:talktous@ajency.in" onclick="ga('send', 'event', 'footerid', 'Contact', 'Footer - talktous@ajency.in');">
-                                    avantih@gmail.com
+                                    avantih@greengrainbowl.com
                                 </a>
                                 <!-- <br/>
                                 <span class="h5">

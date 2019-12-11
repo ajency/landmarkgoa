@@ -159,7 +159,7 @@ class OrderDetails extends Component {
                             {this.getSummary()}
                         </div>
                         <div className="p-15">
-                            * Please note: For any queries feel free to reach us out at <a className="text-underline" href="tel:7770004528">7770004528</a>
+                            * Please note: For any queries feel free to reach us out at <a className="text-underline" href="https://api.whatsapp.com/send?phone=+917770004258">7770004528</a>
                         </div>
                     </div>
                 );
