@@ -182,6 +182,7 @@ class OrderDetails extends Component {
                             <div class="product-price font-weight-light text-right pl-3">₹{item.attributes.price_final}</div>
                         </div>
                     </div>
+                    {this.getComboText(item.attributes.size)}
                 </div>
             </div>
              </div>         
@@ -189,6 +190,14 @@ class OrderDetails extends Component {
        
         return items
     }
+
+    getComboText(size) {
+		if(size == "combo"){
+			return (
+				<div class="text-silver combo-text pl-0">Combo of Bowl + Homemade Lemonade Sweetened With Jaggery</div>
+			)
+		}
+	}
 
     getSummary = () => {
         let deliveryHtml = ''

@@ -50,6 +50,8 @@ class variantSelection extends React.Component {
 			                	<input type="radio" name={"variant-" + this.state.productId} value={variant.id} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
 			                	<span className="checkmark"></span>
 			              </label>
+						  {this.getComboText(variant.size)}
+						
 					</div>
 				)
 			})
@@ -68,6 +70,15 @@ class variantSelection extends React.Component {
 			)
 		}
 	}
+
+	getComboText(size) {
+		if(size == "combo"){
+			return (
+				<div class="text-silver combo-text">Combo of Bowl + Homemade Lemonade Sweetened With Jaggery</div>
+			)
+		}
+	}
+	
 
 	showVariantModal(product_id, last_selected){
 		this.fetchVariants(product_id, last_selected);

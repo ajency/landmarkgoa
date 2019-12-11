@@ -232,11 +232,11 @@ class CartCheckoutSummary extends Component {
 					<div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
 						<div className="">
 							<span className="text-green font-weight-semibold">Name: </span> 
-							<span id="cart-delivery-address"> {'<Not present>'} </span>
+							<span id="cart-delivery-address"> {'<Not provided>'} </span>
 						</div>						
 						<div className="">
 							<span className="text-green font-weight-semibold">Email ID: </span> 
-							<span id="cart-delivery-address"> {'<Not present>'} </span>
+							<span id="cart-delivery-address"> {'<Not provided>'} </span>
 						</div>
 						<div className="">
 							<span className="text-green font-weight-semibold">Mobile No: </span> 

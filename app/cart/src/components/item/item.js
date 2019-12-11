@@ -35,6 +35,7 @@ class Item extends Component {
 								</div>
 							</div>								
 						</div>
+						{this.getComboText(this.props.item.attributes.size)}
 					</div>
 				</div>
 				<div>
@@ -43,6 +44,14 @@ class Item extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	getComboText(size) {
+		if(size == "combo"){
+			return (
+				<div class="text-silver combo-text pl-0">Combo of Bowl + Homemade Lemonade Sweetened With Jaggery</div>
+			)
+		}
 	}
 
 	checkItemDiscount(){
