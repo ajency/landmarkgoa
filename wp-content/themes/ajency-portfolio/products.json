@@ -17,7 +17,31 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardone",
-			"put_empty" : true
+			"put_empty" : true,
+			"availability" : "Monday",
+			"date": "12th Dec"
+		},
+
+		{	
+			"product_id" : "JS42fGblvs7VJ8uxXuaD",
+			"title" : "Quinoa & Nuts Bowl",
+			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
+			"default" : {
+				"id" : "WpKYzupzbBimyAt3WOrg",
+				"mrp" : 200,
+				"sale_price" : 200,
+				"size" : "Small"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
+			],
+			"class" : "cardfour",
+			"put_empty" : false,
+			"availability" : "Thursday",
+			"date": "13th Dec"
 		},
 
 		{	
@@ -37,7 +61,8 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardtwo",
-			"put_empty" : false
+			"put_empty" : false,
+			"availability" : "Tuesday"
 		},
 
 		{	
@@ -57,28 +82,8 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardthree",
-			"put_empty" : true
-		},
-
-
-		{	
-			"product_id" : "JS42fGblvs7VJ8uxXuaD",
-			"title" : "Quinoa & Nuts Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
-			"default" : {
-				"id" : "WpKYzupzbBimyAt3WOrg",
-				"mrp" : 200,
-				"sale_price" : 200,
-				"size" : "Small"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
-			],
-			"class" : "cardfour",
-			"put_empty" : false
+			"put_empty" : true,
+			"availability" : "Wednesday"
 		},
 		
 		{
@@ -98,7 +103,8 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardfive",
-			"put_empty" : true
+			"put_empty" : true,
+			"availability" : "Friday"
 		},
 
 		{	
@@ -118,7 +124,8 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardsix",
-			"put_empty" : false
+			"put_empty" : false,
+			"availability" : ""
 		},
 
 		{	
@@ -138,7 +145,8 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardseven",
-			"put_empty" : true
+			"put_empty" : true,
+			"availability" : ""
 		},
 
 
@@ -159,7 +167,8 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardend",
-			"put_empty" : false
+			"put_empty" : false,
+			"availability" : ""
 		}
 	]
 }
