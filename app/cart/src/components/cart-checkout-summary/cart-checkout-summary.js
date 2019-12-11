@@ -211,7 +211,9 @@ class CartCheckoutSummary extends Component {
 					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
 						<span className="text-green font-weight-semibold">Name: </span> 
 						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.name} </span>
-						<span className="text-green font-weight-semibold">Mobile No.: </span> 
+						<span className="text-green font-weight-semibold">Email ID: </span> 
+						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.email} </span>
+						<span className="text-green font-weight-semibold">Mobile No: </span> 
 						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
 					</div>
 				</div>
@@ -220,6 +222,14 @@ class CartCheckoutSummary extends Component {
 			let errors = this.state.errors;
 			return (
 				<div>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
+						<span className="text-green font-weight-semibold">Name: </span> 
+						<span id="cart-delivery-address"> {'<Not present>'} </span>
+						<span className="text-green font-weight-semibold">Email ID: </span> 
+						<span id="cart-delivery-address"> {'<Not present>'} </span>
+						<span className="text-green font-weight-semibold">Mobile No: </span> 
+						<span id="cart-delivery-address"> {this.state.orderSummary.shipping_address.phone} </span>
+					</div>
 					<div className="font-weight-semibold font-size-16 text-primary cursor-pointer" onClick={() => this.toggleAccountPopUp('show')}>Add Account details</div>
 					<div className="custom-modal user-details" id="cart-checkout-summary-user-details">
 						<div className="custom-modal-content p-15 width-calc">

@@ -52,23 +52,27 @@ class addToCart extends React.Component {
 
 	
 	checkVariant(action){
+		window.addBackDrop();
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log("check user ==>", user);
 			if(user){
 				console.log("user exist");
+				this.variantPopUp(action);
 			}
 			else{
-				this.signInAnonymously();
+				this.signInAnonymously(action);
 			}
 		});
+	}
 
-
-
+	variantPopUp(action){
 		if(action == 'add'){
+			window.removeBackDrop();
 			this.showVariantModal()
 		}
 		else{
 			if(this.state.items.length > 1){
+				window.removeBackDrop();
 				let msg = "Item has multiple variants added. Remove correct item from cart";
 				window.displayError(msg);
 			}
@@ -78,15 +82,17 @@ class addToCart extends React.Component {
 		}
 	}
 
-	signInAnonymously(){
+	signInAnonymously(action){
 		firebase.auth().signInAnonymously()
 			.then((res)=>{
 				// res.user.getIdToken().then((idToken) => {
 		  //          this.updateUserDetails(idToken);
 		  //       });
+		  		this.variantPopUp(action);
 			})
 			.catch((error) => {
-			  	console.log("error in anonymouse sign in", error);
+				window.removeBackDrop();
+			  	console.log("error in anonymous sign in", error);
 			});
 	}
 
