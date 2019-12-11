@@ -18,6 +18,8 @@ class Cart extends Component {
 		super(props);
 		this.state = {
 			site_mode : generalConfig.site_mode,
+			pickupPoint : generalConfig.pickupPoint,
+			approxDeliveryTime : generalConfig.preparationTime,
 			cartData : {},
 			fetchCartComplete : false,
 			fetchCartFailed : false,
@@ -92,7 +94,7 @@ class Cart extends Component {
 							</div>
 							<div className="w-50 text-align-right font-weight-medium">
 								<img src={clockLogo} alt="Estimated time" title="Estimated time" className="d-inline-block vertical-align-middle mr-1"/> 
-								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">30 mins</span>
+								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">{this.state.approxDeliveryTime}</span>
 							</div>
 						</div>
 
@@ -137,7 +139,7 @@ class Cart extends Component {
 				<div className="address-details list-text-block p-15 mb-0">
 					<div className="address-details-inner font-weight-light">
 						<span className="font-weight-semibold">Pick up from </span>
-						<span id="cart-delivery-address">GGB Counter</span>
+						<span id="cart-delivery-address">{this.state.pickupPoint}</span>
 					</div>
 				</div>
 			</div>

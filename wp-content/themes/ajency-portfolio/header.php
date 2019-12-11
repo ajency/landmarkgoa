@@ -68,7 +68,7 @@
       <div id="selected-location-address" class="font-weight-light">
       </div> 
     </div>              
-    <div class="edit-location d-none text-primary vertical-align-middle">
+    <div class="edit-location d-none text-primary vertical-align-middle mt-3">
       <a href="#" class="d-inline-block location-icon"><i class="fas fa-pencil-alt number-edit cursor-pointer"></i></a>  
     </div>
   </div>

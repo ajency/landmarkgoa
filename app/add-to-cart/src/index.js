@@ -11,6 +11,7 @@ class addToCart extends React.Component {
 			lastSelected : '',
 			items : [], // variants added to cart
 			site_mode : process.env.REACT_APP_SITE_MODE,
+			pickup_point : process.env.REACT_APP_PICKUP_POINT,
 			default_lat_lng : [process.env.REACT_APP_DEFAULT_LAT, process.env.REACT_APP_DEFAULT_LNG],
 		};
 	}
@@ -52,23 +53,27 @@ class addToCart extends React.Component {
 
 	
 	checkVariant(action){
+		window.addBackDrop();
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log("check user ==>", user);
 			if(user){
 				console.log("user exist");
+				this.variantPopUp(action);
 			}
 			else{
-				this.signInAnonymously();
+				this.signInAnonymously(action);
 			}
 		});
+	}
 
-
-
+	variantPopUp(action){
 		if(action == 'add'){
+			window.removeBackDrop();
 			this.showVariantModal()
 		}
 		else{
 			if(this.state.items.length > 1){
+				window.removeBackDrop();
 				let msg = "Item has multiple variants added. Remove correct item from cart";
 				window.displayError(msg);
 			}
@@ -78,15 +83,17 @@ class addToCart extends React.Component {
 		}
 	}
 
-	signInAnonymously(){
+	signInAnonymously(action){
 		firebase.auth().signInAnonymously()
 			.then((res)=>{
 				// res.user.getIdToken().then((idToken) => {
 		  //          this.updateUserDetails(idToken);
 		  //       });
+		  		this.variantPopUp(action);
 			})
 			.catch((error) => {
-			  	console.log("error in anonymouse sign in", error);
+				window.removeBackDrop();
+			  	console.log("error in anonymous sign in", error);
 			});
 	}
 
@@ -96,7 +103,7 @@ class addToCart extends React.Component {
 		let cart_id = window.readFromLocalStorage('cart_id');
 		if(this.state.site_mode == 'kiosk') {
 			window.lat_lng = this.state.default_lat_lng;
-			window.formatted_address = this.state.site_mode;
+			window.formatted_address = this.state.pickup_point;
 		}
 		if(cart_id && window.lat_lng){
 			this.addToCartApiCall(variant_id, window.lat_lng, cart_id, window.formatted_address, product);

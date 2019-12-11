@@ -652,11 +652,9 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
     await db.collection('carts').doc(cart_id)
             .update(
                 {
-                    shipping_address : {
-                        lat_long : lat_long,
-                        formatted_address : formatted_address
-                    },
-                    stock_location_id : stock_location_id
+                    'shipping_address.lat_long' : lat_long,
+                    'shipping_address.formatted_address' : formatted_address,
+                    'stock_location_id' : stock_location_id
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
@@ -724,11 +722,9 @@ async function addUserDetails(userObj, cart_id) {
             email   : userObj.email
         })
         await db.collection('carts').doc(cart_id).update({
-            shipping_address: {
-                name    : userObj.name,
-                email   : userObj.email,
-                phone   : userObj.phone
-            },
+            'shipping_address.name'    : userObj.name,
+            'shipping_address.email'   : userObj.email,
+            'shipping_address.phone'   : userObj.phone
         })
         return userObj;
 }
@@ -770,7 +766,7 @@ async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
     if(fetchDraft) {
         shipping_address = cart.shipping_address
         if(phoneNumber) {
-            shipping_address = {phone : phoneNumber}
+            shipping_address.phone = phoneNumber
         }
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
@@ -992,6 +988,7 @@ async function orderDetails(order_id) {
         items.push(formatted_item);
     })
 
+    order_data.order_nos = orderDoc.id
     order_data.items = items;
     let response = {
             success: true, 
