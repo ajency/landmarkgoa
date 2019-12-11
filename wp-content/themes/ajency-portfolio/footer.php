@@ -31,7 +31,7 @@
                         <div class="col-md-5 mt-5 mt-md-0 contact-details">
                             <h4 class="font-weight-light w-75">
                                 Green Grain Bowl Kitchen, 1st floor Panjim convention center, Mala. 
-                                <a class=" font-weight-light h5 " href="shorturl.at/fgpq1" target="_blank">
+                                <a class=" font-weight-light h5 " href="//shorturl.at/fgpq1" target="_blank">
                                     (Map)
                                 </a>
                             </h4>
@@ -83,7 +83,7 @@
     
  if (!is_page_template('archive.php') && !is_singular('post') && !is_page_template('template-blogs.php') && !is_page_template('template-fullwidth.php') ) { ?>
     <noscript id="deferred-styles">
-        <link href="<?php echo get_template_directory_uri(); ?>/css/custom_16.min.css" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo get_template_directory_uri(); ?>/css/custom.css" rel="stylesheet" type="text/css"/>
         <!-- <link href="<?php echo get_bloginfo('url');  ?>/wp-content/themes/ajency-portfolio/style.css" rel="stylesheet" type="text/css"/> -->
          <!--<link href="<?php echo get_template_directory_uri(); ?>/css/zoom.css" rel="stylesheet" type="text/css"/>-->
         <!--  <link rel="stylesheet" type="text/css" href="http://filamentgroup.github.io/enlarge/src/enlarge.css">-->
@@ -174,6 +174,17 @@
             });
         });
     }
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('html,body').addClass('hide-scroll');
+            $('#lb-modal').addClass('open');
+        });
+        $('#close-modal').click(function(){
+            $('html,body').removeClass('hide-scroll');
+            $('#lb-modal').removeClass('open');
+        });
+    });
 </script>
     </body>
 </html>

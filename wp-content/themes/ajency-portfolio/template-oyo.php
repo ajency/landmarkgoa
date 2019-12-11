@@ -275,9 +275,9 @@ $week = $date[0];
 <div class="backdrop-wrap"></div>
 
 <div class="lightbox-modal" id="lb-modal">
-    <button class="close-lightbox-modal" id="close-modal"><i class="fas fa-times"></i></button>
     <div class="lightbox-content">
       <div class="lightbox-content-wrap">
+        <button class="close-lightbox-modal" id="close-modal"><i class="fas fa-times"></i></button>
         <picture>
         <source media="(min-width: 992px)" srcset="<?php echo get_template_directory_uri(); ?>/images/desktop_popup.jpg">
         <source media="(max-width: 991px)" srcset="<?php echo get_template_directory_uri(); ?>/images/mobile_popup.jpg">
@@ -300,16 +300,6 @@ $week = $date[0];
     element.classList.add("d-none");
     elementBtn.classList.add("d-none");
   }
-  setTimeout(function(){
-      var lbmodal = document.getElementById("lb-modal");
-      lbmodal.classList.add('open');
-    },2000); 
-
-  const ccf_button2 = document.getElementById("close-modal")
-    ccf_button2.addEventListener('click', function(e) {		
-      var lbmodal = document.getElementById("lb-modal");
-      lbmodal.classList.remove('open');
-  });
 </script>
 
 <?php get_footer(); ?>
