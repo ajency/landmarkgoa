@@ -215,7 +215,7 @@ $week = $date[0];
           </div>
           <div class="col-md-5 offset-md-1">
             <div class="w-75 team-desc">
-                <h5>The tech part of food tech</h5>
+                <h5>The tech in food tech</h5>
                 <h1 class="display-3">Anuj Khurana</h1>
                 <div class="black f-paragraph-small no-spacing"><h5 class="font-weight-light">Order management, delivery, operations</h5></div>
               </div>
