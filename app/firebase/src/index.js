@@ -988,6 +988,7 @@ async function orderDetails(order_id) {
         items.push(formatted_item);
     })
 
+    order_data.order_nos = orderDoc.id
     order_data.items = items;
     let response = {
             success: true, 
