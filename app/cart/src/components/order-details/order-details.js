@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../header/header.js';
 import {Link} from 'react-router-dom';
+import {generalConfig} from '../config'
 
 class OrderDetails extends Component {
 
