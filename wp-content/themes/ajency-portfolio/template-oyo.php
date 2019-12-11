@@ -72,11 +72,14 @@ $week = $date[0];
                             <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type"><?php echo isset($product['mark_type']) ? $product['mark_type'] : ''; ?></h3>
                             <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3> 
                           </div>
-                          <div class="product-availability  <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['date'] : 'Coming Soon'; ?></h4></div>
+                          <?php if(isset($product['availability']) && $product['availability'] == '' ){ ?>
+                            <div class="product-availability  <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['date'] : 'Coming Soon'; ?></h4></div>
+                          <?php } ?>
                       </div>
 
-                      <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['date'] : 'Coming Soon'; ?></div>
-
+                      <?php if(isset($product['availability']) && $product['availability'] == '' ){ ?>
+                        <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['date'] : 'Coming Soon'; ?></div>
+                      <?php } ?>
                       <div class="product-info lg-w-50 pl-lg-2 hover-text">
                           <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type"><?php echo isset($product['mark_type']) ? $product['mark_type'] : ''; ?></h3>
                           <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3>    
@@ -90,13 +93,7 @@ $week = $date[0];
                                 <?php                                
                                   if(isset($product['availability']) && $product['availability'] != '' ){
                                 ?>
-                                  <?php if($product['availability'] == $week){ ?>
-                                    <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div>                                  
-                                  <?php } else { ?>
-                                    <div class="product-add-to-cart-wrap">
-                                      <label class="btn-add-to-cart text-white bg-primary p-15 text-decoration-none m-0 font-size-25 ft6 cursor-pointer d-inline-block"><span><?php echo isset($product['date']) ? $product['date'] : '' ;  ?></span></label>
-                                    </div>
-                                  <?php } ?>                                                                
+                                  <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div>                                                               
                                 <?php } ?>                                                                
                             </div>
                           </div>
@@ -111,26 +108,26 @@ $week = $date[0];
   </div>
 </section>
 
-<!-- <section>
+<section>
   <div class="container p5">
     <div class="row">
       <div class="col  offset-xl-2 col-xl-8 col12">
         <h3 class="h1 ft6">Common Queries</h3>
-        <p class="body-text">To help you decide if we are the right fit for you.</p>
+        <p class="body-text">Things you should know about GGB</p>
         <div class="seperator">
         </div>
       <div class="accordion aj-faq" id="accordionExample">
         <div class="card">
           <div class="card-header" id="headingOne">
               <a class=" text-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <h2 class="pt-2 pb-2 m-0 ">What technologies & frameworks do you work on?</h2>
+            <h2 class="pt-2 pb-2 m-0 ">Is this a salad?</h2>
               </a>
           </div>
 
           <div id="collapseOne" class="collapse  " aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
-            <p class="body-text">We have active projects in JAVA, PHP, Django, Angular, Node.js, ElasticSearch, Wordpress, Firebase, Ionicframework, AWS, Lambda, Celery.
-            <br><br>In the past, we have been able to build teams around new technologies fairly quickly. For Weddingz.in, we built a 15-people Django team in 6 months.</p>
+            <p class="body-text">Wikipedia defines salad as "a dish consisting of a mixture of small pieces of food, usually vegetables or fruit."
+            <br><br>So yes this is very much a salad. Our bowls are a combination of grain, protein and greens making them a complete meal. </p>
             </div>
           </div>
         </div>
@@ -138,14 +135,14 @@ $week = $date[0];
           <div class="card-header" id="headingTwo">
 
             <a class=" text-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              <h2 class="pt-2 pb-2 m-0 ">Ideal software developer. Myth vs Reality</h2>
+              <h2 class="pt-2 pb-2 m-0 ">Is this 'diet' food?</h2>
               </a>
             </h5>
           </div>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
             <div class="card-body">
-              <p class="body-text">A well rounded software developer should be able to understand business requirements, translate it into system design and then write quality code to deliver usable and bug free features. At the same time, she needs to have good communication skills, especially in a remote + multi team setup.
-              <br><br>We have struggled with finding all these skills in a single developer (or training them for this). Hence we prefer to have a team engagement which rounds up all the above rather than provide individual developers on hire.</p>
+              <p class="body-text">Each of our bowls are between 400 & 600 calories. This is a healthy meal where the calorie count is made up from protein, fat and carbohydrates.
+              <br><br>It is definitely not a low calorie food that is often mistaken as 'healthy' eating.</p>
             </div>
           </div>
         </div>
@@ -153,26 +150,13 @@ $week = $date[0];
           <div class="card-header" id="headingThree">
 
               <a class=" text-link collapsed"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <h2 class="pt-2 pb-2 m-0 ">How does the application development engagement model work?
+                  <h2 class="pt-2 pb-2 m-0 ">I am not a salad person. I want a filling meal. 
                   </h2>
               </a>
           </div>
           <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
             <div class="card-body">
-              <p class="body-text">Application development projects are fixed scope and cost projects. They begin with a discovery phase (1-4 weeks) where we prepare a detailed scope document and project plan. Post signoff, this then becomes the basis for a 3 to 6 month application development project. This works great for building a minimum viable product, test a new idea or build a largely independent module in your existing product.</p>
-            </div>
-          </div>
-        </div>
-          <div class="card">
-          <div class="card-header" id="headingFour">
-
-              <a class=" text-link collapsed"  data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  <h2 class="pt-2 pb-2 m-0 ">How does the dedicated team engagement model work?</h2>
-              </a>
-          </div>
-          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-            <div class="card-body">
-              <p class="body-text">Product development is an ongoing process and after the initial pilot, it requires a dedicated team. A well rounded team needs skills across development, front-end, project management and QA. Depending on the nature and scale of the project, the team that we put together will have a mix of dedicated and shared members.</p>
+              <p class="body-text">We hear you. Give our bowls a try and you will agree that they are as filling as say a thali. </p>
             </div>
           </div>
         </div>
@@ -180,7 +164,7 @@ $week = $date[0];
       </div>
     </div>
   </div>
-</section> -->
+</section>
 
 <section class="p2">
   <div class="container slider-contanier">
@@ -316,12 +300,11 @@ $week = $date[0];
     element.classList.add("d-none");
     elementBtn.classList.add("d-none");
   }
-  window.document.onload = function(e){ 
-    setTimeout(function(){
+  setTimeout(function(){
       var lbmodal = document.getElementById("lb-modal");
       lbmodal.classList.add('open');
     },2000); 
-  }
+
   const ccf_button2 = document.getElementById("close-modal")
     ccf_button2.addEventListener('click', function(e) {		
       var lbmodal = document.getElementById("lb-modal");

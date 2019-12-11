@@ -40,7 +40,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardfour",
+			"class" : "cardtwo",
 			"put_empty" : false,
 			"availability" : "Friday",
 			"date": "Friday 13th"
@@ -63,7 +63,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardtwo",
+			"class" : "cardtthree",
 			"put_empty" : false,
 			"availability" : ""
 		},
@@ -85,7 +85,7 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardthree",
+			"class" : "cardfour",
 			"put_empty" : true,
 			"availability" : ""
 		},
