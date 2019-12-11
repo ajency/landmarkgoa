@@ -439,3 +439,58 @@ nav{
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.close-lightbox-modal {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: transparent;
+    border: 0;
+    font-size: 24px;
+    color: #000;   
+    line-height: 0; 
+    z-index: 2;
+    cursor: pointer;
+}
+
+.lightbox {
+    &-modal {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.2);
+        overflow: scroll;
+        height: 100vh;
+        display: none;
+
+        &.open {
+            display: block;
+        }
+    }
+    &-content {
+        padding: 50px 15px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-wrap {
+            width: 100%;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            max-height: calc(100vh - 100px);
+            width: auto;
+        }
+    }
+}

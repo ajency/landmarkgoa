@@ -6,7 +6,12 @@
  get_header();  ?>
 
 <section class="p-0 full-screen-section">
-  <div class="container p5 mb-29">
+  <nav class="bg-white text-center p-15 pt-6">
+    <a href="<?php echo get_site_url(); ?>" class="">
+      <img src="<?php echo get_template_directory_uri(); ?>/images/logo_new.png" width="250" height="auto" class="logo"/>
+    </a>
+  </nav>
+  <div class="container p5 mb-0">
     <div class="row">
       <div class="col  offset-xl-2 col-xl-8 col12 text-center">
         <h1 class="display-4 font-weight-bold aj-home-title mb-md-0">Wholesome meals. Salad style.</h1>
@@ -15,21 +20,23 @@
       </div>
     </div>
   </div>
+</section>
+<section class="pt-3">
   <div class="text-center p-15 pt-0">
     <img src="<?php echo get_template_directory_uri(); ?>/images/Leaf_with_seperator@2x.png" class="img-fluid auto-width" alt="" title=""/>
   </div>
   <div class="container p5 pt-3">
     <div class="row">
       <div class="col  offset-xl-2 col-xl-8 col12 text-center">
-       <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">our bowls</h1>
-       <p class="body-text small-laptop-text mb-0">Wholesome, balanced and flavourful meals that will make you feel great.</p>
+        <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">our bowls</h1>
+        <p class="body-text small-laptop-text mb-0">Wholesome, balanced and flavourful meals that will make you feel great.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="product-section pt-3">
+<section class="pt-0">
+  <div class="product-section">
     <div class="container-1">
       <div class="row-1">
         <div class="col-lg-21">
@@ -40,7 +47,7 @@
             <?php $products = json_decode(file_get_contents(get_template_directory_uri() . '/products.json'), true)['products']; 
               foreach ($products as $key => $product) { ?>
               <div class="custom-col-3 col-lg-4 product-list-item p-lg-0 effect trigger<?php echo $key+1 ?>" id="product-<?php echo $product['product_id'] ?>">
-                  <div class="product-wrapper <?php echo $product['class'] ?>">
+                  <div class="product-wrapper <?php echo $product['class'] ?>">                    
                       <div class="product-image lg-w-50">
                           <div class="item">
                               <img class="lazy bg-image-animation" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="<?php echo $product['images'][0];?>" data-srcset="<?php echo $product['images'][0];?>"  alt="<?php echo $product['title'] ?>" title="<?php echo $product['title'] ?>">
@@ -57,9 +64,14 @@
                       </div>
 
                       <div class="product-info lg-w-50 pl-lg-2 normal-text d-none d-lg-block">
-                          <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
-                          <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3> 
+                        <div class="content-center">
+                            <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>
+                            <h3 class="product-title h1 ft6 mb-2 mb-lg-3 mt-lg-1 p-title"><?php echo $product['title'] ?></h3> 
+                        </div>
+                        <div class="product-availability <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><h4 class="availability-text"><?php echo $product['availability'] ? 'Available on '.$product['availability'].'s' : 'Coming Soon'; ?></h4></div>
                       </div>
+
+                      <div class="product-badge <?php echo $product['availability'] ? '' : 'coming_soon'; ?>"><?php echo $product['availability'] ? 'Available on '.$product['availability'].'s' : 'Coming Soon'; ?></div>
 
                       <div class="product-info lg-w-50 pl-lg-2 hover-text">
                           <h3 class="mb-4 mb-lg-0 d-none d-lg-block font-weight-light type">Veg</h3>

@@ -3,11 +3,12 @@
 		{
 			"product_id" : "yykiWcEv48MtR2oRiWla",
 			"title" : "Orange Barley Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
+			"mark_type" : "Tofu",
+			"description" : "Barley, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
 			"default" : {
 				"id" : "72mIBZ9aTr8Okr05SfSN",
 				"mrp" : 150,
-				"sale_price" : 100,
+				"sale_price" : 200,
 				"size" : "Small"
 			},
 			"images" : [
@@ -17,58 +18,20 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardone",
-			"put_empty" : true
+			"put_empty" : true,
+			"availability" : "Thursday",
+			"date": "Thursday 12th"
 		},
-
-		{	
-			"product_id" : "ReAlsVnx73KSVrYGvbsn",
-			"title" : "Cracked Wheat & Chickpea Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
-			"default" : {
-				"id" : "5awRHIDbXVNMEZhoYjtZ",
-				"mrp" : 500,
-				"sale_price" : 400,
-				"size" : "Regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
-			],
-			"class" : "cardtwo",
-			"put_empty" : false
-		},
-
-		{	
-			"product_id" : "moVonufnFw46emRbKy7W",
-			"title" : "Thai Brown Rice Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
-			"default" : {
-				"id" : "Nwn6e8h6OWVBpMFN0c9z",
-				"mrp" : 450,
-				"sale_price" : 400,
-				"size" : "Regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
-			],
-			"class" : "cardthree",
-			"put_empty" : true
-		},
-
 
 		{	
 			"product_id" : "JS42fGblvs7VJ8uxXuaD",
-			"title" : "Quinoa & Nuts Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
+			"title" : "Orange Barley Bowl",
+			"mark_type" : "Chicken",
+			"description" : "Barley, roasted chicken, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
 			"default" : {
 				"id" : "WpKYzupzbBimyAt3WOrg",
 				"mrp" : 200,
-				"sale_price" : 200,
+				"sale_price" : 220,
 				"size" : "Small"
 			},
 			"images" : [
@@ -78,76 +41,62 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
 			"class" : "cardfour",
-			"put_empty" : false
+			"put_empty" : false,
+			"availability" : "Friday",
+			"date": "Friday 13th"
+		},
+
+		{	
+			"product_id" : "ReAlsVnx73KSVrYGvbsn",
+			"title" : "Quinoa and Nuts Bowl",
+			"mark_type" : "Veg",
+			"description" : "Quinoa, mixed greens, apples, roasted pumpkin, beetroot and carrots. Tossed in a dijon, balsamic dressing and topped with roasted almonds, seeds and feta.",
+			"default" : {
+				"id" : "5awRHIDbXVNMEZhoYjtZ",
+				"mrp" : 200,
+				"sale_price" : 200,
+				"size" : "Regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
+			],
+			"class" : "cardtwo",
+			"put_empty" : false,
+			"availability" : ""
+		},
+
+		{	
+			"product_id" : "moVonufnFw46emRbKy7W",
+			"title" : "Quinoa and Nuts Bowl",
+			"mark_type" : "Chicken",
+			"description" : "Quinoa and balsamic chicken, mixed greens, apples, roasted pumpkin, beetroot and carrots. Tossed in a dijon, balsamic dressing and topped with roasted almonds, seeds and feta.",
+			"default" : {
+				"id" : "Nwn6e8h6OWVBpMFN0c9z",
+				"mrp" : 200,
+				"sale_price" : 220,
+				"size" : "Regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
+			],
+			"class" : "cardthree",
+			"put_empty" : true,
+			"availability" : ""
 		},
 		
 		{
 			"product_id" : "ByklWaEt4eMsRhtRiWlb",
-			"title" : "Beet Root Bowl",
-			"description" : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+			"title" : "Thai Browl Rice Bowl",
+			"mark_type" : "Paneer",
+			"description" : "Thai grilled paneer with salad vegetables and greens served with basil brown rice. The peanut-butter + coconut milk dressing, along with crunchy roasted groundnuts, bring the Thai flavors home.",
 			"default" : {
 				"id" : "72mIBZ9aTr8Okr05SftN",
-				"mrp" : 150,
-				"sale_price" : 100,
-				"size" : "Small"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
-			],
-			"class" : "cardfive",
-			"put_empty" : true
-		},
-
-		{	
-			"product_id" : "AeAlsAnt7eKSVhYGvbsn2",
-			"title" : "Chickpea Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing",
-			"default" : {
-				"id" : "5awRHIDbXKNMEZhoYltZ",
-				"mrp" : 500,
-				"sale_price" : 400,
-				"size" : "Regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
-			],
-			"class" : "cardsix",
-			"put_empty" : false
-		},
-
-		{	
-			"product_id" : "CoVonulnawt6emRsKh7W3",
-			"title" : "Chinese Brown Rice Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
-			"default" : {
-				"id" : "Nwn6e8h6OLVKpMFN0c9z",
-				"mrp" : 450,
-				"sale_price" : 400,
-				"size" : "Regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
-			],
-			"class" : "cardseven",
-			"put_empty" : true
-		},
-
-
-		{	
-			"product_id" : "JS42fGblvs7VJ8uxXuaD4",
-			"title" : "Quinoa & Nuts Bowl",
-			"description" : "Buckwheat noodles and a colorful mix of greens, roasted vegetables and teriyaki tofu. Served with a very Asian soy-sesame & ginger dressing.",
-			"default" : {
-				"id" : "WpKYzupzbBimyAt3WOrg",
 				"mrp" : 200,
 				"sale_price" : 200,
 				"size" : "Small"
@@ -158,8 +107,75 @@
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
 			],
-			"class" : "cardend",
-			"put_empty" : false
+			"class" : "cardfive",
+			"put_empty" : true,
+			"availability" : ""
+		},
+
+		{	
+			"product_id" : "AeAlsAnt7eKSVhYGvbsn2",
+			"title" : "Thai Brown Rice Bowl",
+			"mark_type" : "Chicken",
+			"description" : "Thai grilled chicken with salad vegetables and greens served with basil brown rice. The peanut-butter + coconut milk dressing, along with crunchy roasted groundnuts, bring the Thai flavors home.",
+			"default" : {
+				"id" : "5awRHIDbXKNMEZhoYltZ",
+				"mrp" : 220,
+				"sale_price" : 220,
+				"size" : "Regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
+			],
+			"class" : "cardsix",
+			"put_empty" : false,
+			"availability" : ""
+		},
+
+		{	
+			"product_id" : "CoVonulnawt6emRsKh7W3",
+			"title" : "Pear Potato Bowl",
+			"mark_type" : "Veg",
+			"description" : "Herb potatoes and french beans, coloured peppers, onions, barley and mixed greens. Brought together by a honey mustard dressing, topped with fresh mint, pear wedges and a bit of feta. The bowl comes with black eyed beans for a vegetarian, and if you like boiled eggs, do add one to your bowl. The dressing goes so well with the egg*, you will love it! *We use free-range eggs (Keggs).",
+			"default" : {
+				"id" : "Nwn6e8h6OLVKpMFN0c9z",
+				"mrp" : 200,
+				"sale_price" : 200,
+				"size" : "Regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
+			],
+			"class" : "cardseven",
+			"put_empty" : true,
+			"availability" : ""
+		},
+		
+		{	
+			"product_id" : "JS42fGblvs7VJ8uxXuaD4",
+			"title" : "Pear Potato Bowl",
+			"mark_type" : "Chicken",
+			"description" : "Herb potatoes and french beans, coloured peppers, onions, barley and mixed greens. Brought together by a honey mustard dressing, topped with fresh mint, pear wedges and a bit of feta. The bowl comes with mustard chicken for the non-vegetarian. You can even add a boiled egg* to your bowl. The dressing goes so well with the egg, you will love it! *We use free-range eggs (Keggs).",
+			"default" : {
+				"id" : "WpKYzupzbBimyAt3WOrg",
+				"mrp" : 220,
+				"sale_price" : 220,
+				"size" : "Small"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_one.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_two.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_three.png",
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/prod_four.png"
+			],
+			"class" : "cardeight",
+			"put_empty" : false,
+			"availability" : ""
 		}
 	]
 }
