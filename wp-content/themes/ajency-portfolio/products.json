@@ -1,43 +1,5 @@
 {
 	"products" : [
-		{
-			"product_id" : "1CG6P1slxnr9TSNnPzvZ",
-			"title" : "Orange Barley Bowl (Tofu)",
-			"mark_type" : "Veg",
-			"description" : "Barley, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
-			"default" : {
-				"id" : "1CG6P1slxnr9TSNnPzvZ-regular",
-				"mrp" : 300,
-				"sale_price" : 200,
-				"size" : "regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Tofu_800.jpg"
-			],
-			"class" : "cardone",
-			"put_empty" : true,
-			"availability" : ""
-		},
-
-		{	
-			"product_id" : "8FVGmVx4JjQZRUsxtYrL",
-			"title" : "Orange Barley Bowl (Chicken)",
-			"mark_type" : "Non Veg",
-			"description" : "Barley, roasted chicken, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
-			"default" : {
-				"id" : "8FVGmVx4JjQZRUsxtYrL-regular",
-				"mrp" : 320,
-				"sale_price" : 220,
-				"size" : "regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Chicken_800.jpg"
-			],
-			"class" : "cardtwo",
-			"put_empty" : false,
-			"availability" : ""
-		},
-
 		{	
 			"product_id" : "QexP4xy4W2cMx4zORNEi",
 			"title" : "Quinoa and Nuts Bowl",
@@ -52,7 +14,7 @@
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/QNB-Veg_800.jpg"
 			],
-			"class" : "cardthree",
+			"class" : "cardone",
 			"put_empty" : false,
 			"availability" : "Friday",
 			"date": "Friday 13th"
@@ -72,10 +34,48 @@
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/QNB-Chicken_800.jpg"
 			],
-			"class" : "cardfour",
+			"class" : "cardtwo",
 			"put_empty" : true,
 			"availability" : "Friday",
 			"date": "Friday 13th"
+		},
+
+		{
+			"product_id" : "1CG6P1slxnr9TSNnPzvZ",
+			"title" : "Orange Barley Bowl (Tofu)",
+			"mark_type" : "Veg",
+			"description" : "Barley, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
+			"default" : {
+				"id" : "1CG6P1slxnr9TSNnPzvZ-regular",
+				"mrp" : 300,
+				"sale_price" : 200,
+				"size" : "regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Tofu_800.jpg"
+			],
+			"class" : "cardthree",
+			"put_empty" : true,
+			"availability" : ""
+		},
+
+		{	
+			"product_id" : "8FVGmVx4JjQZRUsxtYrL",
+			"title" : "Orange Barley Bowl (Chicken)",
+			"mark_type" : "Non Veg",
+			"description" : "Barley, roasted chicken, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
+			"default" : {
+				"id" : "8FVGmVx4JjQZRUsxtYrL-regular",
+				"mrp" : 320,
+				"sale_price" : 220,
+				"size" : "regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Chicken_800.jpg"
+			],
+			"class" : "cardfour",
+			"put_empty" : false,
+			"availability" : ""
 		},
 		
 		{
