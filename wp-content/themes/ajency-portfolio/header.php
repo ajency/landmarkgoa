@@ -56,6 +56,16 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500|Libre+Baskerville:400,400i" rel="stylesheet">  
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/animate.min.css">
     <link rel='icon' type='image/x-icon' href='<?php echo get_template_directory_uri(); ?>/images/Favicon-48.png'/>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154494750-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-154494750-1');
+    </script>
+
   </head>
 
   <body>
