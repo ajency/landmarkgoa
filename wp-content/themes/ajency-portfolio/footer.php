@@ -11,13 +11,13 @@
                     <div class="row no-gutters">
                         <div class="col-md-4 contact-details">
                             <h4 class="font-weight-light">
-                                <a class=" d-block h4 font-weight-light" href="tel:09975931402" onclick="ga('send', 'event', 'telephone', 'CallNow', 'tel:09975931402');">
+                                <a class=" d-block h4 font-weight-light" href="tel:07770004258" onclick="ga('send', 'event', 'telephone', 'CallNow', 'tel:07770004258');">
                                     +91 7770004258
                                 </a>
                             </h4>
                             <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="mailto:talktous@ajency.in" onclick="ga('send', 'event', 'footerid', 'Contact', 'Footer - talktous@ajency.in');">
-                                    avantih@greengrainbowl.com
+                                    avanti@greengrainbowl.com
                                 </a>
                                 <!-- <br/>
                                 <span class="h5">

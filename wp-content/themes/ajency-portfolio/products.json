@@ -21,12 +21,12 @@
 		},
 
 		{	
-			"product_id" : "bqApKRirpEeopN3w9H3J",
-			"title" : "Quinoa and Nuts Bowl (Chicken)",
+			"product_id" : "zhsxgRGAMaIbia75SQJr",
+			"title" : "Quinoa and Nuts Bowl (with Egg*)",
 			"mark_type" : "Non Veg",
-			"description" : "Quinoa and balsamic chicken, mixed greens, apples, roasted pumpkin, beetroot and carrots. Tossed in a dijon, balsamic dressing and topped with roasted almonds, seeds and feta.",
+			"description" : "Quinoa, mixed greens, apples, roasted pumpkin, beetroot and carrots. Tossed in a dijon, balsamic dressing and topped with roasted almonds, seeds and feta and a soft boiled egg* on the side.<br>*We use free range eggs (Keggs).",
 			"default" : {
-				"id" : "bqApKRirpEeopN3w9H3J-regular",
+				"id" : "zhsxgRGAMaIbia75SQJr-regular",
 				"mrp" : 320,
 				"sale_price" : 220,
 				"size" : "regular"
@@ -41,12 +41,12 @@
 		},
 
 		{	
-			"product_id" : "zhsxgRGAMaIbia75SQJr",
-			"title" : "Quinoa and Nuts Bowl (Free Range Eggs)",
+			"product_id" : "bqApKRirpEeopN3w9H3J",
+			"title" : "Quinoa and Nuts Bowl (with Chicken)",
 			"mark_type" : "Non Veg",
 			"description" : "Quinoa and balsamic chicken, mixed greens, apples, roasted pumpkin, beetroot and carrots. Tossed in a dijon, balsamic dressing and topped with roasted almonds, seeds and feta.",
 			"default" : {
-				"id" : "zhsxgRGAMaIbia75SQJr-regular",
+				"id" : "bqApKRirpEeopN3w9H3J-regular",
 				"mrp" : 320,
 				"sale_price" : 220,
 				"size" : "regular"
