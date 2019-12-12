@@ -78,7 +78,7 @@ class variantSelection extends React.Component {
 	
 	getItemType(){
 		if(this.state.product && this.state.product.veg){
-			return (<div class="list-meta nv mt-4 mb-4">
+			return (<div class="list-meta mt-4 mb-4">
 						<div class="list-author">{this.state.title}</div>
 						<div class="list-date">Veg</div>
 					</div>)
