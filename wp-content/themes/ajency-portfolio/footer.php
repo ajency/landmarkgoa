@@ -151,7 +151,9 @@
 <script src="<?php echo $app_url; ?>/sign-in.<?php echo $js_json['sign-in'];?>.js" type="text/javascript" defer></script>
 <script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript" defer></script> -->
 <script src="<?php echo $app_url; ?>/react-components.<?php echo $js_json['react-components'];?>.js" type="text/javascript"></script>
-
+<script src="https://browser.sentry-cdn.com/5.10.2/bundle.min.js" integrity="sha384-ssBfXiBvlVC7bdA/VX03S88B5MwXQWdnpJRbUYFPgswlOBwETwTp6F3SMUNpo9M9" crossorigin="anonymous">
+    </script>
+   
 <script type="text/javascript">
     
 </script>
@@ -187,6 +189,9 @@
             $('#lb-modal').removeClass('open');
         });
     });
+</script>
+<script>
+    Sentry.init({ dsn: 'https://c53a97f47644470594e32f61da014b47@sentry.io/1855007' });
 </script>
     </body>
 </html>
