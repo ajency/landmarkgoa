@@ -32,7 +32,9 @@
         <p class="body-text small-laptop-text mb-0">Wholesome, balanced and flavourful meals that will make you feel great.</p>
         <br>
         <br>
-        <p class="body-text small-laptop-text mb-0">Special offer of ₹100 on all bowls for OYO employees</p>
+        <div class="special-offer-wrap">
+          <p class="body-text small-laptop-text mb-0">Special offer of <b>₹100</b> on all bowls for <span class="oyo">OYO</span> employees</p>
+        </div>
       </div>
     </div>
   </div>
