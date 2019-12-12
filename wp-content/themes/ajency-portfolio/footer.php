@@ -176,10 +176,12 @@
     }
 
     $(document).ready(function(){
-        setTimeout(function(){
-            $('html,body').addClass('hide-scroll');
-            $('#lb-modal').addClass('open');
-        });
+        if(window.location.href == "https://greengrainbowl.com/oyo/"){
+            setTimeout(function(){
+                $('html,body').addClass('hide-scroll');
+                $('#lb-modal').addClass('open');
+            });
+        }
         $('#close-modal').click(function(){
             $('html,body').removeClass('hide-scroll');
             $('#lb-modal').removeClass('open');
