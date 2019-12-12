@@ -21,10 +21,7 @@ class variantSelection extends React.Component {
 				<button type="button" className="btn-reset close-modal" onClick={()=> this.hideVariantModal()}><i class="fas fa-times text-silver"></i></button>
 			        <div className="product-variant text-left text-black">
 					  <h3 class="h1 ft6 pr-4">Choose Your Bowl</h3>
-					  <div class="list-meta mt-4 mb-4">
-						<div class="list-author">{this.state.title}</div>
-						{this.getItemType()}
-					  </div>				          
+					  {this.getItemType()}				          
 			          <div className="variant-list mb-4">
 			          		{this.getVariants()}
 			          </div>
@@ -81,9 +78,15 @@ class variantSelection extends React.Component {
 	
 	getItemType(){
 		if(this.state.product && this.state.product.veg){
-			return (<div class="list-date">Veg</div>)
+			return (<div class="list-meta nv mt-4 mb-4">
+						<div class="list-author">{this.state.title}</div>
+						<div class="list-date">Veg</div>
+					</div>)
 		} else {
-			return (<div class="list-date nv">Non Veg</div>)
+			return (<div class="list-meta nv mt-4 mb-4">
+						<div class="list-author">{this.state.title}</div>
+						<div class="list-date">Non Veg</div>
+					</div>)
 		}
 	}
 
