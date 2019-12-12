@@ -1,13 +1,13 @@
 {
 	"products" : [
 		{
-			"product_id" : "1CG6P1slxnr9TSNnPzvZ",
+			"product_id" : "yykiWcEv48MtR2oRiWla",
 			"title" : "Orange Barley Bowl (Tofu)",
 			"mark_type" : "Veg",
 			"description" : "Barley, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
 			"default" : {
 				"id" : "1CG6P1slxnr9TSNnPzvZ-regular",
-				"mrp" : 220,
+				"mrp" : 300,
 				"sale_price" : 200,
 				"size" : "Regular"
 			},
@@ -21,13 +21,13 @@
 		},
 
 		{	
-			"product_id" : "8FVGmVx4JjQZRUsxtYrL",
+			"product_id" : "JS42fGblvs7VJ8uxXuaD",
 			"title" : "Orange Barley Bowl (Chicken)",
 			"mark_type" : "Non Veg",
 			"description" : "Barley, roasted chicken, greens, vegetables (broccoli, baby corn, beans and carrots), and the odd nugget of fresh orange. All mixed in an orange mustard ginger dressing. Topped with toasted flax seeds.",
 			"default" : {
 				"id" : "8FVGmVx4JjQZRUsxtYrL-regular",
-				"mrp" : 240,
+				"mrp" : 320,
 				"sale_price" : 220,
 				"size" : "Regular"
 			},
