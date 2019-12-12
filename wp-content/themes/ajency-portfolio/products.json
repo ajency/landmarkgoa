@@ -40,6 +40,26 @@
 			"date": "Friday 13th"
 		},
 
+		{	
+			"product_id" : "zhsxgRGAMaIbia75SQJr",
+			"title" : "Quinoa and Nuts Bowl (Free Range Eggs)",
+			"mark_type" : "Non Veg",
+			"description" : "Quinoa and balsamic chicken, mixed greens, apples, roasted pumpkin, beetroot and carrots. Tossed in a dijon, balsamic dressing and topped with roasted almonds, seeds and feta.",
+			"default" : {
+				"id" : "zhsxgRGAMaIbia75SQJr-regular",
+				"mrp" : 320,
+				"sale_price" : 220,
+				"size" : "regular"
+			},
+			"images" : [
+				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/QNB-Chicken_800.jpg"
+			],
+			"class" : "cardthree",
+			"put_empty" : true,
+			"availability" : "Friday",
+			"date": "Friday 13th"
+		},
+
 		{
 			"product_id" : "1CG6P1slxnr9TSNnPzvZ",
 			"title" : "Orange Barley Bowl (Tofu)",
@@ -54,7 +74,7 @@
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Tofu_800.jpg"
 			],
-			"class" : "cardthree",
+			"class" : "cardfour",
 			"put_empty" : true,
 			"availability" : ""
 		},
@@ -73,7 +93,7 @@
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/OBB-Chicken_800.jpg"
 			],
-			"class" : "cardfour",
+			"class" : "cardfive",
 			"put_empty" : false,
 			"availability" : ""
 		},
@@ -92,7 +112,7 @@
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/Thai-Bowl-Paneer_800.jpg"
 			],
-			"class" : "cardfive",
+			"class" : "cardsix",
 			"put_empty" : true,
 			"availability" : ""
 		},
@@ -111,27 +131,8 @@
 			"images" : [
 				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/Thai-Bowl-Chicken_800.jpg"
 			],
-			"class" : "cardsix",
-			"put_empty" : false,
-			"availability" : ""
-		},
-
-		{	
-			"product_id" : "uLG6xoTOYkcnpjxKoTXI",
-			"title" : "Rice Noodle Paneer Bowl",
-			"mark_type" : "Veg",
-			"description" : "Sweet and chilly paneer with rice noodles and assorted vegetables. An equally flavourful dressing and surprise chunks of fruit give this bowl a very tropical vibe, topped off with some roasted cashews.",
-			"default" : {
-				"id" : "uLG6xoTOYkcnpjxKoTXI-regular",
-				"mrp" : 200,
-				"sale_price" : 200,
-				"size" : "regular"
-			},
-			"images" : [
-				"https://greengrainbowl.com/wp-content/themes/ajency-portfolio/images/products/Rice-Noodle-Paneer_800.jpg"
-			],
 			"class" : "cardseven",
-			"put_empty" : true,
+			"put_empty" : false,
 			"availability" : ""
 		},
 		
