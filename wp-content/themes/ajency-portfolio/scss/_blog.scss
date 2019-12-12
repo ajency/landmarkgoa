@@ -97,6 +97,9 @@
         font-size: 1.1rem;
         font-weight: 500;
     }
+    &.nv {
+        border-left: 4px solid #964122;
+    }
 }
 .list-text-block {
     background-color: lighten($gray-400, 12%);

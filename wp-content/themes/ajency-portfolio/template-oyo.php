@@ -30,6 +30,9 @@
       <div class="col  offset-xl-2 col-xl-8 col12 text-center">
         <h1 class="font-weight-bold d-block mobile-header mb-2 display-4 aj-home-title">our bowls</h1>
         <p class="body-text small-laptop-text mb-0">Wholesome, balanced and flavourful meals that will make you feel great.</p>
+        <br>
+        <br>
+        <p class="body-text small-laptop-text mb-0">Special offer of ₹100 on all bowls for OYO employees</p>
       </div>
     </div>
   </div>
@@ -78,15 +81,14 @@ $week = $date[0];
                             <h4 class="product-excerpt font-weight- font-size-18 mt-0 mb-lg-0">
                                 <?php echo $product['description'] ?>
                             </h4>
-                            <div class="product-meta d-flex mt-lg-3">
-                                <div class="product-price h1 ft6 mb-0">₹ <?php echo $product['default']['sale_price'] ?>
-                                </div>
-                                <?php                                
-                                  if(isset($product['availability']) && $product['availability'] != '' ){
-                                ?>
-                                  <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div>                                                               
-                                <?php } ?>                                                                
-                            </div>
+                            <?php                                
+                              if(isset($product['availability']) && $product['availability'] != '' ){
+                            ?>
+                              <div class="product-meta d-flex mt-lg-3">
+                                  <div class="product-price h1 ft6 mb-0"><span class="symbol">₹</span><?php echo $product['default']['sale_price'] ?><del><span>₹</span><?php echo $product['default']['mrp'] ?></del></div>                                
+                                  <div class="react-add-to-cart-container" data-product_data='<?php echo json_encode($product); ?>'></div>                                                                                                                                                            
+                              </div>
+                            <?php } ?>   
                           </div>
                       </div>
                   </div>      
