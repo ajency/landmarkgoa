@@ -65,7 +65,7 @@ class VerifyMobile extends Component {
                         <h6 className="mb-2 pb-3">Didn't receive the code? <a href="javascript:void(0)" className="text-underline" onClick={() => { this.resendOtpCode() }}>Resend</a></h6>
                         <div className="btn-wrapper pt-4">
                             <div className="btn-inner-wrap">
-                                <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between text-capitalize" onClick={() => { this.verifyOtp() }} disabled={this.state.otp.length < 6}>
+                                <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between text-capitalize" onClick={() => { this.verifyOtp() }}>
                                     <span className="zindex-1">Verify OTP</span>
                                     <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
                                 </button>
