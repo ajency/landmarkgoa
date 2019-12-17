@@ -167,7 +167,7 @@ class CartCheckoutSummary extends Component {
 
 						<div className="p-15 pt-0 pb-0">
 							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<Payments checkNameExists={this.checkNameExists} pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: this.state.orderSummary.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
+								<Payments checkNameExists={this.checkNameExists} pgname="razorpay" pgconfig={{pgtype:"standard", classes:"btn btn-primary btn-arrow w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0"}} order={{id:window.readFromLocalStorage('cart_id'), amount: window.cartData.summary.you_pay}}  user_details={{user_details:this.state.orderSummary.user_details}}/>
 							</div>
 						</div>
 					</div>
