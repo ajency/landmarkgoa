@@ -5,7 +5,7 @@ class Standard extends Component {
         super(props);
         this.standardPayment = this.standardPayment.bind(this);
         this.state = {
-            amount:this.props.order.amount
+            amount:this.props.order.amount || window.cartData.summary.you_pay
         }
     }
 
