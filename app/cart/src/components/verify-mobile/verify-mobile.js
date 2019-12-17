@@ -111,6 +111,7 @@ class VerifyMobile extends Component {
     }
 
     setOtp(value) {
+        this.setState({ otpErrorMsg: '' });
         this.setState({ otp: value });
     }
 
@@ -145,9 +146,12 @@ class VerifyMobile extends Component {
         this.setState({ otpErrorMsg: '' });
         
         if(this.state.otp.length < 6 || this.state.otp.length > 6) {
+            console.log("invalid otp");
+            
             this.setState({ otpErrorMsg: "Please enter valid 6 digit verification code"});
-            return;   
+            return false;   
         }
+        console.log("verifing otp");
 
         this.state.confirmationResult.confirm(this.state.otp)
             .then((resuser) => {
