@@ -40,7 +40,7 @@ class verifyOtp extends React.Component {
 			      </h4>
 				  <h4 className="ft6 mb-3">{this.state.phoneNumber}</h4>
 			      <div className="mb-1 pt-4">
-			       	<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" type="tel" placeholder="Enter OTP" onChange={e => {this.setOtp(e.target.value)}} value={this.state.otp} />
+			       	<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" type="tel" placeholder="Enter OTP" onChange={e => {this.setOtp(e.target.value)}} value={this.state.otp} maxLength={6}/>
 			      </div>
 			      <h6 className="mb-2 pb-3">Didn't receive the code? <a href="javascript:void(0)" className="text-underline" onClick={()=>{this.resendOtpCode()}}>Resend</a></h6>
 				  <div className="btn-wrapper pt-4">
@@ -90,6 +90,7 @@ class verifyOtp extends React.Component {
 	}
 
 	setOtp(value){
+		this.setState({otpErrorMsg : ''});
 		this.setState({otp : value});
 	}
 
@@ -162,6 +163,7 @@ class verifyOtp extends React.Component {
 	}
 
 	resendOtpCode(){
+        this.setState({ otpErrorMsg: '' });
 		this.setState({showCapta : true}, ()=>{
 			console.log("inside verify otp code");
 			window.addCartLoader();

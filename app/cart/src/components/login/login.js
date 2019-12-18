@@ -60,7 +60,7 @@ class LogIn extends Component {
 
 	getSignInButtons(){
 		return (<div className="btn-inner-wrap">
-		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 position-relative d-flex align-items-center justify-content-between text-capitalize" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>
+		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 position-relative d-flex align-items-center justify-content-between text-capitalize" onClick={()=> this.signInWithPhoneNumber()}>
 					  <span className="zindex-1">Submit</span> <i className="text-white fa fa-arrow-right" aria-hidden="true"></i></button>		          
 		        </div>
 		);
@@ -73,6 +73,7 @@ class LogIn extends Component {
 	}
 
 	setUserMobile(value){
+		this.setState({errorMessage:""})
 		this.setState({phoneNumber : value});
 	}
 
@@ -88,6 +89,10 @@ class LogIn extends Component {
 
 
 	signInWithPhoneNumber(){
+		if(this.state.phoneNumber.length < 10) {
+			this.setState({errorMessage:"Please enter valid 10 digit mobile number."})
+			return false;
+		}
 		window.addCartLoader();
 		let url = generalConfig.apiEndPoint + "/check-user-exist";
 		let body = {
