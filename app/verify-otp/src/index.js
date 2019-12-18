@@ -163,6 +163,7 @@ class verifyOtp extends React.Component {
 	}
 
 	resendOtpCode(){
+        this.setState({ otp: '' });
         this.setState({ otpErrorMsg: '' });
 		this.setState({showCapta : true}, ()=>{
 			console.log("inside verify otp code");
