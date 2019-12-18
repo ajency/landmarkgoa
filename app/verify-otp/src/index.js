@@ -116,7 +116,7 @@ class verifyOtp extends React.Component {
             this.setState({ otpErrorMsg: "Please enter valid 6 digit verification code"});
             return false;   
 		}
-		console,log("Verifying otp")
+		console.log("Verifying otp")
 		window.addCartLoader();
 		this.setState({showOtpLoader : true , disableButtons : true, otpErrorMsg : ''});
 		this.state.confirmationResult.confirm(this.state.otp)
