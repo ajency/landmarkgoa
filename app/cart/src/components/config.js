@@ -19,7 +19,8 @@ let generalConfig = {
     company_name: "GGB",
     googleApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     preparationTime: process.env.REACT_APP_PREPARATION_TIME,
-    pickupPoint: process.env.REACT_APP_PICKUP_POINT
+    pickupPoint: process.env.REACT_APP_PICKUP_POINT,
+    businessId: process.env.REACT_APP_BUSINESS_ID
 }
 
 export {
