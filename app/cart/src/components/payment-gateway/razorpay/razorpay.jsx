@@ -74,7 +74,9 @@ class Razorpay extends Component {
         let url = generalConfig.apiEndPoint + "/anonymous/payment/create-order";
 			let body = {
                 order_id : this.props.order.id,
-                amount: this.props.order.amount || window.cartData.summary.you_pay
+                amount: this.props.order.amount || window.cartData.summary.you_pay,
+                business_id:generalConfig.businessId,
+                mode:generalConfig.site_mode
             }
             
         return  axios.post(url, body).then((res) => {
