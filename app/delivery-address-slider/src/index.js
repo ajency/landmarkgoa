@@ -341,7 +341,7 @@ class gpsModalPrompt extends React.Component {
 		try{
 			this.setSliderLoader();
 			this.setState({settingUserLocation : true});
-			let cart_id = firebase.auth().currentUser.uid;
+			let cart_id = window.brewCartId();
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
 					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
