@@ -12,6 +12,7 @@ class addToCart extends React.Component {
 			items : [], // variants added to cart
 			site_mode : process.env.REACT_APP_SITE_MODE,
 			pickup_point : process.env.REACT_APP_PICKUP_POINT,
+			businessId: process.env.REACT_APP_BUSINESS_ID,
 			default_lat_lng : [process.env.REACT_APP_DEFAULT_LAT, process.env.REACT_APP_DEFAULT_LNG],
 		};
 	}

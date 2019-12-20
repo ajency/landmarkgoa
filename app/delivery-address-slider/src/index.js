@@ -26,7 +26,9 @@ class gpsModalPrompt extends React.Component {
 			showNoAddressMsg : false,
 			settingUserLocation : false,
 			notLoggedIn : false,
-			showSignInBtn : false
+			showSignInBtn : false,
+			businessId: process.env.REACT_APP_BUSINESS_ID,
+			siteMode: process.env.REACT_APP_SITE_MODE
 		}
 		
 	}
@@ -341,7 +343,7 @@ class gpsModalPrompt extends React.Component {
 		try{
 			this.setSliderLoader();
 			this.setState({settingUserLocation : true});
-			let cart_id = window.brewCartId();
+			let cart_id = window.brewCartId(this.state.siteMode, this.state.businessId);
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
 					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{

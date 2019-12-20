@@ -14,7 +14,8 @@ class VerifyMobile extends Component {
             confirmationResult: '',
             errorMessage: '',
             showCapta: true,
-            showOtpScreen: false
+            showOtpScreen: false,
+            businessId: generalConfig.businessId
         }
     }
 
@@ -156,8 +157,8 @@ class VerifyMobile extends Component {
         this.state.confirmationResult.confirm(this.state.otp)
             .then((resuser) => {
                 resuser.user.getIdToken().then((idToken) => {
-                    let cart_id = window.brewCartId();
-                    window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
+                    let cart_id = window.brewCartId(this.state.site_mode,this.state.businessId);
+                    window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'), this.state.site_mode,this.state.businessId);
                     window.writeInLocalStorage('cart_id', cart_id);
                     // this.updateUserDetails(idToken);
                     if(this.state.site_mode == 'kiosk'){

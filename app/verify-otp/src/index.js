@@ -14,7 +14,9 @@ class verifyOtp extends React.Component {
 			errorMessage : '',
 			showOtpLoader : false,
 			otpErrorMsg : '',
-			showCapta : true
+			showCapta : true,
+			siteMode: process.env.REACT_APP_SITE_MODE,
+			businessId: process.env.REACT_APP_BUSINESS_ID
 		}
 	}
 
@@ -124,7 +126,7 @@ class verifyOtp extends React.Component {
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
 					window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
-					window.writeInLocalStorage('cart_id' , window.brewCartId());
+					window.writeInLocalStorage('cart_id' , window.brewCartId(this.state.siteMode, this.state.businessId));
 		            this.updateUserDetails(idToken);
 		            this.fetchAddresses();
 		        });

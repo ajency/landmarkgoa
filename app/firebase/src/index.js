@@ -488,7 +488,7 @@ async function fetchCart(cart_id){
 }
 
 
-async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
+async function addToCart(site_mode, business_id, variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
     try{
         console.log(" addToCart product ==>", product);
 
@@ -505,7 +505,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
         // user_id is not used as user is creted as on click of add to cart and will exist at this point but cart may not exist
         if(cart_id){
             console.time("fetch cart by id Time")
-            cart_data = await window.getCartByID(await window.brewCartId());
+            cart_data = await window.getCartByID(await window.brewCartId(site_mode, business_id));
             console.timeEnd("fetch cart by id Time")
         }
 
@@ -514,7 +514,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
             cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
             console.time("writeInLocalStorage")
-            window.writeInLocalStorage('cart_id' , window.brewCartId());
+            window.writeInLocalStorage('cart_id' , window.brewCartId(site_mode, business_id));
             console.timeEnd("writeInLocalStorage")
         }
         console.log(" add to cart, cart data ==>",cart_data);
@@ -575,7 +575,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
             timestamp : new Date().getTime()
         }
         console.time("updateOrder")
-        let order_data = await window.updateOrder(item,  window.brewCartId(), cart_data, stock_location_id)
+        let order_data = await window.updateOrder(item,  window.brewCartId(site_mode, business_id), cart_data, stock_location_id)
         console.timeEnd("updateOrder")
 
         console.log("update order data");
@@ -674,13 +674,13 @@ async function getAddresses(){
     return addresses;
 }
 
-async function createCartForVerifiedUser(cart_id){
+async function createCartForVerifiedUser(cart_id, siteMode, businessId){
     let cart_data = await window.getCartByID(cart_id);
     if(cart_data){
         cart_data.user_id = firebase.auth().currentUser.uid;
         cart_data.verified = true;
-        await db.collection("carts").doc(window.brewCartId()).set(cart_data);
-        sycnCartData(window.brewCartId());
+        await db.collection("carts").doc(window.brewCartId(siteMode, businessId)).set(cart_data);
+        sycnCartData(window.brewCartId(siteMode, businessId));
     }
 }
 
@@ -999,7 +999,7 @@ async function orderDetails(order_id) {
         return response;
 }
 
-function brewCartId() {
+function brewCartId(site_mode, business_id) {
     let uid, business_id, site_mode;
     if(window.firebase.auth().currentUser) {
         uid = window.firebase.auth().currentUser.uid
