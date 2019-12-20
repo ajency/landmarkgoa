@@ -3,6 +3,8 @@
 
 // Initialize Firebase
 console.log("initialising firebase");
+console.log("Firebase config",firebaseConfig.businessId, firebaseConfig.siteMode)
+
 firebase.initializeApp(firebaseConfig)
 var db = firebase.firestore();
 // initialiseMessaging();
@@ -127,7 +129,6 @@ syncProducts();
 syncLocations()
 syncAddresses();
 syncUserDetails();
-console.log("Firebase config",firebaseConfig.businessId, firebaseConfig.siteMode)
 if(window.readFromLocalStorage('cart_id')){
     sycnCartData(window.readFromLocalStorage('cart_id'));
 }
