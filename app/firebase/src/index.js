@@ -1001,7 +1001,7 @@ async function orderDetails(order_id) {
 }
 
 function brewCartId(site_mode, business_id) {
-    let uid, business_id, site_mode;
+    let uid;
     if(window.firebase.auth().currentUser) {
         uid = window.firebase.auth().currentUser.uid
         business_id = firebaseConfig.businessId
