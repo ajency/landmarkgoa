@@ -5,7 +5,6 @@
 console.log("initialising firebase");
 firebase.initializeApp(firebaseConfig)
 var db = firebase.firestore();
-
 // initialiseMessaging();
 
 // function initialiseMessaging(){
@@ -515,7 +514,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
             cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
             console.time("writeInLocalStorage")
-            window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+            window.writeInLocalStorage('cart_id' , window.brewCartId());
             console.timeEnd("writeInLocalStorage")
         }
         console.log(" add to cart, cart data ==>",cart_data);
@@ -998,4 +997,16 @@ async function orderDetails(order_id) {
             approx_delivery_time : "40 mins"
     }
         return response;
+}
+
+function brewCartId() {
+    let uid, business_id, site_mode;
+    if(window.firebase.auth().currentUser) {
+        uid = window.firebase.auth().currentUser.uid
+        business_id = firebaseConfig.businessId
+        site_mode = firebaseConfig.siteMode
+        return uid+'-'+business_id+'-'+site_mode
+    } else {
+        return null
+    }
 }

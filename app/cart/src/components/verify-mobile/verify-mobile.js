@@ -156,7 +156,7 @@ class VerifyMobile extends Component {
         this.state.confirmationResult.confirm(this.state.otp)
             .then((resuser) => {
                 resuser.user.getIdToken().then((idToken) => {
-                    let cart_id = window.firebase.auth().currentUser.uid;
+                    let cart_id = window.brewCartId();
                     window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
                     window.writeInLocalStorage('cart_id', cart_id);
                     // this.updateUserDetails(idToken);
