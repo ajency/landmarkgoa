@@ -127,7 +127,7 @@ syncProducts();
 syncLocations()
 syncAddresses();
 syncUserDetails();
-
+console.log("Firebase config",firebaseConfig.businessId, firebaseConfig.siteMode)
 if(window.readFromLocalStorage('cart_id')){
     sycnCartData(window.readFromLocalStorage('cart_id'));
 }
