@@ -3,9 +3,7 @@
 
 // Initialize Firebase
 console.log("initialising firebase");
-console.log("Firebase config",firebaseConfig.businessId, firebaseConfig.siteMode)
-
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(allConfig.firebaseConfig)
 var db = firebase.firestore();
 // initialiseMessaging();
 
