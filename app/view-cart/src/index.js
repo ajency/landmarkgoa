@@ -5,7 +5,7 @@ class viewCart extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
 			cart : null,
 			siteMode: process.env.REACT_APP_SITE_MODE,
 			businessId: process.env.REACT_APP_BUSINESS_ID

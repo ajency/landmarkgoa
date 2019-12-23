@@ -1,7 +1,7 @@
 const fs = require('fs');
 let jsonData = require('./env.json');
 
-let envArr = ["add-to-cart", "cart", "delivery-address-slider", "firebase", "verify-otp"];
+let envArr = ["add-to-cart", "cart", "delivery-address-slider", "firebase", "verify-otp", "view-cart"];
 
 for (var f = 0; f < envArr.length; f++) {
 	let folder = envArr[f];
