@@ -487,7 +487,7 @@ async function fetchCart(cart_id){
 }
 
 
-async function addToCart(site_mode, business_id, variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
+async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
     try{
         console.log(" addToCart product ==>", product);
 
@@ -504,7 +504,7 @@ async function addToCart(site_mode, business_id, variant_id = null, lat_long = n
         // user_id is not used as user is creted as on click of add to cart and will exist at this point but cart may not exist
         if(cart_id){
             console.time("fetch cart by id Time")
-            cart_data = await window.getCartByID(await window.brewCartId(site_mode, business_id));
+            cart_data = await window.getCartByID(await window.brewCartId(allConfig.businessConfig.siteMode, allConfig.businessConfig.businessId));
             console.timeEnd("fetch cart by id Time")
         }
 
