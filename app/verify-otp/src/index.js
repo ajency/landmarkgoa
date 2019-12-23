@@ -125,8 +125,8 @@ class verifyOtp extends React.Component {
 		this.state.confirmationResult.confirm(this.state.otp)
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
-					window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
-					window.writeInLocalStorage('cart_id' , window.brewCartId(this.state.siteMode, this.state.businessId));
+					window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.siteMode+'cart_id'+this.state.businessId));
+					window.writeInLocalStorage(this.state.siteMode+'cart_id'+this.state.businessId , window.brewCartId(this.state.siteMode, this.state.businessId));
 		            this.updateUserDetails(idToken);
 		            this.fetchAddresses();
 		        });

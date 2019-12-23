@@ -7,6 +7,8 @@ class viewCart extends React.Component {
 		this.state = { 
 			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			cart : null,
+			siteMode: process.env.REACT_APP_SITE_MODE,
+			businessId: process.env.REACT_APP_BUSINESS_ID
 		};
 	}
 
@@ -59,7 +61,7 @@ class viewCart extends React.Component {
 	}
 
 	fetchCart() {
-		let cart_id = window.readFromLocalStorage('cart_id');
+		let cart_id = window.readFromLocalStorage(this.state.siteMode+'cart_id'+this.state.businessId);
 		if(cart_id){
 			window.getCartByID(cart_id).then((cart_data)=>{
 				this.setState({cart : cart_data})

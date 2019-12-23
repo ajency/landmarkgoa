@@ -129,7 +129,7 @@ class LogIn extends Component {
 			.then((resuser) => {
 				console.log("update user details response ==>", resuser);
 				if(this.state.site_mode == 'kiosk'){
-					let cart_id =  window.readFromLocalStorage('cart_id');
+					let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId);
 			        if(cart_id) {
 			            window.assignAddressToCart(null, true, this.state.phoneNumber)
 			            .then((res) => {

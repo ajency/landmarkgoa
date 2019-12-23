@@ -122,13 +122,13 @@ var cartData;
 var stockLocations = []
 var userAddresses = [];
 var userDetails;
-
+var cartIdLabel = allConfig.businessConfig.siteMode+'cart_id'+allConfig.businessConfig.businessId
 syncProducts();
 syncLocations()
 syncAddresses();
 syncUserDetails();
-if(window.readFromLocalStorage('cart_id')){
-    sycnCartData(window.readFromLocalStorage('cart_id'));
+if(window.readFromLocalStorage(cartIdLabel)){
+    sycnCartData(window.readFromLocalStorage(cartIdLabel));
 }
 
 function syncProducts(){
@@ -513,7 +513,7 @@ async function addToCart(site_mode, business_id, variant_id = null, lat_long = n
             cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
             console.time("writeInLocalStorage")
-            window.writeInLocalStorage('cart_id' , window.brewCartId(site_mode, business_id));
+            window.writeInLocalStorage(cartIdLabel , window.brewCartId(site_mode, business_id));
             console.timeEnd("writeInLocalStorage")
         }
         console.log(" add to cart, cart data ==>",cart_data);
@@ -730,7 +730,7 @@ async function addUserDetails(userObj, cart_id) {
 
 async function getCurrentStockLocation() {
     let location = [];
-    let cart_id = window.readFromLocalStorage('cart_id');
+    let cart_id = window.readFromLocalStorage(cartIdLabel);
     if(cart_id) {
         let cart = await getCartByID(cart_id);
         if(window.stockLocations.length) {
@@ -751,7 +751,7 @@ async function getCurrentStockLocation() {
 
 async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
     let  order_line_items = [], items = [];
-    let cart_id = window.readFromLocalStorage('cart_id');
+    let cart_id = window.readFromLocalStorage(cartIdLabel);
     if(!cart_id) {
         return {code:"PAYMENT_DONE"}
     }
