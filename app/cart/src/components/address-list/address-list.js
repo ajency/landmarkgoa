@@ -28,7 +28,7 @@ class AddressList extends Component {
         window.addCartLoader()
         window.firebase.auth().onAuthStateChanged((user) => {
             let returnState = {};
-            returnState["cart_id"]=window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId)
+            returnState["cart_id"]=window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
             if(window.firebase.auth().currentUser.isAnonymous) {
                 returnState["showAddressComponent"] = true
             } else {
@@ -126,8 +126,8 @@ class AddressList extends Component {
         }
 
         //let cart_id =  e.target.getAttribute("data-id")
-        this._currentCart = window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId);
-		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId);
+        this._currentCart = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
         if(cart_id) {
              if(e) {
                 e.preventDefault();

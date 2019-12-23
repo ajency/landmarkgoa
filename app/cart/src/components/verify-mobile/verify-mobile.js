@@ -158,8 +158,8 @@ class VerifyMobile extends Component {
             .then((resuser) => {
                 resuser.user.getIdToken().then((idToken) => {
                     let cart_id = window.brewCartId(this.state.site_mode,this.state.businessId);
-                    window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.site_mode+'cart_id'+this.state.businessId), this.state.site_mode,this.state.businessId);
-                    window.writeInLocalStorage(this.state.site_mode+'cart_id'+this.state.businessId, cart_id);
+                    window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId), this.state.site_mode,this.state.businessId);
+                    window.writeInLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId, cart_id);
                     // this.updateUserDetails(idToken);
                     if(this.state.site_mode == 'kiosk'){
                         if(cart_id) {
@@ -232,7 +232,7 @@ class VerifyMobile extends Component {
 			.then((resuser) => {
 				console.log("update user details response ==>", resuser);
 				if(this.state.site_mode == 'kiosk'){
-                    let cart_id =  window.readFromLocalStorage(this.state.site_mode+'cart_id'+this.state.businessId);
+                    let cart_id =  window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId);
                     if(cart_id) {
                         window.assignAddressToCart(null, true, this.state.phoneNumber)
                         .then((res) => {

@@ -61,7 +61,7 @@ class viewCart extends React.Component {
 	}
 
 	fetchCart() {
-		let cart_id = window.readFromLocalStorage(this.state.siteMode+'cart_id'+this.state.businessId);
+		let cart_id = window.readFromLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId);
 		if(cart_id){
 			window.getCartByID(cart_id).then((cart_data)=>{
 				this.setState({cart : cart_data})

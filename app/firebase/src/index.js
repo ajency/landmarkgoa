@@ -122,7 +122,7 @@ var cartData;
 var stockLocations = []
 var userAddresses = [];
 var userDetails;
-var cartIdLabel = allConfig.businessConfig.siteMode+'cart_id'+allConfig.businessConfig.businessId
+var cartIdLabel = allConfig.businessConfig.siteMode+'-cart_id-'+allConfig.businessConfig.businessId
 syncProducts();
 syncLocations()
 syncAddresses();

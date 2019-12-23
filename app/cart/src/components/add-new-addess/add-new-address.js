@@ -87,7 +87,7 @@ class AddNewAddress extends Component {
                 this.setState({address:this.props.location.state.formatted_address})
                 window.removeCartLoader();
             } else {
-                let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId)
+                let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
                 console.log("setInitData ====>", cart_id)
                 if(cart_id) {
                     window.removeCartLoader();

@@ -47,7 +47,7 @@ class Quantity extends Component {
 		try{
 			window.addCartLoader();
 			this.setState({apiCallInProgress : true});
-			let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId);
+			let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
 			let res = await window.removeItemFromCart(this.props.variant_id, cart_id, quantity);
 			if(res.success){
 				let updated_quantity = this.state.quantity - quantity;
@@ -85,7 +85,7 @@ class Quantity extends Component {
 	async addToCart(quantity){
 		window.addCartLoader();
 		this.setState({apiCallInProgress : true});
-		let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId), product;
+		let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId), product;
 		if(window.products && window.products.length){
 			product = window.products.find((product) => product.id == this.props.product_id);
 		}

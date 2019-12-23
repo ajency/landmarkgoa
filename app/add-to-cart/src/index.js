@@ -101,7 +101,7 @@ class addToCart extends React.Component {
 	addToCart(variant_id = null, product) {
 		console.log("add to cart function");
 		this.setState({apiCallInProgress : true});
-		let cart_id = window.readFromLocalStorage(this.state.site_mode+'cart_id'+this.state.businessId);
+		let cart_id = window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId);
 		if(this.state.site_mode == 'kiosk') {
 			window.lat_lng = this.state.default_lat_lng;
 			window.formatted_address = this.state.pickup_point;
@@ -128,7 +128,7 @@ class addToCart extends React.Component {
 	removeFromCart(variant_id = null){
 		window.addBackDrop();
 		this.setState({apiCallInProgress : true});
-			let cart_id = window.readFromLocalStorage(this.state.site_mode+'cart_id'+this.state.businessId), quantity = 1;
+			let cart_id = window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId), quantity = 1;
 			window.removeItemFromCart(variant_id, cart_id, quantity).then((res)=>{
 				if(res.success){
 					window.displaySuccess(this.props.product_data.title + " removed from cart");

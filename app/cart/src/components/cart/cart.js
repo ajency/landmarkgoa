@@ -174,7 +174,7 @@ class Cart extends Component {
 			}
 			else{
 				if(this.state.site_mode == 'kiosk'){
-					let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId);
+					let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
 			        if(cart_id) {
 			            window.addCartLoader();
 			            window.assignAddressToCart(null, true)
@@ -208,7 +208,7 @@ class Cart extends Component {
 	async fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
-		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'cart_id'+generalConfig.businessId);
+		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
 		if(cart_id){
 			try{
 				let cart_data = await window.fetchCart(cart_id);
