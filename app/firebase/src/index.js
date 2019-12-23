@@ -513,7 +513,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
             cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
             console.time("writeInLocalStorage")
-            window.writeInLocalStorage(cartIdLabel , window.brewCartId(site_mode, business_id));
+            window.writeInLocalStorage(cartIdLabel , window.brewCartId(site_mode, allConfig.businessConfig.businessId));
             console.timeEnd("writeInLocalStorage")
         }
         console.log(" add to cart, cart data ==>",cart_data);
@@ -574,7 +574,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
             timestamp : new Date().getTime()
         }
         console.time("updateOrder")
-        let order_data = await window.updateOrder(item,  window.brewCartId(site_mode, business_id), cart_data, stock_location_id)
+        let order_data = await window.updateOrder(item,  window.brewCartId(site_mode, allConfig.businessConfig.businessId), cart_data, stock_location_id)
         console.timeEnd("updateOrder")
 
         console.log("update order data");
