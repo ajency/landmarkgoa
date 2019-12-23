@@ -1002,8 +1002,8 @@ function brewCartId(site_mode, business_id) {
     let uid;
     if(window.firebase.auth().currentUser) {
         uid = window.firebase.auth().currentUser.uid
-        business_id = firebaseConfig.businessId
-        site_mode = firebaseConfig.siteMode
+        business_id = allConfig.businessConfig.businessId
+        site_mode = allConfig.businessConfig.siteMode
         return uid+'-'+business_id+'-'+site_mode
     } else {
         return null
