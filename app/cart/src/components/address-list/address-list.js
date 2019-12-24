@@ -52,7 +52,7 @@ class AddressList extends Component {
         return (
             <div>
                 {this.state.redirectToAddAddress ? "redirect":null}
-                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
+                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
                 {this.state.showAddressComponent ? <AddNewAddress closeAddAddress={this.closeAddAddress} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
