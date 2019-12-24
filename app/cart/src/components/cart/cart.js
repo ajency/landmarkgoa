@@ -180,7 +180,7 @@ class Cart extends Component {
 			            window.assignAddressToCart(null, true)
 			            .then((res) => {
 			                if(res.success) {
-			                    this.props.history.push({pathname:'/cart/cart-summary/'+cart_id, state:{order_obj:res.cart}});
+			                    this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
 			                } else {
 			                    window.removeCartLoader();
 			                    if(res.code =='PAYMENT_DONE') {
