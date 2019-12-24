@@ -65,9 +65,7 @@ class CartCheckoutSummary extends Component {
 				this.setState({shippingAddress: shipping_address_extra})
 				this.setState({dataLoading:false, fetchCartComplete:true})
 				window.removeCartLoader();
-			} else {
-				console.log(this.props.match.params);
-				
+			} else {				
 				window.assignAddressToCart(null,true)
 				.then((res) => {
 					console.log(res)
