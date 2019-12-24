@@ -137,10 +137,10 @@
 <!-- <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script> -->
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios@0.19.0/dist/axios.min.js"></script>
 
-<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
 <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
 <!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> -->
 <script src="<?php echo $app_url; ?>/firebase-functions.js?_1" type="text/javascript"></script>
