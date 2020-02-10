@@ -35,7 +35,7 @@ class gpsModalPrompt extends React.Component {
 
 	componentDidMount(){
 		if(firebase && firebase.app()){
-			firebase.auth().onAuthStateChanged((user) => {
+			let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
 				console.log("check user ==>", user);
 				if(user && !user.isAnonymous){
 					console.log("user found ==== setting showSign in button to false");
@@ -54,6 +54,7 @@ class gpsModalPrompt extends React.Component {
 			  		this.setState({notLoggedIn : true })
 			  		console.log("no user");
 			  	}
+			  	unsubscribeOnAuthStateChanged();
 			});
 		}
 	}

@@ -19,8 +19,9 @@ class OrderDetails extends Component {
     }
 
     componentDidMount() {
-        window.firebase.auth().onAuthStateChanged((user) => {
+        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged((user) => {
             this.getOrderDetails()
+            unsubscribeOnAuthStateChanged();
         })
     }
 

@@ -22,10 +22,11 @@ class OrderSummary extends Component {
         // if(window.firebase.auth().currentUser) {
         //     this.getOrderDetails()        
         // } else {
-            window.firebase.auth().onAuthStateChanged(user => {
+            let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged(user => {
                 if(user) {
                  this.getOrderDetails()     
                 }
+                unsubscribeOnAuthStateChanged();
             })
                
         // }   

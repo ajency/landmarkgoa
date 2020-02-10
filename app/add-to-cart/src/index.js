@@ -55,7 +55,7 @@ class addToCart extends React.Component {
 	
 	checkVariant(action){
 		window.addBackDrop();
-		firebase.auth().onAuthStateChanged((user) => {
+		let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
 			console.log("check user ==>", user);
 			if(user){
 				console.log("user exist");
@@ -64,6 +64,7 @@ class addToCart extends React.Component {
 			else{
 				this.signInAnonymously(action);
 			}
+			unsubscribeOnAuthStateChanged();
 		});
 	}
 

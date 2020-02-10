@@ -185,7 +185,7 @@ function syncLocations() {
 
 var unsubscribeAddressListner
 function syncAddresses() {
-    firebase.auth().onAuthStateChanged((user) => {
+    let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
         if(user){
 
             if(unsubscribeAddressListner){
@@ -212,12 +212,13 @@ function syncAddresses() {
                 });
             });
         }
+        unsubscribeOnAuthStateChanged();
     });
 }
 
 var unsubscribeUserDetailsListner
 function syncUserDetails() {
-    firebase.auth().onAuthStateChanged((user) => {
+    let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
         if(user){
             if(unsubscribeUserDetailsListner){
                 unsubscribeUserDetailsListner();
@@ -229,6 +230,7 @@ function syncUserDetails() {
                     userDetails = doc.data();
             });
         }
+        unsubscribeOnAuthStateChanged();
     });
 }
 
@@ -353,7 +355,8 @@ function findDeliverableLocation(locations, lat_long){
             let diff = headingDistanceTo(lat_long[0], lat_long[1], loc.lat_long.lat, loc.lat_long.long);
             console.log("radius diff==>", diff);
 
-            if(diff < loc.radius && diff < min_diff){
+            //if(diff < loc.radius && diff < min_diff){ // radius compare
+            if(diff < min_diff){
                 min_diff = diff;
                 deliverble = loc;
             }

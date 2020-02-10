@@ -26,7 +26,7 @@ class AddressList extends Component {
 
     componentDidMount() {
         window.addCartLoader()
-        window.firebase.auth().onAuthStateChanged((user) => {
+        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged((user) => {
             let returnState = {};
             returnState["cart_id"]=window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
             if(window.firebase.auth().currentUser.isAnonymous) {
@@ -45,6 +45,7 @@ class AddressList extends Component {
             }
             this.setState(returnState);
             window.removeCartLoader()
+            unsubscribeOnAuthStateChanged();
         });
     }
 
