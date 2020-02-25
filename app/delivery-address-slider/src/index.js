@@ -322,7 +322,7 @@ class gpsModalPrompt extends React.Component {
 				if(res.data.status === "OK"){
 					this.setState({settingUserLocation : false, gpsError : ''});
 					if(loc)
-						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.name+', '+formatted_address) 
+						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.name+', '+res.data.result.formatted_address);
 					else if(latlng)
 						this.setUserLocations(latlng, res.data.results[0].formatted_address);
 				}
