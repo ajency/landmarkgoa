@@ -54,7 +54,7 @@ class gpsModalPrompt extends React.Component {
 			  		this.setState({notLoggedIn : true })
 			  		console.log("no user");
 			  	}
-			  	unsubscribeOnAuthStateChanged();
+			  	// unsubscribeOnAuthStateChanged();
 			});
 		}
 	}

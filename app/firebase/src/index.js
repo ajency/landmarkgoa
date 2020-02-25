@@ -524,7 +524,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
         // TODO : check if the item is already in cart and update the qunatity value accordingly.
         // create new variable called updated quantity
 
-        let item_from_cart = cart_data.items.find((i) => { return i.variant_id == variant_id});
+        let item_from_cart = cart_data.items ? cart_data.items.find((i) => { return i.variant_id == variant_id}) : 0;
         let new_quantity = quantity;
         if(item_from_cart){
             new_quantity += item_from_cart.quantity;
@@ -693,7 +693,7 @@ async function addAddress(addressObj) {
             name    : addressObj.name,
             email   : addressObj.email
         })
-        console.log("addressObj ==>", addressObj, userDetails.phone);
+        console.log("addressObj ==>", addressObj, userDetails);
         let address_obj = {
             name		: addressObj.name,
             email       : addressObj.email,
