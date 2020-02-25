@@ -140,7 +140,6 @@ function syncProducts(){
 
         snapshot.docChanges().forEach(function(change) {
             if (change.type === "added") {
-                console.log("data ==>", change.doc.data());
                 let data = change.doc.data();
                 data.id = change.doc.id;
                 products.push(data);
@@ -212,7 +211,7 @@ function syncAddresses() {
                 });
             });
         }
-        unsubscribeOnAuthStateChanged();
+        // unsubscribeOnAuthStateChanged();
     });
 }
 
@@ -230,7 +229,7 @@ function syncUserDetails() {
                     userDetails = doc.data();
             });
         }
-        unsubscribeOnAuthStateChanged();
+        // unsubscribeOnAuthStateChanged();
     });
 }
 
@@ -511,7 +510,7 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
             console.timeEnd("fetch cart by id Time")
         }
 
-        if(!cart_data ){
+        if(cart_data == undefined || cart_data.order_type == undefined ){
             console.time("getNewCartData")
             cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
@@ -697,7 +696,7 @@ async function addAddress(addressObj) {
         let address_obj = {
             name		: addressObj.name,
             email       : addressObj.email,
-            phone       : userDetails.hasOwnProperty('phone')? userDetails.phone:'',
+            phone       : userDetails && userDetails.phone ? userDetails.phone : '',
             address 	: addressObj.address,
             landmark 	: addressObj.landmark,
             city 		: addressObj.city,
