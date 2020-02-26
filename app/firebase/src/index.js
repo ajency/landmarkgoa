@@ -439,49 +439,60 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
 async function fetchCart(cart_id){
     let cart_data = await window.getCartByID(cart_id);
     let products = window.products;
-    let items = [];
+    let items = [], response;
     cart_data = JSON.parse(JSON.stringify(cart_data));
-    cart_data.items.forEach((item)=>{
-        let product = products.find((product) => { return product.id == item.product_id})
-        let deliverable = true; //check if deliverable
-        let in_stock = true;     // check if in stock
-        if(!cart_data.stock_location_id){
-            deliverable = false;
-        }
-        else{
-            let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
-            let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
-            if(stock_location.quantity < item.quantity){
-                in_stock = false;
+    if(cart_data && cart_data.order_type) {
+        cart_data.items.forEach((item)=>{
+            let product = products.find((product) => { return product.id == item.product_id})
+            let deliverable = true; //check if deliverable
+            let in_stock = true;     // check if in stock
+            if(!cart_data.stock_location_id){
+                deliverable = false;
             }
-        }
-        let formatted_item = {
-            variant_id : item.variant_id,
-            attributes: {
-                title: item.product_name,
-                images: {
-                  "1x": product.image_urls[0]
+            else{
+                let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
+                let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
+                if(stock_location.quantity < item.quantity){
+                    in_stock = false;
+                }
+            }
+            let formatted_item = {
+                variant_id : item.variant_id,
+                attributes: {
+                    title: item.product_name,
+                    images: {
+                      "1x": product.image_urls[0]
+                    },
+                    size : item.size,
+                    price_mrp : item.mrp,
+                    price_final : item.sale_price,
+                    discount_per : 0
                 },
-                size : item.size,
-                price_mrp : item.mrp,
-                price_final : item.sale_price,
-                discount_per : 0
-            },
-              availability : in_stock,
-              quantity : item.quantity,
-              timestamp : item.timestamp,
-              deliverable : deliverable,
-              product_id : product.id
+                  availability : in_stock,
+                  quantity : item.quantity,
+                  timestamp : item.timestamp,
+                  deliverable : deliverable,
+                  product_id : product.id
+            }
+            items.push(formatted_item);
+        })
+        
+        cart_data.items = items;
+        response = {
+                success: true, 
+                cart : cart_data,
+                coupon_applied: null,
+                coupons: []
         }
-        items.push(formatted_item);
-    })
-    
-    cart_data.items = items;
-    let response = {
-            success: true, 
-            cart : cart_data,
-            coupon_applied: null,
-            coupons: []
+    }
+    else {
+        cart_data.items = items;
+        response = {
+                success: true, 
+                cart : cart_data,
+                coupon_applied: null,
+                coupons: []
+        }
     }
 
     return response;

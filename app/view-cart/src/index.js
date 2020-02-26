@@ -67,9 +67,11 @@ class viewCart extends React.Component {
 		if(cart_id){
 			window.getCartByID(cart_id).then((cart_data)=>{
 				this.setState({cart : cart_data})
-				cart_data.items.forEach((item)=>{
-					window.updateaddToCartComponent(item);
-				})
+				if(cart_data && cart_data.items) {
+					cart_data.items.forEach((item)=>{
+						window.updateaddToCartComponent(item);
+					})
+				}
 			})
 		}
 	}
