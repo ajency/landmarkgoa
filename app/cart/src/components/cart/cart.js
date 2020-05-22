@@ -167,7 +167,7 @@ class Cart extends Component {
 	}
 
 	handleCheckout(e) {
-		window.getUserDetails().then((user_details)=>{
+		window.getUserDetails().then(async (user_details)=>{
 			console.log("user_details ==>", user_details);
 			if(!user_details || !user_details.phone){
 				this.props.history.push('/cart/login');
@@ -192,7 +192,34 @@ class Cart extends Component {
 			            })
 			        }
 				} else {
-					this.props.history.push('/cart/select-address');
+					const cartId = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
+					if(cartId) {
+						const cart = await window.getCartByID(cartId)
+						if(cart!=null) {
+							if(cart.shipping_address) {
+								if(cart.shipping_address.landmark && cart.shipping_address.address && cart.shipping_address.name && cart.shipping_address.email ) {
+									window.addCartLoader();
+									window.assignAddressToCart(null, true)
+									.then((res) => {
+										if(res.success) {
+											this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
+										} else {
+											window.removeCartLoader();
+											if(res.code =='PAYMENT_DONE') {
+												this.props.history.push('/cart');
+											}
+										}
+									}).catch(err => {
+										window.removeCartLoader();
+										console.log(err);
+									})
+								}
+							}
+						}
+						this.props.history.push('/cart/select-address');
+					} else {
+						this.props.history.push('/cart/select-address');
+					}
 				}
 			}
 		})
