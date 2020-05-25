@@ -197,7 +197,7 @@ class Cart extends Component {
 						const cart = await window.getCartByID(cartId)
 						if(cart!=null) {
 							if(cart.shipping_address) {
-								if(cart.shipping_address.landmark && cart.shipping_address.address && cart.shipping_address.name && cart.shipping_address.email ) {
+								if(cart.shipping_address.landmark && cart.shipping_address.address && cart.shipping_address.name && cart.shipping_address.email ) { 
 									window.addCartLoader();
 									window.assignAddressToCart(null, true)
 									.then((res) => {
@@ -208,11 +208,33 @@ class Cart extends Component {
 											if(res.code =='PAYMENT_DONE') {
 												this.props.history.push('/cart');
 											}
+											this.props.history.push('/cart/select-address');
 										}
 									}).catch(err => {
 										window.removeCartLoader();
-										console.log(err);
+										this.props.history.push('/cart/select-address');
 									})
+								} else {
+									if(window.userDetails){
+										if(window.userDetails.hasOwnProperty('default_address_id')) {
+											const address_id =  window.userDetails.hasOwnProperty('default_address_id');
+											if (await this.isAddressDeliverable(address_id)) {
+												window.assignAddressToCart(address_id)
+												.then((res) => {
+													if(res.success) {
+														this.setState({cartSummary:res.cart, redirectToSummary:true,})
+													} else {
+														window.removeCartLoader();
+														this.props.history.push('/cart/select-address');	
+													}
+												}).catch(err => {
+													this.props.history.push('/cart/select-address');
+												})
+											} else {
+												this.props.history.push('/cart/select-address');
+											}
+										}
+									}
 								}
 							}
 						}
@@ -224,6 +246,19 @@ class Cart extends Component {
 			}
 		})
 	}
+
+	isAddressDeliverable=(address_id)=> {
+        let address = window.userAddresses.filter((address) => { return address.id == address_id;})[0];
+        return window.getCurrentStockLocation().then(locations => {
+            if(!locations.length) {
+                this.displayError("Something went wrong...")
+                return false;
+            }
+            let deliverable =  window.findDeliverableLocation(locations,address.lat_long)
+        
+            return !!deliverable
+        })
+    }
 
 	closeCart(){
 		document.querySelector(".cart-wrapper").classList.remove('active');
