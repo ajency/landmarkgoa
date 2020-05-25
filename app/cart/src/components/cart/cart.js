@@ -30,6 +30,7 @@ class Cart extends Component {
 	}
 
 	componentDidMount(){
+		this.fetchCart();
 		$('#view-cart-btn').on('click', ()=>{
 			console.log("view cart click event fired");
 			this.setState({cartData : {}, fetchCartComplete : false, cartEmpty : false})
@@ -218,20 +219,24 @@ class Cart extends Component {
 									if(window.userDetails){
 										if(window.userDetails.hasOwnProperty('default_address_id')) {
 											const address_id =  window.userDetails.default_address_id
-											if (await this.isAddressDeliverable(address_id)) {
-												window.assignAddressToCart(address_id)
-												.then((res) => {
-													if(res.success) {
-														this.setState({cartSummary:res.cart, redirectToSummary:true,})
-													} else {
-														window.removeCartLoader();
-														this.props.history.push('/cart/select-address');	
-													}
-												}).catch(err => {
+											if(address_id) {
+
+												if (await this.isAddressDeliverable(address_id)) {
+													window.assignAddressToCart(address_id)
+													.then((res) => {
+														if(res.success) {
+															this.setState({cartSummary:res.cart, redirectToSummary:true,})
+														} else {
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');	
+														}
+													}).catch(err => {
+														console.log("DEfault addrs is not deliverable")
+														this.props.history.push('/cart/select-address');
+													})
+												} else {
 													this.props.history.push('/cart/select-address');
-												})
-											} else {
-												this.props.history.push('/cart/select-address');
+												}
 											}
 										}
 									}
