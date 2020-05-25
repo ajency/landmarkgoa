@@ -26,24 +26,27 @@ class AddressList extends Component {
 
     componentDidMount() {
         window.addCartLoader()
-        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged((user) => {
+        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged(async (user) => {
             let returnState = {};
             returnState["cart_id"]=window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
             if(window.firebase.auth().currentUser.isAnonymous) {
                 returnState["showAddressComponent"] = true
             } else {
                 if(window.firebase.auth().currentUser) {
-                   window.getAddresses().then((userAddresses) => {
-                       if(_.isEmpty(userAddresses)) {
-                           returnState["showAddressComponent"] = true
-                       } else {
-                           returnState["addresses"] = userAddresses
-                           returnState["fetchComplete"] = true
-                       }
-
-                   }).catch(() => {
+                    try {
+                        const  userAddresses =  await window.getAddresses();
+                        if(_.isEmpty(userAddresses)) {
+                            returnState["showAddressComponent"] = true
+                        } else {
+                            returnState["addresses"] = userAddresses
+                            returnState["fetchComplete"] = true
+                        }
+                        
+                    } catch (error) {
                         returnState["showAddressComponent"] = true
-                   })
+                        
+                    }
+
                 } else {
                     this.displayError("Please login to continue");
                 }            
