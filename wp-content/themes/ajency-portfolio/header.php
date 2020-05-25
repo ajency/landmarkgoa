@@ -37,6 +37,11 @@
           min-height: 33vh;
         }
       }   
+      @media (max-width: 991px) {
+       .add-address-form{
+           padding-bottom: 100px;
+       }
+      }
     </style>
     <!-- <script>
 
