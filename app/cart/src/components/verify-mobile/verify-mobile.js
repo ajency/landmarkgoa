@@ -160,7 +160,7 @@ class VerifyMobile extends Component {
                     let cart_id = window.brewCartId(this.state.site_mode,this.state.businessId);
                     window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId), this.state.site_mode,this.state.businessId);
                     window.writeInLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId, cart_id);
-                    // this.updateUserDetails(idToken);
+                    this.updateUserDetails(idToken);
                     if(this.state.site_mode == 'kiosk'){
                         if(cart_id) {
                             window.addCartLoader();
@@ -229,36 +229,52 @@ class VerifyMobile extends Component {
 		}
 		let url = generalConfig.apiEndPoint + "/user/update-user-details";
 		axios.post(url, body, {headers :  headers })
-			.then((resuser) => {
-				console.log("update user details response ==>", resuser);
-				if(this.state.site_mode == 'kiosk'){
-                    let cart_id =  window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId);
-                    if(cart_id) {
-                        window.assignAddressToCart(null, true, this.state.phoneNumber)
-                        .then((res) => {
-                            if(res.success) {
-                                window.removeCartLoader();
-                                this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
-                            } else {
-                                window.removeCartLoader();
-                                if(res.code =='PAYMENT_DONE') {
-                                    this.props.history.push('/cart');
-                                }
-                            }
-                        }).catch(err => {
-                            console.log(err);
-                        })
-                    }
-                } else {
-                    window.removeCartLoader();
-                    this.props.history.push('/cart/select-address');
-                }
+			.then((res) => {
+				console.log("update user details response ==>", res);
 			})
 			.catch((error)=>{
 				console.log("error in update user details ==>", error);
-				window.removeCartLoader();
 			})
 	}
+    // updateUserDetails(idToken){
+	// 	let body = {
+	// 		phone : this.state.phoneNumber
+	// 	}
+	// 	let headers = {
+	// 		Authorization : 'Bearer '+ idToken
+	// 	}
+	// 	let url = generalConfig.apiEndPoint + "/user/update-user-details";
+	// 	axios.post(url, body, {headers :  headers })
+	// 		.then((resuser) => {
+	// 			console.log("update user details response ==>", resuser);
+	// 			if(this.state.site_mode == 'kiosk'){
+    //                 let cart_id =  window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId);
+    //                 if(cart_id) {
+    //                     window.assignAddressToCart(null, true, this.state.phoneNumber)
+    //                     .then((res) => {
+    //                         if(res.success) {
+    //                             window.removeCartLoader();
+    //                             this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+    //                         } else {
+    //                             window.removeCartLoader();
+    //                             if(res.code =='PAYMENT_DONE') {
+    //                                 this.props.history.push('/cart');
+    //                             }
+    //                         }
+    //                     }).catch(err => {
+    //                         console.log(err);
+    //                     })
+    //                 }
+    //             } else {
+    //                 window.removeCartLoader();
+    //                 this.props.history.push('/cart/select-address');
+    //             }
+	// 		})
+	// 		.catch((error)=>{
+	// 			console.log("error in update user details ==>", error);
+	// 			window.removeCartLoader();
+	// 		})
+	// }
 
 }
 
