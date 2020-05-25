@@ -250,7 +250,8 @@ class Cart extends Component {
 	isAddressDeliverable=(address_id)=> {
         let address = window.userAddresses.filter((address) => { return address.id == address_id;})[0];
 		if(address){
-
+			console.log(address);
+			
 			return window.getCurrentStockLocation().then(locations => {
 				if(!locations.length) {
 					this.displayError("Something went wrong...")
