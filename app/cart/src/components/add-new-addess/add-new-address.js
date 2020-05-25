@@ -324,13 +324,10 @@ class AddNewAddress extends Component {
             type:this.state.address_type,
             set_default:false
         }
-        console.log(data)
         
         try {
              window.addAddress({...this.state.address_obj, ...data}).then(address => {
-                console.log(this.props.cartRequest,address)
                 if(this.props.cartRequest) {
-                    console.log(address.id, address)
                     this.props.assignAndProceed(null,address.id)
                 }
              }).catch(err => {
@@ -448,7 +445,6 @@ class AddNewAddress extends Component {
 				}
 				this.setState({showLoader : true, locations : []})
 				cancel && cancel();
-				console.log("cancel ==>", cancel);
 				axios.get(url, {params : body,
 						cancelToken : new CancelToken((c) => {
 							cancel = c;
