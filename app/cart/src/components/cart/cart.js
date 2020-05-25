@@ -217,7 +217,7 @@ class Cart extends Component {
 								} else {
 									if(window.userDetails){
 										if(window.userDetails.hasOwnProperty('default_address_id')) {
-											const address_id =  window.userDetails.hasOwnProperty('default_address_id');
+											const address_id =  window.userDetails.default_address_id
 											if (await this.isAddressDeliverable(address_id)) {
 												window.assignAddressToCart(address_id)
 												.then((res) => {
