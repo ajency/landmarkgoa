@@ -27,7 +27,7 @@ class AddNewAddress extends Component {
                 lat:'15.49359569999',
                 lng:'73.8301322'
             },
-            address_type:'Other',
+            address_type:'Home',
             addressInput: false,
             locations : [],
             searchText:'',
@@ -100,6 +100,7 @@ class AddNewAddress extends Component {
                         let name = cart.shipping_address.name || '';
                         let email = cart.shipping_address.email || '';
                         let building = cart.shipping_address.address ||'';
+                        let address_type =  cart.shipping_address.type ||'Home';
                         this.setState({latlng: latlng, landmark, name,email,building})
                         this.reverseGeocode(latlng);
                     })
