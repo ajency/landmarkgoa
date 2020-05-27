@@ -222,18 +222,8 @@ class Cart extends Component {
 											if(address_id) {
 
 												if (await this.isAddressDeliverable(address_id)) {
-													window.assignAddressToCart(address_id)
-													.then((res) => {
-														if(res.success) {
-															this.setState({cartSummary:res.cart, redirectToSummary:true,})
-														} else {
-															window.removeCartLoader();
-															this.props.history.push('/cart/select-address');	
-														}
-													}).catch(err => {
-														console.log("DEfault addrs is not deliverable")
-														this.props.history.push('/cart/select-address');
-													})
+													console.log("rsrrrr");
+													
 												} else {
 													this.props.history.push('/cart/select-address');
 												}
