@@ -102,7 +102,7 @@ class VerifyMobile extends Component {
         try {
             window.firebase.auth().currentUser.getIdToken().then((idToken)=>{
                 window.addCartLoader();
-                this.updateUserDetails(idToken)
+                this.updateUserDetailsFromSkipOtp(idToken)
             })
         } catch (error) {
             window.removeCartLoader();
@@ -236,45 +236,45 @@ class VerifyMobile extends Component {
 				console.log("error in update user details ==>", error);
 			})
 	}
-    // updateUserDetails(idToken){
-	// 	let body = {
-	// 		phone : this.state.phoneNumber
-	// 	}
-	// 	let headers = {
-	// 		Authorization : 'Bearer '+ idToken
-	// 	}
-	// 	let url = generalConfig.apiEndPoint + "/user/update-user-details";
-	// 	axios.post(url, body, {headers :  headers })
-	// 		.then((resuser) => {
-	// 			console.log("update user details response ==>", resuser);
-	// 			if(this.state.site_mode == 'kiosk'){
-    //                 let cart_id =  window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId);
-    //                 if(cart_id) {
-    //                     window.assignAddressToCart(null, true, this.state.phoneNumber)
-    //                     .then((res) => {
-    //                         if(res.success) {
-    //                             window.removeCartLoader();
-    //                             this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
-    //                         } else {
-    //                             window.removeCartLoader();
-    //                             if(res.code =='PAYMENT_DONE') {
-    //                                 this.props.history.push('/cart');
-    //                             }
-    //                         }
-    //                     }).catch(err => {
-    //                         console.log(err);
-    //                     })
-    //                 }
-    //             } else {
-    //                 window.removeCartLoader();
-    //                 this.props.history.push('/cart/select-address');
-    //             }
-	// 		})
-	// 		.catch((error)=>{
-	// 			console.log("error in update user details ==>", error);
-	// 			window.removeCartLoader();
-	// 		})
-	// }
+    updateUserDetailsFromSkipOtp(idToken){
+		let body = {
+			phone : this.state.phoneNumber
+		}
+		let headers = {
+			Authorization : 'Bearer '+ idToken
+		}
+		let url = generalConfig.apiEndPoint + "/user/update-user-details";
+		axios.post(url, body, {headers :  headers })
+			.then((resuser) => {
+				console.log("update user details response ==>", resuser);
+				if(this.state.site_mode == 'kiosk'){
+                    let cart_id =  window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId);
+                    if(cart_id) {
+                        window.assignAddressToCart(null, true, this.state.phoneNumber)
+                        .then((res) => {
+                            if(res.success) {
+                                window.removeCartLoader();
+                                this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+                            } else {
+                                window.removeCartLoader();
+                                if(res.code =='PAYMENT_DONE') {
+                                    this.props.history.push('/cart');
+                                }
+                            }
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                    }
+                } else {
+                    window.removeCartLoader();
+                    this.props.history.push('/cart/select-address');
+                }
+			})
+			.catch((error)=>{
+				console.log("error in update user details ==>", error);
+				window.removeCartLoader();
+			})
+	}
 
 }
 
