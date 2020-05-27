@@ -550,9 +550,9 @@ async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id 
 
         if(cart_data.stock_location_id){
             location = variant.stock_locations.find((loc)=>{ return loc.id == cart_data.stock_location_id});
-            // if(location && location.quantity < new_quantity){
-            //     throw 'Quantity Not Available';
-            // }
+            if(location && location.quantity < new_quantity){
+                throw 'Quantity Not Available';
+            }
         }
         else{
             //new code
