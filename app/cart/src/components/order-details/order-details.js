@@ -204,15 +204,19 @@ class OrderDetails extends Component {
         let deliveryHtml = ''
         let order_data = this.state.orderSummary.order_data;
         if(order_data.order_mode == 'online') {
-            deliveryHtml = `
-            <div className="summary-item">
-                <div>
-                    <label className="font-weight-light">Delivery fee</label>
+            deliveryHtml = 
+           (() => {
+               return(
+                <div className="summary-item">
+                    <div>
+                        <label className="font-weight-light">Delivery fee</label>
+                    </div>
+                    <div className="font-weight-light">₹${order_data.summary.shipping_fee}</div>
                 </div>
-                <div className="font-weight-light">₹${order_data.summary.shipping_fee}</div>
-            </div>
+               )
+           } )()
 
-            `
+            
         }
        return(
         
