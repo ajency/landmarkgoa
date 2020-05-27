@@ -207,7 +207,7 @@ class OrderDetails extends Component {
                 <div>
                     <label className="font-weight-light">Delivery fee</label>
                 </div>
-                <div className="font-weight-light">₹${order_data.summary.shipping_fee}</div>
+                <div className="font-weight-light">₹{order_data.summary.shipping_fee}</div>
             </div>
            )
     }

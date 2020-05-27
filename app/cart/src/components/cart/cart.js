@@ -247,9 +247,12 @@ class Cart extends Component {
 										this.props.history.push('/cart/select-address');
 									}
 								}
+							} else {
+								this.props.history.push('/cart/select-address');
 							}
+						} else {
+							this.props.history.push('/cart/select-address');
 						}
-						this.props.history.push('/cart/select-address');
 					} else {
 						this.props.history.push('/cart/select-address');
 					}
