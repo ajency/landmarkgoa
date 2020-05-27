@@ -457,7 +457,7 @@ async function fetchCart(cart_id){
                 let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
                 if(stock_location) {
                     if(stock_location.quantity < item.quantity){
-                        in_stock = false;
+                        // in_stock = false;
                     }
                 } else {
                    // in_stock = false;
