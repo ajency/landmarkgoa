@@ -225,25 +225,34 @@ class Cart extends Component {
 													console.log("rsrrrr");
 													
 												} else {
+													console.log("n ot isAddressDeliverable");
+
 													this.props.history.push('/cart/select-address');
 												}
 											} else {
-												this.props.history.push('/cart/select-address');
+													console.log("on address id");
+													this.props.history.push('/cart/select-address');
 											}
 										} else {
+											console.log("no default_address_id");
 											this.props.history.push('/cart/select-address');
 										}
 									} else {
+										console.log("no userDetails");
 										this.props.history.push('/cart/select-address');
 									}
 								}
 							} else {
+										console.log("no shipping_address");
 								this.props.history.push('/cart/select-address');
 							}
 						} else {
-							this.props.history.push('/cart/select-address');
+										console.log("no cart");
+										this.props.history.push('/cart/select-address');
 						}
 					} else {
+						console.log("no cart id");
+
 						this.props.history.push('/cart/select-address');
 					}
 				}
