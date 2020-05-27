@@ -22,7 +22,7 @@ class VerifyMobile extends Component {
 
     componentDidMount() {
         console.log("check state ==>", this.props.location, this.props.history)
-        this.setState({ phoneNumber: this.props.location.state.phoneNumber });
+        this.setState({ phoneNumber: this.props.location.state.phoneNumber , hide_skip_otp:this.props.location.state.hide_skip_otp });
         this.signInWithPhoneNumber();
     }
 

@@ -101,7 +101,7 @@ class AddNewAddress extends Component {
                         let email = cart.shipping_address.email || '';
                         let building = cart.shipping_address.address ||'';
                         let address_type =  cart.shipping_address.type ||'Home';
-                        this.setState({latlng: latlng, landmark, name,email,building})
+                        this.setState({latlng: latlng, landmark, name,email,building, address_type})
                         this.reverseGeocode(latlng);
                     })
                    
