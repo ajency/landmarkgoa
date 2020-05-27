@@ -124,7 +124,6 @@ class signInModal extends React.Component {
 
 			firebase.auth().signInWithPhoneNumber(phone_number, window.recaptchaVerifier)
 			    .then( (confirmationResult) => {
-			    	window.removeCartLoader();
 					console.log("SMS sent.");
 					window.addCartLoader();
 					let url =  process.env.REACT_APP_API_END_PT + "/check-user-exist";
@@ -134,13 +133,17 @@ class signInModal extends React.Component {
 					axios.get(url, {params : body})
 						.then((res) => {
 							if(res.data.success){
+								window.removeCartLoader();
 								this.setState({confirmationResult : confirmationResult, showCapta : false});
 								this.showOtpSlider(confirmationResult, this.state.phoneNumber, true) 
 							} else {
+								window.removeCartLoader();
+
 								this.setState({confirmationResult : confirmationResult, showCapta : false});
 								this.showOtpSlider(confirmationResult, this.state.phoneNumber) 
 							}
 						}).catch((e) => {
+							window.removeCartLoader();
 
 							this.setState({confirmationResult : confirmationResult, showCapta : false});
 							// this.closeSignInSlider() // TODO : function to hide this popup 
