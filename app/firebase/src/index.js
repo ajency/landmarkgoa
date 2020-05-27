@@ -347,7 +347,9 @@ function formateOrderLine(item){
 
 
 function findDeliverableLocation(locations, lat_long){
-    console.time("findDeliverableLocation")
+    console.log(lat_long,locations);
+
+    console.time("findDeliverableLocation", lat_long)
     let deliverble, min_diff = 9999999;
 
         locations.forEach((loc)=>{
@@ -358,6 +360,7 @@ function findDeliverableLocation(locations, lat_long){
             if(diff < min_diff){
                 min_diff = diff;
                 deliverble = loc;
+                return
             }
         })
         console.timeEnd("findDeliverableLocation")
@@ -452,9 +455,14 @@ async function fetchCart(cart_id){
             else{
                 let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
                 let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
-                if(stock_location.quantity < item.quantity){
-                    in_stock = false;
+                if(stock_location) {
+                    if(stock_location.quantity < item.quantity){
+                        in_stock = false;
+                    }
+                } else {
+                   // in_stock = false;
                 }
+
             }
             let formatted_item = {
                 variant_id : item.variant_id,
@@ -650,7 +658,7 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
         locations = await getAllStockLocations();
     }
 
-    console.log("update delivery address all locations", locations);
+    console.log("update delivery address all locations", locations, lat_long);
     let stock_location_id = '';
 
     let closest_deliverable_location = findDeliverableLocation(locations, lat_long)
