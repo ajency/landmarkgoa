@@ -200,24 +200,20 @@ class OrderDetails extends Component {
 		}
 	}
 
-    getSummary = () => {
-        let deliveryHtml = ''
+    deliveryHtml = () => {
         let order_data = this.state.orderSummary.order_data;
-        if(order_data.order_mode == 'online') {
-            deliveryHtml = 
-           (() => {
-               return(
-                <div className="summary-item">
-                    <div>
-                        <label className="font-weight-light">Delivery fee</label>
-                    </div>
-                    <div className="font-weight-light">₹${order_data.summary.shipping_fee}</div>
+        return(
+            <div className="summary-item">
+                <div>
+                    <label className="font-weight-light">Delivery fee</label>
                 </div>
-               )
-           } )()
-
-            
-        }
+                <div className="font-weight-light">₹${order_data.summary.shipping_fee}</div>
+            </div>
+           )
+    }
+    getSummary = () => {
+        let order_data = this.state.orderSummary.order_data;
+       
        return(
         
         <div className="cart-summary-container">
@@ -227,7 +223,7 @@ class OrderDetails extends Component {
                 </div>
                 <div className="font-weight-light">₹{order_data.summary.sale_price_total} </div>
             </div>
-            {deliveryHtml}
+            {order_data.order_mode == 'online' && this.deliveryHtml()}
             <div className="summary-item border-grey-50 border-0-left border-0-right mt-1 pt-2 pb-2">
                 <div>
                     <label className="font-weight-medium mb-0">You Paid</label>
