@@ -1,6 +1,7 @@
 'use strict';
 const e = React.createElement;
 
+import axios from 'axios';
 
 class signInModal extends React.Component {
 	constructor(props) {
@@ -124,10 +125,27 @@ class signInModal extends React.Component {
 			firebase.auth().signInWithPhoneNumber(phone_number, window.recaptchaVerifier)
 			    .then( (confirmationResult) => {
 			    	window.removeCartLoader();
-			    	console.log("SMS sent.");
-			      	this.setState({confirmationResult : confirmationResult, showCapta : false});
-			      	// this.closeSignInSlider() // TODO : function to hide this popup 
-			      	this.showOtpSlider(confirmationResult, this.state.phoneNumber)   // TODO : Show the otp in slider // pass confirmation-result and mobile number to otp component
+					console.log("SMS sent.");
+					window.addCartLoader();
+					let url =  process.env.REACT_APP_API_END_PT + "/check-user-exist";
+					let body = {
+						phone_number : this.state.phoneNumber
+					}
+					axios.get(url, {params : body})
+						.then((res) => {
+							if(res.data.success){
+								this.setState({confirmationResult : confirmationResult, showCapta : false});
+								this.showOtpSlider(confirmationResult, this.state.phoneNumber, true) 
+							} else {
+								this.setState({confirmationResult : confirmationResult, showCapta : false});
+								this.showOtpSlider(confirmationResult, this.state.phoneNumber) 
+							}
+						}).catch((e) => {
+
+							this.setState({confirmationResult : confirmationResult, showCapta : false});
+							// this.closeSignInSlider() // TODO : function to hide this popup 
+							this.showOtpSlider(confirmationResult, this.state.phoneNumber)   // TODO : Show the otp in slider // pass confirmation-result and mobile number to otp component
+						})
 			    }).catch( (error) => {
 			    	window.removeCartLoader();
 			      	console.log("Error :  SMS not sent", error);
@@ -141,9 +159,9 @@ class signInModal extends React.Component {
 		document.querySelector('#phone_number').classList.remove('visible');
 	}
 
-	showOtpSlider(confirmationResult, phone_number){
+	showOtpSlider(confirmationResult, phone_number, hide_skip_otp){
 		window.showOTPSlider(true);
-		window.updateOtpSLider(confirmationResult, phone_number);
+		window.updateOtpSLider(confirmationResult, phone_number, hide_skip_otp);
 	}
 
 }

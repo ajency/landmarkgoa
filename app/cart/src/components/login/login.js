@@ -101,7 +101,7 @@ class LogIn extends Component {
 		axios.get(url, {params : body})
 			.then((res) => {
 				if(res.data.success){
-					this.props.history.push({pathname : '/cart/verify-mobile', state : {phoneNumber : this.state.phoneNumber}});
+					this.props.history.push({pathname : '/cart/verify-mobile', state : {phoneNumber : this.state.phoneNumber, hide_skip_otp:true}});
 					window.removeCartLoader();
 				}
 				else{

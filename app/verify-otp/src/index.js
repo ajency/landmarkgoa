@@ -16,11 +16,13 @@ class verifyOtp extends React.Component {
 			otpErrorMsg : '',
 			showCapta : true,
 			siteMode: process.env.REACT_APP_SITE_MODE,
-			businessId: process.env.REACT_APP_BUSINESS_ID
+			businessId: process.env.REACT_APP_BUSINESS_ID,
+			hide_skip_otp:false
 		}
 	}
 
 	render() {
+		const {hide_skip_otp} =this.state
 		return (
 			<div className="slide-in flex-slide-in" id="otp">
 			  <div className="slide-in-header header-container d-flex align-items-center">
@@ -48,7 +50,7 @@ class verifyOtp extends React.Component {
 				  <div className="btn-wrapper pt-4">
 			        {this.getOtpButtons()}
 			      </div>
-				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipOtp()}>Skip</a></h5>
+				  {!hide_skip_otp && <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipOtp()}>Skip</a></h5>}
 
 			      {this.displayOtpErrorMsg()}
 			  </div>
@@ -213,6 +215,6 @@ window.showOTPSlider = (data) => {
 	document.querySelector('#otp').classList.add('visible');
 }
 
-window.updateOtpSLider = (confirmationResult, phone_number) => {
-	otpModalComponent.setState({phoneNumber : phone_number,  confirmationResult : confirmationResult})
+window.updateOtpSLider = (confirmationResult, phone_number, hide_skip_otp) => {
+	otpModalComponent.setState({phoneNumber : phone_number,  confirmationResult : confirmationResult,hide_skip_otp:hide_skip_otp })
 }

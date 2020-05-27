@@ -15,7 +15,8 @@ class VerifyMobile extends Component {
             errorMessage: '',
             showCapta: true,
             showOtpScreen: false,
-            businessId: generalConfig.businessId
+            businessId: generalConfig.businessId,
+            hide_skip_otp:false
         }
     }
 
@@ -35,6 +36,7 @@ class VerifyMobile extends Component {
     }
 
     getUIContent() {
+        const {hide_skip_otp}=this.state;
         if (!this.state.showOtpScreen) {
             return (
                 <div className="d-flex flex-column p-15 pb-0">
@@ -72,7 +74,7 @@ class VerifyMobile extends Component {
                                 </button>
                             </div>
                         </div>
-                        <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipLogin()}>Skip</a></h5>
+                        {!hide_skip_otp && <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipLogin()}>Skip</a></h5>}
 
                         {this.displayOtpErrorMsg()}
                     </div>
