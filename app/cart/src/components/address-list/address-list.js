@@ -114,7 +114,8 @@ class AddressList extends Component {
                     <div className="text-black text-link highlight">
                         <h1 className="ft6">{obj.type}</h1>
                         <h5 className="font-weight-light">
-                            <span className="p-name d-inline-block">{obj.name}</span>
+                            
+                            <span className="p-name d-inline-block"  style={{marginRight: 10}}>{obj.name}</span>
                             <span className="p-phone-number d-inline-block">{obj.phone}</span>
                         </h5>
                         <h5 className="font-weight-light">
