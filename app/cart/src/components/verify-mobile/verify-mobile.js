@@ -158,11 +158,11 @@ class VerifyMobile extends Component {
 
         this.state.confirmationResult.confirm(this.state.otp)
             .then((resuser) => {
-                resuser.user.getIdToken().then((idToken) => {
+                resuser.user.getIdToken().then(async (idToken) => {
                     let cart_id = window.brewCartId(this.state.site_mode,this.state.businessId);
                     window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId), this.state.site_mode,this.state.businessId);
                     window.writeInLocalStorage(this.state.site_mode+'-cart_id-'+this.state.businessId, cart_id);
-                    this.updateUserDetails(idToken);
+                    await this.updateUserDetails(idToken);
                     if(this.state.site_mode == 'kiosk'){
                         if(cart_id) {
                             window.addCartLoader();
@@ -222,21 +222,21 @@ class VerifyMobile extends Component {
         });
     }
 
-    updateUserDetails(idToken){
+    async updateUserDetails(idToken){
 		let body = {
 			phone : this.state.phoneNumber
 		}
 		let headers = {
 			Authorization : 'Bearer '+ idToken
 		}
-		let url = generalConfig.apiEndPoint + "/user/update-user-details";
-		axios.post(url, body, {headers :  headers })
-			.then((res) => {
-				console.log("update user details response ==>", res);
-			})
-			.catch((error)=>{
-				console.log("error in update user details ==>", error);
-			})
+        let url = generalConfig.apiEndPoint + "/user/update-user-details";
+        try {
+            await axios.post(url, body, {headers :  headers })
+            return 
+        } catch (error) {
+            return 
+        }
+			
 	}
     updateUserDetailsFromSkipOtp(idToken){
 		let body = {
