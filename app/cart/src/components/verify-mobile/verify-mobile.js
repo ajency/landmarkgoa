@@ -231,7 +231,7 @@ class VerifyMobile extends Component {
 		}
         let url = generalConfig.apiEndPoint + "/user/update-user-details";
         try {
-            await axios.post(url, body, {headers :  headers })
+            const res = await axios.post(url, body, {headers :  headers })
             return 
         } catch (error) {
             return 
