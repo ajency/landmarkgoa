@@ -229,6 +229,7 @@ class Cart extends Component {
 														const res =	await window.assignAddressToCart(address_id)
 													
 														if(res.success) {
+															window.removeCartLoader();
 															this.setState({cartSummary:res.cart, redirectToSummary:true,})
 														} else {
 															console.log(" no success assignAddressToCart");
@@ -238,38 +239,45 @@ class Cart extends Component {
 											
 													} catch (error) {
 														console.log("error in assignAddressToCart");
-														this.props.history.push('/cart/select-address');	
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');	
 													}
 													
 												} else {
 													console.log("not isAddressDeliverable");
+													window.removeCartLoader();
 
 													this.props.history.push('/cart/select-address');
 												}
 											} else {
 													console.log("on address id");
+													window.removeCartLoader();
 													this.props.history.push('/cart/select-address');
 											}
 										} else {
 											console.log("no default_address_id");
-											this.props.history.push('/cart/select-address');
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');
 										}
 									} else {
 										console.log("no userDetails");
+										window.removeCartLoader();
 										this.props.history.push('/cart/select-address');
 									}
 								}
 							} else {
-										console.log("no shipping_address");
+								console.log("no shipping_address");
+								window.removeCartLoader();
 								this.props.history.push('/cart/select-address');
 							}
 						} else {
-										console.log("no cart");
-										this.props.history.push('/cart/select-address');
+							console.log("no cart");
+							window.removeCartLoader();
+							this.props.history.push('/cart/select-address');
 						}
 					} else {
 						console.log("no cart id");
-
+						window.removeCartLoader();
 						this.props.history.push('/cart/select-address');
 					}
 				}
