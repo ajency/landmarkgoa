@@ -220,12 +220,27 @@ class Cart extends Component {
 										if(window.userDetails.hasOwnProperty('default_address_id')) {
 											const address_id =  window.userDetails.default_address_id
 											if(address_id) {
-
-												if (await this.isAddressDeliverable(address_id)) {
+												const deliverable = await this.isAddressDeliverable(address_id)
+												if (deliverable) {
 													console.log("rsrrrr");
+													try {
+														const res =	await window.assignAddressToCart(address_id)
+													
+														if(res.success) {
+															this.setState({cartSummary:res.cart, redirectToSummary:true,})
+														} else {
+															console.log(" no success assignAddressToCart");
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');	
+														}
+											
+													} catch (error) {
+														console.log("error in assignAddressToCart");
+														this.props.history.push('/cart/select-address');	
+													}
 													
 												} else {
-													console.log("n ot isAddressDeliverable");
+													console.log("not isAddressDeliverable");
 
 													this.props.history.push('/cart/select-address');
 												}
