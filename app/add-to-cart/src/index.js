@@ -62,7 +62,9 @@ class addToCart extends React.Component {
 				this.variantPopUp(action);
 			}
 			else{
+				console.time('signin')
 				this.signInAnonymously(action);
+				console.timeEnd('signin')
 			}
 			unsubscribeOnAuthStateChanged();
 		});

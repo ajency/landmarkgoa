@@ -123,12 +123,40 @@ var stockLocations = []
 var userAddresses = [];
 var userDetails;
 var cartIdLabel = allConfig.businessConfig.siteMode+'-cart_id-'+allConfig.businessConfig.businessId
+anomynousSignIn();
 syncProducts();
 syncLocations()
 syncAddresses();
 syncUserDetails();
 if(window.readFromLocalStorage(cartIdLabel)){
     sycnCartData(window.readFromLocalStorage(cartIdLabel));
+}
+
+function anomynousSignIn() {
+    let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
+        console.log("check user ==>", user);
+        if(user){
+            console.log("user exist");
+            // this.variantPopUp(action);
+        }
+        else{
+            console.time('signin')
+            this.signInAnonymously();
+            // console.timeEnd('signin')
+        }
+        unsubscribeOnAuthStateChanged();
+    });
+}
+
+function signInAnonymously(){
+    firebase.auth().signInAnonymously()
+        .then((res)=>{
+            return;
+        })
+        .catch((error) => {
+           return 
+              console.log("error in anonymous sign in", error);
+        });
 }
 
 function syncProducts(){
