@@ -217,6 +217,7 @@ class Cart extends Component {
 									})
 								} else {
 									if(window.userDetails){
+										window.addCartLoader()
 										if(window.userDetails.hasOwnProperty('default_address_id')) {
 											const address_id =  window.userDetails.default_address_id
 											if(address_id) {
@@ -224,6 +225,7 @@ class Cart extends Component {
 												if (deliverable) {
 													console.log("rsrrrr");
 													try {
+													
 														const res =	await window.assignAddressToCart(address_id)
 													
 														if(res.success) {
