@@ -42,7 +42,7 @@ class signInModal extends React.Component {
 				  	Your Shipping and payment details will be associated with this number
 			      </h4>
 			      <div className="mb-3 pt-4 pb-2">
-			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="text" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} /> <br/>
+			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="tel" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} maxLength="10"/> <br/>
 			      </div>
 			      <div className="btn-wrapper pt-4">
 			      		{this.getSignInButtons()}
