@@ -89,6 +89,12 @@ class LogIn extends Component {
 
 
 	signInWithPhoneNumber(){
+		const regex = /^[0-9]*$/;
+		const results = this.state.phoneNumber.match(regex);
+		if(!results) {
+			this.setState({errorMessage: 'Please enter valid 10 digit mobile number.'})
+			return false;
+		}
 		if(this.state.phoneNumber.length < 10) {
 			this.setState({errorMessage:"Please enter valid 10 digit mobile number."})
 			return false;

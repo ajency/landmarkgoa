@@ -106,6 +106,12 @@ class signInModal extends React.Component {
 	}
 
 	signInWithPhoneNumber(){
+		const regex = /^[0-9]*$/;
+		const results = this.state.phoneNumber.match(regex);
+		if(!results) {
+			this.setState({errorMessage: 'Please enter valid 10 digit mobile number.'})
+			return false;
+		}
 		if(this.state.phoneNumber.length < 10) {
 			this.setState({errorMessage: 'Please enter valid 10 digit mobile number'})
 			return false;
@@ -151,7 +157,10 @@ class signInModal extends React.Component {
 						})
 			    }).catch( (error) => {
 			    	window.removeCartLoader();
-			      	console.log("Error :  SMS not sent", error);
+					  console.log("Error :  SMS not sent", error);
+					  if(error.message =="TOO_SHORT") {
+						error.message = "Please enter valid 10 digit mobile number."
+					  }
 			      	this.setState({errorMessage : error.message, disableButtons : false, showSignInLoader : false, showCapta : false});
 			    });
 		});
