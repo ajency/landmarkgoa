@@ -145,11 +145,13 @@ class VerifyMobile extends Component {
     }
 
     verifyOtp() {
+        window.addCartLoader()
         console.log("this.state.otp ==>", this.state.otp);
         this.setState({ otpErrorMsg: '' });
         
         if(this.state.otp.length < 6 || this.state.otp.length > 6) {
             console.log("invalid otp");
+            window.removeCartLoader()
             
             this.setState({ otpErrorMsg: "Please enter valid 6 digit verification code"});
             return false;   
@@ -169,6 +171,7 @@ class VerifyMobile extends Component {
                             window.assignAddressToCart(null, true, this.state.phoneNumber)
                             .then((res) => {
                                 if(res.success) {
+                                    window.removeCartLoader()
                                     this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
                                 } else {
                                     window.removeCartLoader();
@@ -181,6 +184,7 @@ class VerifyMobile extends Component {
                             })
                         }
                     } else {
+                        window.removeCartLoader()
                         this.props.history.push('/cart/select-address');
                     }
                 });
