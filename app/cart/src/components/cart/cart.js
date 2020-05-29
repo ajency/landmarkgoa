@@ -230,7 +230,7 @@ class Cart extends Component {
 													
 														if(res.success) {
 															window.removeCartLoader();
-															this.setState({cartSummary:res.cart, redirectToSummary:true,})
+															this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
 														} else {
 															console.log(" no success assignAddressToCart");
 															window.removeCartLoader();
