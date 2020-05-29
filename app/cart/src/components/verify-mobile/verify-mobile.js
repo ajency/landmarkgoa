@@ -184,8 +184,54 @@ class VerifyMobile extends Component {
                             })
                         }
                     } else {
-                        window.removeCartLoader()
-                        this.props.history.push('/cart/select-address');
+                        if(window.userDetails){
+                            window.addCartLoader()
+                            if(window.userDetails.hasOwnProperty('default_address_id')) {
+                                const address_id =  window.userDetails.default_address_id
+                                if(address_id) {
+                                    const deliverable = await this.isAddressDeliverable(address_id)
+                                    if (deliverable) {
+                                        console.log("rsrrrr");
+                                        try {
+                                        
+                                            const res =	await window.assignAddressToCart(address_id)
+                                        
+                                            if(res.success) {
+                                                window.removeCartLoader();
+                                                this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
+                                            } else {
+                                                console.log(" no success assignAddressToCart");
+                                                window.removeCartLoader();
+                                                this.props.history.push('/cart/select-address');	
+                                            }
+                                
+                                        } catch (error) {
+                                            console.log("error in assignAddressToCart");
+                                                window.removeCartLoader();
+                                                this.props.history.push('/cart/select-address');	
+                                        }
+                                        
+                                    } else {
+                                        console.log("not isAddressDeliverable");
+                                        window.removeCartLoader();
+
+                                        this.props.history.push('/cart/select-address');
+                                    }
+                                } else {
+                                        console.log("on address id");
+                                        window.removeCartLoader();
+                                        this.props.history.push('/cart/select-address');
+                                }
+                            } else {
+                                console.log("no default_address_id");
+                                                window.removeCartLoader();
+                                                this.props.history.push('/cart/select-address');
+                            }
+                        } else {
+                            console.log("no userDetails");
+                            window.removeCartLoader();
+                            this.props.history.push('/cart/select-address');
+                        }
                     }
                 });
             })
