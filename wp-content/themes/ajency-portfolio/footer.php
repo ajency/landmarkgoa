@@ -42,6 +42,11 @@
                                     Instagram
                                 </a>
                             </h4>
+                            <h4 class="font-weight-light">
+                                <a class="d-block h4 font-weight-light" href="https://wa.me/917770004258?text=Hi">
+                                    Whatsapp
+                                </a>
+                            </h4>
                             <!-- <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="https://www.linkedin.com/company/ajency-in">
                                     Linkedin
@@ -129,7 +134,7 @@
 
 <script src="<?php echo get_template_directory_uri(); ?>/js/bootstrap-notify.min.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_16" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js" type="text/javascript">
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
