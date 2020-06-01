@@ -42,6 +42,11 @@
                                     Instagram
                                 </a>
                             </h4>
+                            <h4 class="font-weight-light">
+                                <a class="d-block h4 font-weight-light" href="https://wa.me/917770004258?text=Hi">
+                                    Whatsapp
+                                </a>
+                            </h4>
                             <!-- <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="https://www.linkedin.com/company/ajency-in">
                                     Linkedin
