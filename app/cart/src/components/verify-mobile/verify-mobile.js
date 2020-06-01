@@ -21,6 +21,16 @@ class VerifyMobile extends Component {
     }
 
     componentDidMount() {
+        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged((user) => {
+			console.log("check user ==>", user);
+			if(user){
+                this.props.history.push('/cart');
+			}
+			else{
+				
+			}
+			unsubscribeOnAuthStateChanged();
+		});
         console.log("check state ==>", this.props.location, this.props.history)
         this.setState({ phoneNumber: this.props.location.state.phoneNumber , hide_skip_otp:this.props.location.state.hide_skip_otp });
         this.signInWithPhoneNumber();
