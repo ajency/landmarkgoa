@@ -248,6 +248,8 @@ function locationHashChanged() {
     }
     else if(!location.hash){
         closeCart();
+    } else if(location.hash === '#/') {
+        closeCart();
     }
 }
 
