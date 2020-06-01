@@ -129,7 +129,7 @@
 
 <script src="<?php echo get_template_directory_uri(); ?>/js/bootstrap-notify.min.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_16" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js" type="text/javascript">
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
