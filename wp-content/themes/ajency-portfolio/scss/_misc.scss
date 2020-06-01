@@ -326,12 +326,10 @@
 
 .main-post-img img{
     height: 100%;
-    position: absolute;
-    left: 0;
     right: 0;
     top: 0;
-    bottom: 0;
     object-fit: cover;
+    width: 60%;
 }
 
 #footer section{
@@ -346,7 +344,9 @@
        width: 100%;
        padding-right: 0;
     }
-    
+    .main-post-img{
+        display: none;
+    }
     .right-content.wpb_column{
         display: none;
     }
