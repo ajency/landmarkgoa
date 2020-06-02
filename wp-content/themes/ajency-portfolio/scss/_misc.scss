@@ -333,7 +333,14 @@
 }
  
 #footer section{
-    width: 50%;
+    width: 40%;
+    .container {
+        &.p5{
+            @media (min-width: 992px) and (max-width: 1399.98px) {
+                padding-left: 15px;
+            }
+        }
+    }
 }
     
 @media (max-width: 991px){
