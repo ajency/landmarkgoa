@@ -241,14 +241,14 @@ $('.bread-crumb__menu').on('click', function(e) {
 });
 
 function locationHashChanged() {
-    console.log("location hash changed", location.hash);
-    if (location.hash === '#/cart' || location.hash === '#/order-summary') { 
+    console.log("location hash changed", window.location.hash);
+    if (window.location.hash === '#/cart' || window.location.hash === '#/order-summary') { 
         loadCartApp();
         showCartSlider()
     }
-    else if(!location.hash){
+    else if(!window.location.hash){
         closeCart();
-    } else if(location.hash === '#/') {
+    } else if(window.location.hash === '#/') {
         closeCart();
     }
 }
