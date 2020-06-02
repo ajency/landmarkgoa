@@ -241,7 +241,7 @@ $('.bread-crumb__menu').on('click', function(e) {
 });
 
 function locationHashChanged() {
-    console.log("location hash changed");
+    console.log("location hash changed", location.hash);
     if (location.hash === '#/cart' || location.hash === '#/order-summary') { 
         loadCartApp();
         showCartSlider()

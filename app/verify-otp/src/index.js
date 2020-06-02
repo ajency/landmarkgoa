@@ -21,19 +21,6 @@ class verifyOtp extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-		let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged((user) => {
-			console.log("check user ==>", user);
-			if(user){
-                this.props.history.push('/cart');
-			}
-			else{
-				
-			}
-			unsubscribeOnAuthStateChanged();
-		});
-	}
-
 	render() {
 		const {hide_skip_otp} =this.state
 		return (

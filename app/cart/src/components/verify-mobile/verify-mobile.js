@@ -21,16 +21,6 @@ class VerifyMobile extends Component {
     }
 
     componentDidMount() {
-        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged((user) => {
-			console.log("check user ==>", user);
-			if(user){
-                this.props.history.push('/cart');
-			}
-			else{
-				
-			}
-			unsubscribeOnAuthStateChanged();
-		});
         console.log("check state ==>", this.props.location, this.props.history)
         this.setState({ phoneNumber: this.props.location.state.phoneNumber , hide_skip_otp:this.props.location.state.hide_skip_otp });
         this.signInWithPhoneNumber();
@@ -182,11 +172,11 @@ class VerifyMobile extends Component {
                             .then((res) => {
                                 if(res.success) {
                                     window.removeCartLoader()
-                                    this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+                                    this.props.history.replace({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
                                 } else {
                                     window.removeCartLoader();
                                     if(res.code =='PAYMENT_DONE') {
-                                        this.props.history.push('/cart');
+                                        this.props.history.replace('/cart');
                                     }
                                 }
                             }).catch(err => {
@@ -208,39 +198,39 @@ class VerifyMobile extends Component {
                                         
                                             if(res.success) {
                                                 window.removeCartLoader();
-                                                this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
+                                                this.props.history.replace({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
                                             } else {
                                                 console.log(" no success assignAddressToCart");
                                                 window.removeCartLoader();
-                                                this.props.history.push('/cart/select-address');	
+                                                this.props.history.replace('/cart/select-address');	
                                             }
                                 
                                         } catch (error) {
                                             console.log("error in assignAddressToCart");
                                                 window.removeCartLoader();
-                                                this.props.history.push('/cart/select-address');	
+                                                this.props.history.replace('/cart/select-address');	
                                         }
                                         
                                     } else {
                                         console.log("not isAddressDeliverable");
                                         window.removeCartLoader();
 
-                                        this.props.history.push('/cart/select-address');
+                                        this.props.history.replace('/cart/select-address');
                                     }
                                 } else {
                                         console.log("on address id");
                                         window.removeCartLoader();
-                                        this.props.history.push('/cart/select-address');
+                                        this.props.history.replace('/cart/select-address');
                                 }
                             } else {
                                 console.log("no default_address_id");
                                                 window.removeCartLoader();
-                                                this.props.history.push('/cart/select-address');
+                                                this.props.history.replace('/cart/select-address');
                             }
                         } else {
                             console.log("no userDetails");
                             window.removeCartLoader();
-                            this.props.history.push('/cart/select-address');
+                            this.props.history.replace('/cart/select-address');
                         }
                     }
                 });
@@ -335,11 +325,11 @@ class VerifyMobile extends Component {
                         .then((res) => {
                             if(res.success) {
                                 window.removeCartLoader();
-                                this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+                                this.props.history.replace({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
                             } else {
                                 window.removeCartLoader();
                                 if(res.code =='PAYMENT_DONE') {
-                                    this.props.history.push('/cart');
+                                    this.props.history.replace('/cart');
                                 }
                             }
                         }).catch(err => {
@@ -348,7 +338,7 @@ class VerifyMobile extends Component {
                     }
                 } else {
                     window.removeCartLoader();
-                    this.props.history.push('/cart/select-address');
+                    this.props.history.replace('/cart/select-address');
                 }
 			})
 			.catch((error)=>{
