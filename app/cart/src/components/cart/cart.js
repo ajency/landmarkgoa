@@ -170,7 +170,7 @@ class Cart extends Component {
 	handleCheckout(e) {
 		window.getUserDetails().then(async (user_details)=>{
 			console.log("user_details ==>", user_details);
-			if(!user_details || !user_details.phone){
+			if(!user_details || !user_details.phone || !user_details.verified){
 				this.props.history.push('/cart/login');
 			}
 			else{
