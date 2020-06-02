@@ -22,7 +22,7 @@ class Item extends Component {
 							{this.props.item.attributes.title}
 						</div>	
 						<div className="d-flex justify-content-between">
-							<div className="product-size-c font-italic">
+							<div className="product-size-c font-italic text-capitalize">
 								{this.props.item.attributes.size}
 							</div>
 							<div className="d-flex align-items-center">
@@ -35,6 +35,7 @@ class Item extends Component {
 								</div>
 							</div>								
 						</div>
+						{this.getComboText(this.props.item.attributes.size)}
 					</div>
 				</div>
 				<div>
@@ -43,6 +44,14 @@ class Item extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	getComboText(size) {
+		if(size == "combo"){
+			return (
+				<div class="text-silver combo-text pl-0">Combo of Bowl + Homemade Lemonade Sweetened With Jaggery</div>
+			)
+		}
 	}
 
 	checkItemDiscount(){
@@ -57,14 +66,14 @@ class Item extends Component {
 
 	checkServiceability(){
 		if(!this.props.item.deliverable)
-			return <div className="alert-danger p-15">Cannot be delivred at your location</div>
+			return <div className="alert-danger p-15 mb-3">Cannot be delivered at your location</div>
 		if(!this.props.item.availability)
-			return <div className="alert-danger p-15">Quantity not available</div>
+			return <div className="alert-danger p-15 mb-3">Quantity not available</div>
 	}
 
 	displayApiErrorMsg(){
-		if(this.state.apiErrorMsg){
-			return <div className="alert-danger p-15">{this.state.apiErrorMsg}</div>
+		if(this.state.apiErrorMsg && this.props.item.deliverable && this.props.item.availability ){
+			return <div className="alert-danger p-15 mb-3">{this.state.apiErrorMsg}</div>
 		}
 	}
 

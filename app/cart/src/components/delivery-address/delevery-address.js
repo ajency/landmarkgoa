@@ -5,6 +5,7 @@ import editImage from '../../assets/images/Edit.png';
 class DeliveryAddress extends Component {
 	constructor(props) {
 		super(props);
+		this.changeShippingAddress = this.changeShippingAddress.bind(this)
 	}
 	render() {
 		return (
@@ -16,13 +17,7 @@ class DeliveryAddress extends Component {
 						<span className="text-green d-inline-block cursor-pointer" onClick={() => this.openChangeLocationModal()}>. Edit</span>
 					</div>
 
-					{/*<div className="address-details-inner font-weight-light mt-3 pt-3 text-black border-grey-top">
-						<span className="text-green font-weight-semibold">Mobile No.: </span> 
-						<span id="cart-delivery-address"> 9823353495 </span>
-					</div>*/}
-					{/* <div className="btn-edit" onClick={() => this.openChangeLocationModal()}>
-						<img src={editImage} className="app-log" alt="Edit address" title="Edit address"/>
-					</div> */}
+					{this.showSummaryContent()}
 				</div>
 			</div>
 		);
@@ -30,7 +25,38 @@ class DeliveryAddress extends Component {
 
 	openChangeLocationModal(){
 		console.log("openChangeLocationModal");
-		 window.showGpsModalPrompt(true);
+		if(!this.props.showSummaryContent){
+		 	window.showGpsModalPrompt(true);
+		}
+		else{
+			this.props.navigateToAddress();
+		}
+	}
+
+	showSummaryContent() {
+		if(this.props.showSummaryContent) {
+			return (
+				<div>
+					<div className="address-details-inner font-weight-light mt-3 pt-3 border-grey-top">
+						<div className="">
+							<span className="text-green font-weight-semibold">Name: </span> 
+							<span id="cart-delivery-address"> {this.props.userDetails ? this.props.userDetails.name:''} </span>
+						</div>
+						<div className="">
+							<span className="text-green font-weight-semibold">Mobile No: </span> 
+							<span id="cart-delivery-address"> {this.props.userDetails ? this.props.userDetails.phone:''} </span>
+						</div>						
+					</div>
+					{/*<div className="btn-edit" onClick={() => this.changeShippingAddress()}>
+						<img src={editImage} className="app-log" alt="Edit address" title="Edit address"/>
+					</div>*/}
+				</div>
+			);
+		}
+	}
+
+	changeShippingAddress() {
+		this.props.history.push('/cart/select-address');
 	}
 }
 

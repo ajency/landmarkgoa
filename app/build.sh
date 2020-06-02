@@ -1,5 +1,7 @@
 removePreBuildFolder(){
 	rm -rf pre_build
+	cp env/env.json env.json
+	node prebuild.js
 }
 
 buildAddToCart(){
@@ -32,12 +34,25 @@ buildViewCart(){
 	npm run build
 }
 
+buildVariationSelection(){
+	cd ../variant-selection-popup
+	npm install
+	npm run build
+}
+
+buildFirebaseFunctions(){
+	cd ../firebase
+	npm install
+	node addfirebasecred.js
+	cp src/firebase-functions.js ../build/site/firebase-functions.js
+	cd ..
+}
+
 buildCartApp(){
 	cd ../cart
 	npm install
 	npm run build
 	node postbuild.js
-	cd ..
 }
 
 
@@ -49,5 +64,7 @@ buildDeliveryAddress
 buildSignIn
 buildVerifyOtp
 buildViewCart
+buildVariationSelection
 buildCartApp
+buildFirebaseFunctions
 removePreBuildFolder

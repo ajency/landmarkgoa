@@ -31,12 +31,16 @@
 			position: relative;
 			padding-left: 20px;
 			right: 75px;
-			img{
+			i{
 				position: absolute;
 				top:50%;
 				left: 0;
 				transform: translateY(-50%);
 			}
+		}
+		&-name{
+			position: relative;
+			top: 7px;
 		}
 	}
 }

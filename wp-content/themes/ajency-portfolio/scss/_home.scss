@@ -343,15 +343,19 @@
     }
 }
 .logo {
-    @media (min-width: 991.98px) and (max-width: 1199.98px) {
-        float: left !important;
+    //min-height: 250px;
+    @media (min-width: 992px) and (max-width: 1400px) {
+        width: 170px !important;
+        //min-height: 170px;
     }
     @media (min-width: 768px) and (max-width: 991px) {
-        width: 70px !important;
+        width: 110px !important;
+        //min-height: 110px;
         margin: 0 auto;
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
-        width: 45px !important;
+        width: 150px !important;
+        //min-height: 150px;
         margin: 0 auto;
     }
 }
@@ -365,15 +369,26 @@
 }
 nav {
     width: 100%;
-    // position: absolute;
-    // box-shadow: 0 2px 6px 0 rgba(0,0,0,.3);
     padding-bottom: 16px;
+    &.bg-white{
+        padding-top: 15px !important;
+        @media (min-width: 992px) and (max-width: 1400px) {
+            padding-top: 15px !important;
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            padding-top: 15px !important;
+        }
+        @media (min-width: 320px) and (max-width: 767.98px) {
+            padding-top: 15px !important;
+        }
+    }    
     @media (min-width: 768px) and (max-width: 991px) {
         padding-bottom: 16px;
         z-index: 999;
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
         padding-bottom: 16px;
+        padding-top: 50px !important;
         z-index: 999;
     }
     .navbar-nav{
@@ -626,6 +641,9 @@ nav {
 }
 .img-fluid {
     width: 100%;
+    &.auto-width{
+        width: auto;
+    }
 }
 body .fixed-header {
     z-index: 1;
@@ -788,4 +806,50 @@ body .fixed-header {
 }
 body{
     overflow-x: hidden;
+}
+
+.full-screen-section{
+    min-height: 100vh;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1, p, img{
+        -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+        -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+        -o-animation: fadein 2s; /* Opera < 12.1 */
+        animation: fadein 2s;
+    } 
+    .aj-home-title{
+        @media (min-width: 992px) and (max-width: 1450px) {
+            font-size: 40px !important;
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            font-size: 45px !important;
+        }
+        @media (max-width: 767px) {
+            font-size: 5.7vw;
+        }
+    }
+    .body-text{
+        &.small-laptop-text{
+            @media (max-width: 767px) {
+                font-size: 16px;
+                line-height: 23px;
+            }
+        }
+    }
+}
+
+.bg-image-animation{
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #F6F6F6;
+    background: linear-gradient(to right, #f6f7f9 0%, #e9ebee 20%, #f6f7f9 40%, #f6f7f9 100%);
+    background-size: 800px 504px;
 }

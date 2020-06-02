@@ -11,46 +11,51 @@
                     <div class="row no-gutters">
                         <div class="col-md-4 contact-details">
                             <h4 class="font-weight-light">
-                                <a class=" d-block h4 font-weight-light" href="tel:09975931402" onclick="ga('send', 'event', 'telephone', 'CallNow', 'tel:09975931402');">
-                                    +91 99759 31402
+                                <a class=" d-block h4 font-weight-light" href="tel:07770004258" onclick="ga('send', 'event', 'telephone', 'CallNow', 'tel:07770004258');">
+                                    +91 7770004258
                                 </a>
                             </h4>
                             <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="mailto:talktous@ajency.in" onclick="ga('send', 'event', 'footerid', 'Contact', 'Footer - talktous@ajency.in');">
-                                    talktous@ajency.in
+                                    avanti@greengrainbowl.com
                                 </a>
-                                <br/>
+                                <!-- <br/>
                                 <span class="h5">
                                     Career Opportunities:
                                 </span>
                                 <a class=" d-block h4 font-weight-light" href="mailto:workwithus@ajency.in">
                                     workwithus@ajency.in
-                                </a>
+                                </a> -->
                             </h4>
                         </div>
                         <div class="col-md-5 mt-5 mt-md-0 contact-details">
                             <h4 class="font-weight-light w-75">
-                                Panjim Convention Center, Panjim. Goa, India.
-                                <a class=" font-weight-light h5 " href="https://goo.gl/maps/qmCNWotzNhC2" target="_blank">
+                                Green Grain Bowl Kitchen, 1st floor Panjim convention center, Mala. 
+                                <a class=" font-weight-light h5 " href="//shorturl.at/fgpq1" target="_blank">
                                     (Map)
                                 </a>
                             </h4>
                         </div>
                         <div class="col-md-3 mt-5 mt-md-0 contact-details-1">
                             <h4 class="font-weight-light">
-                                <a class="d-block h4 font-weight-light" href="https://www.facebook.com/Ajency.in/">
-                                    Facebook
+                                <a class="d-block h4 font-weight-light" href="https://www.instagram.com/greengrainbowl/">
+                                    Instagram
                                 </a>
                             </h4>
                             <h4 class="font-weight-light">
+                                <a class="d-block h4 font-weight-light" href="https://wa.me/917770004258?text=Hi">
+                                    Whatsapp
+                                </a>
+                            </h4>
+                            <!-- <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="https://www.linkedin.com/company/ajency-in">
                                     Linkedin
                                 </a>
-                            </h4>
+                            </h4> -->
                         </div>
                     </div>
                     <div class="mt-5">
-                        (C) 2018 Digital Dwarves Pvt Ltd. All Right Reserved
+                        (C) Green Grain Bowl 2019 All Right Reserved
                     </div>
                 </div>
             </div>
@@ -68,17 +73,23 @@
 </div>
 
 <?php
-    $app_url = APP_URL;
-    $json_path = JSON_PATH;
-    $js_json = json_decode(file_get_contents($json_path.'/react_component_file_hash.json'), true);
-    $css_json = json_decode(file_get_contents($json_path.'/cart_app_css_file_hash.json'), true);
+    $build_location = "/site";
+    if (is_front_page()) $build_location = "/site";
+    else if (is_page_template('template-oyo.php')) $build_location = "/oyo";
+    else if (is_page_template('template-oyofourth.php')) $build_location = "/oyofourth";
+    else if (is_page_template('template-oyofifth.php')) $build_location = "/oyofifth";
+    $app_url = APP_URL . $build_location;
+    $json_path = JSON_PATH . $build_location;
+    $site_url = get_site_url();
+    $js_json = json_decode(file_get_contents($json_path.'/react_component_file_hash.json?time='.current_time('timestamp')), true);
+    $css_json = json_decode(file_get_contents($json_path.'/cart_app_css_file_hash.json?time='.current_time('timestamp')), true);
     // $show_pn = SHOW_PN;
     $show_pn = true;
     
  if (!is_page_template('archive.php') && !is_singular('post') && !is_page_template('template-blogs.php') && !is_page_template('template-fullwidth.php') ) { ?>
     <noscript id="deferred-styles">
         <link href="<?php echo get_template_directory_uri(); ?>/css/custom.css" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo get_bloginfo('url');  ?>/wp-content/themes/ajency-portfolio/style.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="<?php echo get_bloginfo('url');  ?>/wp-content/themes/ajency-portfolio/style.css" rel="stylesheet" type="text/css"/> -->
          <!--<link href="<?php echo get_template_directory_uri(); ?>/css/zoom.css" rel="stylesheet" type="text/css"/>-->
         <!--  <link rel="stylesheet" type="text/css" href="http://filamentgroup.github.io/enlarge/src/enlarge.css">-->
     </noscript>
@@ -98,6 +109,8 @@
           var react_css_file_hashes = <?php echo json_encode($css_json); ?>;
           var app_url = "<?php echo $app_url; ?>";
           var show_pn = "<?php echo $show_pn; ?>";
+          var site_url = "<?php echo $site_url?>";
+          console.log(site_url);
           console.log("show push notifications ==>", true);
     </script>
 <?php } ?>
@@ -110,10 +123,8 @@
       lazySizesConfig.loadMode = 3;
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/js/animation.gsap.js" type="text/javascript"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/combine.js" type="text/javascript">
+</script>
 
 <script>
     // init controller
@@ -121,99 +132,33 @@
     var controller2 = new ScrollMagic.Controller();
 </script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.scrollify.js" type="text/javascript"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/bootstrap-notify.min.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/combine.js" type="text/javascript">
-</script>
-<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js?_13" type="text/javascript">
+<script src="<?php echo get_template_directory_uri(); ?>/js/custom.js" type="text/javascript">
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
 
-<script src="<?php echo get_template_directory_uri(); ?>/js/firebase-config.js" type="text/javascript">
-</script>
+<script src="https://unpkg.com/axios@0.19.0/dist/axios.min.js"></script>
 
-<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
 <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script> -->
 <!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> -->
-<script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/add-to-cart.<?php echo $js_json['add-to-cart'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/delivery-address-slider.<?php echo $js_json['delivery-address-slider'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/sign-in.<?php echo $js_json['sign-in'];?>.js" type="text/javascript"></script>
-<script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript"></script>
+<script src="<?php echo $app_url; ?>/firebase-functions.js?_1" type="text/javascript"></script>
+<!-- <script src="<?php echo $app_url; ?>/view-cart.<?php echo $js_json['view-cart'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/variant-selection-popup.<?php echo $js_json['variant-selection-popup'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/add-to-cart.<?php echo $js_json['add-to-cart'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/delivery-address-slider.<?php echo $js_json['delivery-address-slider'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/sign-in.<?php echo $js_json['sign-in'];?>.js" type="text/javascript" defer></script>
+<script src="<?php echo $app_url; ?>/verify-otp.<?php echo $js_json['verify-otp'];?>.js" type="text/javascript" defer></script> -->
+<script src="<?php echo $app_url; ?>/react-components.<?php echo $js_json['react-components'];?>.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    if ($(window).innerWidth() < 767) {
-
-        $('.product-list').find('.product-list-item:last').removeClass('effect');
-
-        // build scene
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger1", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardone", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger1", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger2", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardtwo", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger2", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger3", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardthree", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger3", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger4", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardfour", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger4", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger5", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardfive", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger5", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-        var scene = new ScrollMagic.Scene({
-                            triggerElement: ".effect.trigger6", 
-                            triggerHook: 'onLeave', 
-                            duration: '150%'
-                        })
-                        .setTween(".cardsix", { scale: 0.75, opacity: 0}) // the tween durtion can be omitted and defaults to 1
-                        .setPin(".effect.trigger6", {pushFollowers: false})
-                        // .offset(-10)
-                        // .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
-                        .addTo(controller);
-
-    }
+    
 </script>
 
 
@@ -227,16 +172,26 @@
             navigator.serviceWorker.register(sw).then(function(registration) {
                 // Registration was successful
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                messaging.useServiceWorker(registration);
+                // messaging.useServiceWorker(registration);
             }, function(err) {
                 // registration failed :(
                 console.log('ServiceWorker registration failed: ', err);
             });
         });
     }
+
+    $(document).ready(function(){
+        if(window.location.href == "https://greengrainbowl.com/oyo/"){
+            setTimeout(function(){
+                $('html,body').addClass('hide-scroll');
+                $('#lb-modal').addClass('open');
+            });
+        }
+        $('#close-modal').click(function(){
+            $('html,body').removeClass('hide-scroll');
+            $('#lb-modal').removeClass('open');
+        });
+    });
 </script>
-
-    <?php wp_footer(); ?>
-
     </body>
 </html>

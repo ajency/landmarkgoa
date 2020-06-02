@@ -15,9 +15,8 @@ class gpsModalPrompt extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
+			webSiteLink : process.env.REACT_APP_WEBSITE_LINK,
 			locations : [],
 			locError : '',
 			gpsError : '',
@@ -27,48 +26,60 @@ class gpsModalPrompt extends React.Component {
 			showNoAddressMsg : false,
 			settingUserLocation : false,
 			notLoggedIn : false,
-			showSignInBtn : false
+			showSignInBtn : false,
+			businessId: process.env.REACT_APP_BUSINESS_ID,
+			siteMode: process.env.REACT_APP_SITE_MODE
 		}
-		firebase.auth().onAuthStateChanged((user) => {
-			console.log("check user ==>", user);
-			if(user){
-				console.log("user found ==== setting showSign in button to false");
-				this.setState({showSignInBtn : false})
-			}
-			else{
-				this.setState({showSignInBtn : true})
-			}
+		
+	}
 
-		  	if (user && !this.state.notLoggedIn) {
-		    	user.getIdToken().then((idToken) => {
-		   			this.fetchAddresses(idToken);        
-		        });
-		  	}
-		  	else {
-		  		this.setState({notLoggedIn : true })
-		  		console.log("no user");
-		  	}
-		});
+	componentDidMount(){
+		if(firebase && firebase.app()){
+			let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
+				console.log("check user ==>", user);
+				if(user && !user.isAnonymous){
+					console.log("user found ==== setting showSign in button to false");
+					this.setState({showSignInBtn : false})
+				}
+				else{
+					this.setState({showSignInBtn : true})
+				}
+
+			  	if (user && !this.state.notLoggedIn && !user.isAnonymous) {
+			    	user.getIdToken().then((idToken) => {
+			   			this.fetchAddresses();        
+			        });
+			  	}
+			  	else {
+			  		this.setState({notLoggedIn : true })
+			  		console.log("no user");
+			  	}
+			  	// unsubscribeOnAuthStateChanged();
+			});
+		}
 	}
 
 	render() {
 		return (
 		    <div className="slide-in" id="gpsModal">
 			  <div className="slide-in-header header-container d-flex align-items-center">
-			      <div className="app-name d-flex align-items-center">				
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+			      <div className="app-name d-flex align-items-center">			
+			          <img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	  <i class="sprite sprite-checkout"></i>
 			          Secure <br/>Checkout
 			      </div>
 			      <h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.closeGpsSlider()}>
-			          <span aria-hidden="true"><img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/remove.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
+			          <span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
 			      {this.showSignInButton()}
-			      <h3 className="mt-4 h1 ft6">Add delivery address</h3>
+					<div className="position-relative title-wrap pl-0">
+						{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
+						<h3 className="mt-4 h1 ft6">Add delivery address</h3>
+					</div>
 			      <h4 className="font-weight-light mt-4 pb-4">
 			        We currently serve at Panjim, Porvorim & its neighbourhood.
 			      </h4>
@@ -86,7 +97,7 @@ class gpsModalPrompt extends React.Component {
 						{this.checkLocationErrorMsg()}
 					</div>
 
-			      	<ul style={locationStyle} className="pl-0 h5 mb-0">
+			      	<ul style={locationStyle} className="pl-0 h5 mb-0 add-list">
 						{this.getAutoCompleteLocations()}
 					</ul>
 
@@ -109,8 +120,20 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	checkGpsErrorMsg(){
-		if(this.state.gpsError){
-			return <div className="alert-danger">{this.state.gpsError}</div>
+		if(this.state.gpsError == 'permission_denied'){
+			return (<div className="alert-danger p-15 mb-3">
+					<p>You have blocked GreenGrainBowl from tracking your location. <a target="_blank" href="https://www.lifewire.com/denying-access-to-your-location-4027789">Know more</a> </p> 
+					<p className="mb-0"> Or use location search option below.</p>
+				</div>
+			)
+		}
+		else if(this.state.gpsError == 'other_error'){
+			return (
+				<div className="alert-danger p-15 mb-3">
+					<p>Error in getting current location using GPS.</p> 
+					<p>Use location search option below.</p>
+				</div>
+			)
 		}
 	}
 
@@ -120,8 +143,9 @@ class gpsModalPrompt extends React.Component {
 					<div>
 						<div className="text-center h4 mb-0 font-weight-light">-OR-</div>
 						<div className="position-relative mb-3 mt-3 text-center">
-			        		<input type="text" className="border-grey-2 w-100 rounded-0 p-3 h5 mb-0 plceholder-text" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} />
-			       			<img className="position-absolute-right20" src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/search.png"/>
+			        		<input onFocus={this.scrollTop} type="text" className="text-grey border-green-2 w-100 rounded-0 p-3 h5 mb-0 outline-0" name="search" placeholder="Search Location" value={this.state.searchText} onChange={e => {this.autoCompleteLocation(e.target.value)}} autoComplete="off"/>
+							{/* <i class="sprite sprite-search position-absolute-right20"></i> */}
+							<i class="fa fa-search position-absolute-right20 text-primary"></i>
 			      		</div>
 			      	</div>
 			)
@@ -139,7 +163,7 @@ class gpsModalPrompt extends React.Component {
 			)
 		else if(!this.state.settingUserLocation)
 			return (
-				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location text-grey border-green-2  w-100 p-3 text-left h5 mb-0 position-relative">Use Current Location <img className="position-absolute-right20" src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/location.png"/></button>
+				 <button onClick={() => this.getLocation()} type="button" className="btn-reset btn-location text-grey border-green-2  w-100 p-3 text-left h5 mb-0 position-relative">Use Current Location <i class="sprite sprite-location position-absolute-right20"></i></button>
 			)
 	}
 
@@ -159,11 +183,11 @@ class gpsModalPrompt extends React.Component {
 		if(this.state.addresses && this.state.addresses.length && !this.state.locations.length && !this.state.settingUserLocation && !this.state.fetchingGPS){
 			let addresses = this.state.addresses.map((address)=>{
 				return (
-					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.address.lat_long, address.address.formatted_address)}>
-						{this.getAddressIcon(address.address.type)}
+					<li key={address.id} className="cursor-pointer address saved-address-item" onClick={() => this.setUserLocations(address.lat_long, address.formatted_address)}>
+						{this.getAddressIcon(address.type)}
 						<div className="address-text">
-							<h5>{address.address.type}</h5>
-							<span className=" font-weight-light h6">{address.address.address}, {address.address.landmark}, {address.address.city}, {address.address.state}, {address.address.pincode}</span>
+							<h5>{address.type}</h5>
+							<span className=" font-weight-light h6">{address.address}, {address.landmark}, {address.city}, {address.state}, {address.pincode}</span>
 						</div>
 					</li>
 				)
@@ -181,19 +205,20 @@ class gpsModalPrompt extends React.Component {
 
 	getAddressIcon(type){
 		console.log("type :  ", type);
-		let src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/map.png"
+		let src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/map.png"
 		if(type == 'home')
-			src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/home.png"
+			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/home.png"
 		else if(type == 'office')
-			src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/office.png"
+			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/office.png"
 		return (<img src={src} className="address-icon"/>)
 	}
 
 	getAutoCompleteLocations(){
 		if(this.state.locations.length){
 			let locs =  this.state.locations.map((loc)=>
-				<li key={loc.id} className="btn p-1" onClick={() => {this.reverseGeocode(loc)}}>
-					{loc.description}
+				<li key={loc.id} className="btn p-1 position-relative" onClick={() => {this.reverseGeocode(loc)}}>
+					<div class="address-icon"><i class="fas fa-map-marker-alt"></i></div>
+					<div class="address-text">{loc.description}</div>
 				</li>
 			);
 			this.scrollTop();
@@ -207,9 +232,9 @@ class gpsModalPrompt extends React.Component {
 				)
 		}
 
-		if(!this.state.locations.length && this.state.searchText.length > 2){
+		if(!this.state.locations.length && this.state.searchText.length > 2 && !this.state.settingUserLocation){
 			return (
-					<div>
+					<div className="no-results-msg">
 						No results, please enter a valid street address
 					</div>
 				);
@@ -218,7 +243,7 @@ class gpsModalPrompt extends React.Component {
 
 	checkLocationErrorMsg(){
 		if(this.state.locError){
-			return <div className="alert-danger">{this.state.locError}</div>
+			return <div className="alert-danger p-15 mb-3">{this.state.locError}</div>
 		}
 	}
 
@@ -297,7 +322,7 @@ class gpsModalPrompt extends React.Component {
 				if(res.data.status === "OK"){
 					this.setState({settingUserLocation : false, gpsError : ''});
 					if(loc)
-						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address) 
+						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.name+', '+res.data.result.formatted_address);
 					else if(latlng)
 						this.setUserLocations(latlng, res.data.results[0].formatted_address);
 				}
@@ -316,43 +341,36 @@ class gpsModalPrompt extends React.Component {
 	}
 
 	setUserLocations(lat_lng, formatted_address){
-		this.setSliderLoader();
-		this.setState({settingUserLocation : true});
-		let cart_id = window.readFromLocalStorage('cart_id');
-		if(cart_id){
-			let url = this.state.apiEndPoint + "/anonymous/cart/change-location";
-			let body = {
-				cart_id : cart_id,
-				lat_long : lat_lng,
-				formatted_address : formatted_address
-			};
-			axios.post(url, body)
-			.then((res) => {
-				this.removeSliderLoader();
-				this.updateLocationUI(lat_lng, formatted_address);
-				this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
-				this.closeGpsModal();
-
-			})
-			.catch((error)=>{
-				this.removeSliderLoader();
-				this.setState({ fetchingGPS : false, settingUserLocation : false});
-				console.log("error in updating cart location ==>", error);
-				let msg = error.message ? error.message : error;
-				this.setState({locError : msg});
-			})
+		try{
+			this.setSliderLoader();
+			this.setState({settingUserLocation : true});
+			let cart_id = window.brewCartId(this.state.siteMode, this.state.businessId);
+			window.getCartByID(cart_id).then((res)=>{
+				if(res){
+					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{
+						this.removeSliderLoader();
+						this.updateLocationUI(lat_lng, formatted_address);
+						this.setState({ fetchingGPS : false, searchText : '', settingUserLocation : false});
+						this.closeGpsModal();
+					})
+				}
+				else{
+					this.removeSliderLoader();
+					this.setState({ fetchingGPS : false, searchText: '', settingUserLocation : false});
+					this.updateLocationUI(lat_lng, formatted_address);
+					this.closeGpsModal();
+				}
+			})	
 		}
-		else{
+		catch(error){
 			this.removeSliderLoader();
 			this.setState({ fetchingGPS : false, searchText: '', settingUserLocation : false});
 			this.updateLocationUI(lat_lng, formatted_address);
 			this.closeGpsModal();
-		}		
+		}	
 	}
 
 	updateLocationUI(lat_lng, formatted_address){
-		// document.cookie = "lat_lng=" + lat_lng[0] + ',' +lat_lng[1] + ";path=/";
-		// document.cookie = "formatted_address=" + formatted_address + ";path=/";
 		window.writeInLocalStorage('lat_lng', lat_lng[0] + ',' +lat_lng[1]);
 		window.writeInLocalStorage('formatted_address', formatted_address);
 		window.lat_lng = lat_lng;
@@ -360,13 +378,13 @@ class gpsModalPrompt extends React.Component {
 		document.querySelector("#selected-location-address").innerHTML = '<div>' + formatted_address + '</div><i class="fas fa-pencil-alt number-edit cursor-pointer"></i>';
 		let cart_address = document.querySelector("#cart-delivery-address");
 		if(cart_address){
-			cart_address.innerHTML = formatted_address;
-			
+			// cart_address.innerHTML = formatted_address;			
 			let cart_add_trigger = document.querySelector("#cart-address-change-trigger");
 			if(cart_add_trigger && document.getElementById("root").classList.contains('active')){
 				cart_add_trigger.click();
 			}
 		}
+		window.displaySuccess("Location is set to - " + formatted_address)
 	}
 
 	getLocation(){
@@ -374,41 +392,37 @@ class gpsModalPrompt extends React.Component {
 		this.setState({locations : [], fetchingGPS : true})
 		let geoOptions = {
 			maximumAge: 30 * 60 * 1000,
-			timeout: 20 * 1000,
-			enableHighAccuracy : true
+			timeout: 20 * 1000
+			// enableHighAccuracy : true
 		}
 		navigator.geolocation.getCurrentPosition((position) => {
 			console.log("position ==>", position.coords);
 			this.reverseGeocode(null, [position.coords.latitude, position.coords.longitude]);
 		},
 		(geoError) =>{
-			this.removeSliderLoader();
-			this.setState({fetchingGPS : false});
+			this.removeSliderLoader();			
 			console.log("error in getting geolocation", geoError);
+			let gps_error = '';
 			if(geoError.code === 1){
-				// permission denied
-				this.setState({gpsError : 'You have blocked Green Grain Bowl from tracking your location. To use this, change your location settings in browser.'})
+				gps_error = 'permission_denied'
 			}
 			else{
-				// other errors
-				this.setState({gpsError : 'Error in getting current location using GPS'});
+				gps_error = 'other_error'
 			}
+			this.setState({fetchingGPS : false, gpsError : gps_error});
 		},geoOptions);
 	}
 
-	fetchAddresses(idToken){
-		let headers = {
-			Authorization : 'Bearer '+ idToken
+	fetchAddresses(){
+		try{
+			window.getAddresses().then((res)=>{
+				this.setState({ addresses : res });
+			})
 		}
-		let url = this.state.apiEndPoint + "/user/get-addresses";
-		axios.get(url, {headers :  headers })
-			.then((res) => {
-				this.setState({ addresses : res.data.addresses });
-				// this.setDefaultAddress(res.data.addresses)
-			})
-			.catch((error)=>{
-				console.log("error in fetch addresses ==>", error);
-			})
+		catch(error){
+			console.log("error in fetching addresses", error);
+		}
+
 	}
 
 	setDefaultAddress(addresses){
@@ -432,12 +446,10 @@ class gpsModalPrompt extends React.Component {
 
 	setSliderLoader(){
 		window.addCartLoader();
-		// document.querySelector('#react-add-delivery-address-container').classList.add('slider-loader');
 	}
 
 	removeSliderLoader(){
 		window.removeCartLoader();
-		// document.querySelector('#react-add-delivery-address-container').classList.remove('slider-loader');
 	}
 
 }
@@ -450,7 +462,6 @@ window.showGpsModalPrompt = (display, addresses = null) => {
 	gpsModalPromptComponent.setState({showNoAddressMsg : false, locations : [], locError : '', gpsError : '', fetchingGPS : false, searchText : '', settingUserLocation : false});
 	document.querySelector('#gpsModal').classList.add('visible');
 	window.addBackDrop();
-	window.checkPushNotificationPermissions();
 }
 
 window.updateAddresses = (addresses = null) => {

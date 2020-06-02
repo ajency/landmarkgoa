@@ -1,14 +1,12 @@
 'use strict';
 const e = React.createElement;
 
+import axios from 'axios';
 
 class signInModal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -24,24 +22,27 @@ class signInModal extends React.Component {
 			<div className="slide-in flex-slide-in" id="phone_number">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">					
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				 	 <i class="sprite sprite-checkout"></i>
 			          Secure <br/>Checkout
 			      </div>
 			      <h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.closeSignInSlider()} disabled={this.state.disableButtons}>
-			          <span aria-hidden="true"><img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/remove.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
+			          <span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
 			      <div className="spacer-2101"></div>
-			      <h3 className="h1 ft6">Login</h3>
-			      <h4 className="font-weight-light mt-4 pb-4">
-			        Having an account with GGB makes it dead simple to place orders
+				  <div className="position-relative title-wrap pl-0">
+					{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
+					<h3 className="h1 ft6">Mobile Number</h3>
+			      </div>
+				  <h4 className="font-weight-light mt-4 pb-4">
+				  	Your Shipping and payment details will be associated with this number
 			      </h4>
 			      <div className="mb-3 pt-4 pb-2">
-			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="text" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} /> <br/>
+			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="tel" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} maxLength="10"/> <br/>
 			      </div>
 			      <div className="btn-wrapper pt-4">
 			      		{this.getSignInButtons()}
@@ -74,8 +75,7 @@ class signInModal extends React.Component {
 		// 	);
 		// }
 		return (<div className="btn-inner-wrap">
-		          <button type="button" className="btn-reset text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100" onClick={()=> this.signInWithPhoneNumber()} disabled={this.state.phoneNumber.length < 10}>Submit</button>
-		          <i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
+		          <button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=> this.signInWithPhoneNumber()}><span className="zindex-1">Submit</span> <i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i></button>
 		        </div>
 		);
 	}
@@ -87,12 +87,14 @@ class signInModal extends React.Component {
 	}
 
 	setUserMobile(value){
+		this.setState({errorMessage: ''})
 		this.setState({phoneNumber : value});
 	}
 
 	validateMobile(e){
-	    let key = e.keyCode || e.which;
-	    if ((key < 48 || key > 57 || e.target.value.length >9 ) && key !== 8 && key !== 13) {
+	    let key = e.key;
+	    let keyList = ["1","2","3","4","5","6","7","8","9","0"];
+	    if (key !== 'ArrowUp' && key !== 'ArrowDown' && key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'Backspace' && (!keyList.includes(key) || e.target.value.length >9 )) {
 	        if (e.preventDefault) 
 	        	e.preventDefault(); //normal browsers
 	        e.returnValue = false; //IE
@@ -103,23 +105,17 @@ class signInModal extends React.Component {
 		window.modal_closed = true;
 	}
 
-	// checkUserExist(){
-	// 	this.setState({disableButtons : true, showSignInLoader : true});
-	// 	let url = this.state.apiEndPoint + "/check-user-exist";
-	// 		let body = {
-	// 			phone_number : this.state.phoneNumber
-	// 		}
-	// 		axios.get(url, {params : body})
-	// 			.then((res) => {
-	// 				this.signInWithPhoneNumber();
-	// 			})
-	// 			.catch((error)=>{
-	// 				console.log("error in check user exist ==>", error);
-	// 				this.signInAnonymously();
-	// 			})
-	// }
-
 	signInWithPhoneNumber(){
+		const regex = /^[0-9]*$/;
+		const results = this.state.phoneNumber.match(regex);
+		if(!results) {
+			this.setState({errorMessage: 'Please enter valid 10 digit mobile number.'})
+			return false;
+		}
+		if(this.state.phoneNumber.length < 10) {
+			this.setState({errorMessage: 'Please enter valid 10 digit mobile number'})
+			return false;
+		}
 		window.addCartLoader();
 		this.setState({disableButtons : true, showSignInLoader : true, showCapta : true}, () => {
 			let phone_number = "+91" + this.state.phoneNumber;
@@ -134,63 +130,50 @@ class signInModal extends React.Component {
 
 			firebase.auth().signInWithPhoneNumber(phone_number, window.recaptchaVerifier)
 			    .then( (confirmationResult) => {
-			    	window.removeCartLoader();
-			    	console.log("SMS sent.");
-			      	this.setState({confirmationResult : confirmationResult, showCapta : false});
-			      	// this.closeSignInSlider() // TODO : function to hide this popup 
-			      	this.showOtpSlider(confirmationResult, this.state.phoneNumber)   // TODO : Show the otp in slider // pass confirmation-result and mobile number to otp component
+					console.log("SMS sent.");
+					window.addCartLoader();
+					let url =  process.env.REACT_APP_API_END_PT + "/check-user-exist";
+					let body = {
+						phone_number : this.state.phoneNumber
+					}
+					axios.get(url, {params : body})
+						.then((res) => {
+							if(res.data.success){
+								window.removeCartLoader();
+								this.setState({confirmationResult : confirmationResult, showCapta : false});
+								this.showOtpSlider(confirmationResult, this.state.phoneNumber, true) 
+							} else {
+								window.removeCartLoader();
+
+								this.setState({confirmationResult : confirmationResult, showCapta : false});
+								this.showOtpSlider(confirmationResult, this.state.phoneNumber) 
+							}
+						}).catch((e) => {
+							window.removeCartLoader();
+
+							this.setState({confirmationResult : confirmationResult, showCapta : false});
+							// this.closeSignInSlider() // TODO : function to hide this popup 
+							this.showOtpSlider(confirmationResult, this.state.phoneNumber)   // TODO : Show the otp in slider // pass confirmation-result and mobile number to otp component
+						})
 			    }).catch( (error) => {
 			    	window.removeCartLoader();
-			      	console.log("Error :  SMS not sent", error);
+					  console.log("Error :  SMS not sent", error);
+					  if(error.message =="TOO_SHORT") {
+						error.message = "Please enter valid 10 digit mobile number."
+					  }
 			      	this.setState({errorMessage : error.message, disableButtons : false, showSignInLoader : false, showCapta : false});
 			    });
 		});
 		
 	}
 
-	// signInAnonymously(){
-	// 	firebase.auth().signInAnonymously()
-	// 		.then((res)=>{
-	// 			res.user.getIdToken().then((idToken) => {
-	// 	           this.updateUserDetails(idToken);
-	// 	        });
-	// 			this.showGpsSlider();
-	// 		})
-	// 		.catch((error) => {
-	// 		  	console.log("error in anonymouse sign in", error);
-	// 		  	this.setState({errorMessage : error, disableButtons : false, showSignInLoader : false});
-	// 		});
-	// }
-
-	// updateUserDetails(idToken){
-	// 	let body = {
-	// 		phone : this.state.phoneNumber
-	// 	}
-	// 	let headers = {
-	// 		Authorization : 'Bearer '+ idToken
-	// 	}
-	// 	let url = this.state.apiEndPoint + "/user/update-user-details";
-	// 	axios.post(url, body, {headers :  headers })
-	// 		.then((res) => {
-	// 			console.log("update user details response ==>", res);
-	// 		})
-	// 		.catch((error)=>{
-	// 			console.log("error in update user details ==>", error);
-	// 		})
-	// }
-
-	// showGpsSlider(){
-	// 	// $('#signInModalPrompt').modal('hide');
-	// 	window.showGpsModalPrompt(true);
-	// }
-
 	closeSignInSlider(){
 		document.querySelector('#phone_number').classList.remove('visible');
 	}
 
-	showOtpSlider(confirmationResult, phone_number){
+	showOtpSlider(confirmationResult, phone_number, hide_skip_otp){
 		window.showOTPSlider(true);
-		window.updateOtpSLider(confirmationResult, phone_number);
+		window.updateOtpSLider(confirmationResult, phone_number, hide_skip_otp);
 	}
 
 }

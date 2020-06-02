@@ -32,7 +32,7 @@
 .address{
     position: relative;
     &-text{        
-        margin-left: 35px;
+        margin-left: 25px;
         border-bottom: 1px solid #DFDFDF;
         display: inline-block;
         padding-bottom: 20px;
@@ -41,8 +41,25 @@
         position: absolute;
         top:5px;
         left: 0;
+        font-size: 20px;
     }
     &:last-child{
         margin-bottom: 0;
     }
+}
+
+.add-list{
+    word-break: break-word;
+    li.btn{
+        white-space: unset;
+        text-align: left;
+    }
+    .no-results-msg{
+        font-size: 14px;
+        font-weight: 300;
+    }
+}
+
+.add-list{
+    //min-height: 200px;
 }

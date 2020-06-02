@@ -6,34 +6,26 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 import Cart from './components/cart/cart.js';
 import AddNewAddress from './components/add-new-addess/add-new-address';
 import AddressList from './components/address-list/address-list';
-import VerifyMobile from './components/login/verify-mobile';
+import VerifyMobile from './components/verify-mobile/verify-mobile';
+import CartCheckoutSummary from './components/cart-checkout-summary/cart-checkout-summary';
+import OrderSummary from './components/order-summary/order-summary';
+import LogIn from './components/login/login';
+import OrderDetails from './components/order-details/order-details.js';
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <Route path="/cart" component={Cart} />
-        <Route path="/address" component={AddressList} />
-        <Route path="/add-address" component={AddNewAddress} />
-        <Route path="/verify-mobile" component={VerifyMobile} />
+        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/cart/login" component={LogIn} />
+        <Route exact path="/cart/select-address" component={AddressList} />
+        <Route exact path="/cart/add-address" component={AddNewAddress} />
+        <Route exact path="/cart/verify-mobile" component={VerifyMobile} />
+        <Route exact path="/cart/cart-summary" component={CartCheckoutSummary}></Route>
+        <Route exact path="/order-summary/:transaction_id" component={OrderSummary}></Route>
+        <Route exact path="/order-details/:order_id" component={OrderDetails} />
       </Router>
     );
-  }
-
-  getComponent(){
-  	console.log("check ==>", window.location.hash);
-  	if(window.location.hash === '#/cart'){
-  		return (<Cart/>)
-  	}
-  	else if(window.location.hash === '#/cart/address'){
-  		return ( <AddressList/>);
-  	}
-  	else if(window.location.hash === '#/cart/add-address'){
-  		return (  <AddNewAddress latlng={{lat:15.487590683051524,lng:73.83213189817026}} address={"Panjim Convention Centre, Panjim goa"}/> );
-  	}
-    else if(window.location.hash === '#/cart/verify-mobile'){
-      return ( <VerifyMobile/>);
-    }
   }
 }
 

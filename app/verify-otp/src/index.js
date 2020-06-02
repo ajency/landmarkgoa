@@ -6,9 +6,7 @@ class verifyOtp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -16,23 +14,27 @@ class verifyOtp extends React.Component {
 			errorMessage : '',
 			showOtpLoader : false,
 			otpErrorMsg : '',
-			showCapta : true
+			showCapta : true,
+			siteMode: process.env.REACT_APP_SITE_MODE,
+			businessId: process.env.REACT_APP_BUSINESS_ID,
+			hide_skip_otp:false
 		}
 	}
 
 	render() {
+		const {hide_skip_otp} =this.state
 		return (
 			<div className="slide-in flex-slide-in" id="otp">
 			  <div className="slide-in-header header-container d-flex align-items-center">
 			      <div className="app-name d-flex align-items-center">					
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/Newlogo.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	<img src={window.site_url + "/wp-content/themes/ajency-portfolio/images/slidein/app-logo.png"} className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
 			      </div>
 			      <div className="app-chekout text-green">
-			          <img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/checkout.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl"/>
+				  	<i class="sprite sprite-checkout"></i>
 			          Secure <br/>Checkout
 			      </div>
 			      <h3 className="app-close bg-primary m-0 text-white btn-pay m-0" onClick={() => this.hideVerifyOtpSlider()}>
-			          <span aria-hidden="true"><img src="http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/remove.png" className="app-log" alt="Green Grain Bowl" title="Green Grain Bowl" /></span>
+			          <span aria-hidden="true"><i class="sprite sprite-remove"></i></span>
 			      </h3>
 			  </div>
 			  <div className="slide-in-content">
@@ -42,13 +44,13 @@ class verifyOtp extends React.Component {
 			      </h4>
 				  <h4 className="ft6 mb-3">{this.state.phoneNumber}</h4>
 			      <div className="mb-1 pt-4">
-			       	<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" type="tel" placeholder="Enter OTP" onChange={e => {this.setOtp(e.target.value)}} value={this.state.otp} />
+			       	<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" type="tel" placeholder="Enter OTP" onChange={e => {this.setOtp(e.target.value)}} value={this.state.otp} maxLength={6}/>
 			      </div>
 			      <h6 className="mb-2 pb-3">Didn't receive the code? <a href="javascript:void(0)" className="text-underline" onClick={()=>{this.resendOtpCode()}}>Resend</a></h6>
 				  <div className="btn-wrapper pt-4">
 			        {this.getOtpButtons()}
 			      </div>
-				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer" href="#">Skip.</a></h5>
+				  {!hide_skip_otp && <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipOtp()}>Skip</a></h5>}
 
 			      {this.displayOtpErrorMsg()}
 			  </div>
@@ -74,16 +76,13 @@ class verifyOtp extends React.Component {
 					</div>
 			);
 		}
-		// return (<div> 
-		// 			<button onClick={()=>{this.skipOtp()}}>SKIP OTP</button>
-		// 			<button onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>VERIFY OTP</button>
-		// 		</div>
-		// 	);
 
 		return (
 			 <div className="btn-inner-wrap">
-	        	<button type="button" className="btn-reset text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}>Verify OTP</button>
-	          	<i className="text-white fa fa-arrow-right" aria-hidden="true"></i>
+	        	<button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=>{this.verifyOtp()}}><span className="zindex-1">Verify OTP</span>
+				<i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+				</button>
+	          	
 	        </div>
 		);
 	}
@@ -95,6 +94,7 @@ class verifyOtp extends React.Component {
 	}
 
 	setOtp(value){
+		this.setState({otpErrorMsg : ''});
 		this.setState({otp : value});
 	}
 
@@ -116,12 +116,21 @@ class verifyOtp extends React.Component {
 	}
 
 	verifyOtp(){
+		if(this.state.otp.length < 6 || this.state.otp.length > 6) {
+			console.log("invalid otp ==>")
+            this.setState({ otpErrorMsg: "Please enter valid 6 digit verification code"});
+            return false;   
+		}
+		console.log("Verifying otp")
 		window.addCartLoader();
 		this.setState({showOtpLoader : true , disableButtons : true, otpErrorMsg : ''});
 		this.state.confirmationResult.confirm(this.state.otp)
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
-		           this.fetchAddresses(idToken);
+					window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId));
+					window.writeInLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId , window.brewCartId(this.state.siteMode, this.state.businessId));
+		            this.updateUserDetails(idToken);
+		            this.fetchAddresses();
 		        });
 			})
 			.catch((error)=>{
@@ -132,25 +141,21 @@ class verifyOtp extends React.Component {
 			})
 	}
 
-	fetchAddresses(idToken){
-		let headers = {
-			Authorization : 'Bearer '+ idToken
-		}
-		let url = this.state.apiEndPoint + "/user/get-addresses";
-		axios.get(url, {headers :  headers })
-			.then((res) => {
+	fetchAddresses(){
+		try{
+			window.getAddresses().then((res)=>{
 				this.closeSignInSlider();
 				this.hideVerifyOtpSlider();
-		      	// this.showGpsSlider();
-		      	window.updateAddresses(res.data.addresses);
+		      	window.updateAddresses(res);
 		      	window.removeCartLoader();
 			})
-			.catch((error)=>{
-				window.removeCartLoader();
-				console.log("error in fetch addresses ==>", error);
-				let msg = error.message ? error.message : error;
-				this.setState({showOtpLoader : false, disableButtons : false, otpErrorMsg : msg});
-			})
+		}
+		catch(error){
+			this.closeSignInSlider();
+			this.hideVerifyOtpSlider();
+	      	window.updateAddresses([]);
+	      	window.removeCartLoader();
+		}
 	}
 
 	hideVerifyOtpSlider(){
@@ -162,6 +167,8 @@ class verifyOtp extends React.Component {
 	}
 
 	resendOtpCode(){
+        this.setState({ otp: '' });
+        this.setState({ otpErrorMsg: '' });
 		this.setState({showCapta : true}, ()=>{
 			console.log("inside verify otp code");
 			window.addCartLoader();
@@ -189,7 +196,8 @@ class verifyOtp extends React.Component {
 	}
 
 	skipOtp(){
-
+		this.closeSignInSlider();
+		this.hideVerifyOtpSlider();
 	}
 
 	showGpsSlider(){
@@ -207,6 +215,6 @@ window.showOTPSlider = (data) => {
 	document.querySelector('#otp').classList.add('visible');
 }
 
-window.updateOtpSLider = (confirmationResult, phone_number) => {
-	otpModalComponent.setState({phoneNumber : phone_number,  confirmationResult : confirmationResult})
+window.updateOtpSLider = (confirmationResult, phone_number, hide_skip_otp) => {
+	otpModalComponent.setState({phoneNumber : phone_number,  confirmationResult : confirmationResult,hide_skip_otp:hide_skip_otp })
 }

@@ -60,6 +60,14 @@ body{
     font-size: 1.75rem;
     /*letter-spacing: .2px;*/
     line-height: 1.428;
+    &.small-laptop-text {
+        @media (min-width: 992px) and (max-width: 1450px)  {
+            font-size: 1.2rem;
+        }
+        @media (max-width: 767px) {
+            font-size: 1.2rem;
+        }
+    }
     @media (min-width: 320px) and (max-width: 767.98px) {
         font-size: 1.375rem;
     	.font-weight-bold{

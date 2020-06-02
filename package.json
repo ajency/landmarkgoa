@@ -26,10 +26,11 @@
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.13.0"
   },
   "dependencies": {
     "cssnano": "^4.1.10",
+    "geolocation-utils": "^1.2.2",
     "gulp-sourcemaps": "^2.6.5"
   }
 }

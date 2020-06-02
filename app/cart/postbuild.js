@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+let jsonData = require('./build_location.json');
 
 let react_file_hash = {};
 let react_css_file_hash = {}
@@ -6,28 +7,40 @@ let js_files = ["runtime-main.", "main.", "2."];
 let css_files = ["main."];
 
 let react_component_file_hash = {};
-let react_component_js_files = ["add-to-cart.", "delivery-address-slider.", "sign-in.", "verify-otp.", "view-cart."];
+let react_component_js_files = ["add-to-cart.js", "delivery-address-slider.js", "sign-in.js", "verify-otp.js", "view-cart.js", "variant-selection-popup.js"];
 
 fs.emptyDir('../pre_build/cart')
 .then(() => {
 	fs.copy('./build/', '../pre_build/cart/')
 		.then((success) =>{
 			console.log("build folder copied successfully");
+
+			//cart app js and css
 			for(let i = 0; i<js_files.length; i++){
 			    fromDir('./build/static/js/', js_files[i], 'js');
 			}
 
 			fromDir('./build/static/css/', css_files[0], 'css');
 
-			console.log("file hash ==>", react_file_hash, react_css_file_hash);
 
 
-			for(let i = 0; i<react_component_js_files.length; i++){
-			    fromDir('../pre_build/', react_component_js_files[i], 'js');
+			//copy components to one file
+			let timestamp = new Date().getTime();
+			for(let file of react_component_js_files){
+			    copyComponentsToOneFile(file, timestamp);
 			}
 
-			fs.copy('../pre_build/' , '../build/').then((success)=>{
-				fs.writeJson('../build/react_component_file_hash.json', react_file_hash)
+			// copy hash to react_file_hash.json file
+			fromDir('../pre_build/', 'react-components.', 'js');
+
+			//delete components build file
+			for(let file of react_component_js_files){
+			    fs.unlinkSync('../pre_build/'+file)
+			}
+			
+
+			fs.copy('../pre_build/' , '../build/' + jsonData['location'] + '/').then((success)=>{
+				fs.writeJson('../build/' + jsonData['location'] + '/react_component_file_hash.json', react_file_hash)
 				.then(() => {
 				  console.log('success!')
 				})
@@ -35,7 +48,7 @@ fs.emptyDir('../pre_build/cart')
 				  console.error(err)
 				})
 
-				fs.writeJson('../build/cart_app_css_file_hash.json', react_css_file_hash)
+				fs.writeJson('../build/' + jsonData['location'] + '/cart_app_css_file_hash.json', react_css_file_hash)
 				.then(() => {
 				  console.log('success!')
 				})
@@ -51,7 +64,7 @@ fs.emptyDir('../pre_build/cart')
 
 		})
 		.catch((error)=>{
-			console.log("error in copying build folder");
+			console.log("error in copying build folder", error);
 		})
 })
 .catch(err => {
@@ -85,3 +98,14 @@ function fromDir(startPath,filter, type){
 	    };
     }
 };
+
+async function copyComponentsToOneFile(file, timestamp){
+	await copyFile('../pre_build/'+file, '../pre_build/react-components.'+timestamp+'.js');
+};
+
+
+
+async function copyFile(source, destination) {
+    let readMe = fs.readFileSync(source); 
+    fs.appendFileSync(destination, readMe);
+}

@@ -77,12 +77,16 @@
 			position: relative;
             padding-left: 20px;
             right: 75px;
-			img{
+			i{
 				position: absolute;
 				top:50%;
 				left: 0;
 				transform: translateY(-50%);
 			}
+		}
+		&-name{
+			position: relative;
+			top: 7px;
 		}
 	}
 }
@@ -111,6 +115,9 @@
 				width: 100%;
 			}			
 		}
+		@media (min-width: 320px) and (max-width: 991px) and (orientation : landscape) {
+			height: auto;
+		}
 	}
 }
 
@@ -138,4 +145,8 @@
 	@media (max-width: 767px) {
 		max-width: 100%;
 	}
+}
+
+.title-wrap{
+	padding-left: 40px;
 }

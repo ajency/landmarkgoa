@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {generalConfig} from '../../config'
 
 class Quantity extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			site_mode : generalConfig.site_mode,
+			apiEndPoint : generalConfig.apiEndPoint,
 			apiCallInProgress : false,
 			quantity : 0
 		}
@@ -43,31 +43,23 @@ class Quantity extends Component {
 		)		
 	}
 
-	removeFromCart(quantity){
-		this.setState({apiCallInProgress : true});
-		let url = this.state.apiEndPoint + "/anonymous/cart/delete";
-		// let url = "https://demo8558685.mockable.io/remove-from-cart";
-		let body = {
-			variant_id 	: this.props.variant_id,
-			quantity 	: quantity,
-			cart_id 	: window.readFromLocalStorage('cart_id')
-		}
-		window.addCartLoader();
-		axios.post(url, body)
-		.then((res) => {
-			console.log("add to cart response ==>", res);
-			window.removeCartLoader();
-			if(res.data.success){
+	async removeFromCart(quantity){
+		try{
+			window.addCartLoader();
+			this.setState({apiCallInProgress : true});
+			let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+			let res = await window.removeItemFromCart(this.props.variant_id, cart_id, quantity);
+			if(res.success){
 				let updated_quantity = this.state.quantity - quantity;
 				console.log("check ==>", updated_quantity, quantity, this.state.quantity);
-				this.props.updateSummary(res.data.summary);
+				this.props.updateSummary(res.summary);
 				if(updated_quantity === 0){
 					this.props.removeItem();
 				}
 				else{
 					this.setState({quantity : updated_quantity})
 				}
-				window.updateViewCartCompoent(res.data);
+				window.updateViewCartCompoent(res);
 				let item = {
 					variant_id : this.props.variant_id,
 					quantity : quantity,
@@ -76,44 +68,46 @@ class Quantity extends Component {
 				window.updateItemQuantity(item, 'remove');
 			}
 			else{
-				this.displayError(res.data.message);
+				this.displayError(res.message);
 			}
+			window.removeCartLoader();
 			this.setState({apiCallInProgress : false});
-		})
-		.catch((error)=>{
+		}
+		catch(error){
 			window.removeCartLoader();
 			console.log("error in add to cart ==>", error);
 			this.setState({apiCallInProgress : false});
 			let msg = error && error.message ? error.message : error;
 			this.displayError(msg);
-		})
+		}
 	}
 
-	addToCart(quantity){
+	async addToCart(quantity){
 		window.addCartLoader();
 		this.setState({apiCallInProgress : true});
-		let url = this.state.apiEndPoint + "/anonymous/cart/insert";
-		let body = {
-			variant_id : this.props.variant_id,
-			quantity : 1,
-			cart_id 	: window.readFromLocalStorage('cart_id')
+		let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId), product;
+		if(window.products && window.products.length){
+			product = window.products.find((product) => product.id == this.props.product_id);
+		}
+		else{
+			product = await window.fetchProduct(this.props.product_id);
 		}
 
-		axios.post(url, body)
-		.then((res) => {
+		window.addToCart(this.state.site_mode, this.props.variant_id, null, cart_id, null, product).then((res) =>{
+			console.log("response ==>", res);
 			window.removeCartLoader();
-			console.log("add to cart response ==>", res);
-			if(res.data.success){
-				this.props.updateSummary(res.data.summary);
-				let quantity = this.state.quantity + res.data.item.quantity;
+			this.setState({apiCallInProgress : false});
+			if(res.success){
+				console.log("response ==>", res);
+				this.props.updateSummary(res.summary);
+				let quantity = this.state.quantity + res.item.quantity;
 				this.setState({quantity : quantity})
-				window.updateViewCartCompoent(res.data);
-				window.updateItemQuantity(res.data.item, 'add');
+				window.updateViewCartCompoent(res);
+				window.updateItemQuantity(res.item, 'add');
 			}
 			else{
-				this.displayError(res.data.message);
+				this.displayError(res.message);
 			}
-			this.setState({apiCallInProgress : false});
 		})
 		.catch((error)=>{
 			window.removeCartLoader();

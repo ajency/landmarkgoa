@@ -1,38 +1,33 @@
 'use strict';
 const e = React.createElement;
 
-const divStyle = {
-	// display : 'flex',
-	// 'justify-content': 'space-between',
-	// 'background' : '#A3DE9A'
-}
-
-const btnStyle = {
-	cursor : 'pointer'
-}
-
 class viewCart extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
 			cart : null,
+			siteMode: process.env.REACT_APP_SITE_MODE,
+			businessId: process.env.REACT_APP_BUSINESS_ID
 		};
 	}
 
 	componentDidMount(){
+		console.log("viewCart")
 		this.fetchCart();
 	}
 
 	render() {
 			return (
-				<div style={divStyle} className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : '')}>
+				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : 'view-cart-holder empty-cart')}>
 						{this.getItemsCount()}
-						{/* {this.getCartTotal()} */}
-					<div id="view-cart-btn" style={btnStyle} onClick={() => this.loadCart()}>
+					<div id="view-cart-btn" className="cursor-pointer zindex-1" onClick={() => this.loadCart()}>
 						VIEW CART
+					</div>
+					<div className="d-none">
+						<a href="javascript:void(0)" class="d-inline-block location-icon text-primary text-decoration-none">
+							<i class="fas fa-map-marker-alt text-primary font-size-34" aria-hidden="true"></i>
+						</a> 
 					</div>
 				</div>
 			);
@@ -41,8 +36,11 @@ class viewCart extends React.Component {
 	getItemsCount(){
 		if(this.state.cart && this.state.cart.cart_count){
 			return (
-				<div>
-					{this.state.cart.cart_count} Item(s)
+				<div className="zindex-1">
+					<div className="cart-count d-inline-block d-lg-flex">
+						{this.state.cart.cart_count} 
+					</div>
+					<span className="d-inline-block d-lg-none ml-1">Item(s)</span>
 				</div>
 			)
 		}
@@ -59,28 +57,22 @@ class viewCart extends React.Component {
 	}
 
 	loadCart() {
-		// window.checkPushNotificationPermissions();
 		let url = window.location.href.split("#")[0] + '#/cart';
         window.location = url;
 	}
 
 	fetchCart() {
-		let cart_id = window.readFromLocalStorage('cart_id');
+		let cart_id = window.readFromLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId);
+		console.log("inside fetch cart",cart_id)
 		if(cart_id){
-			let url = this.state.apiEndPoint + "/anonymous/cart/fetch";
-			let body = {
-				cart_id : cart_id
-			}
-			axios.get(url, {params : body})
-				.then((res) => {
-					this.setState({cart : res.data.cart})
-					res.data.cart.items.forEach((item)=>{
+			window.getCartByID(cart_id).then((cart_data)=>{
+				this.setState({cart : cart_data})
+				if(cart_data && cart_data.items) {
+					cart_data.items.forEach((item)=>{
 						window.updateaddToCartComponent(item);
 					})
-				})
-				.catch((error)=>{
-					console.log("error in fetch cart ==>", error);
-				})
+				}
+			})
 		}
 	}
 }
