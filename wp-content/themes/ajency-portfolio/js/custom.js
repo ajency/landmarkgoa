@@ -248,7 +248,7 @@ function locationHashChanged() {
     }
     else if(!window.location.hash){
         closeCart();
-    } else if(window.location.hash === '#/') {
+    } else if(window.location.hash == '#/' || window.location.hash == '') {
         closeCart();
     }
 }
