@@ -5,11 +5,11 @@
     <section class="footer-section">
         <div class="container p5">
             <div class="row">
-                <div class="col-xl-2 contact-us">
+                <div class="col-xl-12 contact-us">
                 </div>
-                <div class="col-xl-8">
+                <div class="col-xl-12">
                     <div class="row no-gutters">
-                        <div class="col-md-4 contact-details">
+                        <div class="col-md-12 contact-details">
                             <h4 class="font-weight-light">
                                 <a class=" d-block h4 font-weight-light" href="tel:07770004258" onclick="ga('send', 'event', 'telephone', 'CallNow', 'tel:07770004258');">
                                     +91 7770004258
@@ -28,7 +28,7 @@
                                 </a> -->
                             </h4>
                         </div>
-                        <div class="col-md-5 mt-5 mt-md-0 contact-details">
+                        <div class="col-md-12 mt-5 mt-md-0 py-2 contact-details">
                             <h4 class="font-weight-light w-75">
                                 Green Grain Bowl Kitchen, 1st floor Panjim convention center, Mala. 
                                 <a class=" font-weight-light h5 " href="//shorturl.at/fgpq1" target="_blank">
@@ -36,7 +36,7 @@
                                 </a>
                             </h4>
                         </div>
-                        <div class="col-md-3 mt-5 mt-md-0 contact-details-1">
+                        <div class="col-md-12 mt-5 mt-md-0 contact-details-1">
                             <h4 class="font-weight-light">
                                 <a class="d-block h4 font-weight-light" href="https://www.instagram.com/greengrainbowl/">
                                     Instagram
