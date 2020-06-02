@@ -312,12 +312,12 @@
 }
 
 .left-content.wpb_column{
-    width: 50%;
+    width: 65%;
     padding-right: 32px;
 }
     
 .right-content.wpb_column{
-    width: 50%;
+    width: 35%;
     position: fixed;
     right: 0;
     top: 0;
@@ -326,8 +326,10 @@
 
 .main-post-img img{
     height: 100%;
+    position: fixed;
     right: 0;
     top: 0;
+    -o-object-fit: cover;
     object-fit: cover;
     width: 60%;
 }
@@ -348,7 +350,7 @@
         display: none;
     }
     .right-content.wpb_column{
-        display: none;
+        display: none !important;
     }
     #footer section{
         width: 100%;
