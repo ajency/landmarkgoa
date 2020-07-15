@@ -24,8 +24,12 @@ require_once PADO_T_PATH . '/include/customizer.php';
 require_once PADO_T_PATH . '/include/menu-walker.php';
 require_once PADO_T_PATH . '/include/custom-menu.php';
 
-require_once PADO_T_PATH . '/wp-updates-theme.php';
-new WPUpdatesThemeUpdater_2414( 'http://wp-updates.com/api/2/theme', basename( get_template_directory() ) );
+require PADO_T_PATH . '/plugin-update-checker/plugin-update-checker.php';
+$MyUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://main.aheto.co/wp-update/?action=get_metadata&slug=pado', //Metadata URL.
+	__FILE__, //Full path to the main plugin file.
+	'pado' //Plugin slug. Usually it's the same as the name of the directory.
+);
 
 // after setup
 if (!function_exists('pado_after_setup')) {

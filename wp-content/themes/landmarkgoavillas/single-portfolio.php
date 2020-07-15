@@ -342,9 +342,10 @@ while (have_posts()) : the_post(); ?>
                 </div>
 
                     <?php
-                       $gallery = explode(',', $portfolio_meta[0]['images']);
+                        $gallery = explode(',', $portfolio_meta[0]['images']);
 
-                         if(!empty($gallery)){ ?>
+                        if($gallery[0] != 0){
+                        // if(!empty($gallery)){ ?>
                             <div class="images-wrap izotope-container light-gallery">
                             <?php
                             foreach ($gallery as $item) {

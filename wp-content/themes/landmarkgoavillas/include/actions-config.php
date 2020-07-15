@@ -286,13 +286,13 @@ if ( ! function_exists( 'pado_include_required_plugins' ) ) {
 				// The plugin name
 				'slug'               => 'pado-plugins',
 				// The plugin slug (typically the folder name)
-				'source'             => esc_url( 'http://download-plugins.viewdemo.co/pado/pado-plugins.zip' ),
+				'source'             => esc_url( '//download-plugins.viewdemo.co/pado/pado-plugins.zip' ),
 				// The plugin source
 				'required'           => true,
 				// If false, the plugin is only 'recommended' instead of required
 				'force_activation'   => false,
 				// If true, plugin is activated upon theme activation and cannot be deactivated until theme switch
-				'version'            => '1.0.6',
+				'version'            => '',
 				'force_deactivation' => false,
 				// If true, plugin is deactivated upon theme switch, useful for theme-specific plugins
 				'external_url'       => '',
@@ -303,7 +303,7 @@ if ( ! function_exists( 'pado_include_required_plugins' ) ) {
 				// The plugin name
 				'slug'               => 'js_composer',
 				// The plugin slug (typically the folder name)
-				'source'             => esc_url( 'http://download-plugins.viewdemo.co/premium-plugins/js_composer.zip' ),
+				'source'             => esc_url( '//download-plugins.viewdemo.co/premium-plugins/js_composer.zip' ),
 				// The plugin source
 				'required'           => true,
 				// If false, the plugin is only 'recommended' instead of required
@@ -321,7 +321,7 @@ if ( ! function_exists( 'pado_include_required_plugins' ) ) {
                 // The plugin name
                 'slug'               => 'image-map-pro-wordpress',
                 // The plugin slug (typically the folder name)
-                'source'             => esc_url( 'http://download-plugins.viewdemo.co/premium-plugins/image-map-pro-wordpress.zip' ),
+                'source'             => esc_url( '//download-plugins.viewdemo.co/premium-plugins/image-map-pro-wordpress.zip' ),
                 // The plugin source
                 'required'           => true,
                 // If false, the plugin is only 'recommended' instead of required
@@ -339,7 +339,7 @@ if ( ! function_exists( 'pado_include_required_plugins' ) ) {
 				// The plugin name
 				'slug'               => 'the_grid',
 				// The plugin slug (typically the folder name)
-				'source'             => esc_url( 'http://download-plugins.viewdemo.co/premium-plugins/the_grid.zip' ),
+				'source'             => esc_url( '//download-plugins.viewdemo.co/premium-plugins/the_grid.zip' ),
 				// The plugin source
 				'required'           => true,
 				// If false, the plugin is only 'recommended' instead of required
