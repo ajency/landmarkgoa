@@ -34,7 +34,7 @@ class LogIn extends Component {
 				  	{this.state.number_text}
 			      </h4>
 			      <div className="mb-3 pt-4 pb-2">
-			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="text" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} /> <br/>
+					<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="tel" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} maxLength="10"/> <br/>
 			      </div>
 			      <div className="btn-wrapper pt-4">
 			      		{this.getSignInButtons()}
@@ -89,6 +89,12 @@ class LogIn extends Component {
 
 
 	signInWithPhoneNumber(){
+		const regex = /^[0-9]*$/;
+		const results = this.state.phoneNumber.match(regex);
+		if(!results) {
+			this.setState({errorMessage: 'Please enter valid 10 digit mobile number.'})
+			return false;
+		}
 		if(this.state.phoneNumber.length < 10) {
 			this.setState({errorMessage:"Please enter valid 10 digit mobile number."})
 			return false;

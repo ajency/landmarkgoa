@@ -145,11 +145,13 @@ class VerifyMobile extends Component {
     }
 
     verifyOtp() {
+        window.addCartLoader()
         console.log("this.state.otp ==>", this.state.otp);
         this.setState({ otpErrorMsg: '' });
         
         if(this.state.otp.length < 6 || this.state.otp.length > 6) {
             console.log("invalid otp");
+            window.removeCartLoader()
             
             this.setState({ otpErrorMsg: "Please enter valid 6 digit verification code"});
             return false;   
@@ -169,11 +171,12 @@ class VerifyMobile extends Component {
                             window.assignAddressToCart(null, true, this.state.phoneNumber)
                             .then((res) => {
                                 if(res.success) {
-                                    this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+                                    window.removeCartLoader()
+                                    this.props.history.replace({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
                                 } else {
                                     window.removeCartLoader();
                                     if(res.code =='PAYMENT_DONE') {
-                                        this.props.history.push('/cart');
+                                        this.props.history.replace('/cart');
                                     }
                                 }
                             }).catch(err => {
@@ -181,7 +184,54 @@ class VerifyMobile extends Component {
                             })
                         }
                     } else {
-                        this.props.history.push('/cart/select-address');
+                        if(window.userDetails){
+                            window.addCartLoader()
+                            if(window.userDetails.hasOwnProperty('default_address_id')) {
+                                const address_id =  window.userDetails.default_address_id
+                                if(address_id) {
+                                    const deliverable = await this.isAddressDeliverable(address_id)
+                                    if (deliverable) {
+                                        console.log("rsrrrr");
+                                        try {
+                                        
+                                            const res =	await window.assignAddressToCart(address_id)
+                                        
+                                            if(res.success) {
+                                                window.removeCartLoader();
+                                                this.props.history.replace({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
+                                            } else {
+                                                console.log(" no success assignAddressToCart");
+                                                window.removeCartLoader();
+                                                this.props.history.replace('/cart/select-address');	
+                                            }
+                                
+                                        } catch (error) {
+                                            console.log("error in assignAddressToCart");
+                                                window.removeCartLoader();
+                                                this.props.history.replace('/cart/select-address');	
+                                        }
+                                        
+                                    } else {
+                                        console.log("not isAddressDeliverable");
+                                        window.removeCartLoader();
+
+                                        this.props.history.replace('/cart/select-address');
+                                    }
+                                } else {
+                                        console.log("on address id");
+                                        window.removeCartLoader();
+                                        this.props.history.replace('/cart/select-address');
+                                }
+                            } else {
+                                console.log("no default_address_id");
+                                                window.removeCartLoader();
+                                                this.props.history.replace('/cart/select-address');
+                            }
+                        } else {
+                            console.log("no userDetails");
+                            window.removeCartLoader();
+                            this.props.history.replace('/cart/select-address');
+                        }
                     }
                 });
             })
@@ -191,6 +241,25 @@ class VerifyMobile extends Component {
                 this.setState({ otpErrorMsg: msg });
                 console.log("error in otp verification ==>", error);
             })
+    }
+
+    isAddressDeliverable=(address_id)=> {
+        let address = window.userAddresses.filter((address) => { return address.id == address_id;})[0];
+		if(address){
+			console.log(address);
+			
+			return window.getCurrentStockLocation().then(locations => {
+				if(!locations.length) {
+					this.displayError("Something went wrong...")
+					return false;
+				}
+				let deliverable =  window.findDeliverableLocation(locations,address.lat_long)
+			
+				return !!deliverable
+			})
+		} else {
+			return false
+		}
     }
 
     resendOtpCode() {
@@ -256,11 +325,11 @@ class VerifyMobile extends Component {
                         .then((res) => {
                             if(res.success) {
                                 window.removeCartLoader();
-                                this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+                                this.props.history.replace({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
                             } else {
                                 window.removeCartLoader();
                                 if(res.code =='PAYMENT_DONE') {
-                                    this.props.history.push('/cart');
+                                    this.props.history.replace('/cart');
                                 }
                             }
                         }).catch(err => {
@@ -269,7 +338,7 @@ class VerifyMobile extends Component {
                     }
                 } else {
                     window.removeCartLoader();
-                    this.props.history.push('/cart/select-address');
+                    this.props.history.replace('/cart/select-address');
                 }
 			})
 			.catch((error)=>{

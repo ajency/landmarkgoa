@@ -42,7 +42,7 @@ class signInModal extends React.Component {
 				  	Your Shipping and payment details will be associated with this number
 			      </h4>
 			      <div className="mb-3 pt-4 pb-2">
-			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="text" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} /> <br/>
+			        <input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" placeholder="10 digit mobile number" type="tel" onKeyDown={e => {this.validateMobile(e)}} onChange={e => {this.setUserMobile(e.target.value)}} value={this.state.phoneNumber} maxLength="10"/> <br/>
 			      </div>
 			      <div className="btn-wrapper pt-4">
 			      		{this.getSignInButtons()}
@@ -106,6 +106,12 @@ class signInModal extends React.Component {
 	}
 
 	signInWithPhoneNumber(){
+		const regex = /^[0-9]*$/;
+		const results = this.state.phoneNumber.match(regex);
+		if(!results) {
+			this.setState({errorMessage: 'Please enter valid 10 digit mobile number.'})
+			return false;
+		}
 		if(this.state.phoneNumber.length < 10) {
 			this.setState({errorMessage: 'Please enter valid 10 digit mobile number'})
 			return false;
@@ -151,7 +157,10 @@ class signInModal extends React.Component {
 						})
 			    }).catch( (error) => {
 			    	window.removeCartLoader();
-			      	console.log("Error :  SMS not sent", error);
+					  console.log("Error :  SMS not sent", error);
+					  if(error.message =="TOO_SHORT") {
+						error.message = "Please enter valid 10 digit mobile number."
+					  }
 			      	this.setState({errorMessage : error.message, disableButtons : false, showSignInLoader : false, showCapta : false});
 			    });
 		});
