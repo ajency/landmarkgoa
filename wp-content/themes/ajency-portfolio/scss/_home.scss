@@ -343,19 +343,19 @@
     }
 }
 .logo {
-    min-height: 250px;
+    //min-height: 250px;
     @media (min-width: 992px) and (max-width: 1400px) {
         width: 170px !important;
-        min-height: 170px;
+        //min-height: 170px;
     }
     @media (min-width: 768px) and (max-width: 991px) {
         width: 110px !important;
-        min-height: 110px;
+        //min-height: 110px;
         margin: 0 auto;
     }
     @media (min-width: 320px) and (max-width: 767.98px) {
         width: 150px !important;
-        min-height: 150px;
+        //min-height: 150px;
         margin: 0 auto;
     }
 }
@@ -371,15 +371,15 @@ nav {
     width: 100%;
     padding-bottom: 16px;
     &.bg-white{
-        padding-top: 32px !important;
+        padding-top: 15px !important;
         @media (min-width: 992px) and (max-width: 1400px) {
-            padding-top: 30px !important;
+            padding-top: 15px !important;
         }
         @media (min-width: 768px) and (max-width: 991px) {
-            padding-top: 30px !important;
+            padding-top: 15px !important;
         }
         @media (min-width: 320px) and (max-width: 767.98px) {
-            padding-top: 30px !important;
+            padding-top: 15px !important;
         }
     }    
     @media (min-width: 768px) and (max-width: 991px) {
@@ -809,7 +809,12 @@ body{
 }
 
 .full-screen-section{
-    min-height: calc(100vh - 361px);   
+    min-height: 100vh;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     h1, p, img{
         -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
         -moz-animation: fadein 2s; /* Firefox < 16 */
@@ -835,15 +840,6 @@ body{
                 line-height: 23px;
             }
         }
-    }
-    @media (min-width: 992px) and (max-width: 1400px) {
-        min-height: calc(100vh - 235px);
-    }
-    @media (max-width: 991px) {
-        min-height: calc(100vh - 211px);
-    }
-    @media (max-width: 767px) {
-        min-height: calc(100vh - 175px);
     }
 }
 

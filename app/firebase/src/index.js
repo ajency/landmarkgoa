@@ -1,31 +1,10 @@
 
- // Your web app's Firebase configuration
-
-var firebaseConfig = {
-    apiKey: "AIzaSyC-w19gW41OaoyjuK4jHPVN5JtviKGB7KQ",
-    authDomain: "project-ggb-dev.firebaseapp.com",
-    databaseURL: "https://project-ggb-dev.firebaseio.com",
-    projectId: "project-ggb-dev",
-    storageBucket: "project-ggb-dev.appspot.com",
-    messagingSenderId: "1034785903670",
-    appId: "1:1034785903670:web:496c7762259b7fb3b9f497"
-};
-
-//  var firebaseConfig = {
-//     apiKey: "AIzaSyDkH2U1VrkRiXNHkyrhTOuL48zeq_2dwAw",
-//     authDomain: "project-ggb.firebaseapp.com",
-//     databaseURL: "https://project-ggb.firebaseio.com",
-//     projectId: "project-ggb",
-//     storageBucket: "project-ggb.appspot.com",
-//     messagingSenderId: "854451069142",
-//     appId: "1:854451069142:web:0e523576b2ef9c7f47e977"
-// };
+// Your web app's Firebase configuration
 
 // Initialize Firebase
 console.log("initialising firebase");
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(allConfig.firebaseConfig)
 var db = firebase.firestore();
-
 // initialiseMessaging();
 
 // function initialiseMessaging(){
@@ -143,14 +122,41 @@ var cartData;
 var stockLocations = []
 var userAddresses = [];
 var userDetails;
-
+var cartIdLabel = allConfig.businessConfig.siteMode+'-cart_id-'+allConfig.businessConfig.businessId
+anomynousSignIn();
 syncProducts();
 syncLocations()
 syncAddresses();
 syncUserDetails();
+if(window.readFromLocalStorage(cartIdLabel)){
+    sycnCartData(window.readFromLocalStorage(cartIdLabel));
+}
 
-if(window.readFromLocalStorage('cart_id')){
-    sycnCartData(window.readFromLocalStorage('cart_id'));
+function anomynousSignIn() {
+    let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
+        console.log("check user ==>", user);
+        if(user){
+            console.log("user exist");
+            // this.variantPopUp(action);
+        }
+        else{
+            console.time('signin')
+            this.signInAnonymously();
+            // console.timeEnd('signin')
+        }
+        unsubscribeOnAuthStateChanged();
+    });
+}
+
+function signInAnonymously(){
+    firebase.auth().signInAnonymously()
+        .then((res)=>{
+            return;
+        })
+        .catch((error) => {
+           return 
+              console.log("error in anonymous sign in", error);
+        });
 }
 
 function syncProducts(){
@@ -162,7 +168,6 @@ function syncProducts(){
 
         snapshot.docChanges().forEach(function(change) {
             if (change.type === "added") {
-                console.log("data ==>", change.doc.data());
                 let data = change.doc.data();
                 data.id = change.doc.id;
                 products.push(data);
@@ -207,7 +212,7 @@ function syncLocations() {
 
 var unsubscribeAddressListner
 function syncAddresses() {
-    firebase.auth().onAuthStateChanged((user) => {
+    let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
         if(user){
 
             if(unsubscribeAddressListner){
@@ -234,12 +239,13 @@ function syncAddresses() {
                 });
             });
         }
+        // unsubscribeOnAuthStateChanged();
     });
 }
 
 var unsubscribeUserDetailsListner
 function syncUserDetails() {
-    firebase.auth().onAuthStateChanged((user) => {
+    let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
         if(user){
             if(unsubscribeUserDetailsListner){
                 unsubscribeUserDetailsListner();
@@ -251,6 +257,7 @@ function syncUserDetails() {
                     userDetails = doc.data();
             });
         }
+        // unsubscribeOnAuthStateChanged();
     });
 }
 
@@ -368,16 +375,20 @@ function formateOrderLine(item){
 
 
 function findDeliverableLocation(locations, lat_long){
-    console.time("findDeliverableLocation")
+    console.log(lat_long,locations);
+
+    console.time("findDeliverableLocation", lat_long)
     let deliverble, min_diff = 9999999;
 
         locations.forEach((loc)=>{
             let diff = headingDistanceTo(lat_long[0], lat_long[1], loc.lat_long.lat, loc.lat_long.long);
             console.log("radius diff==>", diff);
 
-            if(diff < loc.radius && diff < min_diff){
+            //if(diff < loc.radius && diff < min_diff){ // radius compare
+            if(diff < min_diff){
                 min_diff = diff;
                 deliverble = loc;
+                return
             }
         })
         console.timeEnd("findDeliverableLocation")
@@ -459,50 +470,65 @@ async function removeItemFromCart(variant_id, cart_id, quantity){
 async function fetchCart(cart_id){
     let cart_data = await window.getCartByID(cart_id);
     let products = window.products;
-    let items = [];
+    let items = [], response;
     cart_data = JSON.parse(JSON.stringify(cart_data));
-    cart_data.items.forEach((item)=>{
-        let product = products.find((product) => { return product.id == item.product_id})
-        let deliverable = true; //check if deliverable
-        let in_stock = true;     // check if in stock
-        if(!cart_data.stock_location_id){
-            deliverable = false;
-        }
-        else{
-            let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
-            let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
-            if(stock_location.quantity < item.quantity){
-                in_stock = false;
+    if(cart_data && cart_data.order_type) {
+        cart_data.items.forEach((item)=>{
+            let product = products.find((product) => { return product.id == item.product_id})
+            let deliverable = true; //check if deliverable
+            let in_stock = true;     // check if in stock
+            if(!cart_data.stock_location_id){
+                deliverable = false;
             }
-        }
-        let formatted_item = {
-            variant_id : item.variant_id,
-            attributes: {
-                title: item.product_name,
-                images: {
-                  "1x": product.image_urls[0]
+            else{
+                let variant = product.variants.find((v)=>{ return v.id == item.variant_id});
+                let stock_location = variant.stock_locations.find((stock)=>{ return stock.id == cart_data.stock_location_id})
+                if(stock_location) {
+                    if(stock_location.quantity < item.quantity){
+                        // in_stock = false;
+                    }
+                } else {
+                   // in_stock = false;
+                }
+
+            }
+            let formatted_item = {
+                variant_id : item.variant_id,
+                attributes: {
+                    title: item.product_name,
+                    images: {
+                      "1x": product.image_urls[0]
+                    },
+                    size : item.size,
+                    price_mrp : item.mrp,
+                    price_final : item.sale_price,
+                    discount_per : 0
                 },
-                size : item.size,
-                price_mrp : item.mrp,
-                price_final : item.sale_price,
-                discount_per : 0
-            },
-              availability : in_stock,
-              quantity : item.quantity,
-              timestamp : item.timestamp,
-              deliverable : deliverable,
-              product_id : product.id
+                  availability : in_stock,
+                  quantity : item.quantity,
+                  timestamp : item.timestamp,
+                  deliverable : deliverable,
+                  product_id : product.id
+            }
+            items.push(formatted_item);
+        })
+        
+        cart_data.items = items;
+        response = {
+                success: true, 
+                cart : cart_data,
+                coupon_applied: null,
+                coupons: []
         }
-        items.push(formatted_item);
-    })
-    
-    cart_data.items = items;
-    let response = {
-            success: true, 
-            cart : cart_data,
-            coupon_applied: null,
-            coupons: [],
-            approx_delivery_time : "40 mins"
+    }
+    else {
+        cart_data.items = items;
+        response = {
+                success: true, 
+                cart : cart_data,
+                coupon_applied: null,
+                coupons: []
+        }
     }
 
     return response;
@@ -510,7 +536,7 @@ async function fetchCart(cart_id){
 }
 
 
-async function addToCart(variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
+async function addToCart(site_mode, variant_id = null, lat_long = null, cart_id = null, formatted_address = null, product) {
     try{
         console.log(" addToCart product ==>", product);
 
@@ -527,16 +553,16 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
         // user_id is not used as user is creted as on click of add to cart and will exist at this point but cart may not exist
         if(cart_id){
             console.time("fetch cart by id Time")
-            cart_data = await window.getCartByID(user_id);
+            cart_data = await window.getCartByID(await window.brewCartId(allConfig.businessConfig.siteMode, allConfig.businessConfig.businessId));
             console.timeEnd("fetch cart by id Time")
         }
 
-        if(!cart_data ){
+        if(cart_data == undefined || cart_data.order_type == undefined ){
             console.time("getNewCartData")
-            cart_data = getNewCartData(lat_long, formatted_address);
+            cart_data = getNewCartData(lat_long, formatted_address, site_mode);
             console.timeEnd("getNewCartData")
             console.time("writeInLocalStorage")
-            window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+            window.writeInLocalStorage(cartIdLabel , window.brewCartId(site_mode, allConfig.businessConfig.businessId));
             console.timeEnd("writeInLocalStorage")
         }
         console.log(" add to cart, cart data ==>",cart_data);
@@ -544,7 +570,7 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
         // TODO : check if the item is already in cart and update the qunatity value accordingly.
         // create new variable called updated quantity
 
-        let item_from_cart = cart_data.items.find((i) => { return i.variant_id == variant_id});
+        let item_from_cart = cart_data.items ? cart_data.items.find((i) => { return i.variant_id == variant_id}) : 0;
         let new_quantity = quantity;
         if(item_from_cart){
             new_quantity += item_from_cart.quantity;
@@ -597,7 +623,7 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
             timestamp : new Date().getTime()
         }
         console.time("updateOrder")
-        let order_data = await window.updateOrder(item, user_id, cart_data, stock_location_id)
+        let order_data = await window.updateOrder(item,  window.brewCartId(site_mode, allConfig.businessConfig.businessId), cart_data, stock_location_id)
         console.timeEnd("updateOrder")
 
         console.log("update order data");
@@ -623,16 +649,17 @@ async function addToCart(variant_id = null, lat_long = null, cart_id = null, for
 }
 
 
-function getNewCartData (lat_long, formatted_address) {
+function getNewCartData (lat_long, formatted_address, site_mode) {
     let cart_data = {
         user_id : firebase.auth().currentUser.uid,
         summary : {
             mrp_total : 0,
             sale_price_total : 0,
             cart_discount : 0,
-            shipping_fee : 50, // get from config or db
-            you_pay : 50, // change accordingly
+            shipping_fee : (site_mode == 'kiosk') ? 0 : 1, // get from config or db
+            you_pay : (site_mode == 'kiosk') ? 0 : 50, // change accordingly
         },
+        order_mode : site_mode,
         order_type : 'cart',
         cart_count : 0,
         shipping_address : {
@@ -659,7 +686,7 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
         locations = await getAllStockLocations();
     }
 
-    console.log("update delivery address all locations", locations);
+    console.log("update delivery address all locations", locations, lat_long);
     let stock_location_id = '';
 
     let closest_deliverable_location = findDeliverableLocation(locations, lat_long)
@@ -672,11 +699,9 @@ async function updateDeliveryLocation(lat_long, formatted_address,  cart_id){
     await db.collection('carts').doc(cart_id)
             .update(
                 {
-                    shipping_address : {
-                        lat_long : lat_long,
-                        formatted_address : formatted_address
-                    },
-                    stock_location_id : stock_location_id
+                    'shipping_address.lat_long' : lat_long,
+                    'shipping_address.formatted_address' : formatted_address,
+                    'stock_location_id' : stock_location_id
                 })
     let res = { success : true , message: 'Address updated successfully' }
     return res;
@@ -697,28 +722,28 @@ async function getAddresses(){
     return addresses;
 }
 
-async function createCartForVerifiedUser(cart_id){
+async function createCartForVerifiedUser(cart_id, siteMode, businessId){
     let cart_data = await window.getCartByID(cart_id);
     if(cart_data){
         cart_data.user_id = firebase.auth().currentUser.uid;
         cart_data.verified = true;
-        await db.collection("carts").doc(firebase.auth().currentUser.uid).set(cart_data);
-        sycnCartData(firebase.auth().currentUser.uid);
+        await db.collection("carts").doc(window.brewCartId(siteMode, businessId)).set(cart_data);
+        sycnCartData(window.brewCartId(siteMode, businessId));
     }
 }
 
 async function addAddress(addressObj) {
         //TODO : get UID from id token
-        userDetails_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get()
+        //userDetails_ref = await db.collection("user-details").doc(firebase.auth().currentUser.uid).get()
         await db.collection("user-details").doc(firebase.auth().currentUser.uid).update({
             name    : addressObj.name,
             email   : addressObj.email
         })
-        console.log("addressObj ==>", addressObj, userDetails.phone);
+        console.log("addressObj ==>", addressObj, userDetails);
         let address_obj = {
             name		: addressObj.name,
             email       : addressObj.email,
-            phone       : userDetails.hasOwnProperty('phone')? userDetails.phone:'',
+            phone       : userDetails && userDetails.phone ? userDetails.phone : '',
             address 	: addressObj.address,
             landmark 	: addressObj.landmark,
             city 		: addressObj.city,
@@ -738,10 +763,23 @@ async function addAddress(addressObj) {
         return address_obj
 }
 
+async function addUserDetails(userObj, cart_id) {
+        await db.collection("user-details").doc(firebase.auth().currentUser.uid).update({
+            name    : userObj.name,
+            email   : userObj.email
+        })
+        await db.collection('carts').doc(cart_id).update({
+            'shipping_address.name'    : userObj.name,
+            'shipping_address.email'   : userObj.email,
+            'shipping_address.phone'   : userObj.phone
+        })
+        return userObj;
+}
+
 
 async function getCurrentStockLocation() {
     let location = [];
-    let cart_id = window.readFromLocalStorage('cart_id');
+    let cart_id = window.readFromLocalStorage(cartIdLabel);
     if(cart_id) {
         let cart = await getCartByID(cart_id);
         if(window.stockLocations.length) {
@@ -760,9 +798,9 @@ async function getCurrentStockLocation() {
         
 }
 
-async function assignAddressToCart (address_id, fetchDraft) {
+async function assignAddressToCart (address_id, fetchDraft, phoneNumber) {
     let  order_line_items = [], items = [];
-    let cart_id = window.readFromLocalStorage('cart_id');
+    let cart_id = window.readFromLocalStorage(cartIdLabel);
     if(!cart_id) {
         return {code:"PAYMENT_DONE"}
     }
@@ -774,6 +812,9 @@ async function assignAddressToCart (address_id, fetchDraft) {
     let lat_lng = [], shipping_address
     if(fetchDraft) {
         shipping_address = cart.shipping_address
+        if(phoneNumber) {
+            shipping_address.phone = phoneNumber
+        }
     } else {
         let address = userAddresses.filter((address) => {return address.id == address_id})[0]
         shipping_address = address
@@ -783,7 +824,7 @@ async function assignAddressToCart (address_id, fetchDraft) {
     let user_details = {...userDetails}
    
     
-    if(!fetchDraft) {
+    if(!fetchDraft || phoneNumber) {
         await db.collection('carts').doc(cart_id).update({
             shipping_address: shipping_address,
         })
@@ -829,8 +870,7 @@ let response = {
         success: true, 
         cart : cart_data,
         coupon_applied: null,
-        coupons: [],
-        approx_delivery_time : "40 mins"
+        coupons: []
 }
 
 
@@ -913,8 +953,108 @@ async function orderSummary(transaction_id) {
             order_data : order_data,
             payment_summary:data,
             coupon_applied: null,
+            coupons: []
+    }
+        return response;
+}
+
+async function orderDetails(order_id) {
+    let  order_line_items = [], items = [];
+    let lat_lng = [], shipping_address
+    if(!order_id) {
+        return {success:false, msg:"order is empty"}
+    }
+
+
+    let user_order_map_ref = await db.collection("user-orders-map").where("order_id", "==",order_id).get()
+    
+    if(!user_order_map_ref.docs.length) {
+        return {success:false, msg:"Order cannot be found"}
+    }
+
+    let orderDoc = await db.collection('user-details').doc(user_order_map_ref.docs[0].data().user_id).collection("orders").doc(order_id).get()
+    if(!orderDoc.exists) {
+        return {success: false, msg:"Order cannot be found"}
+    }
+
+
+    let order_data = orderDoc.data();
+    
+    if(order_data.status =="draft") {
+        return {success:true, pending:1};
+    }
+
+    let payment_ref = await db.collection("payments").where("user_id","==", user_order_map_ref.docs[0].data().user_id).where("order_id","==",order_id).get()
+    if(payment_ref.docs.length) {
+    
+
+        let payment_data = payment_ref.docs[0].data()
+
+        if(payment_data.other_details) {
+            order_data.payment_details = JSON.parse(payment_data.other_details)
+        }
+    }
+   
+    let shipping_address_obj = order_data.shipping_address
+   
+    // let order_data = order_ref.data()
+    if(order_data.order_mode == "kiosk") {
+
+    } else {
+        if(shipping_address_obj) {
+            let latlng = {}
+            latlng["lat"] = shipping_address_obj.lat_long[0]
+            latlng["lng"] = shipping_address_obj.lat_long[1]
+            order_data.shipping_address.lat_long = latlng
+    
+        }
+    }
+   
+   
+    order_data.items.forEach((item)=>{
+        let product = products.find((product) => { return product.id == item.product_id})
+        let deliverable = true; //check if deliverable
+        let in_stock = true;     // check if in stock
+    
+        let formatted_item = {
+            variant_id : item.variant_id,
+            attributes: {
+                title: item.product_name,
+                image: product.image_urls[0],
+                size : item.size,
+                price_mrp : item.mrp,
+                price_final : item.sale_price,
+                discount_per : 0
+            },
+            availability : in_stock,
+            quantity : item.quantity,
+            timestamp : item.timestamp,
+            deliverable : deliverable,
+            product_id : product.id
+        }
+        items.push(formatted_item);
+    })
+
+    order_data.order_nos = orderDoc.id
+    order_data.items = items;
+    let response = {
+            success: true, 
+            order_data : order_data,
+            coupon_applied: null,
             coupons: [],
             approx_delivery_time : "40 mins"
     }
         return response;
+}
+
+function brewCartId(site_mode, business_id) {
+    let uid;
+    if(window.firebase.auth().currentUser) {
+        uid = window.firebase.auth().currentUser.uid
+        business_id = allConfig.businessConfig.businessId
+        site_mode = allConfig.businessConfig.siteMode
+        return uid+'-'+business_id+'-'+site_mode
+    } else {
+        return null
+    }
 }

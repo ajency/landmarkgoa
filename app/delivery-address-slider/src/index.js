@@ -15,7 +15,8 @@ class gpsModalPrompt extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
+			webSiteLink : process.env.REACT_APP_WEBSITE_LINK,
 			locations : [],
 			locError : '',
 			gpsError : '',
@@ -25,14 +26,16 @@ class gpsModalPrompt extends React.Component {
 			showNoAddressMsg : false,
 			settingUserLocation : false,
 			notLoggedIn : false,
-			showSignInBtn : false
+			showSignInBtn : false,
+			businessId: process.env.REACT_APP_BUSINESS_ID,
+			siteMode: process.env.REACT_APP_SITE_MODE
 		}
 		
 	}
 
 	componentDidMount(){
 		if(firebase && firebase.app()){
-			firebase.auth().onAuthStateChanged((user) => {
+			let unsubscribeOnAuthStateChanged = firebase.auth().onAuthStateChanged((user) => {
 				console.log("check user ==>", user);
 				if(user && !user.isAnonymous){
 					console.log("user found ==== setting showSign in button to false");
@@ -51,6 +54,7 @@ class gpsModalPrompt extends React.Component {
 			  		this.setState({notLoggedIn : true })
 			  		console.log("no user");
 			  	}
+			  	// unsubscribeOnAuthStateChanged();
 			});
 		}
 	}
@@ -72,8 +76,8 @@ class gpsModalPrompt extends React.Component {
 			  </div>
 			  <div className="slide-in-content">
 			      {this.showSignInButton()}
-					<div className="position-relative title-wrap">
-						<button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+					<div className="position-relative title-wrap pl-0">
+						{/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
 						<h3 className="mt-4 h1 ft6">Add delivery address</h3>
 					</div>
 			      <h4 className="font-weight-light mt-4 pb-4">
@@ -201,19 +205,20 @@ class gpsModalPrompt extends React.Component {
 
 	getAddressIcon(type){
 		console.log("type :  ", type);
-		let src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/map.png"
+		let src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/map.png"
 		if(type == 'home')
-			src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/home.png"
+			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/home.png"
 		else if(type == 'office')
-			src = "http://greengrainbowl-com.digitaldwarve.staging.wpengine.com/wp-content/themes/ajency-portfolio/images/slidein/office.png"
+			src = this.state.webSiteLink + "wp-content/themes/ajency-portfolio/images/slidein/office.png"
 		return (<img src={src} className="address-icon"/>)
 	}
 
 	getAutoCompleteLocations(){
 		if(this.state.locations.length){
 			let locs =  this.state.locations.map((loc)=>
-				<li key={loc.id} className="btn p-1" onClick={() => {this.reverseGeocode(loc)}}>
-					{loc.description}
+				<li key={loc.id} className="btn p-1 position-relative" onClick={() => {this.reverseGeocode(loc)}}>
+					<div class="address-icon"><i class="fas fa-map-marker-alt"></i></div>
+					<div class="address-text">{loc.description}</div>
 				</li>
 			);
 			this.scrollTop();
@@ -317,7 +322,7 @@ class gpsModalPrompt extends React.Component {
 				if(res.data.status === "OK"){
 					this.setState({settingUserLocation : false, gpsError : ''});
 					if(loc)
-						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.formatted_address) 
+						this.setUserLocations([res.data.result.geometry.location.lat,res.data.result.geometry.location.lng], res.data.result.name+', '+res.data.result.formatted_address);
 					else if(latlng)
 						this.setUserLocations(latlng, res.data.results[0].formatted_address);
 				}
@@ -339,7 +344,7 @@ class gpsModalPrompt extends React.Component {
 		try{
 			this.setSliderLoader();
 			this.setState({settingUserLocation : true});
-			let cart_id = firebase.auth().currentUser.uid;
+			let cart_id = window.brewCartId(this.state.siteMode, this.state.businessId);
 			window.getCartByID(cart_id).then((res)=>{
 				if(res){
 					window.updateDeliveryLocation(lat_lng, formatted_address, cart_id).then((res)=>{

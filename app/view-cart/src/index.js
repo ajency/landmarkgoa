@@ -5,21 +5,29 @@ class viewCart extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			apiEndPoint : 'https://asia-east2-project-ggb-dev.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
 			cart : null,
+			siteMode: process.env.REACT_APP_SITE_MODE,
+			businessId: process.env.REACT_APP_BUSINESS_ID
 		};
 	}
 
 	componentDidMount(){
+		console.log("viewCart")
 		this.fetchCart();
 	}
 
 	render() {
 			return (
-				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : '')}>
+				<div className={(!this.state.cart || !this.state.cart.cart_count ? 'd-none' : 'view-cart-holder empty-cart')}>
 						{this.getItemsCount()}
 					<div id="view-cart-btn" className="cursor-pointer zindex-1" onClick={() => this.loadCart()}>
 						VIEW CART
+					</div>
+					<div className="d-none">
+						<a href="javascript:void(0)" class="d-inline-block location-icon text-primary text-decoration-none">
+							<i class="fas fa-map-marker-alt text-primary font-size-34" aria-hidden="true"></i>
+						</a> 
 					</div>
 				</div>
 			);
@@ -54,13 +62,16 @@ class viewCart extends React.Component {
 	}
 
 	fetchCart() {
-		let cart_id = window.readFromLocalStorage('cart_id');
+		let cart_id = window.readFromLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId);
+		console.log("inside fetch cart",cart_id)
 		if(cart_id){
 			window.getCartByID(cart_id).then((cart_data)=>{
 				this.setState({cart : cart_data})
-				cart_data.items.forEach((item)=>{
-					window.updateaddToCartComponent(item);
-				})
+				if(cart_data && cart_data.items) {
+					cart_data.items.forEach((item)=>{
+						window.updateaddToCartComponent(item);
+					})
+				}
 			})
 		}
 	}

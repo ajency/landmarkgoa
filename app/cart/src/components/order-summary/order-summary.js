@@ -22,10 +22,11 @@ class OrderSummary extends Component {
         // if(window.firebase.auth().currentUser) {
         //     this.getOrderDetails()        
         // } else {
-            window.firebase.auth().onAuthStateChanged(user => {
+            let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged(user => {
                 if(user) {
                  this.getOrderDetails()     
                 }
+                unsubscribeOnAuthStateChanged();
             })
                
         // }   
@@ -168,7 +169,7 @@ class OrderSummary extends Component {
                             <h4 className="font-weight-light mt-4 pb-4">No worries, you can always try again</h4>
                         </div> 
                         <div className="d-flex justify-content-between p-15 secure-checkout fixed-bottom visible bg-white payment-button">
-                            <Link to={`/cart/cart-summary/${this.state.orderSummary.payment_summary.order_id}`} auto_pay={true}>
+                            <Link to={`/cart/cart-summary`} auto_pay={true}>
                                 <button className="btn btn-primary btn-arrow-icon position-relative rounded-0 p-15 text-left w-100 d-flex align-items-center justify-content-between">
                                     <span className="zindex-1">Try Again </span>
                                     <i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>

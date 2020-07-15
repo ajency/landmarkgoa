@@ -29,13 +29,30 @@
 }
 
 #react-view-cart-container{
-    >div{
+    .view-cart-holder{
         background: #4aa751;
         border-color: #4aa751;
         padding: 15px;
         color: #fff;
         display: flex;
         justify-content: space-between;
+        &.empty-cart{
+            a{
+                @media (min-width: 992px) {
+                    background-color: transparent;            
+                }    
+            }
+            @media (max-width: 991px) {
+                //justify-content: center;
+                a{
+                    i{
+                        color: #fff!important;
+                        position: relative;
+                        z-index: 1;
+                    }
+                }
+            }
+        }
         @media (min-width: 992px) {
             background: #fff;
             border: 2px solid #4aa751;
@@ -51,6 +68,8 @@
             cursor: pointer;
             -webkit-animation: in 1.5s infinite ease-out;
             animation: in 1.5s infinite ease-out;
+            justify-content: center;
+            align-items: center;
         }
         @media (max-width: 991px) {
             &:before{
@@ -91,7 +110,7 @@
             text-align: center;
             font-weight: 500;
             position: relative;
-            top: 9px;
+            // top: 9px;
             font-size: 16px;
             line-height: 20px;
         }

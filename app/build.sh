@@ -1,5 +1,7 @@
 removePreBuildFolder(){
 	rm -rf pre_build
+	cp env/env.json env.json
+	node prebuild.js
 }
 
 buildAddToCart(){
@@ -41,7 +43,8 @@ buildVariationSelection(){
 buildFirebaseFunctions(){
 	cd ../firebase
 	npm install
-	cp src/index.js ../build/firebase-functions.js
+	node addfirebasecred.js
+	cp src/firebase-functions.js ../build/site/firebase-functions.js
 	cd ..
 }
 

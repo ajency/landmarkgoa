@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+let jsonData = require('./build_location.json');
 
 let react_file_hash = {};
 let react_css_file_hash = {}
@@ -38,8 +39,8 @@ fs.emptyDir('../pre_build/cart')
 			}
 			
 
-			fs.copy('../pre_build/' , '../build/').then((success)=>{
-				fs.writeJson('../build/react_component_file_hash.json', react_file_hash)
+			fs.copy('../pre_build/' , '../build/' + jsonData['location'] + '/').then((success)=>{
+				fs.writeJson('../build/' + jsonData['location'] + '/react_component_file_hash.json', react_file_hash)
 				.then(() => {
 				  console.log('success!')
 				})
@@ -47,7 +48,7 @@ fs.emptyDir('../pre_build/cart')
 				  console.error(err)
 				})
 
-				fs.writeJson('../build/cart_app_css_file_hash.json', react_css_file_hash)
+				fs.writeJson('../build/' + jsonData['location'] + '/cart_app_css_file_hash.json', react_css_file_hash)
 				.then(() => {
 				  console.log('success!')
 				})

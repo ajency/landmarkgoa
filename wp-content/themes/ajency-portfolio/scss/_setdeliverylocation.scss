@@ -32,7 +32,7 @@
 .address{
     position: relative;
     &-text{        
-        margin-left: 35px;
+        margin-left: 25px;
         border-bottom: 1px solid #DFDFDF;
         display: inline-block;
         padding-bottom: 20px;
@@ -41,6 +41,7 @@
         position: absolute;
         top:5px;
         left: 0;
+        font-size: 20px;
     }
     &:last-child{
         margin-bottom: 0;

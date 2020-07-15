@@ -20,31 +20,40 @@ class AddressList extends Component {
             cart_id:'',
             redirectToCart:false,
             showAddressComponent: false,
-            approxDeliveryTime:''
+            approxDeliveryTime:generalConfig.preparationTime
         }
     }
 
     componentDidMount() {
         window.addCartLoader()
-        window.firebase.auth().onAuthStateChanged((user) => {
+        let unsubscribeOnAuthStateChanged = window.firebase.auth().onAuthStateChanged(async (user) => {
             let returnState = {};
-            returnState["cart_id"]=window.readFromLocalStorage('cart_id')
+            returnState["cart_id"]=window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
             if(window.firebase.auth().currentUser.isAnonymous) {
                 returnState["showAddressComponent"] = true
             } else {
                 if(window.firebase.auth().currentUser) {
-                    if(_.isEmpty(window.userAddresses)) {
+                    try {
+                        const  userAddresses =  await window.getAddresses();
+                        if(_.isEmpty(userAddresses)) {
+                            returnState["showAddressComponent"] = true
+                        } else {
+                            returnState["addresses"] = userAddresses
+                            returnState["fetchComplete"] = true
+                        }
+                        
+                    } catch (error) {
                         returnState["showAddressComponent"] = true
-                    } else {
-                        returnState["addresses"] = window.userAddresses
-                        returnState["fetchComplete"] = true
+                        
                     }
+
                 } else {
                     this.displayError("Please login to continue");
                 }            
             }
             this.setState(returnState);
             window.removeCartLoader()
+            unsubscribeOnAuthStateChanged();
         });
     }
 
@@ -52,7 +61,7 @@ class AddressList extends Component {
         return (
             <div>
                 {this.state.redirectToAddAddress ? "redirect":null}
-                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary/${this.state.cart_id}`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
+                {this.state.redirectToSummary ? <Redirect to={{ pathname:`/cart/cart-summary`, state:{order_obj:this.state.cartSummary, approx_delivery_time:this.state.approxDeliveryTime}}} />: null}
                 {this.state.redirectToCart ? <Redirect to={{ pathname:`/cart`}} />: null}
                 {this.state.showAddressComponent ? <AddNewAddress closeAddAddress={this.closeAddAddress} cartRequest={true} assignAndProceed={this.assignAndProceed}/>: this.showAllAddresses()}
             </div>
@@ -75,7 +84,7 @@ class AddressList extends Component {
                 <Header/>
                 <div className="cart-heading p-15 pb-0">
                     <div className="position-relative title-wrap">
-                        <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+                        <button className="btn btn-reset btn-back p-0" onClick={()=> this.props.history.push('/cart')}><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
                         <h3 className="mt-4 h1 ft6">Choose Delivery Address</h3>
                     </div> 
                 </div>
@@ -105,7 +114,8 @@ class AddressList extends Component {
                     <div className="text-black text-link highlight">
                         <h1 className="ft6">{obj.type}</h1>
                         <h5 className="font-weight-light">
-                            <span className="p-name d-inline-block">{obj.name}</span>
+                            
+                            <span className="p-name d-inline-block"  style={{marginRight: 10}}>{obj.name}</span>
                             <span className="p-phone-number d-inline-block">{obj.phone}</span>
                         </h5>
                         <h5 className="font-weight-light">
@@ -126,8 +136,8 @@ class AddressList extends Component {
         }
 
         //let cart_id =  e.target.getAttribute("data-id")
-        this._currentCart = window.readFromLocalStorage('cart_id');
-		let cart_id =  window.readFromLocalStorage('cart_id');
+        this._currentCart = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
         if(cart_id) {
              if(e) {
                 e.preventDefault();
@@ -146,7 +156,7 @@ class AddressList extends Component {
             return window.assignAddressToCart(address_id)
             .then((res) => {
                 if(res.success) {
-                    this.setState({cartSummary:res.cart, approxDeliveryTime : res.approx_delivery_time, redirectToSummary:true,})
+                    this.setState({cartSummary:res.cart, redirectToSummary:true,})
                 } else {
                     window.removeCartLoader();
                     if(res.code =='PAYMENT_DONE') {
