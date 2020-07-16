@@ -1,0 +1,144 @@
+/*------------------------------------------------------*/
+/*---------------------- IMAGE PARALLAX ----------------------*/
+.image-parallax {
+  $p: &;
+  .image-parallax-overlay {
+    position: absolute;
+    background-color: rgba(#000, 0.4);
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+  }
+  &__banner {
+    position: relative;
+    z-index: 2;
+
+    &-title {
+      font-size: 80px;
+      color: #fff;
+      font-weight: 300;
+
+      @media (max-width: 1200px) {
+        font-size: 60px;
+      }
+
+      @media (max-width: 991px) {
+        font-size: 50px;
+      }
+
+      @media (max-width: 767px) {
+        font-size: 40px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 32px;
+      }
+
+      b {
+        font-weight: 600;
+      }
+    }
+
+    &-description {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+
+      @media (max-width: 480px) {
+        font-size: 14px;
+      }
+    }
+  }
+  &__item {
+    display: flex;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 5;
+
+    &.simple {
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &--bl {
+      align-items: flex-end;
+      justify-content: flex-start;
+      #{$p}__content {
+        min-width: 440px;
+        max-width: 538px;
+        padding: 35px 30px;
+        @media (max-width: 767px) {
+          min-width: auto;
+          max-width: 90%;
+        }
+      }
+    }
+
+    &--br {
+      align-items: flex-end;
+      justify-content: flex-end;
+      #{$p}__content {
+        min-width: 440px;
+        max-width: 538px;
+        padding: 25px 40px;
+        @media (max-width: 767px) {
+          min-width: auto;
+          max-width: 90%;
+        }
+      }
+    }
+
+    &--center {
+      align-items: center;
+      justify-content: center;
+      #{$p}__content {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 70px 0;
+
+        @media (max-width: 991px) {
+          padding: 50px 0;
+        }
+      }
+
+      #{$p}__heading {
+        max-width: 1100px;
+
+        @media (max-width: 991px) {
+          max-width: calc(100% - 50px);
+        }
+      }
+    }
+  }
+  &__content {
+    background-color: #fff;
+    z-index: 3;
+
+    &-description {
+      &,
+      p,
+      ul,
+      ol {
+        font-size: 15px;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    &-subtitle {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    &-title {
+      margin-bottom: 20px;
+      letter-spacing: 0.065em;
+      margin-top: 0;
+    }
+  }
+}

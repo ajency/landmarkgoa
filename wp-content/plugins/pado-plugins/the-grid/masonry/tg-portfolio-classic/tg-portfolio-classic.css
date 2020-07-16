@@ -1,0 +1,124 @@
+.tg-portfolio-classic a:not([class*="tg-element-"]),
+.tg-portfolio-classic a:not([class*="tg-element-"]):active,
+.tg-portfolio-classic a:not([class*="tg-element-"]):focus,
+.tg-portfolio-classic [class*="tg-element-"] *:not(del) {
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+	text-align: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	line-height: inherit;
+	font-weight: inherit;
+	text-transform: inherit;
+	text-decoration: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+}
+.tg-portfolio-classic [class*="tg-element-"],
+.tg-portfolio-classic .tg-item-overlay,
+.tg-portfolio-classic .tg-center-holder,
+.tg-portfolio-classic .tg-center-inner > * {
+	vertical-align: middle;
+}
+.tg-portfolio-classic .tg-item-overlay[data-position="top"] {
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-portfolio-classic:not(.tg-force-play):not(.tg-is-playing):hover .tg-item-overlay[data-position="top"] {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-portfolio-classic .tg-item-overlay[data-position="center"] {
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 450ms ease;
+	-moz-transition: all 450ms ease;
+	-ms-transition: all 450ms ease;
+	transition: all 450ms ease;
+}
+.tg-portfolio-classic:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-holder:hover .tg-item-overlay[data-position="center"] {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-portfolio-classic .tg-item-overlay[data-position="bottom"] {
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-portfolio-classic:not(.tg-force-play):not(.tg-is-playing):hover .tg-item-overlay[data-position="bottom"] {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-portfolio-classic div.tg-item-media-content {
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-portfolio-classic:hover .tg-item-media-content {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-portfolio-classic .tg-element-1 {
+	position: relative;
+	font-size: 14px;
+	line-height: 18px;
+	color: #004ae2 !important;
+	font-weight: 400;
+	display: inline-block;
+	padding: 0 0 10px;
+}
+.tg-portfolio-classic .tg-element-1 .tg-item-term {
+	position: relative;
+	display: inline-block;
+}
+.tg-portfolio-classic .tg-element-3 {
+	position: relative;
+	font-size: 30px;
+	line-height: 38px;
+	color: #ffffff !important;
+	font-weight: 400;
+	letter-spacing: 0.2px;
+	display: block;
+	margin: 0 0 5px;
+	padding: 0;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-portfolio-classic .tg-element-3:hover {
+	opacity: 0.7 !important;
+}
+.tg-portfolio-classic .title {
+	font-weight: 800;
+}
+.tg-portfolio-classic .category {
+	font-weight: bold;
+}
+.tg-portfolio-classic .tg-item-media-content {
+	background-color: #222;
+	position: absolute;
+	max-width: 100%;
+	height: 100%;
+	left: -15px;
+	top: 15px;
+	padding: 40px 90px 40px 40px;
+}
+.tg-portfolio-classic .tg-item-overlay {
+	display: none;
+}
+.tg-portfolio-classic .tg-bottom-holder {
+	padding: 40px 30px;
+}

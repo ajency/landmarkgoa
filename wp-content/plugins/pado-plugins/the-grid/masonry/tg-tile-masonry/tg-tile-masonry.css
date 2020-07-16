@@ -1,0 +1,80 @@
+.tg-tile-masonry a:not([class*="tg-element-"]),
+.tg-tile-masonry a:not([class*="tg-element-"]):active,
+.tg-tile-masonry a:not([class*="tg-element-"]):focus,
+.tg-tile-masonry [class*="tg-element-"] *:not(del) {
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+	text-align: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	line-height: inherit;
+	font-weight: inherit;
+	text-transform: inherit;
+	text-decoration: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+}
+.tg-tile-masonry [class*="tg-element-"],
+.tg-tile-masonry .tg-item-overlay,
+.tg-tile-masonry .tg-center-holder,
+.tg-tile-masonry .tg-center-inner > * {
+	vertical-align: middle;
+}
+.tg-tile-masonry:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-inner:not(.no-media-poster) > * {
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+	-webkit-transform:  scale3d(1,1,1);
+	-moz-transform:  scale3d(1,1,1);
+	-ms-transform:  scale3d(1,1,1);
+	transform:  scale3d(1,1,1);
+}
+.tg-tile-masonry:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-holder:hover .tg-item-media-inner:not(.no-media-poster) > * {
+	-webkit-transform:  scale3d(1.2,1.2,1.2);
+	-moz-transform:  scale3d(1.2,1.2,1.2);
+	-ms-transform:  scale3d(1.2,1.2,1.2);
+	transform:  scale3d(1.2,1.2,1.2);
+}
+.tg-tile-masonry .tg-item-overlay[data-position="center"] {
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 450ms ease;
+	-moz-transition: all 450ms ease;
+	-ms-transition: all 450ms ease;
+	transition: all 450ms ease;
+}
+.tg-tile-masonry:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-holder:hover .tg-item-overlay[data-position="center"] {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-tile-masonry .tg-item-content-holder[data-position="bottom"] {
+	text-align: center;
+	position: relative;
+	min-height: 1px;
+	display: block;
+	padding: 15px 0;
+}
+.tg-tile-masonry div.tg-item-media-content {
+	text-align: center;
+}
+.tg-tile-masonry .tg-element-3 {
+	position: relative;
+	font-size: 16px;
+	line-height: 24px;
+	color: #222222 !important;
+	font-weight: 500;
+	letter-spacing: 0.2px;
+	display: block;
+	margin: 0;
+	padding: 0;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-tile-masonry .tg-element-3:hover {
+	opacity: 0.7 !important;
+}

@@ -1,0 +1,358 @@
+/*------------------------------------------------------*/
+/*---------------------- TEAM ----------------------*/
+.team-members-wrap {
+  * {
+    text-transform: none;
+  }
+  a {
+    text-decoration: none;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+  }
+  .member-name {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.2px;
+    text-align: center;
+    color: #222222;
+    margin-bottom: 7px;
+  }
+  .member-position {
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.2px;
+    color: #999999;
+  }
+  &.inline{
+    .team-member{
+      height: 380px;
+      padding: 0;
+      &:hover{
+        .member-info-wrap {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+    .member-wrap{
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .member-info-wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      visibility: hidden;
+      opacity: 0;
+      background-color: rgba(255,255,255,0.9);
+      -webkit-transition: all 350ms ease;
+      transition: all 350ms ease;
+    }
+    .member-info {
+      position: relative;
+      top: 46.7%;
+      padding: 0 15px;
+      width: 100%;
+      text-align: center;
+      h5{
+        color: #004ae2;
+      }
+    }
+    .social {
+      position: absolute;
+      bottom: 37px;
+      width: 100%;
+      text-align: center;
+      .soc-item {
+        padding: 0 13px 0 13px;
+      }
+      .fa{
+        font-size: 18px;
+        transition: all 350ms ease;
+        &:hover{
+          color: #004ae2;
+        }
+      }
+    }
+    .btn-wrap {
+      clear: both;
+      padding-top: 65px;
+    }
+  }
+}
+
+// end .team-members-wrap
+
+// inline text style
+.team-members-wrap {
+  &.inline_text {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    .info-wrapper {
+      width: 35%;
+      .title {
+        margin-bottom: 85px;
+        font-weight: 300;
+        -ms-word-wrap: break-word;
+        word-wrap: break-word;
+        max-width: 300px;
+        b {
+          font-weight: 600;
+        }
+      }
+    }
+    .team-list-wrap {
+      margin: 0;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      width: 75%;
+      li {
+        width: calc(33.33333% - 25px);
+        margin-bottom: 50px;
+        list-style: none;
+      }
+    }
+    .team-member {
+      .s-back-switch {
+        position: relative;
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 240px;
+        &:hover {
+          .social {
+            opacity: 1;
+            visibility: visible;
+            box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.08);
+          }
+        }
+      }
+      .social {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        background-color: #ffffff;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: opacity .3s ease, visibility .3s ease, box-shadow .3s ease;
+        -o-transition: opacity .3s ease, visibility .3s ease, box-shadow .3s ease;
+        transition: opacity .3s ease, visibility .3s ease, box-shadow .3s ease;
+        a {
+          -webkit-transition: color .3s ease;
+          -o-transition: color .3s ease;
+          transition: color .3s ease;
+          font-size: 18px;
+          &:not(:last-of-type) {
+            margin-right: 20px;
+          }
+          &:hover {
+            color: #004ae2;
+          }
+        }
+      }
+    }
+    .member-info {
+      padding-top: 20px;
+      text-align: center;
+    }
+  }
+  &.slider_modern {
+    .team-member {
+      .s-back-switch {
+        position: relative;
+        -webkit-background-size: cover;
+        background-size: cover;
+        width: 100%;
+        height: 300px;
+        &:hover {
+          .social {
+            -webkit-box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.08);
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+      }
+      .social {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px;
+        background-color: #ffffff;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transition: opacity .3s ease, visibility .3s ease;
+        -o-transition: opacity .3s ease, visibility .3s ease;
+        transition: opacity .3s ease, visibility .3s ease;
+        a {
+          -webkit-transition: color .3s ease;
+          -o-transition: color .3s ease;
+          transition: color .3s ease;
+          &:not(:last-of-type) {
+            margin-right: 20px;
+          }
+          &:hover {
+            color: #004ae2;
+          }
+        }
+      }
+    }
+    .member-info {
+      padding-top: 20px;
+      text-align: center;
+    }
+    .swiper3-button-next,
+    .swiper3-button-prev {
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+      background-image: none;
+      font-size: 20px;
+      color: #d1d0d0;
+      text-align: center;
+    }
+    .swiper3-button-prev {
+      left: -30px;
+    }
+    .swiper3-button-next {
+      right: -30px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .team-members-wrap {
+    &.inline_text {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      .info-wrapper,
+      .team-list-wrap {
+        width: 100%;
+      }
+      .info-wrapper {
+        margin-bottom: 60px;
+        text-align: center;
+        .title {
+          margin-bottom: 40px;
+          max-width: none;
+        }
+      }
+      .team-list-wrap {
+        margin-left: -15px;
+        margin-right: -15px;
+        width: auto;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        li {
+          width: 50%;
+          padding: 0 15px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 767px) and (min-width: 600px){
+  .team-members-wrap{
+    .team-member{
+      &.col-2,
+      &.col-3,
+      &.col-4{
+        width: 50%;
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  .team-members-wrap {
+    &.inline_text {
+      .info-wrapper {
+        margin-bottom: 40px;
+        .title {
+          margin-bottom: 20px;
+        }
+      }
+      .team-list-wrap {
+        li {
+          margin-bottom: 30px;
+        }
+      }
+    }
+    .btn-wrap{
+      padding-top: 40px !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .team-members-wrap {
+    &.inline_text {
+      .team-list-wrap {
+        li {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 991px) {
+    .team-members-wrap {
+        &.slider_modern {
+            .team-member {
+                .s-back-switch {
+                    height: 380px;
+                    background-position: top;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 480px) {
+    .team-members-wrap {
+        &.slider_modern {
+            .team-member {
+                .s-back-switch {
+                    height: 350px;
+                }
+            }
+        }
+    }
+}

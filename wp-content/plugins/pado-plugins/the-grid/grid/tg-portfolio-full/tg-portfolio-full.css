@@ -1,0 +1,128 @@
+.tg-portfolio-full a:not([class*="tg-element-"]),
+.tg-portfolio-full a:not([class*="tg-element-"]):active,
+.tg-portfolio-full a:not([class*="tg-element-"]):focus,
+.tg-portfolio-full [class*="tg-element-"] *:not(del) {
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+	text-align: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	line-height: inherit;
+	font-weight: inherit;
+	text-transform: inherit;
+	text-decoration: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+}
+.tg-portfolio-full [class*="tg-element-"],
+.tg-portfolio-full .tg-item-overlay,
+.tg-portfolio-full .tg-center-holder,
+.tg-portfolio-full .tg-center-inner > * {
+	vertical-align: middle;
+}
+.tg-portfolio-full .tg-item-inner {
+	overflow: hidden;
+}
+.tg-portfolio-full .tg-item-overlay {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.tg-portfolio-full div.tg-item-media-content {
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-portfolio-full:hover .tg-item-media-content {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-portfolio-full .tg-element-1 {
+	position: relative;
+	font-size: 30px;
+	line-height: 1.2em;
+	color: #ffffff !important;
+	font-weight: 400;
+	text-align: center;
+	letter-spacing: 0.2px;
+	display: block;
+	margin: 0 0 10px;
+	padding: 0 0 0 30px;
+	-webkit-transition: all 320ms cubic-bezier(.7,.01,.31,.78);
+	-moz-transition: all 320ms cubic-bezier(.7,.01,.31,.78);
+	-ms-transition: all 320ms cubic-bezier(.7,.01,.31,.78);
+	transition: all 320ms cubic-bezier(.7,.01,.31,.78);
+}
+.tg-portfolio-full .tg-element-1:hover {
+	opacity: 0.7 !important;
+}
+.tg-portfolio-full .tg-element-2 {
+	position: relative;
+	font-size: 13px;
+	line-height: 16px;
+	color: #004ae2 !important;
+	font-weight: 400;
+	font-style: normal !important;
+	text-decoration: none !important;
+	letter-spacing: 0.2px !important;
+	display: block;
+	padding: 0 0 0 30px;
+}
+.tg-portfolio-full .tg-element-2 .tg-item-term {
+	position: relative;
+	display: inline-block;
+}
+.tg-portfolio-full:hover .title {
+	top: 0;
+}
+.tg-portfolio-full:hover .link-icon {
+	top: 0;
+}
+.tg-portfolio-full:hover .category {
+	top: 0;
+}
+.tg-portfolio-full .title {
+	-webkit-transition: all .3s cubic-bezier(.7,.01,.31,.78);
+	-moz-transition: all .3s cubic-bezier(.7,.01,.31,.78);
+	transition: all .3s cubic-bezier(.7,.01,.31,.78);
+	position: relative;
+	font-weight: 800;
+}
+.tg-portfolio-full .link-icon {
+	top: 36px;
+}
+.tg-portfolio-full .category {
+	font-weight: 800;
+	top: 24px;
+	-webkit-transition: top .3s cubic-bezier(.7,.01,.31,.78);
+	-moz-transition: top .3s cubic-bezier(.7,.01,.31,.78);
+	transition: top .3s cubic-bezier(.7,.01,.31,.78);
+	position: relative;
+}
+.tg-portfolio-full .link-icon {
+	-webkit-transition: all .3s cubic-bezier(.7,.01,.31,.78);
+	-moz-transition: all .3s cubic-bezier(.7,.01,.31,.78);
+	transition: all .3s cubic-bezier(.7,.01,.31,.78);
+	position: relative;
+	font-weight: 800;
+}
+.tg-portfolio-full .tg-item-media-content {
+	background-color: #222;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+.tg-portfolio-full .tg-item-overlay {
+	display: none;
+}

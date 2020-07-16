@@ -1,0 +1,91 @@
+/*------------------------------------------------------*/
+/*---------------------- PORTFOLIO LIST ----------------------*/
+// PARALLAX SHOWCASE
+.parallax-showcase-wrapper {
+  .s-back-switch {
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+  }
+  .parallax-showcase-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding-left: 85px;
+    padding-right: 85px;
+  }
+  .parallax-showcase-content {
+    max-width: 600px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .title {
+    color: #222;
+    font-size: 70px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 15px;
+  }
+  .desc {
+    color: #222;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  a {
+    margin-top: 30px;
+  }
+  &.-light{
+    .title,
+    .desc{
+      color: #fff;
+    }
+  }
+}
+@media (max-width: 1500px) {
+  .parallax-showcase-wrapper {
+    .parallax-showcase-item {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
+}
+
+@media only screen and(max-width: 991px) {
+  .parallax-showcase-wrapper {
+    .title {
+      font-size: 50px;
+    }
+    .desc {
+      font-size: 15px;
+    }
+  }
+}
+
+@media only screen and(max-width: 767px) {
+  .parallax-showcase-wrapper {
+    .parallax-showcase-item {
+      padding-left: 0;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .parallax-showcase-content {
+      text-align: center;
+    }
+    .title {
+      font-size: 35px;
+    }
+    .desc {
+      font-size: 15px;
+    }
+  }
+}

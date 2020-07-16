@@ -1,0 +1,271 @@
+/*------------------------------------------------------*/
+/*---------------------- BANNER IMAGE ----------------------*/
+$header_fix: '.header_trans-fixed + .container .vc_row:first-child';
+.top-banner {
+  position: relative;
+  display: table;
+  width: 100%;
+  padding: 100px 0;
+  text-align: center;
+
+  .img-parallax {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .banner-wrap {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  #{$header_fix} & {
+    padding-top: 130px;
+  }
+
+  .container-fluid {
+    width: 100%;
+    padding: 0 85px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(#081b35, 0.4);
+  }
+
+  .subtitle {
+    margin-bottom: 15px;
+    color: #222;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: .3px;
+  }
+
+  .title {
+    font-size: 80px;
+    color: #222;
+    font-weight: 300;
+    letter-spacing: .2px;
+    margin-bottom: 0;
+    margin-top: 0;
+    line-height: 1.1;
+
+    b {
+      font-weight: 600;
+    }
+
+    i {
+      color: #004ae2;
+      font-style: normal;
+    }
+  }
+
+
+  .additional_wrap {
+    padding: 35px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 1;
+  }
+
+
+  .additional_title {
+    position: absolute;
+    top: 50%;
+    color: #bbb;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    -webkit-transform: rotate(-90deg) translate(-50%, -50%);
+    -ms-transform: rotate(-90deg) translate(-50%, -50%);
+    transform: rotate(-90deg) translate(-50%, -50%);
+    -webkit-transform-origin: top center;
+    -ms-transform-origin: top center;
+    transform-origin: 0 0;
+    white-space: nowrap;
+    padding-left: 10vh;
+    left: 50%;
+  }
+
+  .socials {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    padding-bottom: 35px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+    &:hover  {
+      opacity: 1;
+    }
+
+    a {
+      margin-bottom: 2vh;
+      color: #bbbbbb;
+      font-size: 18px;
+      font-weight: 800;
+      display: inline-block;
+      text-decoration: none;
+      -webkit-transition: all 350ms ease;
+      -o-transition: all 350ms ease;
+      transition: all 350ms ease;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        color: #004ae2;
+      }
+    }
+  }
+
+  .description {
+    color: #222;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+
+  .buttons {
+    margin-top: 25px;
+    margin-left: -15px;
+    margin-right: -15px;
+
+    .a-btn {
+      margin: 15px 15px 0;
+    }
+  }
+
+  &.small_banner {
+    min-height: 450px;
+
+    .title {
+      font-size: 50px;
+    }
+  }
+
+  &.medium_banner {
+    min-height: 600px;
+
+    .title {
+      font-size: 60px;
+    }
+  }
+
+  &.t-left {
+    text-align: left;
+  }
+
+  &.t-right {
+    text-align: right;
+  }
+
+  &.-light {
+    .subtitle,
+    .title,
+    .description {
+      color: #fff;
+    }
+  }
+}
+
+@media (max-height: 800px) {
+  .top-banner {
+    .additional_title {
+      letter-spacing: 4px;
+    }
+  }
+}
+
+@media (max-width: 1500px) {
+  .top-banner {
+    .container-fluid {
+      padding: 0 25px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .top-banner {
+    padding: 70px 0;
+
+    #{$header_fix} & {
+      padding-top: 100px;
+    }
+
+    .title {
+      font-size: 60px;
+    }
+
+    &.small_banner {
+      min-height: 300px;
+
+      .title {
+        font-size: 40px;
+      }
+    }
+
+    &.medium_banner {
+      min-height: 500px;
+
+      .title {
+        font-size: 40px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .top-banner {
+    padding: 60px 0;
+
+    .additional_wrap {
+      display: none;
+    }
+
+    #{$header_fix} & {
+      padding-top: 90px;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    .title {
+      font-size: 40px;
+      line-height: 1.2;
+    }
+
+    &.small_banner {
+      .title {
+        font-size: 32px;
+      }
+    }
+
+    &.medium_banner {
+      min-height: 300px;
+
+      .title {
+        font-size: 32px;
+      }
+    }
+  }
+}

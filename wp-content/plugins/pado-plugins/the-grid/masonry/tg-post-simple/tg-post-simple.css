@@ -1,0 +1,127 @@
+.tg-post-simple a:not([class*="tg-element-"]),
+.tg-post-simple a:not([class*="tg-element-"]):active,
+.tg-post-simple a:not([class*="tg-element-"]):focus,
+.tg-post-simple [class*="tg-element-"] *:not(del) {
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+	text-align: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	line-height: inherit;
+	font-weight: inherit;
+	text-transform: inherit;
+	text-decoration: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+}
+.tg-post-simple [class*="tg-element-"],
+.tg-post-simple .tg-item-overlay,
+.tg-post-simple .tg-center-holder,
+.tg-post-simple .tg-center-inner > * {
+	vertical-align: middle;
+}
+.tg-post-simple:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-inner:not(.no-media-poster) > * {
+	-webkit-transition: all 320ms ease;
+	-moz-transition: all 320ms ease;
+	-ms-transition: all 320ms ease;
+	transition: all 320ms ease;
+	-webkit-transform: translate3d(0px,10px,0px);
+	-moz-transform: translate3d(0px,10px,0px);
+	-ms-transform: translate3d(0px,10px,0px);
+	transform: translate3d(0px,10px,0px);
+}
+.tg-post-simple:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-holder:hover .tg-item-media-inner:not(.no-media-poster) > * {
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+.tg-post-simple .tg-item-overlay[data-position="center"] {
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 450ms ease;
+	-moz-transition: all 450ms ease;
+	-ms-transition: all 450ms ease;
+	transition: all 450ms ease;
+}
+.tg-post-simple:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-holder:hover .tg-item-overlay[data-position="center"] {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-post-simple .tg-item-content-holder[data-position="bottom"] {
+	position: relative;
+	min-height: 1px;
+	display: block;
+	padding: 30px 0 0;
+}
+.tg-post-simple div.tg-item-media-content {
+	text-align: center;
+}
+.tg-post-simple .tg-element-6 {
+	position: relative;
+	font-size: 14px;
+	line-height: 16px;
+	color: #999999 !important;
+	font-weight: 400;
+	letter-spacing: 0.2px;
+	display: inline;
+}
+.tg-post-simple .tg-element-6 .tg-item-term {
+	position: relative;
+	display: inline-block;
+}
+.tg-post-simple .tg-element-3 {
+	position: relative;
+	font-size: 18px;
+	line-height: 32px;
+	font-weight: 400;
+	letter-spacing: 0.2px;
+	display: block;
+	margin: 0;
+	padding: 5px 0 0;
+	-webkit-transition: all 700ms ease;
+	-moz-transition: all 700ms ease;
+	-ms-transition: all 700ms ease;
+	transition: all 700ms ease;
+}
+.tg-post-simple .tg-element-3:hover {
+	opacity: 0.7 !important;
+}
+.tg-post-simple .tg-element-10 {
+	position: relative;
+	font-size: 14px;
+	color: #004ae2 !important;
+	font-weight: 600;
+	text-align: left;
+	display: block;
+	margin: 15px 0 0;
+	-webkit-transition: all 180ms ease;
+	-moz-transition: all 180ms ease;
+	-ms-transition: all 180ms ease;
+	transition: all 180ms ease;
+}
+.tg-post-simple .tg-element-10:hover {
+	color: #999999;
+	opacity: 1 !important;
+}
+.tg-post-simple .category {
+	font-weight: 600;
+}
+.tg-post-simple .date {
+	font-weight: 600;
+}
+.tg-post-simple .title {
+	margin-top: 5px;
+	font-weight: 600;
+}
+.tg-post-simple .tg-a-btn-4 {
+	transition: .3s ease;
+}
+.tg-post-simple .tg-a-btn-4 a:hover {
+	color: #999 !important;
+}
+.tg-post-simple .tg-a-btn-4 a:hover:after {
+	transform: translateX(8px);
+}
