@@ -67,11 +67,16 @@ class Razorpay extends Component {
         if(e) {
             e.preventDefault();
         }
+        if(!this.props.checkNameExists()) {
+            return false;
+        }
         window.addCartLoader();
         let url = generalConfig.apiEndPoint + "/anonymous/payment/create-order";
 			let body = {
                 order_id : this.props.order.id,
-                amount: this.props.order.amount
+                amount: this.props.order.amount || window.cartData.summary.you_pay,
+                business_id:generalConfig.businessId,
+                mode:generalConfig.site_mode
             }
             
         return  axios.post(url, body).then((res) => {

@@ -132,13 +132,13 @@ footer {
     overflow: hidden;
 }
 
-.lg-w-50{
+/*.lg-w-50{
     @media (min-width: 992px) {
         width: 50%;
         float: left;
     }
 }
-
+*/
 .position{
     &-absolute{
         &-right20{
@@ -295,6 +295,10 @@ footer {
     font-size: 20px;
 }
 
+.font-size-34{
+    font-size: 34px;
+}
+
 .add-address-form{
     .error{
         color: $danger;
@@ -302,6 +306,13 @@ footer {
         margin-top: 5px;
         font-size: 14px;
     }
+}
+
+.text-error{
+    color: $danger;
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
 }
 
 @media (min-width: 320px) and (max-width: 767.98px) {
@@ -409,4 +420,99 @@ nav{
 
 .outline-0{
     outline: 0;
+}
+
+[data-notify="progressbar"] {
+	margin-bottom: 0px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 5px;
+}
+
+.overflow-hidden{
+    overflow: hidden !important;
+}
+
+.px-15{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.close-lightbox-modal {
+    position: absolute;
+    right: -5px;
+    top: -35px;
+    background: transparent;
+    border: 0;
+    font-size: 28px;
+    color: #000;   
+    line-height: 0; 
+    z-index: 2;
+    cursor: pointer;
+    outline: 0 !important;
+}
+
+.lightbox {
+    &-modal {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.2);
+        overflow: auto; 
+        height: 100vh;
+        display: none;
+
+        &.open {
+            display: block;
+        }
+    }
+    &-content {
+        padding: 50px 15px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-wrap {
+            position: relative;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            max-height: calc(100vh - 100px);
+            width: auto;
+        }
+    }
+}
+
+.combo-text{
+    font-size: 13px;
+    padding-left: 35px;
+    font-weight: 300;
+    line-height: 16px;
+}
+
+.slick-slide {
+    outline: 0 !important;
+}
+
+.special-offer-wrap {
+    background: #d0e9d1;
+    padding: 15px 10px;
+    
+    .oyo {
+        color: #ef2c28;
+        font-weight: 700;
+    }
 }

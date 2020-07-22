@@ -8,7 +8,7 @@
     padding: 1px;
     border-radius: 50%;
     i{
-        font-size: 10px;
+        //font-size: 10px;
     }
     &:hover, &:focus{
         background: #4aa751;
@@ -29,6 +29,11 @@
     }
     &.show{
         display: block;
+    }
+    @media (max-width: 992px) {
+        min-width: 320px;
+        width: 100%;
+        left: 0;
     }
 }
 
@@ -91,12 +96,11 @@
 }
 
 #selected-location-address{
-    margin-top: 5px;
+    margin-top: 7px;
     &:after{        
         @media (max-width: 991px) {
             content: '';
             position: absolute;
-            // left: 28px;
             left: 5px;
             top: -9px;
             width: 0;
@@ -107,7 +111,6 @@
             border-bottom: 10px solid #eeefee;
         }    
         @media (min-width: 768px) and (max-width: 991px) {
-            // left: 44px;
             left: 19px;
         }   
     }
@@ -117,10 +120,10 @@
 }
 
 .number-edit{
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
+    //position: absolute;
+    //top: 50%;
+    //right: 15px;
+    //transform: translateY(-50%);
     color: #fff;
     background: #4aa751;
     padding: 7px;
@@ -145,4 +148,11 @@
             width: 100%;
         }
     }
+}
+
+.header-location{
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1;
 }

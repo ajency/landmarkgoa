@@ -17,6 +17,9 @@ class Cart extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			site_mode : generalConfig.site_mode,
+			pickupPoint : generalConfig.pickupPoint,
+			approxDeliveryTime : generalConfig.preparationTime,
 			cartData : {},
 			fetchCartComplete : false,
 			fetchCartFailed : false,
@@ -27,6 +30,7 @@ class Cart extends Component {
 	}
 
 	componentDidMount(){
+		this.fetchCart();
 		$('#view-cart-btn').on('click', ()=>{
 			console.log("view cart click event fired");
 			this.setState({cartData : {}, fetchCartComplete : false, cartEmpty : false})
@@ -66,11 +70,10 @@ class Cart extends Component {
 				cartContainer = <div className="text-center mt-5"> <h4> {this.state.fetchCartFailureMsg} </h4>  </div>
 			}
 			else {
-				cartContainer = 
-					<div>
-						<div>
-							<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
-						</div>
+				cartContainer =
+				<div className=""> 
+					<div className="cart-container visible">
+						{this.getDeliveryAddressSection()}
 
 						<div className="cart-heading p-15 pt-0 pb-0">
 							<h1 className="font-weight-bold d-block mobile-header mb-4 text-muted">Your cart</h1>
@@ -92,7 +95,7 @@ class Cart extends Component {
 							</div>
 							<div className="w-50 text-align-right font-weight-medium">
 								<img src={clockLogo} alt="Estimated time" title="Estimated time" className="d-inline-block vertical-align-middle mr-1"/> 
-								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">30 mins</span>
+								<span className="d-inline-block vertical-align-middle text-black font-weight-medium">{this.state.approxDeliveryTime}</span>
 							</div>
 						</div>
 
@@ -109,25 +112,44 @@ class Cart extends Component {
 								</div>
 							</div>
 						</div>
-
-						<div className="p-15 pt-0 pb-0">
-							<div className="secure-checkout fixed-bottom visible bg-white p-15">
-								<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-capitalize" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
-									<span className="zindex-1">Proceed to Checkout</span>
-									<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
-								</button>
-							</div>
+					</div>
+					<div className="p-15 pt-0 pb-0">
+						<div className="secure-checkout fixed-bottom visible bg-white p-15">
+							<button className="btn btn-primary btn-arrow-icon w-100 p-15 rounded-0 text-left position-relative h5 ft6 mb-0 d-flex align-items-center justify-content-between text-uppercase overflow-hidden" onClick={(e) => this.handleCheckout(e)} data-address="1EmY0FQBuNLKrNKq9jSE" data-id="16ZywalSNVRPLwmwAmLR" disabled={this.disableCheckoutButton()}>
+								<span className="zindex-1">Proceed to Checkout</span>
+								<i class="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
+							</button>
 						</div>
 					</div>
+				</div>
 			}
 		}
 
 		return (
-			<div className="cart-container visible">
+			<div className="">
 				<Header/>
 				{cartContainer}
 			</div>
 		);
+	}
+
+	getDeliveryAddressSection(){
+		let deliveryaddress = '';
+		if(this.state.site_mode == 'kiosk'){
+			deliveryaddress = <div className="delivery-address-container p-15">
+				<div className="address-details list-text-block p-15 mb-0">
+					<div className="address-details-inner font-weight-light">
+						<span className="font-weight-semibold">Pick up from </span>
+						<span id="cart-delivery-address">{this.state.pickupPoint}</span>
+					</div>
+				</div>
+			</div>
+		} else {
+			deliveryaddress = <div>
+				<DeliveryAddress address={this.state.cartData.cart.shipping_address.formatted_address}/>
+			</div>
+		}
+		return deliveryaddress
 	}
 
 	disableCheckoutButton(){
@@ -146,16 +168,141 @@ class Cart extends Component {
 	}
 
 	handleCheckout(e) {
-		window.getUserDetails().then((user_details)=>{
+		window.getUserDetails().then(async (user_details)=>{
 			console.log("user_details ==>", user_details);
-			if(!user_details || !user_details.phone){
+			if(!user_details || !user_details.phone || !user_details.verified){
 				this.props.history.push('/cart/login');
 			}
 			else{
-				this.props.history.push('/cart/select-address');
+				if(this.state.site_mode == 'kiosk'){
+					let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
+			        if(cart_id) {
+			            window.addCartLoader();
+			            window.assignAddressToCart(null, true)
+			            .then((res) => {
+			                if(res.success) {
+			                    this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart}});
+			                } else {
+			                    window.removeCartLoader();
+			                    if(res.code =='PAYMENT_DONE') {
+			                        this.props.history.push('/cart');
+			                    }
+			                }
+			            }).catch(err => {
+			                console.log(err);
+			            })
+			        }
+				} else {
+					const cartId = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
+					if(cartId) {
+						const cart = await window.getCartByID(cartId)
+						if(cart!=null) {
+							if(cart.shipping_address) {
+								if(cart.shipping_address.landmark && cart.shipping_address.address && cart.shipping_address.name && cart.shipping_address.email ) { 
+									window.addCartLoader();
+									window.assignAddressToCart(null, true)
+									.then((res) => {
+										if(res.success) {
+											this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
+										} else {
+											window.removeCartLoader();
+											if(res.code =='PAYMENT_DONE') {
+												this.props.history.push('/cart');
+											}
+											this.props.history.push('/cart/select-address');
+										}
+									}).catch(err => {
+										window.removeCartLoader();
+										this.props.history.push('/cart/select-address');
+									})
+								} else {
+									if(window.userDetails){
+										window.addCartLoader()
+										if(window.userDetails.hasOwnProperty('default_address_id')) {
+											const address_id =  window.userDetails.default_address_id
+											if(address_id) {
+												const deliverable = await this.isAddressDeliverable(address_id)
+												if (deliverable) {
+													console.log("rsrrrr");
+													try {
+													
+														const res =	await window.assignAddressToCart(address_id)
+													
+														if(res.success) {
+															window.removeCartLoader();
+															this.props.history.push({pathname:'/cart/cart-summary', state:{order_obj:res.cart,approx_delivery_time:generalConfig.preparationTime}});
+														} else {
+															console.log(" no success assignAddressToCart");
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');	
+														}
+											
+													} catch (error) {
+														console.log("error in assignAddressToCart");
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');	
+													}
+													
+												} else {
+													console.log("not isAddressDeliverable");
+													window.removeCartLoader();
+
+													this.props.history.push('/cart/select-address');
+												}
+											} else {
+													console.log("on address id");
+													window.removeCartLoader();
+													this.props.history.push('/cart/select-address');
+											}
+										} else {
+											console.log("no default_address_id");
+															window.removeCartLoader();
+															this.props.history.push('/cart/select-address');
+										}
+									} else {
+										console.log("no userDetails");
+										window.removeCartLoader();
+										this.props.history.push('/cart/select-address');
+									}
+								}
+							} else {
+								console.log("no shipping_address");
+								window.removeCartLoader();
+								this.props.history.push('/cart/select-address');
+							}
+						} else {
+							console.log("no cart");
+							window.removeCartLoader();
+							this.props.history.push('/cart/select-address');
+						}
+					} else {
+						console.log("no cart id");
+						window.removeCartLoader();
+						this.props.history.push('/cart/select-address');
+					}
+				}
 			}
 		})
 	}
+
+	isAddressDeliverable=(address_id)=> {
+        let address = window.userAddresses.filter((address) => { return address.id == address_id;})[0];
+		if(address){
+			console.log(address);
+			
+			return window.getCurrentStockLocation().then(locations => {
+				if(!locations.length) {
+					this.displayError("Something went wrong...")
+					return false;
+				}
+				let deliverable =  window.findDeliverableLocation(locations,address.lat_long)
+			
+				return !!deliverable
+			})
+		} else {
+			return false
+		}
+    }
 
 	closeCart(){
 		document.querySelector(".cart-wrapper").classList.remove('active');
@@ -167,7 +314,7 @@ class Cart extends Component {
 	async fetchCart() {
 		window.addCartLoader();
 		console.log("inside fetch cart");
-		let cart_id =  window.readFromLocalStorage('cart_id');
+		let cart_id =  window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId);
 		if(cart_id){
 			try{
 				let cart_data = await window.fetchCart(cart_id);

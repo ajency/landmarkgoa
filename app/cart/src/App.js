@@ -10,6 +10,7 @@ import VerifyMobile from './components/verify-mobile/verify-mobile';
 import CartCheckoutSummary from './components/cart-checkout-summary/cart-checkout-summary';
 import OrderSummary from './components/order-summary/order-summary';
 import LogIn from './components/login/login';
+import OrderDetails from './components/order-details/order-details.js';
 
 class App extends Component {
   render() {
@@ -20,8 +21,9 @@ class App extends Component {
         <Route exact path="/cart/select-address" component={AddressList} />
         <Route exact path="/cart/add-address" component={AddNewAddress} />
         <Route exact path="/cart/verify-mobile" component={VerifyMobile} />
-        <Route exact path="/cart/cart-summary/:cart_id" component={CartCheckoutSummary}></Route>
+        <Route exact path="/cart/cart-summary" component={CartCheckoutSummary}></Route>
         <Route exact path="/order-summary/:transaction_id" component={OrderSummary}></Route>
+        <Route exact path="/order-details/:order_id" component={OrderDetails} />
       </Router>
     );
   }

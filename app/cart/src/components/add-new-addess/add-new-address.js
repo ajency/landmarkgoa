@@ -15,8 +15,6 @@ class AddNewAddress extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
-			// apiEndPoint : 'http://localhost:5000/project-ggb-dev/us-central1/api/rest/v1',
-			// apiEndPoint : 'https://us-central1-project-ggb-dev.cloudfunctions.net/api/rest/v1',
             apiEndPoint : generalConfig.apiEndPoint,
 			locError : '',
 			gpsError : '',
@@ -29,7 +27,7 @@ class AddNewAddress extends Component {
                 lat:'15.49359569999',
                 lng:'73.8301322'
             },
-            address_type:'Other',
+            address_type:'Home',
             addressInput: false,
             locations : [],
             searchText:'',
@@ -46,7 +44,6 @@ class AddNewAddress extends Component {
                 building:'',
                 landmark:'',
                 name:'',
-                landmark:'',
                 type:'',
                 email:''
             }
@@ -59,13 +56,20 @@ class AddNewAddress extends Component {
         if(window.firebase.auth().currentUser.isAnonymous) {
             returnState['showUserDetailsFields'] =true;
         } else {
-            if(!window.userDetails.hasOwnProperty("name") || !window.userDetails.hasOwnProperty("email")) {
+            if(window.userDetails) {
+                if(window.userDetails.name == '' || window.userDetails.email == '') {
+                    returnState['showUserDetailsFields'] = true;
+                } 
+                if(state.name == '') {
+                    returnState["name"] = window.userDetails.name;
+                } 
+                if(state.email =='') {
+                    returnState["email"] = window.userDetails.email;
+                }
+                returnState["phone"] = window.userDetails.phone;
+            } else {
                 returnState['showUserDetailsFields'] = true;
-            } 
-            returnState["name"] = window.userDetails.name;
-            returnState["email"] = window.userDetails.email;
-            returnState["phone"] = window.userDetails.phone;
-           
+            }
         }
 
         if(props.cartRequest) {
@@ -78,20 +82,26 @@ class AddNewAddress extends Component {
         try {
             window.addCartLoader();
             if(this.props.location) {
+                console.log(this.props.location, 'setInitData')
                 this.setState({latlng: {lat:this.props.location.state.lat_lng[0], lng:this.props.location.state.lat_lng[1]}})
                 this.setState({address:this.props.location.state.formatted_address})
                 window.removeCartLoader();
             } else {
-                let cart_id = window.readFromLocalStorage('cart_id')
+                let cart_id = window.readFromLocalStorage(generalConfig.site_mode+'-cart_id-'+generalConfig.businessId)
                 console.log("setInitData ====>", cart_id)
                 if(cart_id) {
                     window.removeCartLoader();
                     window.getCartByID(cart_id).then(cart => {
                         console.log("fetch cart response ==>", cart);
                         cart = JSON.parse(JSON.stringify(cart));
-                        console.log("fetch cart response ==>", cart);
+                        console.log("fetch cart response ==>", cart.shipping_address);
                         let latlng = {lat:cart.shipping_address.lat_long[0], lng:cart.shipping_address.lat_long[1]}
-                        this.setState({latlng: latlng})
+                        let landmark = cart.shipping_address.landmark || '';
+                        let name = cart.shipping_address.name || '';
+                        let email = cart.shipping_address.email || '';
+                        let building = cart.shipping_address.address ||'';
+                        let address_type =  cart.shipping_address.type ||'Home';
+                        this.setState({latlng: latlng, landmark, name,email,building, address_type})
                         this.reverseGeocode(latlng);
                     })
                    
@@ -119,8 +129,8 @@ class AddNewAddress extends Component {
                     <div id="marker"><i class="fas fa-map-marker-alt"></i></div>
                 </div>
                 <div className="p-15">
-                    <div className="position-relative title-wrap">
-                        <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button>
+                    <div className="position-relative title-wrap pl-0">
+                        {/* <button className="btn btn-reset btn-back p-0"><i class="fa fa-arrow-left font-size-20" aria-hidden="true"></i></button> */}
                         <h3 className="mt-4 h1 ft6">Set a delivery address</h3>
                     </div>                    
                     <div className="list-text-block p-15 mb-4 mt-4">
@@ -256,10 +266,12 @@ class AddNewAddress extends Component {
                   errors.name = value.length >1 ? '':'required';
             break;
             case "email":
-                if( value.length >1) {
-                    errors.email ='required' 
+                if( value.length < 1) {
+                    errors.email = 'required' 
                 } else if(!window.validEmailRegex.test(value)) {
                     errors.email = "Please enter valid email";
+                } else {
+                    errors.email = ''
                 }
             break;
             case "landmark":
@@ -316,11 +328,11 @@ class AddNewAddress extends Component {
         
         try {
              window.addAddress({...this.state.address_obj, ...data}).then(address => {
-                console.log(this.props.cartRequest,address)
                 if(this.props.cartRequest) {
-                    console.log(address.id, address)
                     this.props.assignAndProceed(null,address.id)
                 }
+             }).catch(err => {
+                console.log(err)
              })
             
 
@@ -337,13 +349,13 @@ class AddNewAddress extends Component {
                 <h5 className="ft6 mb-4">Account details</h5>
                 <label className="d-block mb-4">
                     <span className='error'>*</span>Full Name
-                    <input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({name:e.target.value}); this.handleChange(e)}} required/>
+                    <input type="text" name="name" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({name:e.target.value}); this.handleChange(e)}} value={this.state.name} required/>
                     {errors.name.length > 0 &&  <span className='error'>{errors.name}</span>}
                 </label>
 
                 <label className="d-block mb-4">
                     <span className='error'>*</span>Email
-                    <input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({email:e.target.value}); this.handleChange(e)}} required/>
+                    <input type="email" name="email" className="d-block w-100 rounded-0 input-bottom" onChange={(e) => {this.setState({email:e.target.value}); this.handleChange(e)}} value={this.state.email} required/>
                     {errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
                 </label>              
             </div>
@@ -434,7 +446,6 @@ class AddNewAddress extends Component {
 				}
 				this.setState({showLoader : true, locations : []})
 				cancel && cancel();
-				console.log("cancel ==>", cancel);
 				axios.get(url, {params : body,
 						cancelToken : new CancelToken((c) => {
 							cancel = c;

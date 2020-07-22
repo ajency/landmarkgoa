@@ -29,13 +29,30 @@
 }
 
 #react-view-cart-container{
-    >div{
+    .view-cart-holder{
         background: #4aa751;
         border-color: #4aa751;
         padding: 15px;
         color: #fff;
         display: flex;
         justify-content: space-between;
+        &.empty-cart{
+            a{
+                @media (min-width: 992px) {
+                    background-color: transparent;            
+                }    
+            }
+            @media (max-width: 991px) {
+                //justify-content: center;
+                a{
+                    i{
+                        color: #fff!important;
+                        position: relative;
+                        z-index: 1;
+                    }
+                }
+            }
+        }
         @media (min-width: 992px) {
             background: #fff;
             border: 2px solid #4aa751;
@@ -51,6 +68,8 @@
             cursor: pointer;
             -webkit-animation: in 1.5s infinite ease-out;
             animation: in 1.5s infinite ease-out;
+            justify-content: center;
+            align-items: center;
         }
         @media (max-width: 991px) {
             &:before{
@@ -91,7 +110,7 @@
             text-align: center;
             font-weight: 500;
             position: relative;
-            top: 9px;
+            // top: 9px;
             font-size: 16px;
             line-height: 20px;
         }
@@ -285,4 +304,60 @@
     0%   {left: 0;}
     50% {left: 100%}
     100% {left: 0;}
+}
+
+
+.vc_row.wpb_row.vc_row-fluid.main-row{
+    display: flex;
+}
+
+.left-content.wpb_column{
+    width: 35%;
+    padding-right: 32px;
+}
+  
+.right-content.wpb_column {
+    width: 65%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding-left: 50px;
+}
+
+.main-post-img img{
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+}
+ 
+#footer section{
+    width: 40%;
+    .container {
+        &.p5{
+            @media (min-width: 992px) and (max-width: 1399.98px) {
+                padding-left: 15px;
+            }
+        }
+    }
+}
+    
+@media (max-width: 991px){
+    .vc_row.wpb_row.vc_row-fluid.main-row{
+        display: block;
+    }
+    .left-content.wpb_column{
+       width: 100%;
+       padding-right: 0;
+    }
+    .main-post-img{
+        display: none;
+    }
+    .right-content.wpb_column{
+        display: none !important;
+    }
+    #footer section{
+        width: 100%;
+    }
 }

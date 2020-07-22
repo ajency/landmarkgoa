@@ -21,10 +21,7 @@ class variantSelection extends React.Component {
 				<button type="button" className="btn-reset close-modal" onClick={()=> this.hideVariantModal()}><i class="fas fa-times text-silver"></i></button>
 			        <div className="product-variant text-left text-black">
 					  <h3 class="h1 ft6 pr-4">Choose Your Bowl</h3>
-					  <div class="list-meta mt-4 mb-4">
-						<div class="list-author">{this.state.title}</div>
-						<div class="list-date">Veg</div>
-					  </div>				          
+					  {this.getItemType()}				          
 			          <div className="variant-list mb-4">
 			          		{this.getVariants()}
 			          </div>
@@ -50,6 +47,8 @@ class variantSelection extends React.Component {
 			                	<input type="radio" name={"variant-" + this.state.productId} value={variant.id} checked={this.state.selectedVariant == variant.id} onChange={(event) => this.handleOptionChange(event)} />
 			                	<span className="checkmark"></span>
 			              </label>
+						  {this.getComboText(variant.size)}
+						
 					</div>
 				)
 			})
@@ -66,6 +65,28 @@ class variantSelection extends React.Component {
 		              </div>
 				</div>
 			)
+		}
+	}
+
+	getComboText(size) {
+		if(size == "combo"){
+			return (
+				<div class="text-silver combo-text">Combo of Bowl + Homemade Lemonade Sweetened With Jaggery</div>
+			)
+		}
+	}
+	
+	getItemType(){
+		if(this.state.product && this.state.product.veg){
+			return (<div class="list-meta mt-4 mb-4">
+						<div class="list-author">{this.state.title}</div>
+						<div class="list-date">Veg</div>
+					</div>)
+		} else {
+			return (<div class="list-meta nv mt-4 mb-4">
+						<div class="list-author">{this.state.title}</div>
+						<div class="list-date">Non Veg</div>
+					</div>)
 		}
 	}
 

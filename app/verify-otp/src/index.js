@@ -6,7 +6,7 @@ class verifyOtp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			apiEndPoint : 'https://asia-east2-project-ggb.cloudfunctions.net/api/rest/v1',
+			apiEndPoint : process.env.REACT_APP_API_END_PT,
 			phoneNumber : '',
 			otp : '',
 			confirmationResult : '',
@@ -14,11 +14,15 @@ class verifyOtp extends React.Component {
 			errorMessage : '',
 			showOtpLoader : false,
 			otpErrorMsg : '',
-			showCapta : true
+			showCapta : true,
+			siteMode: process.env.REACT_APP_SITE_MODE,
+			businessId: process.env.REACT_APP_BUSINESS_ID,
+			hide_skip_otp:false
 		}
 	}
 
 	render() {
+		const {hide_skip_otp} =this.state
 		return (
 			<div className="slide-in flex-slide-in" id="otp">
 			  <div className="slide-in-header header-container d-flex align-items-center">
@@ -40,13 +44,13 @@ class verifyOtp extends React.Component {
 			      </h4>
 				  <h4 className="ft6 mb-3">{this.state.phoneNumber}</h4>
 			      <div className="mb-1 pt-4">
-			       	<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" type="tel" placeholder="Enter OTP" onChange={e => {this.setOtp(e.target.value)}} value={this.state.otp} />
+			       	<input className="w-100 p-3 border-green h5 ft6 rounded-0 plceholder-text" type="tel" placeholder="Enter OTP" onChange={e => {this.setOtp(e.target.value)}} value={this.state.otp} maxLength={6}/>
 			      </div>
 			      <h6 className="mb-2 pb-3">Didn't receive the code? <a href="javascript:void(0)" className="text-underline" onClick={()=>{this.resendOtpCode()}}>Resend</a></h6>
 				  <div className="btn-wrapper pt-4">
 			        {this.getOtpButtons()}
 			      </div>
-				  <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipOtp()}>Skip</a></h5>
+				  {!hide_skip_otp && <h5 class="mt-3 text-center">Don't wish to login? <a class="text-green d-inline-block cursor-pointer text-underline" onClick={() => this.skipOtp()}>Skip</a></h5>}
 
 			      {this.displayOtpErrorMsg()}
 			  </div>
@@ -75,7 +79,7 @@ class verifyOtp extends React.Component {
 
 		return (
 			 <div className="btn-inner-wrap">
-	        	<button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=>{this.verifyOtp()}} disabled={this.state.otp.length < 6}><span className="zindex-1">Verify OTP</span>
+	        	<button type="button" className="btn-reset btn-arrow-icon text-white border-green bg-primary p-3 text-left h5 ft6 mb-0 rounded-0 w-100 d-flex align-items-center justify-content-between" onClick={()=>{this.verifyOtp()}}><span className="zindex-1">Verify OTP</span>
 				<i className="text-white fa fa-arrow-right font-size-20" aria-hidden="true"></i>
 				</button>
 	          	
@@ -90,6 +94,7 @@ class verifyOtp extends React.Component {
 	}
 
 	setOtp(value){
+		this.setState({otpErrorMsg : ''});
 		this.setState({otp : value});
 	}
 
@@ -111,13 +116,19 @@ class verifyOtp extends React.Component {
 	}
 
 	verifyOtp(){
+		if(this.state.otp.length < 6 || this.state.otp.length > 6) {
+			console.log("invalid otp ==>")
+            this.setState({ otpErrorMsg: "Please enter valid 6 digit verification code"});
+            return false;   
+		}
+		console.log("Verifying otp")
 		window.addCartLoader();
 		this.setState({showOtpLoader : true , disableButtons : true, otpErrorMsg : ''});
 		this.state.confirmationResult.confirm(this.state.otp)
 			.then((res) =>{
 				res.user.getIdToken().then((idToken) => {
-					window.createCartForVerifiedUser(window.readFromLocalStorage('cart_id'));
-					window.writeInLocalStorage('cart_id' , firebase.auth().currentUser.uid);
+					window.createCartForVerifiedUser(window.readFromLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId));
+					window.writeInLocalStorage(this.state.siteMode+'-cart_id-'+this.state.businessId , window.brewCartId(this.state.siteMode, this.state.businessId));
 		            this.updateUserDetails(idToken);
 		            this.fetchAddresses();
 		        });
@@ -156,6 +167,8 @@ class verifyOtp extends React.Component {
 	}
 
 	resendOtpCode(){
+        this.setState({ otp: '' });
+        this.setState({ otpErrorMsg: '' });
 		this.setState({showCapta : true}, ()=>{
 			console.log("inside verify otp code");
 			window.addCartLoader();
@@ -202,6 +215,6 @@ window.showOTPSlider = (data) => {
 	document.querySelector('#otp').classList.add('visible');
 }
 
-window.updateOtpSLider = (confirmationResult, phone_number) => {
-	otpModalComponent.setState({phoneNumber : phone_number,  confirmationResult : confirmationResult})
+window.updateOtpSLider = (confirmationResult, phone_number, hide_skip_otp) => {
+	otpModalComponent.setState({phoneNumber : phone_number,  confirmationResult : confirmationResult,hide_skip_otp:hide_skip_otp })
 }
