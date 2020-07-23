@@ -1,0 +1,153 @@
+/*** Google Fonts (http://fonts.googleapis.com/css?family=Muli%3A300%7CNunito%3A300%2C400) ***/
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Muli Light'), local('Muli-Light'), url(http://fonts.gstatic.com/s/muli/v12/7Au_p_0qiz-adZnkOCX2yg.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Nunito Light'), local('Nunito-Light'), url(http://fonts.gstatic.com/s/nunito/v9/XRXW3I6Li01BKofAnsSUYevN.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Nunito Regular'), local('Nunito-Regular'), url(http://fonts.gstatic.com/s/nunito/v9/XRXV3I6Li01BKofINeaE.ttf) format('truetype');
+}
+
+/*** Skin css ***/
+.tg-post-quito a:not([class*="tg-element-"]),
+.tg-post-quito a:not([class*="tg-element-"]):active,
+.tg-post-quito a:not([class*="tg-element-"]):focus,
+.tg-post-quito [class*="tg-element-"] *:not(del) {
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+	text-align: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	line-height: inherit;
+	font-weight: inherit;
+	text-transform: inherit;
+	text-decoration: inherit;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: none;
+}
+.tg-post-quito [class*="tg-element-"],
+.tg-post-quito .tg-item-overlay,
+.tg-post-quito .tg-center-holder,
+.tg-post-quito .tg-center-inner > * {
+	vertical-align: middle;
+}
+.tg-post-quito .tg-item-overlay {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 400ms ease !important;
+	-moz-transition: all 400ms ease !important;
+	-ms-transition: all 400ms ease !important;
+	transition: all 400ms ease !important;
+}
+.tg-post-quito:not(.tg-force-play):not(.tg-is-playing) .tg-item-media-holder:hover .tg-item-overlay {
+	opacity: 1;
+	visibility: visible;
+}
+.tg-post-quito .tg-item-content-holder[data-position="bottom"] {
+	text-align: center;
+	position: relative;
+	min-height: 1px;
+	display: block;
+	padding: 0 24px 30px;
+}
+.tg-post-quito div.tg-item-media-content {
+	text-align: center;
+}
+.tg-post-quito .tg-element-9 {
+	position: relative;
+	font-size: 30px;
+	line-height: 38px;
+	color: #ffffff !important;
+	font-weight: 300;
+	font-family: Muli;
+	text-transform: uppercase;
+	text-align: center;
+	display: inline-block;
+	margin: 10px;
+	padding: 6px 14px;
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 500ms cubic-bezier(.39,1.89,.55,1.45);
+	-moz-transition: all 500ms cubic-bezier(.39,1.89,.55,1.45);
+	-ms-transition: all 500ms cubic-bezier(.39,1.89,.55,1.45);
+	transition: all 500ms cubic-bezier(.39,1.89,.55,1.45);
+	-webkit-transform: perspective(250px)  scale3d(0.8,0.8,1);
+	-moz-transform: perspective(250px)  scale3d(0.8,0.8,1);
+	-ms-transform: perspective(250px)  scale3d(0.8,0.8,1);
+	transform: perspective(250px)  scale3d(0.8,0.8,1);
+}
+.tg-post-quito .tg-item-media-holder:hover .tg-element-9 {
+	opacity: 1;
+	visibility: visible;
+	-webkit-transform: perspective(250px)  scale3d(1,1,1);
+	-moz-transform: perspective(250px)  scale3d(1,1,1);
+	-ms-transform: perspective(250px)  scale3d(1,1,1);
+	transform: perspective(250px)  scale3d(1,1,1);
+}
+.tg-post-quito .tg-element-1 {
+	position: relative;
+	font-size: 14px;
+	line-height: 18px;
+	color: #ffffff !important;
+	font-weight: 300;
+	font-family: Muli;
+	background-color: #ffffff !important;
+	display: inline-block;
+	border-radius: 2px;
+}
+.tg-post-quito .tg-element-1 .tg-item-term {
+	position: relative;
+	display: inline-block;
+	padding: 5px 10px;
+}
+.tg-post-quito .tg-element-3 {
+	position: relative;
+	font-size: 24px;
+	line-height: 28px;
+	color: #222222 !important;
+	font-weight: 300;
+	font-family: Nunito;
+	letter-spacing: 0.2px;
+	display: block;
+	margin: 0;
+	padding: 22px 20px 0;
+}
+.tg-post-quito .tg-element-6 {
+	position: relative;
+	font-size: 15px;
+	line-height: 24px;
+	color: #999999 !important;
+	font-weight: 400;
+	font-family: Nunito;
+	display: block;
+	margin: 0;
+	padding: 22px 0 0;
+}
+.tg-post-quito .title {
+	font-weight: 800;
+}
+.tg-post-quito .category {
+	font-weight: 800;
+}
+.tg-post-quito a {
+	text-decoration: none;
+}

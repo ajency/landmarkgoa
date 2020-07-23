@@ -1,0 +1,200 @@
+/*------------------------------------------------------*/
+/*---------------------- ACCORDION ----------------------*/
+.accordion-wrapper {
+  &.small-width {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .accordion-header {
+    border-bottom: 1px solid #d8d8d8;
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
+
+  .accordion-content {
+    display: none;
+    border-bottom: 1px solid #d8d8d8;
+  }
+
+  .accordion-item {
+    &:last-child {
+      .accordion-header,
+      .accordion-content {
+        border-bottom: 0;
+      }
+
+      .accordion-content {
+        border-top: 1px solid #d8d8d8;
+      }
+    }
+  }
+
+  .accordion-title {
+    font-size: 20px;
+    line-height: 1.5;
+    color: #222;
+    letter-spacing: 0.2px;
+    position: relative;
+    margin-bottom: 0;
+    cursor: pointer;
+    padding-right: 30px;
+
+    i {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      color: #bbbbbb;
+      -webkit-transition: 0.3s;
+      -o-transition: 0.3s;
+      transition: 0.3s;
+    }
+
+    &.is_opened {
+      i {
+        -webkit-transform: translateY(-50%) rotate(180deg);
+        -ms-transform: translateY(-50%) rotate(180deg);
+        transform: translateY(-50%) rotate(180deg);
+        color: #004ae2;
+      }
+    }
+
+    span {
+      color: #bbb;
+    }
+  }
+
+  .accordion-description,
+  .accordion-position {
+    font-size: 14px;
+    line-height: 1.71;
+    color: #999;
+  }
+
+  .accordion-description {
+    margin: 15px 0;
+  }
+
+  .accordion-position {
+    margin-top: 2px;
+  }
+
+  .accordion-form {
+    margin: 15px 0;
+
+    p {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      margin-bottom: 0;
+      position: relative;
+
+      &:before {
+        content: "\f2c3";
+        font-family: "Ionicons";
+        position: absolute;
+        right: 0;
+        top: 3px;
+        width: 20px;
+        text-align: center;
+        color: #004ae2;
+        font-size: 20px;
+        line-height: 1;
+        -webkit-transition: 0.5s opacity;
+        -o-transition: 0.5s opacity;
+        transition: 0.5s opacity;
+      }
+    }
+
+    .wpcf7 {
+      &.animated {
+        p {
+          &:before {
+            opacity: 0;
+            -webkit-transform: translate(100px, -100px) scale(0.6);
+            -ms-transform: translate(100px, -100px) scale(0.6);
+            transform: translate(100px, -100px) scale(0.6);
+            -webkit-transition: 1.2s;
+            -o-transition: 1.2s;
+            transition: 1.2s;
+          }
+        }
+      }
+    }
+
+    div.wpcf7-response-output,
+    div.wpcf7-validation-errors,
+    div.wpcf7-acceptance-missing {
+      border: 0;
+      padding: 0;
+      margin: 10px 0 15px;
+      font-size: 12px;
+      line-height: 1.71;
+      color: #999;
+    }
+
+    .wpcf7-form-control-wrap,
+    br {
+      display: none;
+    }
+
+    .ajax-loader {
+      display: none;
+    }
+
+    .wpcf7-file {
+      display: none;
+    }
+
+    .wpcf7-submit {
+      width: 20px;
+      opacity: 0;
+    }
+
+    label {
+      color: #004ae2;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.71;
+      letter-spacing: 0;
+      position: relative;
+      padding-left: 19px;
+      margin-bottom: 0;
+      cursor: pointer;
+      display: inline-block;
+      width: auto;
+
+      &:before {
+        position: absolute;
+        left: 5px;
+        top: -1px;
+        content: "\f20f";
+        font-family: "Ionicons";
+        font-size: 27px;
+        -webkit-transform: rotate(22deg);
+        -ms-transform: rotate(22deg);
+        transform: rotate(22deg);
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .accordion-wrapper {
+    &.small-width {
+      max-width: 100%;
+    }
+  }
+}

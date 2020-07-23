@@ -1,0 +1,382 @@
+/*------------------------------------------------------*/
+/*---------------------- SPLIT SLIDER ----------------------*/
+.split-wrapper {
+  height: 100vh;
+  .ms-section {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .ms-section.ms-table{
+    display: table;
+    width: 100%;
+  }
+  .ms-tableCell {
+    background-position: 50%;
+    background-size: cover;
+    padding: 50px 174px 0;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+  }
+  .ms-scrollable {
+    overflow: hidden;
+    position: relative;
+  }
+  .ms-scroller{
+    overflow: hidden;
+  }
+  .iScrollIndicator{
+    border: 0 !important;
+  }
+  .ms-easing {
+    -webkit-transition: all 0.7s ease-out;
+    -moz-transition: all 0.7s ease-out;
+    -o-transition: all 0.7s ease-out;
+    transition: all 0.7s ease-out;
+  }
+  .ms-responsive .ms-hide{
+    display: none;
+  }
+  .subtitle {
+    font-size: 18px;
+    color: #004ae2;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  .title {
+    font-size: 36px;
+    margin-bottom: 30px;
+    &:not(:first-child) {
+      margin-top: 15px;
+    }
+  }
+  .description {
+    font-size: 16px;
+    color: #999;
+  }
+  .link-wrap {
+    margin-top: 52px;
+  }
+  .wpcf7 {
+    margin-top: 35px;
+    max-width: 530px;
+    .ajax-loader,
+    br {
+      display: none;
+    }
+    p {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+    .wpcf7-form-control-wrap {
+      margin-bottom: 20px;
+      display: block;
+      width: 100%;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      &:nth-of-type(1),
+      &:nth-of-type(2) {
+        width: 50%;
+      }
+    }
+    .wpcf7-submit {
+      width: calc(100% - 20px);
+      margin-left: 10px;
+    }
+    textarea,
+    input:not([type="submit"]) {
+      background-color: transparent;
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid #eee;
+      color: #888;
+      font-size: 15px;
+      line-height: 21px;
+
+      &::-webkit-input-placeholder {
+        color: inherit;
+      }
+      &::-moz-placeholder {
+        color: inherit;
+      }
+      &:-ms-input-placeholder {
+        color: inherit;
+      }
+      &:-moz-placeholder {
+        color: inherit;
+      }
+
+      &:focus {
+        color: #004ae2;
+        border-color: #004ae2;
+        outline: 1px solid #004ae2;
+      }
+    }
+    textarea {
+      height: 148px;
+      resize: none;
+    }
+    div.wpcf7-mail-sent-ok,
+    div.wpcf7-validation-errors,
+    div.wpcf7-acceptance-missing {
+      margin: 0;
+      padding: 5px;
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      margin-top: 10px;
+      display: block;
+    }
+    span.wpcf7-not-valid-tip {
+      font-size: 12px;
+      color: #888;
+      margin-top: 7px;
+    }
+  }
+  .image-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 34px -10px 0;
+
+    &.text-center {
+      justify-content: center;
+    }
+
+    &.text-right {
+      justify-content: flex-end;
+    }
+  }
+  .image-item {
+    padding: 20px 10px 0;
+    width: 50%;
+
+    &.three {
+      width: 33.33%;
+    }
+
+    &.four {
+      width: 25%;
+    }
+  }
+  .content-wrap {
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &.light {
+      .title {
+        color: #fff;
+      }
+      .wpcf7 {
+        textarea,
+        input:not([type="submit"]) {
+          border-color: rgba(255,255,255, 0.5);
+          color: rgba(255,255,255,0.5);
+
+          &:focus {
+            border-color: #004ae2;
+          }
+        }
+      }
+    }
+
+    &.text-right {
+      .wpcf7 {
+        margin-left: auto;
+      }
+    }
+
+    &.text-center {
+      .wpcf7 {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+  .split-mob-image {
+    height: 60vw;
+    min-height: 250px;
+    margin-bottom: 80px;
+    background-size: cover;
+    background-position: 50%;
+    margin-left: -25px;
+    margin-right: -25px;
+  }
+
+  .split-mob-section {
+    padding: 0 25px 80px;
+  }
+}
+
+#multiscroll-nav {
+  margin-top: 0 !important;
+  position: absolute;
+  left: 85px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 34;
+
+  &.right {
+    left: auto;
+    right: 85px;
+  }
+
+  ul {
+    margin: 0;
+    list-style-type: none;
+  }
+
+  li {
+    + li {
+      margin-top: 20px;
+    }
+  }
+
+  a {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+    background-color: #222;
+    transition: 1s 0.25s;
+
+    &.active {
+      background-color: #fff;
+    }
+  }
+}
+
+.split-wrapper {
+  &--mob {
+    display: none;
+  }
+
+  @media (max-width: 991px) {
+    height: auto;
+
+    &--desctop {
+      display: none;
+    }
+
+    &--mob {
+      display: block;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  html.split-slider-init,
+  body.split-slider-init {
+    overflow: auto !important;
+    height: auto !important;
+  }
+
+  #multiscroll-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 1500px) {
+  .split-wrapper {
+    .ms-tableCell {
+      padding: 50px 120px 0;
+    }
+  }
+
+  #multiscroll-nav {
+    left: 25px;
+
+    &.right {
+      right: 25px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .split-wrapper {
+    .ms-tableCell {
+      padding: 130px 80px 80px;
+    }
+
+    .title {
+      font-size: 32px;
+    }
+
+    .link-wrap,
+    .wpcf7 {
+      margin-top: 30px;
+    }
+
+    .image-list {
+      margin-top: 10px;
+    }
+  }
+
+  #multiscroll-nav {
+    left: 35px;
+
+    &.right {
+      right: 35px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .split-wrapper {
+    .wpcf7 {
+      .wpcf7-form-control-wrap {
+        &:nth-of-type(1),
+        &:nth-of-type(2) {
+          width: 100%;
+        }
+      }
+    }
+
+    .content-wrap {
+      text-align: center;
+    }
+
+    .split-mob-image {
+      margin-bottom: 60px;
+    }
+
+    .split-mob-section {
+      padding-bottom: 60px;
+    }
+
+    .title {
+      font-size: 27px;
+    }
+
+    .image-item {
+      width: 100%;
+
+      &.three {
+        width: 100%;
+      }
+
+      &.four {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .split-wrapper {
+    .split-mob-image {
+      margin-bottom: 45px;
+    }
+
+    .split-mob-section {
+      padding-bottom: 45px;
+    }
+  }
+}
+

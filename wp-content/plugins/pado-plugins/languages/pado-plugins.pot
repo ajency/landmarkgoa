@@ -1,0 +1,433 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Pado Plugins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-05 15:20+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: importer/index.php:275
+msgid " padoy from having an awesome looking blog for the whole world to see."
+msgstr ""
+
+#: importer/index.php:103
+msgid "...verifying"
+msgstr ""
+
+#: importer/index.php:346
+msgid "120"
+msgstr ""
+
+#: importer/index.php:341
+msgid "128M"
+msgstr ""
+
+#: importer/index.php:330
+msgid "5.6.0"
+msgstr ""
+
+#: importer/index.php:336 importer/index.php:351
+msgid "8M"
+msgstr ""
+
+#: importer/index.php:503
+msgid "Activating Plugin"
+msgstr ""
+
+#: importer/index.php:326
+msgid "Actual"
+msgstr ""
+
+#: importer/index.php:1177
+#, php-format
+msgid ""
+"Advanced Users: If you are going to make changes to the theme source code "
+"please use a %s rather than modifying the main theme HTML/CSS/PHP code."
+msgstr ""
+
+#: importer/index.php:277
+msgid ""
+"By the way, if you are slammed for time and can't spare 5 minutes right now, "
+"no problem! Come back to this \"dashboard\" page when you have a little more "
+"time and we'll be waiting right here-ready to go!"
+msgstr ""
+
+#: register_post_types.php:54
+msgid "Categories"
+msgstr ""
+
+#: importer/index.php:597
+msgid "Change logo colors, fonts, layout... you know, the cool stuff."
+msgstr ""
+
+#: importer/index.php:127
+msgid "Content"
+msgstr ""
+
+#: importer/index.php:472 importer/index.php:722 importer/index.php:1111
+#: importer/index.php:1184
+msgid "Continue"
+msgstr ""
+
+#: importer/index.php:588
+msgid ""
+"Cool \"widgets\" on your sidebar that you will make your page come alive "
+"with options."
+msgstr ""
+
+#: importer/index.php:269
+msgid ""
+"Copy these values into your PHP code when distributing/updating the theme."
+msgstr ""
+
+#: importer/index.php:260
+msgid "Current Settings:"
+msgstr ""
+
+#: importer/index.php:267
+msgid "Custom Options:"
+msgstr ""
+
+#: importer/index.php:132
+msgid "Customize"
+msgstr ""
+
+#: importer/index.php:614
+msgid "Customize options"
+msgstr ""
+
+#: importer/index.php:631
+msgid "Default Content"
+msgstr ""
+
+#: importer/index.php:434
+msgid "Default Plugins"
+msgstr ""
+
+#: importer/importer/parsers.php:46
+msgid ""
+"Details are shown above. The importer will now try again with a different "
+"parser..."
+msgstr ""
+
+#: importer/index.php:596
+msgid "Enable default options"
+msgstr ""
+
+#: importer/index.php:776
+msgid "Error"
+msgstr ""
+
+#: importer/index.php:274
+msgid ""
+"Everyone hates to install-but you will love this! Our rocket-fast install "
+"wizard will do most of the work for you. We'll have a couple of questions "
+"along the way, but right now you are "
+msgstr ""
+
+#: importer/index.php:606
+msgid "General settings help you to customize your site."
+msgstr ""
+
+#: importer/index.php:466
+msgid ""
+"Good news! All plugins are already installed and up to date. Please continue."
+msgstr ""
+
+#: importer/index.php:75
+msgid "Import Demo Data"
+msgstr ""
+
+#: importer/index.php:647
+msgid "IMPORT EVERYTHING"
+msgstr ""
+
+#: importer/index.php:652
+msgid "IMPORT SPECIFIC PAGES"
+msgstr ""
+
+#: importer/index.php:972
+msgid "Imported"
+msgstr ""
+
+#: importer/index.php:975
+msgid "Imported to Inactive"
+msgstr ""
+
+#: importer/index.php:1198
+msgid ""
+"In the future, if you would like to modify your theme, simply login to your "
+"WordPress dashboard, and padoy you go!"
+msgstr ""
+
+#. Description of the plugin
+msgid "Includes Portfolio Custom Post Type and Visual Composer Shortcodes"
+msgstr ""
+
+#: importer/index.php:617
+msgid "Installing Default Customize Settings."
+msgstr ""
+
+#: importer/index.php:608
+msgid "Installing Default Settings."
+msgstr ""
+
+#: importer/index.php:599
+msgid "Installing Default Theme Settings."
+msgstr ""
+
+#: importer/index.php:590
+msgid "Installing Default Widgets."
+msgstr ""
+
+#: importer/index.php:705
+msgid "Installing Demo Data..."
+msgstr ""
+
+#: importer/index.php:533
+msgid "Installing Plugin"
+msgstr ""
+
+#: importer/index.php:114
+msgid "Introduction"
+msgstr ""
+
+#: register_post_types.php:40
+msgid "Item"
+msgstr ""
+
+#: importer/index.php:1213
+msgid "Learn how to use WordPress"
+msgstr ""
+
+#: importer/index.php:359
+msgid "Let's Go!"
+msgstr ""
+
+#: importer/index.php:1062
+msgid "Logo &amp; Design"
+msgstr ""
+
+#: importer/index.php:345
+msgid "Max Execution Time"
+msgstr ""
+
+#: importer/index.php:340
+msgid "Memory limit"
+msgstr ""
+
+#: importer/index.php:265
+msgid "Menu IDs:"
+msgstr ""
+
+#: importer/index.php:1210
+msgid "More Resources"
+msgstr ""
+
+#: importer/index.php:633
+msgid ""
+"Most theme's come with some \"Lorem ipsum...\" type of text that sounds like "
+"a language from Mars. Pado is different (but you know that by now!). We've "
+"handpicked some interesting articles that you can use or discard. Read them--"
+"they'll help you improve your blog. And have fun playing with the different "
+"options below. "
+msgstr ""
+
+#: importer/index.php:641 importer/index.php:715
+msgid "Next"
+msgstr ""
+
+#: importer/index.php:1202
+msgid "Next Steps"
+msgstr ""
+
+#: importer/index.php:737
+msgid "No content Found"
+msgstr ""
+
+#: importer/index.php:486
+msgid "No Slug Found"
+msgstr ""
+
+#: importer/index.php:982
+msgid "No Title"
+msgstr ""
+
+#: importer/index.php:361
+msgid "Not right now"
+msgstr ""
+
+#: importer/index.php:275
+msgid "only minutes"
+msgstr ""
+
+#. Name of the plugin
+msgid "Pado Plugins"
+msgstr ""
+
+#: importer/index.php:589 importer/index.php:598 importer/index.php:607
+#: importer/index.php:616
+msgid "Pending."
+msgstr ""
+
+#: importer/index.php:329
+msgid "PHP Version"
+msgstr ""
+
+#: importer/index.php:1064
+msgid ""
+"Please add your logo below. For best results, the logo should be a "
+"transparent PNG ( 190 by 35 pixels). The logo can be changed at any time "
+"from the Appearance > Customize area in your dashboard."
+msgstr ""
+
+#: importer/index.php:1089
+msgid ""
+"Please choose the color scheme for this website. The color scheme (along "
+"with font colors &amp; styles) can be changed at any time from the "
+"Appearance > Customize area in your dashboard."
+msgstr ""
+
+#: importer/index.php:121
+msgid "Plugins"
+msgstr ""
+
+#: importer/index.php:350
+msgid "Post Max Size"
+msgstr ""
+
+#: importer/index.php:638 importer/index.php:712
+msgid "Previous"
+msgstr ""
+
+#: importer/index.php:137
+msgid "Ready!"
+msgstr ""
+
+#: importer/index.php:325
+msgid "Recommended"
+msgstr ""
+
+#: importer/index.php:320
+msgid "Refresh"
+msgstr ""
+
+#: importer/index.php:174
+msgid "Return to the WordPress Dashboard"
+msgstr ""
+
+#: register_post_types.php:39
+msgid "Services"
+msgstr ""
+
+#: importer/index.php:605
+msgid "Settings"
+msgstr ""
+
+#: importer/index.php:878
+msgid "Sidebar does not exist in theme (using Inactive)"
+msgstr ""
+
+#: importer/index.php:900
+msgid "Site does not support widget"
+msgstr ""
+
+#: importer/index.php:474 importer/index.php:724 importer/index.php:1113
+msgid "Skip this step"
+msgstr ""
+
+#: importer/index.php:441
+msgid "Some of these you Must Have and some of them you'll Want to Have..."
+msgstr ""
+
+#: importer/index.php:543
+msgid "Success"
+msgstr ""
+
+#: importer/index.php:591 importer/index.php:600 importer/index.php:609
+#: importer/index.php:618
+msgid "Success."
+msgstr ""
+
+#: importer/index.php:1171
+msgid "Theme Customization"
+msgstr ""
+
+#: importer/importer/parsers.php:45 importer/importer/parsers.php:80
+#: importer/importer/parsers.php:88
+msgid "There was an error when reading this WXR file"
+msgstr ""
+
+#: importer/index.php:1178
+#, php-format
+msgid ""
+"This allows the parent theme to receive updates without overwriting your "
+"source code changes.%s See %s in the main folder for a sample."
+msgstr ""
+
+#: importer/importer/parsers.php:93 importer/importer/parsers.php:99
+#: importer/importer/parsers.php:345 importer/importer/parsers.php:561
+msgid ""
+"This does not appear to be a WXR file, missing/invalid WXR version number"
+msgstr ""
+
+#: importer/index.php:1173
+msgid ""
+"To change the Sidebars go to Appearance > Widgets. You can \"drag & drop\" "
+"the widgets into your sidebar. To control which \"widget areas\" appear, go "
+"to an individual page and look for the \"Left/Right Column\" menu. Here "
+"widgets can be chosen for display on the left or right of a page. More "
+"details in documentation."
+msgstr ""
+
+#: importer/index.php:518
+msgid "Updating Plugin"
+msgstr ""
+
+#: importer/index.php:335
+msgid "Upload Max Filesize"
+msgstr ""
+
+#: importer/index.php:1083
+msgid "Upload New Logo"
+msgstr ""
+
+#: importer/index.php:1205
+msgid "VIEW YOUR NEW WEBSITE!"
+msgstr ""
+
+#: importer/index.php:273
+msgid "Welcome to Pado install!"
+msgstr ""
+
+#: importer/index.php:923
+msgid "Widget already exists"
+msgstr ""
+
+#: importer/index.php:263
+msgid "Widget Options:"
+msgstr ""
+
+#: importer/index.php:261
+msgid "Widget Positions:"
+msgstr ""
+
+#: importer/index.php:587
+msgid "Widgets"
+msgstr ""
+
+#: importer/index.php:615
+msgid "You'll see-more cool stuff to play with."
+msgstr ""
+
+#: importer/index.php:1196
+msgid "Your Website is Ready!"
+msgstr ""

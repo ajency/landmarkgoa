@@ -1,0 +1,250 @@
+/*------------------------------------------------------*/
+/*---------------------- HEADING ----------------------*/
+// ANIMATION FOR HEADING
+.headings-wrap {
+  padding-left: 15px;
+  padding-right: 15px;
+  &.load-fade {
+    .but-wrap,
+    .title,
+    .subtitle,
+    .description {
+      opacity: 0;
+      -webkit-transition: all .7s cubic-bezier(.37, .31, .2, .85);
+      -o-transition: all .7s cubic-bezier(.37, .31, .2, .85);
+      transition: all .7s cubic-bezier(.37, .31, .2, .85);
+      &.animation {
+        opacity: 1;
+      }
+    }
+    .title,
+    .subtitle,
+    .description,
+    .but-wrap {
+      -moz-transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-transform: translateY(50px);
+      -ms-transform: translateY(50px);
+      transform: translateY(50px);
+      &.animation {
+        transform: matrix(1, 0, 0, 1, 0, 0);
+      }
+    }
+    .subtitle {
+      transition-delay: .2s;
+    }
+    .title {
+      transition-delay: .4s;
+    }
+    .description {
+      transition-delay: .6s;
+    }
+    .but-wrap {
+      transition-delay: .8s;
+    }
+  }
+}
+
+// HEADING GENERAL
+.headings {
+  .subtitle,
+  .title,
+  .description {
+    margin: 0;
+    i {
+      color: #004ae2;
+      font-style: normal;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .headings {
+    .subtitle,
+    .title,
+    .description {
+      br {
+        display: none;
+      }
+    }
+  }
+}
+
+// STYLE 1
+.headings-wrap {
+  position: relative;
+
+  .content {
+    display: table;
+    width: 100%;
+  }
+
+  .info {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .but-wrap {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    padding-left: 20px;
+
+    .a-btn {
+      text-align: center;
+    }
+  }
+
+  &.not-bg-title {
+    .headings {
+      padding-bottom: 0 !important;
+    }
+
+    .info {
+      vertical-align: middle;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .headings {
+    &.style1 {
+      .title {
+        max-width: 520px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .headings {
+    &.style1 {
+      .title {
+        padding: 0 15px;
+        margin: 0 auto;
+      }
+      .info {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      .content,
+      .but-wrap,
+      .info {
+        text-align: center;
+        display: block;
+      }
+    }
+  }
+}
+
+// STYLE 2
+.headings {
+  &.style2 {
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &.text-right {
+      margin-right: 0;
+    }
+
+    &.text-left {
+      margin-left: 0;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .2px;
+      color: #004ae2;
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+
+    .title {
+      color: #222;
+      font-weight: 300;
+
+      b {
+        font-weight: 600;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 25px;
+      }
+    }
+
+    .description {
+      color: #999;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .headings-wrap {
+    .but-wrap {
+      padding-left: 0;
+    }
+  }
+
+  .headings {
+    &.style2 {
+      &.text-right,
+      &.text-left {
+        text-align: center;
+      }
+
+      .title {
+        &:not(:last-child) {
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+}
+
+// style 5
+.headings {
+  &.style5 {
+    .content {
+      padding: 0 15px;
+    }
+    .title {
+      font-size: 100px;
+    }
+    .typed,
+    .typed-cursor {
+      color: #004ae2;
+    }
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .headings.style5 .title {
+    font-size: 70px;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .headings {
+    &.style5 {
+      .title {
+        font-size: 50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .headings {
+    &.style5 {
+      .title {
+        font-size: 30px;
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+/*------------------------------------------------------*/
+/*---------------------- FAQ ----------------------*/
+.faq {
+  &-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    &:not(:first-of-type) {
+      padding-top: 70px;
+    }
+
+    &:not(:last-of-type) {
+      border-bottom: 2px dashed #dfdede;
+      padding-bottom: 70px;
+    }
+
+    .number {
+      width: 100%;
+      margin-bottom: 15px;
+      color: #004ae2;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+
+    .title-wrap {
+      width: 35%;
+      margin-right: 20px;
+    }
+
+    .title {
+      color: #222;
+      font-size: 27px;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    .text {
+      width: 60%;
+      color: #999;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .faq {
+    &-item {
+      &:not(:first-of-type) {
+        padding-top: 40px;
+      }
+
+      &:not(:last-of-type) {
+        padding-bottom: 40px;
+      }
+
+      .title-wrap,
+      .text {
+        width: 100%;
+      }
+
+      .title-wrap {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+
+      .title {
+        font-size: 22px;
+      }
+    }
+  }
+}
+
