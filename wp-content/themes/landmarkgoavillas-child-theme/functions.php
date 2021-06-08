@@ -162,3 +162,37 @@ function my_login_logo_url_title() {
     return 'Landmark Goa Villas';
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
+
+
+/* Custom login page logo - Haveli Anirudh
+================================================== */
+function my_login_logo1() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url('/wp-content/uploads/sites/22/2021/05/site-logo.png');
+            width:206px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            padding-bottom: 30px;
+        }
+    </style>
+<?php }
+
+
+function my_login_logo_url1() {
+    return home_url();
+}
+add_filter( 'login_headerurl', 'my_login_logo_url1' );
+
+function my_login_logo_url_title1() {
+    return 'Haveli Anirudh';
+}
+
+$siteurl = home_url();
+
+if($siteurl == 'https://havelianirudh.com' ){
+
+    add_action( 'login_enqueue_scripts', 'my_login_logo1' );
+    add_filter( 'login_headertitle', 'my_login_logo_url_title1' );
+
+}
